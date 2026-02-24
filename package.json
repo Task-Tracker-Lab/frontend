@@ -1,0 +1,29 @@
+{
+  "name": "task-tracker",
+  "version": "1.0.0",
+  "private": "true",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "pnpm run --parallel dev",
+    "build": "pnpm run --parallel build",
+    "start": "pnpm run --parallel start",
+    "lint": "pnpm run --recursive lint",
+    "lint:fix": "pnpm run --recursive lint:fix",
+    "lint:frontend": "pnpm --filter @tracker/frontend lint",
+    "lint:backend": "pnpm --filter @tracker/backend lint",
+    "lint:shared": "pnpm --filter @tracker/shared-types lint",
+    "type-check": "pnpm run --recursive type-check",
+    "format": "pnpm run --recursive format",
+    "format:check": "pnpm run --recursive format:check"
+
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@types/node": "^25.0.0",
+    "eslint": "^10.0.0",
+    "prettier": "^3.0.0"
+  },
+  "license": "ISC",
+  "packageManager": "pnpm@10.29.3"
+}
