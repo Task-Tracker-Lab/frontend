@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { Button } from 'shared/components/ui/button';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,7 +9,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "shared/components/ui/alert-dialog"
+  Button,
+} from "shared/ui"
 
 interface MainPageProps {
   className?: string;
