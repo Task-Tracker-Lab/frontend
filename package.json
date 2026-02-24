@@ -10,13 +10,15 @@
     "start": "pnpm run --parallel start",
     "lint": "pnpm run --recursive lint",
     "lint:fix": "pnpm run --recursive lint:fix",
-    "lint:frontend": "pnpm --filter @tracker/frontend lint",
-    "lint:backend": "pnpm --filter @tracker/backend lint",
-    "lint:shared": "pnpm --filter @tracker/shared-types lint",
+    "lint:frontend": "pnpm --filter @task-tracker/frontend lint",
+    "lint:backend": "pnpm --filter @task-tracker/backend lint",
+    "lint:shared": "pnpm --filter @task-tracker/shared-types lint",
     "type-check": "pnpm run --recursive type-check",
     "format": "pnpm run --recursive format",
-    "format:check": "pnpm run --recursive format:check"
-
+    "format:check": "pnpm run --recursive format:check",
+    "dev:backend": "pnpm --filter @task-tracker/backend start:dev",
+    "build:backend": "pnpm --filter @task-tracker/backend build",
+    "start:backend": "pnpm --filter @task-tracker/backend start:prod"
   },
   "devDependencies": {
     "typescript": "^5.0.0",
