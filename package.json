@@ -15,7 +15,10 @@
     "lint:shared": "pnpm --filter @task-tracker/shared-types lint",
     "type-check": "pnpm run --recursive type-check",
     "format": "pnpm run --recursive format",
-    "format:check": "pnpm run --recursive format:check"
+    "format:check": "pnpm run --recursive format:check",
+    "dev:backend": "pnpm --filter @task-tracker/backend start:dev",
+    "build:backend": "pnpm --filter @task-tracker/backend build",
+    "start:backend": "pnpm --filter @task-tracker/backend start:prod"
   },
   "devDependencies": {
     "@eslint/js": "9.39.2",
