@@ -3,8 +3,8 @@ import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
-const fastifyCompress = require('@fastify/compress');
-const fastifyCors = require('@fastify/cors');
+import fastifyCompress from '@fastify/compress';
+import fastifyCors from '@fastify/cors';
 
 async function bootstrap() {
 
