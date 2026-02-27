@@ -96,6 +96,16 @@ updated_at timestamptz
 
 ---
 
+### team_role_enum
+
+- OWNER — создатель команды
+
+- ADMIN — администратор
+
+- MEMBER — участник
+
+RBAC реализуется через NestJS Guards.
+
 ## Team Members
 
 **Комментарий:** Связующая таблица пользователей и команд. Определяет
@@ -154,6 +164,13 @@ updated_at timestamptz
 
 ---
 
+### board_group_enum
+
+- STATUS
+- ASSIGNEE
+- PRIORITY
+- CUSTOM_FIELD
+
 ## Board Columns
 
 **Комментарий:** Колонки доски определяют workflow. Порядок задается
@@ -201,6 +218,30 @@ created_at timestamptz
 updated_at timestamptz
 
 ---
+
+### task_type_enum
+
+- EPIC
+- STORY
+- BUG
+- TECH_DEBT
+- TASK
+
+### task_status_enum
+
+- BACKLOG
+- TODO
+- IN_PROGRESS
+- REVIEW
+- DONE
+- CANCELLED
+
+### task_priority_enum
+
+- LOW
+- MEDIUM
+- HIGH
+- CRITICAL
 
 # 6. Task Filters
 
@@ -258,6 +299,17 @@ new_value jsonb
 created_at timestamptz
 
 ---
+
+### task_event_enum
+
+- CREATED
+- UPDATED
+- STATUS_CHANGED
+- ASSIGNEE_CHANGED
+- COMMENT_ADDED
+- MOVED_COLUMN
+- DELETED
+- RESTORED
 
 # 9. Notifications
 
