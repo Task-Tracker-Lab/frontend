@@ -1,1 +1,1 @@
-export * from './tests/jest'
+export * from './tests/jest';

@@ -17,7 +17,7 @@ export const Default: Story = {
   args: {
     size: 'default',
     variant: 'default',
-    children: 'Button'
+    children: 'Button',
   },
 };
 
@@ -25,7 +25,7 @@ export const Destructive: Story = {
   args: {
     size: 'default',
     variant: 'destructive',
-    children: 'Button'
+    children: 'Button',
   },
 };
 
@@ -33,6 +33,6 @@ export const Outline: Story = {
   args: {
     size: 'default',
     variant: 'outline',
-    children: 'Button'
+    children: 'Button',
   },
 };
