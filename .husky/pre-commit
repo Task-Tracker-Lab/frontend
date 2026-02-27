@@ -1,0 +1,3 @@
+pnpm lint-staged
+pnpm --filter @task-tracker/frontend lint:fsd
+pnpm type-check

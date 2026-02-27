@@ -15,16 +15,41 @@
     "lint:shared": "pnpm --filter @task-tracker/shared-types lint",
     "type-check": "pnpm run --recursive type-check",
     "format": "pnpm run --recursive format",
-    "format:check": "pnpm run --recursive format:check"
+    "format:check": "pnpm run --recursive format:check",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@eslint/js": "9.39.2",
     "@types/node": "^25.0.0",
     "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "prettier": "^3.0.0",
     "typescript": "^5.0.0",
     "typescript-eslint": "^8.56.0"
   },
   "license": "ISC",
-  "packageManager": "pnpm@10.29.3"
+  "packageManager": "pnpm@10.29.3",
+  "lint-staged": {
+    "apps/frontend/**/*.{ts,tsx,js,jsx,mjs}": [
+      "eslint --fix --no-warn-ignored --config apps/frontend/eslint.config.mjs",
+      "prettier --write"
+    ],
+    "apps/backend/**/*.{ts,js}": [
+      "eslint --fix --no-warn-ignored --config apps/backend/eslint.config.mjs",
+      "prettier --write"
+    ],
+    "packages/shared-types/**/*.{ts,js}": [
+      "eslint --fix --no-warn-ignored --config packages/shared-types/eslint.config.mjs",
+      "prettier --write"
+    ],
+    "*.{ts,js,mjs}": [
+      "eslint --fix --no-warn-ignored",
+      "prettier --write"
+    ],
+    "**/*.{json,css,md}": [
+      "prettier --write"
+    ]
+  }
 }
