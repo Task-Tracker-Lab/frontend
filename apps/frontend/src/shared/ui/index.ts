@@ -1,3 +1,3 @@
 export * from './alert-dialog'
-export * from './button'
+export * from './Button/button'
 export * from './card'
