@@ -1,26 +1,109 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import {
+    ConflictException,
+    Injectable,
+    NotFoundException
+} from '@nestjs/common'
+import { CreateUserDto } from './dto/create-user.dto'
+import { UpdateUserDto } from './dto/update-user.dto'
+import { PrismaService } from '../prisma/prisma.service'
+import { hashPassword } from './utils/hashPassword/hashPassword'
+import { UserDto } from './dto/user.dto'
+import { Prisma } from '@prisma/client'
 
 @Injectable()
 export class UserService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
-  }
+    constructor(private readonly prisma: PrismaService) {}
 
-  findAll() {
-    return `This action returns all user`;
-  }
+    async create(createUserDto: CreateUserDto): Promise<UserDto> {
+        const existing = await this.prisma.user.findUnique({
+            where: { email: createUserDto.email }
+        })
+        if (existing) {
+            throw new ConflictException('User already exist')
+        }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
+        const hashedPassword = await hashPassword(createUserDto.password)
+        const user = await this.prisma.user.create({
+            data: {
+                ...createUserDto,
+                password: hashedPassword
+            }
+        })
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
+        return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            role: user.role
+        }
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
-  }
+    async findAll(): Promise<UserDto[]> {
+        const users = await this.prisma.user.findMany()
+
+        return users.map((user) => {
+            return {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                role: user.role
+            }
+        })
+    }
+
+    async findOne(id: number): Promise<UserDto> {
+        const user = await this.prisma.user.findUnique({
+            where: { id }
+        })
+        if (!user) {
+            throw new NotFoundException('User not found')
+        }
+
+        return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            role: user.role
+        }
+    }
+
+    async update(id: number, updateUserDto: UpdateUserDto): Promise<UserDto> {
+        try {
+            const updatedUser = await this.prisma.user.update({
+                where: { id },
+                data: updateUserDto
+            })
+
+            return {
+                id: updatedUser.id,
+                name: updatedUser.name,
+                email: updatedUser.email,
+                role: updatedUser.role
+            }
+        } catch (error) {
+            if (
+                error instanceof Prisma.PrismaClientKnownRequestError &&
+                error.code === 'P2025'
+            ) {
+                throw new NotFoundException('User not found')
+            }
+            throw error
+        }
+    }
+
+    async remove(id: number): Promise<void> {
+        try {
+            await this.prisma.user.delete({
+                where: { id }
+            })
+        } catch (error) {
+            if (
+                error instanceof Prisma.PrismaClientKnownRequestError &&
+                error.code === 'P2025'
+            ) {
+                throw new NotFoundException('User not found')
+            }
+            throw error
+        }
+    }
 }
