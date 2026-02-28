@@ -3,13 +3,13 @@ import { UserRole } from '@prisma/client'
 export const usersForSeed = [
     {
         name: 'testUser',
-        email: 'testUser1@gmail.com',
+        email: 'testUser@gmail.com',
         password: 'testUser'
         // role: USER - default role
     },
     {
         name: 'testAdmin',
-        email: 'testAdmin1@gmail.com',
+        email: 'testAdmin@gmail.com',
         password: 'testAdmin',
         role: UserRole.ADMIN
     },

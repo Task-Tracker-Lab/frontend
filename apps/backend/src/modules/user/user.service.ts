@@ -1,42 +1,14 @@
-import {
-    ConflictException,
-    Injectable,
-    NotFoundException
-} from '@nestjs/common'
-import { CreateUserDto } from './dto/create-user.dto'
+import { Injectable, NotFoundException } from '@nestjs/common'
 import { UpdateUserDto } from './dto/update-user.dto'
-import { PrismaService } from '../prisma/prisma.service'
-import { hashPassword } from './utils/hashPassword/hashPassword'
+import { PrismaService } from '../../prisma/prisma.service'
 import { UserDto } from './dto/user.dto'
 import { Prisma } from '@prisma/client'
+import { CreateUserDto } from '../auth/dto/create-user.dto'
+import { User } from '@prisma/client'
 
 @Injectable()
 export class UserService {
     constructor(private readonly prisma: PrismaService) {}
-
-    async create(createUserDto: CreateUserDto): Promise<UserDto> {
-        const existing = await this.prisma.user.findUnique({
-            where: { email: createUserDto.email }
-        })
-        if (existing) {
-            throw new ConflictException('User already exist')
-        }
-
-        const hashedPassword = await hashPassword(createUserDto.password)
-        const user = await this.prisma.user.create({
-            data: {
-                ...createUserDto,
-                password: hashedPassword
-            }
-        })
-
-        return {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            role: user.role
-        }
-    }
 
     async findAll(): Promise<UserDto[]> {
         const users = await this.prisma.user.findMany()
@@ -51,13 +23,32 @@ export class UserService {
         })
     }
 
-    async findOne(id: number): Promise<UserDto> {
+    async findById(id: number): Promise<UserDto> {
         const user = await this.prisma.user.findUnique({
             where: { id }
         })
         if (!user) {
             throw new NotFoundException('User not found')
         }
+
+        return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            role: user.role
+        }
+    }
+
+    async findByEmail(email: string): Promise<User | null> {
+        return await this.prisma.user.findUnique({
+            where: { email }
+        })
+    }
+
+    async create(createUserDto: CreateUserDto): Promise<UserDto> {
+        const user = await this.prisma.user.create({
+            data: createUserDto
+        })
 
         return {
             id: user.id,

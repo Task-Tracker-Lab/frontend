@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { usersForSeed } from './seed-constants'
-import { hashPassword } from '../../user/utils/hashPassword/hashPassword'
+import { hashPassword } from '../../modules/auth/utils/hashPassword/hashPassword'
 
 const prisma = new PrismaClient()
 
