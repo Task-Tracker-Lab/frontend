@@ -43,7 +43,7 @@ jobs:
               run: pnpm format:check
 
             - name: Typecheck
-              run: pnpm type-check:frontend
+              run: pnpm typecheck:frontend
 
             #      - name: Unit tests
             #        run: pnpm test:frontend:ci
