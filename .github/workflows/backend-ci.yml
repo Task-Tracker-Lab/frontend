@@ -30,12 +30,12 @@ jobs:
           --health-timeout=5s
           --health-retries=5
 
+    env:
+      DATABASE_URL: postgresql://test:test@postgres:5432/test
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Load env
-        run: cat apps/backend/.env.example >> $GITHUB_ENV
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
