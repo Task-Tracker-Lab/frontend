@@ -7,7 +7,8 @@ const config: Config = {
     transform: {
         '^.+\\.(t|j)s$': 'ts-jest'
     },
-    testEnvironment: 'node'
+    testEnvironment: 'node',
+    setupFiles: ['<rootDir>/../jest.setup.ts']
 }
 
 export default config

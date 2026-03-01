@@ -66,6 +66,7 @@
         "@types/jest": "^30.0.0",
         "@types/passport-jwt": "^4.0.1",
         "@types/passport-local": "^1.0.38",
+        "dotenv": "^17.3.1",
         "globals": "^17.3.0",
         "jest": "^30.2.0",
         "prettier": "^3.8.1",

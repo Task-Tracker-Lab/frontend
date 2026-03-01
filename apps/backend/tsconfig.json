@@ -18,6 +18,7 @@
             "@shared-types/*": ["../../packages/shared-types/src/*"]
         }
     },
-    "include": ["src/**/*"],
+    "include": ["src/**/*",
+        "jest.setup.ts"],
     "exclude": ["node_modules", "dist"]
 }
