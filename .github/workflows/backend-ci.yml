@@ -1,13 +1,8 @@
 name: Backend CI
 
 on:
-    push:
-        branches: ['dev', 'main', 'feature/CI-workflow']
-        paths:
-            - 'apps/backend/**'
-
     pull_request:
-        branches: ['dev', 'main', 'feature/CI-workflow']
+        branches: ['dev', 'main']
         paths:
             - 'apps/backend/**'
 
