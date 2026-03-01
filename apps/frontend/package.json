@@ -11,7 +11,10 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "lint:fsd": "steiger ./src",
-    "lint:fsd:watch": "steiger ./src --watch"
+    "lint:fsd:watch": "steiger ./src --watch",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "keywords": [],
   "author": "",

@@ -10,13 +10,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
   Button,
-} from "shared/ui"
+} from 'shared/ui';
 
 interface MainPageProps {
   className?: string;
 }
 
-const MainPage: FC<MainPageProps> = ({className}) => {
+const MainPage: FC<MainPageProps> = ({ className }) => {
   return (
     <div className={className}>
       <AlertDialog>
@@ -27,8 +27,8 @@ const MainPage: FC<MainPageProps> = ({className}) => {
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your
-              account from our servers.
+              This action cannot be undone. This will permanently delete your account from our
+              servers.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
