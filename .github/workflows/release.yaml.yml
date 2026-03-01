@@ -1,5 +1,0 @@
-on:
-  release:
-    types: [published]
-
-#docker build,push,deploy
