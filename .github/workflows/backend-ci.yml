@@ -2,7 +2,7 @@ name: Backend CI
 
 on:
   push:
-    branches: [ 'dev', 'main', 'features/ci-workflow' ]
+    branches: [ 'dev', 'main', 'features/CI-workflow' ]
     paths:
       - 'apps/backend/**'
 
