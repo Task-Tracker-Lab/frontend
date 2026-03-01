@@ -1,14 +1,14 @@
-import type { Config } from 'jest'
+import type { Config } from 'jest';
 
 const config: Config = {
-    moduleFileExtensions: ['js', 'json', 'ts'],
-    rootDir: 'src',
-    testRegex: '.*\\.spec\\.ts$',
-    transform: {
-        '^.+\\.(t|j)s$': 'ts-jest'
-    },
-    testEnvironment: 'node',
-    setupFiles: ['<rootDir>/../jest.setup.ts']
-}
+  moduleFileExtensions: ['js', 'json', 'ts'],
+  rootDir: 'src',
+  testRegex: '.*\\.spec\\.ts$',
+  transform: {
+    '^.+\\.(t|j)s$': 'ts-jest',
+  },
+  testEnvironment: 'node',
+  setupFiles: ['<rootDir>/../jest.setup.ts'],
+};
 
-export default config
+export default config;

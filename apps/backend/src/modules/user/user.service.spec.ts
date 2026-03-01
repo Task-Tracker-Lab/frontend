@@ -1,34 +1,34 @@
-import { Test, TestingModule } from '@nestjs/testing'
-import { UserService } from './user.service'
-import { PrismaService } from '../../prisma/prisma.service'
+import { Test, TestingModule } from '@nestjs/testing';
+import { UserService } from './user.service';
+import { PrismaService } from '../../prisma/prisma.service';
 
 describe('UserService', () => {
-    let service: UserService
-    const prismaMock = {
-        user: {
-            findMany: jest.fn(),
-            findUnique: jest.fn(),
-            create: jest.fn(),
-            update: jest.fn(),
-            delete: jest.fn()
-        }
-    }
+  let service: UserService;
+  const prismaMock = {
+    user: {
+      findMany: jest.fn(),
+      findUnique: jest.fn(),
+      create: jest.fn(),
+      update: jest.fn(),
+      delete: jest.fn(),
+    },
+  };
 
-    beforeEach(async () => {
-        const module: TestingModule = await Test.createTestingModule({
-            providers: [
-                UserService,
-                {
-                    provide: PrismaService,
-                    useValue: prismaMock
-                }
-            ]
-        }).compile()
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [
+        UserService,
+        {
+          provide: PrismaService,
+          useValue: prismaMock,
+        },
+      ],
+    }).compile();
 
-        service = module.get<UserService>(UserService)
-    })
+    service = module.get<UserService>(UserService);
+  });
 
-    it('should be defined', () => {
-        expect(service).toBeDefined()
-    })
-})
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+});

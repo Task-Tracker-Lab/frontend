@@ -1,47 +1,50 @@
 name: Frontend CI
 
 on:
-  pull_request:
-    branches: ['dev', 'main', 'features/ci-workflow']
-    paths:
-      - 'frontend/**'
+    pull_request:
+        branches: ['dev', 'main', 'features/ci-workflow']
+        paths:
+            - 'apps/frontend/**'
 
 jobs:
-  frontend:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: apps/frontend
+    frontend:
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'pnpm'
+            - name: Setup pnpm
+              uses: pnpm/action-setup@v3
+              with:
+                  version: 9
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 9
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: 'pnpm'
 
-      - name: Install deps
-        run: pnpm install --frozen-lockfile
+            - name: Install deps
+              run: pnpm install --frozen-lockfile
 
-      - name: Lint
-        run: pnpm lint
+            - name: Lint
+              run: pnpm lint:frontend
 
-      - name: Typecheck
-        run: pnpm typecheck
+            - name: Lint FSD
+              run: pnpm lint:fsd:frontend
 
-#      - name: Unit tests
-#        run: pnpm test --run
+            - name: Format
+              run: pnpm format:check
 
-      - name: Build
-        run: pnpm build
+            - name: Typecheck
+              run: pnpm type-check:frontend
 
-#      - name: Build Storybook
-#        run: pnpm build-storybook
+            #      - name: Unit tests
+            #        run: pnpm test:frontend:ci
+
+            - name: Build
+              run: pnpm build:frontend
+
+      #      - name: Build Storybook
+      #        run: pnpm build-storybook
