@@ -1,0 +1,67 @@
+name: Backend CI
+
+on:
+  pull_request:
+    branches: ['dev', 'main', 'features/ci-workflow']
+    paths:
+      - 'apps/backend/**'
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: test
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Load env
+        run: cat apps/backend/.env.example >> $GITHUB_ENV
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
+      - name: Prisma generate
+        run: pnpm --filter @task-tracker/backend prisma:generate
+
+      - name: Apply migrations (test DB)
+        run: pnpm --filter @task-tracker/backend prisma:migrate:deploy
+
+      - name: Lint
+        run: pnpm --filter @task-tracker/backend lint
+
+      - name: Format
+        run: pnpm --filter @task-tracker/backend format
+
+      - name: Typecheck
+        run: pnpm --filter @task-tracker/backend typecheck
+
+      - name: Unit tests
+        run: pnpm --filter @task-tracker/backend test
+
+      - name: Build
+        run: pnpm --filter @task-tracker/backend build

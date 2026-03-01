@@ -14,7 +14,7 @@ import { CreateUserDto } from './dto/create-user.dto'
 import { LocalAuthGuard } from './guards/local-auth.guard'
 import { LoginUserDto } from './dto/login-user.dto'
 import { JwtAuthGuard } from './guards/jwt-auth.guard'
-import { isDev } from '../../env'
+import { isProd } from '../../env'
 import { JwtPayload } from './types/jwt-payload.type'
 
 @Controller('auth')
@@ -31,7 +31,7 @@ export class AuthController {
 
         res.setCookie('access_token', access_token, {
             httpOnly: true,
-            secure: !isDev,
+            secure: isProd,
             sameSite: 'strict',
             path: '/'
         })
@@ -49,7 +49,7 @@ export class AuthController {
 
         res.setCookie('access_token', access_token, {
             httpOnly: true,
-            secure: !isDev,
+            secure: isProd,
             sameSite: 'strict',
             path: '/'
         })

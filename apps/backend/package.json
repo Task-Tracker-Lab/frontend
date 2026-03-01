@@ -11,8 +11,14 @@
         "start:debug": "nest start --debug --watch",
         "start:prod": "nest dist/main",
         "prisma:seed": "prisma db seed",
+        "prisma:generate": "prisma generate",
+        "prisma:migrate:dev": "prisma migrate dev",
+        "prisma:migrate:deploy": "prisma migrate deploy",
         "format": "prettier --write .",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "typecheck": "tsc --noEmit",
+        "test": "jest",
+        "test:ci": "jest --runInBand",
+        "lint": "eslint ."
     },
     "prisma": {
         "seed": "ts-node --transpile-only src/prisma/seed/seed.ts"
@@ -60,9 +66,12 @@
         "@types/jest": "^30.0.0",
         "@types/passport-jwt": "^4.0.1",
         "@types/passport-local": "^1.0.38",
+        "globals": "^17.3.0",
+        "jest": "^30.2.0",
         "prettier": "^3.8.1",
         "prisma": "6.19.2",
         "source-map-support": "^0.5.21",
+        "ts-jest": "^29.4.6",
         "ts-loader": "^9.5.4",
         "ts-node": "^10.9.2",
         "tsconfig-paths": "^4.2.0"
