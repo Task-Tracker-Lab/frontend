@@ -6,7 +6,7 @@ export default [
     js.configs.recommended,
 
     {
-        ignores: ['dist']
+        ignores: ['dist', 'jest.config.ts']
     },
 
     // TypeScript
