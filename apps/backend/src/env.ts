@@ -19,4 +19,4 @@ export const env = envSchema.parse(process.env)
 export const isDev = env.NODE_ENV === NodeEnv.DEV
 export const isProd = env.NODE_ENV === NodeEnv.PRODUCTION
 
-//test ci 3
+//test ci 7
