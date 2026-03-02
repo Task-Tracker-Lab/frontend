@@ -29,8 +29,8 @@
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
+      "pnpm lint:fix",
+      "pnpm format"
     ]
   },
   "devDependencies": {

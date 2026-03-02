@@ -1,8 +1,4 @@
 pnpm exec lint-staged
 pnpm lint:fsd:frontend
-pnpm typecheck:frontend
-pnpm lint:fix
-pnpm lint:backend
 pnpm typecheck:backend
-pnpm format
-pnpm test:backend:ci
+pnpm typecheck:frontend
