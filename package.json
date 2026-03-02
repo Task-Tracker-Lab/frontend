@@ -26,7 +26,11 @@
     "prisma:migrate:deploy:backend": "pnpm --filter @task-tracker/backend prisma:migrate:deploy",
     "prepare": "husky"
   },
-  "lint-staged": {"*.{ts,tsx}": ["eslint --fix"]},
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix"
+    ]
+  },
   "devDependencies": {
     "@eslint/js": "9.39.2",
     "@types/node": "^25.0.0",
