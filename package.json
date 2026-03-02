@@ -8,27 +8,29 @@
     "dev": "pnpm run --parallel dev",
     "build": "pnpm run --parallel build",
     "start": "pnpm run --parallel start",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier . --write",
-    "format:check": "prettier . --check",
+    "lint": "pnpm run --recursive lint",
+    "lint:shared": "pnpm --filter @task-tracker/shared-types lint",
+    "lint:fix": "pnpm run --recursive lint:fix",
+    "format": "pnpm run --recursive format",
+    "format:check": "pnpm run --recursive format:check",
     "lint:frontend": "pnpm --filter @task-tracker/frontend lint",
     "lint:fsd:frontend": "pnpm --filter @task-tracker/frontend lint:fsd",
-    "typecheck:frontend": "pnpm --filter @task-tracker/frontend type-check",
+    "typecheck:frontend": "pnpm --filter @task-tracker/frontend typecheck",
     "build:frontend": "pnpm --filter @task-tracker/frontend build",
     "dev:backend": "pnpm --filter @task-tracker/backend start:dev",
     "start:backend": "pnpm --filter @task-tracker/backend start:prod",
     "build:backend": "pnpm --filter @task-tracker/backend build",
     "lint:backend": "pnpm --filter @task-tracker/backend lint",
     "test:backend:ci": "pnpm --filter @task-tracker/backend test:ci",
-    "typecheck:backend": "pnpm --filter @task-tracker/backend type-check",
+    "typecheck:backend": "pnpm --filter @task-tracker/backend typecheck",
     "prisma:generate:backend": "pnpm --filter @task-tracker/backend prisma:generate",
     "prisma:migrate:deploy:backend": "pnpm --filter @task-tracker/backend prisma:migrate:deploy",
     "prepare": "husky"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "eslint --fix"
+      "eslint --fix",
+      "prettier --write"
     ]
   },
   "devDependencies": {
