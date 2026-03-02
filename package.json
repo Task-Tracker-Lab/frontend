@@ -28,11 +28,14 @@
     "prepare": "husky"
   },
   "lint-staged": {
-    "*.{ts,tsx}": [
-      "pnpm lint:fix",
-      "pnpm format"
-    ]
-  },
+    ".{ts,tsx,js,,mjs}": [
+    "eslint --fix --no-warn-ignored",
+    "prettier --write"
+  ],
+    ".{json,css,md}": [
+    "prettier --write"
+  ]
+},
   "devDependencies": {
     "@eslint/js": "9.39.2",
     "@types/node": "^25.0.0",
