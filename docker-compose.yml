@@ -1,22 +1,22 @@
 services:
-    postgres:
-        container_name: postgres
-        image: postgres:latest
-        restart: always
-        environment:
-            POSTGRES_USER: ${DB_USERNAME}
-            POSTGRES_PASSWORD: ${DB_PASSWORD}
-            DB_DATABASE: ${DB_DATABASE}
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
 
-        ports:
-            - '5433:5432'
-        volumes:
-            - postgres_data:/var/lib/postgresql/postgres_data
-        networks:
-            - nestjs
+    ports:
+      - '5433:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/postgres_data
+    networks:
+      - nestjs
 
 volumes:
-    postgres_data:
+  postgres_data:
 
 networks:
-    nestjs:
+  nestjs:
