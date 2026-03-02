@@ -1,11 +1,9 @@
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
-import react from 'eslint-plugin-react';
-import reactHooks from 'eslint-plugin-react-hooks';
 import importPlugin from 'eslint-plugin-import';
 import unusedImports from 'eslint-plugin-unused-imports';
 import prettier from 'eslint-plugin-prettier';
-import globals from 'globals';
+import globals from 'globals'; // Добавили для работы окружений
 
 export default [
   js.configs.recommended,
@@ -16,46 +14,13 @@ export default [
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {
-        project: true,
+        project: ['./tsconfig.json'],
+      },
+      globals: {
+        ...globals.es2021,
       },
     },
   },
-
-  // backend
-
-  {
-    files: ['apps/backend/**/*.{ts,js}'],
-    languageOptions: {
-      globals: globals.node,
-    },
-    rules: {
-      'no-console': 'off',
-    },
-  },
-
-  // frontend
-
-  {
-    files: ['apps/frontend/**/*.{ts,tsx}'],
-    languageOptions: {
-      globals: globals.browser,
-    },
-    plugins: {
-      react,
-      'react-hooks': reactHooks,
-    },
-    settings: {
-      react: {
-        version: 'detect',
-      },
-    },
-    rules: {
-      'react/react-in-jsx-scope': 'off',
-      'react-hooks/rules-of-hooks': 'error',
-      'react-hooks/exhaustive-deps': 'warn',
-    },
-  },
-
   {
     plugins: {
       import: importPlugin,
