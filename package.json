@@ -1,10 +1,10 @@
 {
-    "name": "task-tracker",
-    "version": "1.0.0",
-    "private": "true",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
+  "name": "task-tracker",
+  "version": "1.0.0",
+  "private": "true",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
         "dev": "pnpm run --parallel dev",
         "build": "pnpm run --parallel build",
         "start": "pnpm run --parallel start",
@@ -28,16 +28,36 @@
         "test:backend:ci": "pnpm --filter @task-tracker/backend test:ci",
         "typecheck:backend": "pnpm --filter @task-tracker/backend typecheck",
         "prisma:generate:backend": "pnpm --filter @task-tracker/backend prisma:generate",
-        "prisma:migrate:deploy:backend": "pnpm --filter @task-tracker/backend prisma:migrate:deploy"
+        "prisma:migrate:deploy:backend": "pnpm --filter @task-tracker/backend prisma:migrate:deploy",
+        "prepare": "husky"
     },
-    "devDependencies": {
-        "@eslint/js": "9.39.2",
-        "@types/node": "^25.0.0",
-        "eslint": "^9.39.2",
-        "prettier": "^3.0.0",
-        "typescript": "^5.0.0",
-        "typescript-eslint": "^8.56.0"
-    },
-    "license": "ISC",
-    "packageManager": "pnpm@10.29.3"
+  "lint-staged": {
+    ".{ts,tsx,js,,mjs}": [
+    "eslint --fix --no-warn-ignored",
+    "prettier --write"
+  ],
+    ".{json,css,md}": [
+    "prettier --write"
+  ]
+},
+  "devDependencies": {
+    "@eslint/js": "9.39.2",
+    "@types/node": "^25.0.0",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-n": "^17.24.0",
+    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-unused-imports": "^4.4.1",
+    "globals": "^17.3.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.3.1",
+    "prettier": "^3.0.0",
+    "typescript": "^5.0.0",
+    "typescript-eslint": "^8.56.0"
+  },
+  "license": "ISC",
+  "packageManager": "pnpm@10.29.3"
 }
