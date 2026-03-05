@@ -9,7 +9,6 @@ import {
   UseGuards,
   Req,
   ForbiddenException,
-  ParseIntPipe,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
