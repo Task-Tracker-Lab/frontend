@@ -5,6 +5,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "echo 'No build step'",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
