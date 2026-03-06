@@ -1,5 +1,6 @@
 import { PipeTransform, BadRequestException, Injectable } from '@nestjs/common';
 
+//reg
 const CUID_REGEX = /^c[a-z0-9]{24}$/i;
 
 @Injectable()
