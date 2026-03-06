@@ -97,7 +97,7 @@ CREATE TABLE "Task" (
 CREATE TABLE "TaskStatus" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "projectId" TEXT NOT NULL,
+    "boardId" TEXT NOT NULL,
 
     CONSTRAINT "TaskStatus_pkey" PRIMARY KEY ("id")
 );
@@ -183,7 +183,7 @@ CREATE INDEX "Task_assignedToId_idx" ON "Task"("assignedToId");
 CREATE INDEX "Task_parentId_idx" ON "Task"("parentId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "TaskStatus_projectId_name_key" ON "TaskStatus"("projectId", "name");
+CREATE UNIQUE INDEX "TaskStatus_boardId_name_key" ON "TaskStatus"("boardId", "name");
 
 -- CreateIndex
 CREATE INDEX "TasksFilter_boardId_idx" ON "TasksFilter"("boardId");
@@ -237,7 +237,7 @@ ALTER TABLE "Task" ADD CONSTRAINT "Task_createdById_fkey" FOREIGN KEY ("createdB
 ALTER TABLE "Task" ADD CONSTRAINT "Task_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "Task"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "TaskStatus" ADD CONSTRAINT "TaskStatus_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Project"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "TaskStatus" ADD CONSTRAINT "TaskStatus_boardId_fkey" FOREIGN KEY ("boardId") REFERENCES "Board"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "TasksFilter" ADD CONSTRAINT "TasksFilter_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "TeamMember"("id") ON DELETE SET NULL ON UPDATE CASCADE;
