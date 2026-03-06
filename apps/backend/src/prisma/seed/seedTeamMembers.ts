@@ -1,26 +1,26 @@
-import { type PrismaClient, TeamMemberRole, type User } from '@prisma/client';
+import { type PrismaClient, TeamMemberRole } from '@prisma/client';
 
 export async function seedTeamMembers(
-    prisma: PrismaClient,
-    teamId: string,
-    userAdminId: string,
-    userMemberId: string
+  prisma: PrismaClient,
+  teamId: string,
+  userAdminId: string,
+  userMemberId: string
 ) {
-    const teamMemberAdmin = await prisma.teamMember.create({
-        data: {
-            userId: userAdminId,
-            teamId,
-            role: TeamMemberRole.ADMIN,
-        },
-    });
+  const teamMemberAdmin = await prisma.teamMember.create({
+    data: {
+      userId: userAdminId,
+      teamId,
+      role: TeamMemberRole.ADMIN,
+    },
+  });
 
-    const teamMember = await prisma.teamMember.create({
-        data: {
-            userId: userMemberId,
-            teamId,
-            role: TeamMemberRole.MEMBER,
-        },
-    });
+  const teamMember = await prisma.teamMember.create({
+    data: {
+      userId: userMemberId,
+      teamId,
+      role: TeamMemberRole.MEMBER,
+    },
+  });
 
-    return { teamMemberAdmin, teamMember };
+  return { teamMemberAdmin, teamMember };
 }
