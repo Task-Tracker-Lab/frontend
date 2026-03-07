@@ -2,9 +2,9 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../../prisma/prisma.service';
 import { UserDto } from './dto/user.dto';
-import { Prisma } from '@prisma/client';
 import { CreateUserDto } from '../auth/dto/create-user.dto';
 import { User } from '@prisma/client';
+import { handlePrismaError } from '../../shared/helpers/handle-prisma-error.helper';
 
 @Injectable()
 export class UserService {
@@ -39,23 +39,27 @@ export class UserService {
     };
   }
 
-  async findByEmail(email: string): Promise<User | null> {
-    return await this.prisma.user.findUnique({
+  async findByEmailOrNull(email: string): Promise<User | null> {
+    return this.prisma.user.findUnique({
       where: { email },
     });
   }
 
   async create(createUserDto: CreateUserDto): Promise<UserDto> {
-    const user = await this.prisma.user.create({
-      data: createUserDto,
-    });
+    try {
+      const user = await this.prisma.user.create({
+        data: createUserDto,
+      });
 
-    return {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-    };
+      return {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      };
+    } catch (error) {
+      handlePrismaError(error, { UNIQUE_CONSTRAINT: 'User with this email already exists' });
+    }
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<UserDto> {
@@ -72,10 +76,7 @@ export class UserService {
         role: updatedUser.role,
       };
     } catch (error) {
-      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
-        throw new NotFoundException('User not found');
-      }
-      throw error;
+      handlePrismaError(error, { NOT_FOUND: 'User not found' });
     }
   }
 
@@ -85,10 +86,7 @@ export class UserService {
         where: { id },
       });
     } catch (error) {
-      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
-        throw new NotFoundException('User not found');
-      }
-      throw error;
+      handlePrismaError(error, { NOT_FOUND: 'User not found' });
     }
   }
 }
