@@ -9,7 +9,6 @@ import {
   UseGuards,
   Req,
   ForbiddenException,
-  ParseIntPipe,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -18,6 +17,7 @@ import { UserDto } from './dto/user.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UserRole } from '@prisma/client';
 import { JwtPayload } from '../auth/types/jwt-payload.type';
+import { ParseCuidPipe } from '../../shared/pipes/parse-cuid.pipe';
 
 @Controller('user')
 export class UserController {
@@ -35,7 +35,7 @@ export class UserController {
   }
 
   @Get(':id')
-  async findById(@Param('id', ParseIntPipe) id: number): Promise<ApiResponse<UserDto>> {
+  async findById(@Param('id', ParseCuidPipe) id: string): Promise<ApiResponse<UserDto>> {
     const user = await this.userService.findById(id);
 
     return { data: user };
@@ -44,7 +44,7 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
   async update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseCuidPipe) id: string,
     @Body() updateUserDto: UpdateUserDto,
     @Req() req: Request & { user: JwtPayload }
   ): Promise<ApiResponse<UserDto>> {
@@ -62,7 +62,7 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   @HttpCode(204)
-  remove(@Param('id', ParseIntPipe) id: number, @Req() req: Request & { user: JwtPayload }) {
+  remove(@Param('id', ParseCuidPipe) id: string, @Req() req: Request & { user: JwtPayload }) {
     if (req.user.role !== UserRole.ADMIN && req.user.sub !== id) {
       throw new ForbiddenException();
     }

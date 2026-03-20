@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserDto } from '../user/dto/user.dto';
 import bcrypt from 'bcrypt';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -15,7 +15,7 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string): Promise<UserDto | null> {
-    const user = await this.userService.findByEmail(email);
+    const user = await this.userService.findByEmailOrNull(email);
 
     if (!user) return null;
 
@@ -32,13 +32,7 @@ export class AuthService {
   }
 
   async registration(createUserDto: CreateUserDto) {
-    const existing = await this.userService.findByEmail(createUserDto.email);
-    if (existing) {
-      throw new ConflictException('Email in use');
-    }
-
     const hashedPassword = await hashPassword(createUserDto.password);
-
     const user = await this.userService.create({
       ...createUserDto,
       password: hashedPassword,
@@ -59,8 +53,17 @@ export class AuthService {
     };
   }
 
-  async me(user: JwtPayload): Promise<UserDto> {
-    const { sub: id } = user;
-    return await this.userService.findById(id);
+  async me(email: string): Promise<UserDto> {
+    const user = await this.userService.findByEmailOrNull(email);
+    if (!user) {
+      throw new UnauthorizedException('Not authorized');
+    }
+
+    return {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      role: user.role,
+    };
   }
 }

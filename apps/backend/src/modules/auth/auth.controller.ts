@@ -51,7 +51,8 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get('me')
   async me(@Req() req: Request & { user: JwtPayload }): Promise<ApiResponse<UserDto>> {
-    const user = await this.authService.me(req.user);
+    const { email } = req.user;
+    const user = await this.authService.me(email);
 
     return { data: user };
   }
