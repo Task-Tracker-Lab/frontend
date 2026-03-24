@@ -43,6 +43,10 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+@theme {
+  --color-link: oklch(54.6% 0.245 262.881);
+}
+
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -76,6 +80,7 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --link: oklch(0.62 0.19 259);
 }
 
 .dark {
@@ -118,5 +123,9 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
   }
 }
