@@ -1,5 +1,5 @@
 export * from './alert-dialog';
-export * from './button';
+export * from './Button/button';
 export * from './card';
 export * from './field';
 export * from './input';
