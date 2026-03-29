@@ -1,10 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../../prisma/prisma.service';
 import { UserDto } from './dto/user.dto';
 import { CreateUserDto } from '../auth/dto/create-user.dto';
 import { User } from '@prisma/client';
-import { handlePrismaError } from '../../shared/helpers/handle-prisma-error.helper';
+import { DomainError } from '../../shared/errors';
 
 @Injectable()
 export class UserService {
@@ -28,7 +28,7 @@ export class UserService {
       where: { id },
     });
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw DomainError.NotFound('User not found');
     }
 
     return {
@@ -46,47 +46,35 @@ export class UserService {
   }
 
   async create(createUserDto: CreateUserDto): Promise<UserDto> {
-    try {
-      const user = await this.prisma.user.create({
-        data: createUserDto,
-      });
+    const user = await this.prisma.user.create({
+      data: createUserDto,
+    });
 
-      return {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      };
-    } catch (error) {
-      handlePrismaError(error, { UNIQUE_CONSTRAINT: 'User with this email already exists' });
-    }
+    return {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    };
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<UserDto> {
-    try {
-      const updatedUser = await this.prisma.user.update({
-        where: { id },
-        data: updateUserDto,
-      });
+    const updatedUser = await this.prisma.user.update({
+      where: { id },
+      data: updateUserDto,
+    });
 
-      return {
-        id: updatedUser.id,
-        name: updatedUser.name,
-        email: updatedUser.email,
-        role: updatedUser.role,
-      };
-    } catch (error) {
-      handlePrismaError(error, { NOT_FOUND: 'User not found' });
-    }
+    return {
+      id: updatedUser.id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      role: updatedUser.role,
+    };
   }
 
   async remove(id: string): Promise<void> {
-    try {
-      await this.prisma.user.delete({
-        where: { id },
-      });
-    } catch (error) {
-      handlePrismaError(error, { NOT_FOUND: 'User not found' });
-    }
+    await this.prisma.user.delete({
+      where: { id },
+    });
   }
 }
