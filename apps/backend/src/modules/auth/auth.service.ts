@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UserDto } from '../user/dto/user.dto';
 import bcrypt from 'bcrypt';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -6,6 +6,7 @@ import { hashPassword } from './utils/hashPassword/hashPassword';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/user.service';
 import { JwtPayload } from './types/jwt-payload.type';
+import { DomainError } from '../../shared/errors';
 
 @Injectable()
 export class AuthService {
@@ -56,7 +57,7 @@ export class AuthService {
   async me(email: string): Promise<UserDto> {
     const user = await this.userService.findByEmailOrNull(email);
     if (!user) {
-      throw new UnauthorizedException('Not authorized');
+      throw DomainError.Unauthorized();
     }
 
     return {
