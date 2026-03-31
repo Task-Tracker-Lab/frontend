@@ -24,6 +24,7 @@
     "lint:backend": "pnpm --filter @task-tracker/backend lint",
     "format:check:backend": "pnpm --filter @task-tracker/backend format:check",
     "test:backend:ci": "pnpm --filter @task-tracker/backend test:ci",
+    "test:frontend:ci": "pnpm --filter @task-tracker/frontend test:ci",
     "typecheck:backend": "pnpm --filter @task-tracker/backend typecheck",
     "prisma:generate:backend": "pnpm --filter @task-tracker/backend prisma:generate",
     "prisma:migrate:deploy:backend": "pnpm --filter @task-tracker/backend prisma:migrate:deploy",
