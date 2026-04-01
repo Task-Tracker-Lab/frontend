@@ -1,59 +1,42 @@
-import { Body, Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { ApiResponse } from '../../shared/types/api-response.type';
-import { UserDto } from '../user/dto/user.dto';
-import { CreateUserDto } from './dto/create-user.dto';
-import { LocalAuthGuard } from './guards/local-auth.guard';
-import { LoginUserDto } from './dto/login-user.dto';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { ApiResponse } from '../../shared/types';
+import { PrivateUserDto } from '../user/dto/user.dto';
+import { CreateUserDto } from '../user/dto/create-user.dto';
 import { isProd } from '../../env';
-import { JwtPayload } from './types/jwt-payload.type';
+import { type FastifyReply } from 'fastify';
+import { LoginRequestDto } from './dto/login.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @UseGuards(LocalAuthGuard)
   @Post('login')
+  @HttpCode(200)
   async login(
-    @Req() req: Request & { user: UserDto },
-    @Res({ passthrough: true }) res
-  ): Promise<ApiResponse<LoginUserDto>> {
-    const { access_token } = await this.authService.login(req.user);
+    @Body() loginUserDto: LoginRequestDto,
+    @Res({ passthrough: true }) res: FastifyReply
+  ): Promise<ApiResponse<PrivateUserDto>> {
+    const { accessToken, user } = await this.authService.login(loginUserDto);
 
-    res.setCookie('access_token', access_token, {
+    res.setCookie('access_token', accessToken, {
       httpOnly: true,
       secure: isProd,
       sameSite: 'strict',
       path: '/',
     });
 
-    return { data: { success: true } };
+    return { data: user };
+  }
+
+  @Post('logout')
+  @HttpCode(204)
+  async logout(@Res({ passthrough: true }) res: FastifyReply) {
+    res.clearCookie('access_token', { path: '/' });
   }
 
   @Post('registration')
-  async registration(
-    @Body() createUserDto: CreateUserDto,
-    @Res({ passthrough: true }) res
-  ): Promise<ApiResponse<LoginUserDto>> {
-    const { access_token } = await this.authService.registration(createUserDto);
-
-    res.setCookie('access_token', access_token, {
-      httpOnly: true,
-      secure: isProd,
-      sameSite: 'strict',
-      path: '/',
-    });
-
-    return { data: { success: true } };
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('me')
-  async me(@Req() req: Request & { user: JwtPayload }): Promise<ApiResponse<UserDto>> {
-    const { email } = req.user;
-    const user = await this.authService.me(email);
-
-    return { data: user };
+  async registration(@Body() createUserDto: CreateUserDto): Promise<void> {
+    await this.authService.registration(createUserDto);
   }
 }
