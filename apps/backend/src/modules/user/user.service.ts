@@ -1,75 +1,91 @@
 import { Injectable } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../../prisma/prisma.service';
-import { UserDto } from './dto/user.dto';
-import { CreateUserDto } from '../auth/dto/create-user.dto';
-import { User } from '@prisma/client';
+import { CreateUserDto } from './dto/create-user.dto';
 import { DomainError } from '../../shared/errors';
+import { privateUserSelect, publicUserSelect } from './selectors/user.selectors';
+import { PrivateUserDto, PublicUserDto } from './dto/user.dto';
+import bcrypt from 'bcrypt';
+import { UpdateAuthUserPasswordDto } from './dto/update-auth-user-password.dto';
+import { CurrentUserType } from '../auth/types/jwt-payload.type';
+import { hashPassword } from '../auth/utils/hashPassword/hashPassword';
 
 @Injectable()
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll(): Promise<UserDto[]> {
-    const users = await this.prisma.user.findMany();
+  async me(id: string): Promise<PrivateUserDto> {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+      select: privateUserSelect,
+    });
+    if (!user) {
+      throw DomainError.Unauthorized();
+    }
 
-    return users.map((user) => {
-      return {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      };
+    return user;
+  }
+
+  async updatePassword(
+    currentUser: CurrentUserType,
+    updatePasswordDto: UpdateAuthUserPasswordDto
+  ): Promise<void> {
+    const user = await this.findByEmailWithPasswordOrNull(currentUser.email);
+    if (!user) {
+      throw DomainError.NotFound('User not found');
+    }
+
+    const isValidPassword = await bcrypt.compare(updatePasswordDto.oldPassword, user.password);
+    if (!isValidPassword) {
+      throw DomainError.BadRequest('Invalid password');
+    }
+
+    const hashedNewPassword = await hashPassword(updatePasswordDto.newPassword);
+
+    await this.prisma.user.update({
+      where: { id: currentUser.id },
+      data: {
+        password: hashedNewPassword,
+      },
     });
   }
 
-  async findById(id: string): Promise<UserDto> {
+  async findPublicById(id: string): Promise<PublicUserDto> {
     const user = await this.prisma.user.findUnique({
       where: { id },
+      select: publicUserSelect,
     });
     if (!user) {
       throw DomainError.NotFound('User not found');
     }
 
-    return {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-    };
+    return user;
   }
 
-  async findByEmailOrNull(email: string): Promise<User | null> {
+  async findByEmailWithPasswordOrNull(
+    email: string
+  ): Promise<(PrivateUserDto & { password: string }) | null> {
     return this.prisma.user.findUnique({
       where: { email },
+      select: {
+        ...privateUserSelect,
+        password: true,
+      },
     });
   }
 
-  async create(createUserDto: CreateUserDto): Promise<UserDto> {
-    const user = await this.prisma.user.create({
+  async create(createUserDto: CreateUserDto): Promise<void> {
+    await this.prisma.user.create({
       data: createUserDto,
     });
-
-    return {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-    };
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto): Promise<UserDto> {
-    const updatedUser = await this.prisma.user.update({
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<PrivateUserDto> {
+    return await this.prisma.user.update({
       where: { id },
       data: updateUserDto,
+      select: privateUserSelect,
     });
-
-    return {
-      id: updatedUser.id,
-      name: updatedUser.name,
-      email: updatedUser.email,
-      role: updatedUser.role,
-    };
   }
 
   async remove(id: string): Promise<void> {

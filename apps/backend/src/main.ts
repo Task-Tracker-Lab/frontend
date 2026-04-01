@@ -38,7 +38,12 @@ async function bootstrap() {
       allowedHeaders: ['Content-Type', 'Accept', 'Authorization'],
     });
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    })
+  );
   app.setGlobalPrefix('api/v1', {
     exclude: ['/'],
   });
