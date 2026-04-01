@@ -2,6 +2,7 @@ import { ArgumentsHost, Catch, ExceptionFilter, HttpStatus, Logger } from '@nest
 import { Prisma } from '@prisma/client';
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { HttpAdapterHost } from '@nestjs/core';
+import { ApiErrorResponseDto } from '../dto';
 
 @Catch(Prisma.PrismaClientKnownRequestError)
 export class PrismaExceptionFilter implements ExceptionFilter {
@@ -54,9 +55,10 @@ export class PrismaExceptionFilter implements ExceptionFilter {
       );
     }
 
-    const responseBody = {
+    const responseBody: ApiErrorResponseDto = {
       statusCode: status,
       message,
+      error: exception.code,
       timestamp: new Date().toISOString(),
       path: request.url,
     };

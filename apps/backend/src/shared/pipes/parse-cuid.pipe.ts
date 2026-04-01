@@ -1,4 +1,5 @@
-import { PipeTransform, BadRequestException, Injectable } from '@nestjs/common';
+import { PipeTransform, Injectable } from '@nestjs/common';
+import { DomainError } from '../errors';
 
 //reg
 const CUID_REGEX = /^c[a-z0-9]{24}$/i;
@@ -7,7 +8,7 @@ const CUID_REGEX = /^c[a-z0-9]{24}$/i;
 export class ParseCuidPipe implements PipeTransform<string, string> {
   transform(value: string): string {
     if (!CUID_REGEX.test(value)) {
-      throw new BadRequestException('Invalid cuid');
+      throw DomainError.BadRequest('Invalid id');
     }
 
     return value;

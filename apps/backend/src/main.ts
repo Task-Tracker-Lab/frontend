@@ -7,6 +7,8 @@ import fastifyCompress from '@fastify/compress';
 import fastifyCors from '@fastify/cors';
 import fastifyCookie from '@fastify/cookie';
 import { env } from './env';
+import { TransformResponseInterceptor } from './shared/interceptors';
+import { ApiResponse, ApiResponsePaginated } from './shared/dto';
 
 async function bootstrap() {
   const PORT = Number(env.PORT);
@@ -14,10 +16,7 @@ async function bootstrap() {
     throw new Error('Не задан порт в .env');
   }
 
-  const config = new DocumentBuilder().setTitle('API').setDescription('Tracker API').build();
-
   const adapter = new FastifyAdapter();
-
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, adapter, {
     rawBody: true,
   });
@@ -47,8 +46,21 @@ async function bootstrap() {
   app.setGlobalPrefix('api/v1', {
     exclude: ['/'],
   });
+  app.useGlobalInterceptors(new TransformResponseInterceptor());
 
-  const document = SwaggerModule.createDocument(app, config);
+  const config = new DocumentBuilder()
+    .setTitle('Task Tracker API')
+    .setDescription('API documentation for Task Tracker')
+    .setVersion('1.0')
+    .addCookieAuth('access_token', {
+      type: 'apiKey',
+      in: 'cookie',
+      description: 'JWT token in HttpOnly cookie',
+    })
+    .build();
+  const document = SwaggerModule.createDocument(app, config, {
+    extraModels: [ApiResponse, ApiResponsePaginated],
+  });
   SwaggerModule.setup('doc', app, document);
 
   await app.listen(PORT, '0.0.0.0', () =>
