@@ -9,6 +9,7 @@ import fastifyCookie from '@fastify/cookie';
 import { env } from './env';
 import { TransformResponseInterceptor } from './shared/interceptors';
 import { ApiResponse, ApiResponsePaginated } from './shared/dto';
+import { corsConfig } from './config/cors.config';
 
 async function bootstrap() {
   const PORT = Number(env.PORT);
@@ -28,14 +29,7 @@ async function bootstrap() {
     threshold: 1024,
   });
 
-  await app
-    .getHttpAdapter()
-    .getInstance()
-    .register(fastifyCors, {
-      origin: '*',
-      methods: ['GET', 'HEAD', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
-      allowedHeaders: ['Content-Type', 'Accept', 'Authorization'],
-    });
+  await app.getHttpAdapter().getInstance().register(fastifyCors, corsConfig);
 
   app.useGlobalPipes(
     new ValidationPipe({
