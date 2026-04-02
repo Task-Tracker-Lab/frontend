@@ -2,6 +2,7 @@ import { ArgumentsHost, Catch, ExceptionFilter, HttpStatus } from '@nestjs/commo
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { DomainError } from '../errors';
 import { HttpAdapterHost } from '@nestjs/core';
+import { ApiErrorResponseDto } from '../dto';
 
 @Catch(DomainError)
 export class DomainExceptionFilter implements ExceptionFilter {
@@ -33,10 +34,10 @@ export class DomainExceptionFilter implements ExceptionFilter {
         break;
     }
 
-    const responseBody = {
+    const responseBody: ApiErrorResponseDto = {
       statusCode: status,
       message: exception.message,
-      error: exception.code,
+      error: exception.code.replace(/\s+/g, '_').toUpperCase(),
       timestamp: new Date().toISOString(),
       path: request.url,
     };
