@@ -1,21 +1,45 @@
-'use client';
 import { LoginForm } from './LoginForm';
-import Link from 'next/link';
+import { LoginImageLight, LoginImageDark } from 'shared/assests';
+import { AppCopyright, Logo, ThemedImage } from 'shared/ui';
+import * as React from 'react';
+
 export default function LoginPage() {
   return (
-    <div>
-      <h1 className="text-2xl font-semibold mb-2"># Task-tracker</h1>
-
-      <h2 className="text-lg font-medium mb-4">С возвращением</h2>
-      <LoginForm />
-      <div className="flex flex-col justify-center items-center gap-10">
-        <div className="flex gap-2">
-          <p className="text-gray-500">Нет аккаунта?</p>
-          <Link className="text-blue-700" href="/auth/register">
-            Зарегистрироваться
-          </Link>
+    <div className="flex min-h-svh flex-row-reverse">
+      <main className="flex flex-1 items-center justify-center">
+        <div className="w-full max-w-xs space-y-5">
+          <div className="flex flex-col items-center gap-3 text-center">
+            <h1 className="text-3xl font-bold">Вход в систему</h1>
+            <p className="text-muted-foreground text-sm text-balance">
+              Пожалуйста, введите ваши данные для входа.
+            </p>
+          </div>
+          <LoginForm />
         </div>
-      </div>
+      </main>
+      <aside className="bg-secondary hidden max-w-1/2 flex-1 flex-col justify-between gap-4 p-8 lg:flex">
+        <header>
+          <Logo />
+        </header>
+        <div>
+          <h2 className="text-2xl font-bold">С возвращением!</h2>
+          <p className="mt-3">
+            Войдите в свой аккаунт и продолжайте работу над проектами. <br />
+            Ваша команда уже ждет вас.
+          </p>
+          <div className="mt-10 overflow-hidden rounded-lg">
+            <ThemedImage
+              className="motion-safe:animate-fade-in-6 w-full object-contain"
+              srcLight={LoginImageLight}
+              srcDark={LoginImageDark}
+              alt="Скриншот интерфейса приложения"
+            />
+          </div>
+        </div>
+        <footer>
+          <AppCopyright />
+        </footer>
+      </aside>
     </div>
   );
 }
