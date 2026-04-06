@@ -5,3 +5,7 @@ export * from './field';
 export * from './input';
 export * from './label';
 export * from './separator';
+export * from './Logo/logo';
+export * from './AppCopyright/app-copyright';
+export * from './ThemedImage/themed-image';
+export * from './Link/link';
