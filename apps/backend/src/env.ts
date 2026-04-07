@@ -13,6 +13,18 @@ const envSchema = z.object({
   JWT_SECRET: z.string(),
   JWT_EXPIRES_IN: z.custom<JwtExpires>(),
   NODE_ENV: z.enum(NodeEnv),
+  CORS_ALLOWED_ORIGINS: z
+    .string()
+    .min(1, "CORS_ALLOWED_ORIGINS can't be empty")
+    .transform((val) => val.split(','))
+    .pipe(
+      z.array(
+        z.url({ error: 'Origin must be valid URL' }).refine((val) => {
+          const url = new URL(val);
+          return url.origin === val;
+        }, 'Invalid CORS origin')
+      )
+    ),
 });
 
 export const env = envSchema.parse(process.env);
