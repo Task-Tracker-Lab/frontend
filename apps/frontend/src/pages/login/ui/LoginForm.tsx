@@ -1,55 +1,89 @@
 'use client';
-import Link from 'next/link';
-import { useForm } from 'react-hook-form';
+
+import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { formSchema, FormState } from '../model/loginSchema';
-import { Field, FieldDescription, FieldLabel, Button, Input } from 'shared/ui';
+import {
+  Field,
+  FieldDescription,
+  FieldLabel,
+  Button,
+  Input,
+  FieldGroup,
+  FieldError,
+  Link,
+} from 'shared/ui';
+import { cn } from 'shared/lib';
+import * as z from 'zod';
 
-export function LoginForm() {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({
+export function LoginForm({ className, ...props }: Omit<React.ComponentProps<'form'>, 'children'>) {
+  const form = useForm<FormState>({
     resolver: zodResolver(formSchema),
-    mode: 'onChange',
+    defaultValues: {
+      email: '',
+      password: '',
+    },
   });
-  const onSubmit = (data: FormState): void => {
-    console.log(data);
-    reset();
+
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
+    alert(JSON.stringify(data));
   };
+
   return (
-    <form className="space-y-6 mb-4" onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex flex-col space-y-4">
+    <form
+      className={cn('flex flex-col gap-6', className)}
+      onSubmit={form.handleSubmit(onSubmit)}
+      {...props}
+    >
+      <FieldGroup>
+        <Controller
+          name="email"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="email">Email</FieldLabel>
+              <Input
+                {...field}
+                id="email"
+                aria-invalid={fieldState.invalid}
+                type="email"
+                placeholder="mail@example.com"
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+        <Controller
+          name="password"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <div className="flex items-center">
+                <FieldLabel htmlFor="password">Пароль</FieldLabel>
+                <Link href="#" className="ml-auto text-sm">
+                  Забыли пароль?
+                </Link>
+              </div>
+              <Input
+                {...field}
+                id="password"
+                aria-invalid={fieldState.invalid}
+                type="password"
+                placeholder="password"
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
         <Field>
-          <FieldLabel htmlFor="email">Почта</FieldLabel>
-          <Input type="email" {...register('email')} id="email" placeholder="example@company.com" />
-          {errors.email && (
-            <FieldDescription className="text-red-500">{errors.email.message}</FieldDescription>
-          )}
+          <Button type="submit">Войти</Button>
         </Field>
-        <Field className="grid gap-2">
-          <div className="flex items-center">
-            <FieldLabel htmlFor="password">Пароль</FieldLabel>
-            <Link
-              href="/auth/reset-password"
-              className="ml-auto text-sm underline-offset-4 hover:underline text-muted-foreground"
-            >
-              Забыли пароль?
-            </Link>
-          </div>
-
-          <Input id="password" type="password" placeholder="********" {...register('password')} />
-
-          {errors.password && (
-            <FieldDescription className="text-red-500 text-sm">
-              {errors.password.message}
-            </FieldDescription>
-          )}
+        <Field>
+          <FieldDescription className="text-center">
+            Нет аккаунта? <Link href="/register">Зарегистрироваться</Link>
+          </FieldDescription>
         </Field>
-      </div>
-      <Button className="w-full bg-blue-600 text-white py-2 rounded">Войти</Button>
+      </FieldGroup>
     </form>
   );
 }
