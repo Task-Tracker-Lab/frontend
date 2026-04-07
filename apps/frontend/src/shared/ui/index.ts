@@ -9,3 +9,7 @@ export * from './Logo/logo';
 export * from './AppCopyright/app-copyright';
 export * from './ThemedImage/themed-image';
 export * from './Link/link';
+export * from './input-group';
+export * from './textarea';
+export * from './InputPassword/input-password';
+export * from './InputEmail/input-email';
