@@ -6,7 +6,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 const linkVariants = cva('underline-offset-4 hover:underline', {
   variants: {
     variant: {
-      default: 'text-link-foreground bg-link hover:text-link-foreground/80',
+      default: 'text-link-foreground bg-link hover:!text-link-foreground/80',
       primary: 'text-primary',
       clear: '',
     },
