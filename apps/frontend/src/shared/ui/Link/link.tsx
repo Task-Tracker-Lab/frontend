@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cn } from 'shared/lib';
+import { cn } from 'shared/lib/utils';
 import NextLink from 'next/link';
 import { cva, type VariantProps } from 'class-variance-authority';
 

@@ -13,7 +13,7 @@ import {
   FieldError,
   Link,
 } from 'shared/ui';
-import { cn } from 'shared/lib';
+import { cn } from 'shared/lib/utils';
 import * as z from 'zod';
 
 export function LoginForm({ className, ...props }: Omit<React.ComponentProps<'form'>, 'children'>) {
