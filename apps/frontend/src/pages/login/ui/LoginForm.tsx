@@ -8,12 +8,13 @@ import {
   FieldDescription,
   FieldLabel,
   Button,
-  Input,
   FieldGroup,
   FieldError,
   Link,
+  InputPassword,
+  InputEmail,
 } from 'shared/ui';
-import { cn } from 'shared/lib';
+import { cn } from 'shared/lib/utils';
 import * as z from 'zod';
 
 export function LoginForm({ className, ...props }: Omit<React.ComponentProps<'form'>, 'children'>) {
@@ -42,12 +43,11 @@ export function LoginForm({ className, ...props }: Omit<React.ComponentProps<'fo
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="email">Email</FieldLabel>
-              <Input
+              <InputEmail
                 {...field}
                 id="email"
+                aria-required="true"
                 aria-invalid={fieldState.invalid}
-                type="email"
-                placeholder="mail@example.com"
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -64,13 +64,7 @@ export function LoginForm({ className, ...props }: Omit<React.ComponentProps<'fo
                   Забыли пароль?
                 </Link>
               </div>
-              <Input
-                {...field}
-                id="password"
-                aria-invalid={fieldState.invalid}
-                type="password"
-                placeholder="password"
-              />
+              <InputPassword {...field} id="password" aria-invalid={fieldState.invalid} />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
