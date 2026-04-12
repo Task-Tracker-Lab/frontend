@@ -1,116 +1,52 @@
 name: CI workflow
 
 on:
-    pull_request:
-      branches: ['dev', 'main']
-      paths-ignore:
-        - '*.md'
-        - 'docs/**'
+  pull_request:
+    branches: ['dev', 'main']
+    paths-ignore:
+      - '*.md'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-    frontend:
-        runs-on: ubuntu-latest
+  CI:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-            - name: Setup pnpm
-              uses: pnpm/action-setup@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
 
-            - name: Setup Node
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 22
-                  cache: 'pnpm'
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
 
-            - name: Install deps
-              run: pnpm install --frozen-lockfile
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
 
-            - name: Lint
-              run: pnpm lint:frontend
+      - name: Lint
+        run: pnpm lint
 
-            - name: Lint FSD
-              run: pnpm lint:fsd:frontend
+      - name: Lint FSD
+        run: pnpm lint:fsd
 
-            - name: Format
-              run: pnpm format:check:frontend
+      - name: Format
+        run: pnpm format:check
 
-            - name: Typecheck
-              run: pnpm typecheck:frontend
+      - name: Typecheck
+        run: pnpm typecheck
 
-            - name: Unit tests
-              run: pnpm test:frontend:ci
+      - name: Unit tests
+        run: pnpm test:ci
 
-            - name: Build
-              run: pnpm build:frontend
+      - name: Build
+        run: pnpm build
 
-      #      - name: Build Storybook
-      #        run: pnpm build-storybook
-
-    backend:
-      runs-on: ubuntu-latest
-
-      services:
-        postgres:
-          image: postgres:16
-          env:
-            POSTGRES_DB: test
-            POSTGRES_USER: test
-            POSTGRES_PASSWORD: test
-          ports:
-            - 5432:5432
-          options: >-
-            --health-cmd="pg_isready"
-            --health-interval=10s
-            --health-timeout=5s
-            --health-retries=5
-
-      env:
-        DATABASE_URL: postgresql://test:test@localhost:5432/test
-        PORT: 3000
-        JWT_SECRET: test
-        JWT_EXPIRES_IN: 7d
-        NODE_ENV: test
-        CORS_ALLOWED_ORIGINS: http://localhost:3000
-
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v4
-
-        - name: Setup pnpm
-          uses: pnpm/action-setup@v4
-
-        - name: Setup Node
-          uses: actions/setup-node@v4
-          with:
-            node-version: 22
-            cache: 'pnpm'
-
-        - name: Install deps
-          run: pnpm install --frozen-lockfile
-
-        - name: Prisma generate
-          run: pnpm prisma:generate:backend
-
-        - name: Apply migrations (test DB)
-          run: pnpm prisma:migrate:deploy:backend
-
-        - name: Lint
-          run: pnpm lint:backend
-
-        - name: Format
-          run: pnpm format:check:backend
-
-        - name: Typecheck
-          run: pnpm typecheck:backend
-
-        - name: Unit tests
-          run: pnpm test:backend:ci
-
-        - name: Build
-          run: pnpm build:backend
+    #      - name: Build Storybook
+    #        run: pnpm build-storybook
