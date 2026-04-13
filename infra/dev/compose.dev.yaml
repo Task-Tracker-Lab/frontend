@@ -1,0 +1,109 @@
+version: '3.9'
+
+name: task-tracker
+
+services:
+  frontend:
+    hostname: frontend
+    container_name: frontend
+    build:
+      context: ../..
+      dockerfile: Dockerfile.dev
+    environment:
+      WATCHPACK_POLLING: 'true'
+    ports:
+      - '4000:4000'
+    command: pnpm run dev -p 4000
+    volumes:
+      - ../..:/app
+      - frontend_node_modules:/app/node_modules
+    depends_on:
+      api:
+        condition: service_started
+    networks:
+      - backend
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2048M
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  api:
+    hostname: api
+    container_name: api
+    platform: linux/amd64
+    image: ghcr.io/task-tracker-lab/task-tracker-backend:feat-user
+    env_file:
+      - .env
+    ports:
+      - '3000:3000'
+    depends_on:
+      database:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - backend
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1024M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+
+  database:
+    hostname: database
+    container_name: database
+    image: postgres:16-alpine
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    ports:
+      - '6000:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U "$$POSTGRES_USER" -d "$$POSTGRES_DB" -q || exit 1']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    profiles: ['infra']
+
+  redis:
+    hostname: redis
+    container_name: redis
+    image: redis:7-alpine
+    restart: always
+    ports:
+      - '7001:6379'
+    command: redis-server --save 60 1 --loglevel notice
+    volumes:
+      - redis_data:/data
+    networks:
+      - backend
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    profiles: ['infra']
+
+volumes:
+  postgres_data:
+  redis_data:
+  frontend_node_modules:
+
+networks:
+  backend:
+    name: task-tracker-gateway
