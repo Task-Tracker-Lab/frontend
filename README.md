@@ -1,20 +1,10 @@
-# Task Tracker
+# Task Tracker (frontend)
 
-## Структура проекта
-
-- `apps/frontend` - Next.js приложение
-- `apps/backend` - NestJS API
-- `packages/config` - Общие конфиги
-- `packages/shared-types` - Общие типы TypeScript
-- `docs` - Общая документация
+Next.js-приложение.
 
 ## Быстрый старт
 
 ```bash
 pnpm install
-# Запустить Postgres
-docker-compose up -d
-
-pnpm dev  # Запускает и frontend, и backend
-
+pnpm dev
 ```
