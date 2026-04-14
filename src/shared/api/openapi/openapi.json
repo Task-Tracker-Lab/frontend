@@ -1,0 +1,1979 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/v1/dump": {
+      "get": {
+        "operationId": "PrometheusController_index",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["Prometheus"]
+      }
+    },
+    "/api/v1/auth/sign-up": {
+      "post": {
+        "description": "Создает пользователя, базовые настройки безопасности и уведомлений.",
+        "operationId": "AuthController_signUp",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignUpDto_Output"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Пользователь успешно зарегистрирован.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResponse_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка валидации данных (например, неверный формат email)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "VALIDATION_FAILED",
+                    "message": "Ошибка валидации данных (например, неверный формат email)",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:46.839Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Пользователь с таким email уже существует",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "CONFLICT",
+                    "message": "Пользователь с таким email уже существует",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:46.839Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:46.846Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Регистрация нового пользователя",
+        "tags": ["Auth"]
+      }
+    },
+    "/api/v1/auth/sign-up/confirm": {
+      "post": {
+        "description": "Проверяет OTP из письма, создаёт аккаунт, выдаёт access-токен в теле ответа и устанавливает refresh в httpOnly cookie.",
+        "operationId": "AuthController_verify",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyDto_Output"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Аккаунт подтверждён, сессия создана.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": true,
+                    "message": "Аккаунт успешно подтвержден",
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5c..."
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Неверный или истёкший код подтверждения",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "BAD_REQUEST",
+                    "message": "Неверный или истёкший код подтверждения",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:46.840Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:46.846Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Подтверждение регистрации по коду",
+        "tags": ["Auth"]
+      }
+    },
+    "/api/v1/auth/sign-in": {
+      "post": {
+        "description": "Возвращает Access/Refresh токены. Если у пользователя включена 2FA, вернет временный токен.",
+        "operationId": "AuthController_signIn",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignInDto_Output"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Успешный вход.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": true,
+                    "message": false,
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5c..."
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Неверный формат email",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "BAD_REQUEST",
+                    "message": "Неверный формат email",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:46.842Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Неверный email или пароль",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "AUTH_REQUIRED",
+                    "message": "Неверный email или пароль",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:46.842Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:46.846Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Вход в систему",
+        "tags": ["Auth"]
+      }
+    },
+    "/api/v1/auth/sign-out": {
+      "post": {
+        "description": "Удаляет текущую сессию пользователя из Redis.",
+        "operationId": "AuthController_logout",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Успешный выход.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResponse_Output"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Сессия истекла или токен не валиден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "AUTH_REQUIRED",
+                    "message": "Сессия истекла или токен не валиден",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:46.844Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:46.846Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Выход из системы",
+        "tags": ["Auth"]
+      }
+    },
+    "/api/v1/auth/refresh": {
+      "post": {
+        "description": "Выдает новую пару Access и Refresh токенов.",
+        "operationId": "AuthController_refresh",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Токены успешно обновлены.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": true,
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5c...",
+                    "message": "def50200508a1768c7e..."
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка валидации (не передан refresh токен)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "BAD_REQUEST",
+                    "message": "Ошибка валидации (не передан refresh токен)",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:46.845Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Refresh токен недействителен, истек или отозван",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "AUTH_REQUIRED",
+                    "message": "Refresh токен недействителен, истек или отозван",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:46.845Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:46.846Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Обновление токенов",
+        "tags": ["Auth"]
+      }
+    },
+    "/api/v1/auth/password/reset": {
+      "post": {
+        "description": "Отправляет одноразовый код на email, если пользователь существует.",
+        "operationId": "AuthController_resetPasswordRequest",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordDto_Output"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Код отправлен на почту (при успешной обработке запроса).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResponse_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Некорректный формат email",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "VALIDATION_FAILED",
+                    "message": "Некорректный формат email",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:46.845Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Пользователь с таким email не найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "NOT_FOUND",
+                    "message": "Пользователь с таким email не найден",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:46.845Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Указанный email адрес имеет некорректный формат",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INVALID_EMAIL_FORMAT",
+                    "message": "Указанный email адрес имеет некорректный формат",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:46.845Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:46.846Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Запрос кода восстановления пароля",
+        "tags": ["Auth"]
+      }
+    },
+    "/api/v1/auth/password/reset/verify": {
+      "post": {
+        "description": "Проверяет код из письма и помечает сессию сброса как подтверждённую.",
+        "operationId": "AuthController_verifyResetCode",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyResetCodeDto_Output"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Код подтверждён, можно задать новый пароль.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResponse_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Неверный или истёкший код подтверждения",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "BAD_REQUEST",
+                    "message": "Неверный или истёкший код подтверждения",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:46.845Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:46.846Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Проверка кода восстановления пароля",
+        "tags": ["Auth"]
+      }
+    },
+    "/api/v1/auth/password/reset/confirm": {
+      "post": {
+        "description": "Доступно только после успешной проверки кода на шаге verify.",
+        "operationId": "AuthController_confirmPasswordReset",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PasswordResetConfirmDto_Output"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Пароль успешно изменён.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResponse_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Сессия восстановления не найдена или истекла",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "BAD_REQUEST",
+                    "message": "Сессия восстановления не найдена или истекла",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:46.846Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "У вас недостаточно прав для этого действия",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "ACCESS_DENIED",
+                    "message": "У вас недостаточно прав для этого действия",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:46.846Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Не удалось обновить пароль. Попробуйте позже.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "PASSWORD_UPDATE_FAILED",
+                    "message": "Не удалось обновить пароль. Попробуйте позже.",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:46.846Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Установка нового пароля после сброса",
+        "tags": ["Auth"]
+      }
+    },
+    "/api/v1/users/me": {
+      "get": {
+        "description": "Возвращает полную структуру профиля, включая вложенные объекты безопасности и настроек.",
+        "operationId": "UserController_getProfile",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Данные профиля успешно получены.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse_Output"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Сессия истекла или токен не валиден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "AUTH_REQUIRED",
+                    "message": "Сессия истекла или токен не валиден",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:45.955Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:45.965Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Получить профиль текущего пользователя",
+        "tags": ["Users"]
+      },
+      "patch": {
+        "description": "Позволяет точечно обновить имя, bio, часовой пояс и язык интерфейса.",
+        "operationId": "UserController_updateProfile",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProfileDto_Output"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Профиль успешно обновлен.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResponse_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка валидации (например, слишком короткое имя)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "VALIDATION_FAILED",
+                    "message": "Ошибка валидации (например, слишком короткое имя)",
+                    "retryable": false,
+                    "details": [
+                      {
+                        "field": "fullName",
+                        "message": "Строка должна содержать минимум 2 символа",
+                        "code": "too_small"
+                      }
+                    ],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:45.961Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Сессия истекла или токен не валиден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "AUTH_REQUIRED",
+                    "message": "Сессия истекла или токен не валиден",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:45.961Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:45.965Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Обновить данные профиля",
+        "tags": ["Users"]
+      }
+    },
+    "/api/v1/users/me/notifications": {
+      "patch": {
+        "description": "Частичное обновление настроек email и push уведомлений.",
+        "operationId": "UserController_updateNotifications",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateNotificationsDto_Output"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Настройки успешно сохранены.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResponse_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Некорректный формат настроек",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "VALIDATION_FAILED",
+                    "message": "Некорректный формат настроек",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:45.963Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Сессия истекла или токен не валиден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "AUTH_REQUIRED",
+                    "message": "Сессия истекла или токен не валиден",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:45.963Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:45.965Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Обновить настройки уведомлений",
+        "tags": ["Users"]
+      }
+    },
+    "/api/v1/users/me/activity": {
+      "get": {
+        "description": "Возвращает список последних действий пользователя (логи).",
+        "operationId": "UserController_getActivity",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 9007199254740991,
+              "default": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Количество записей для вывода (по умолчанию 10)",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20,
+              "example": "15",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Список активностей успешно получен.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "data": [
+                      {
+                        "id": "clj1abc230000jk78",
+                        "eventType": "TASK_COMPLETED",
+                        "description": "Завершена задача \"Обновить текст лендинга\"",
+                        "createdAt": "2026-04-10T20:00:00.000Z",
+                        "metadata": {
+                          "taskId": "clj1xyz990000abc1"
+                        }
+                      }
+                    ],
+                    "meta": {
+                      "total": 45,
+                      "page": 1,
+                      "limit": 20,
+                      "totalPages": 3
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Сессия истекла или токен не валиден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "AUTH_REQUIRED",
+                    "message": "Сессия истекла или токен не валиден",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:45.964Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:45.965Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Получить ленту активности пользователя",
+        "tags": ["Users"]
+      }
+    },
+    "/api/v1/users/me/avatar": {
+      "post": {
+        "description": "Загрузка файла изображения для профиля пользователя.",
+        "operationId": "UserController_uploadAvatar",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Аватар успешно загружен.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResponse_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Файл не передан или имеет неверный формат",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "BAD_REQUEST",
+                    "message": "Файл не передан или имеет неверный формат",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:45.965Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Сессия истекла или токен не валиден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "AUTH_REQUIRED",
+                    "message": "Сессия истекла или токен не валиден",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:45.965Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-14T16:34:45.965Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Загрузить новую аватарку",
+        "tags": ["Users"]
+      }
+    },
+    "/api/v1/health": {
+      "get": {
+        "description": "Используется внешними системами для проверки доступности сервиса.",
+        "operationId": "HealthController_checkHealth",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Сервис работает нормально",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Сервис недоступен или критическая ошибка"
+          }
+        },
+        "summary": "Краткий статус (Health Check)",
+        "tags": ["System"]
+      }
+    },
+    "/api/v1/ping": {
+      "get": {
+        "description": "Возвращает аптайм, время старта и метрики памяти.",
+        "operationId": "HealthController_ping",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Полная статистика сервиса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse_Output"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Детальный дамп состояния",
+        "tags": ["System"]
+      }
+    }
+  },
+  "info": {
+    "title": "Task Tracker API",
+    "description": "API бэкенда таск-трекера",
+    "version": "0.1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "SignUpDto_Output": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$",
+            "description": "Email пользователя"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 32,
+            "description": "Пароль (минимум 8 символов)"
+          },
+          "firstName": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 50,
+            "description": "Имя"
+          },
+          "lastName": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 50,
+            "description": "Фамилия"
+          },
+          "middleName": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50
+              },
+              {
+                "type": "string",
+                "enum": [""]
+              }
+            ],
+            "description": "Отчество (опционально)"
+          }
+        },
+        "required": ["email", "password", "firstName", "lastName"],
+        "description": "Схема регистрации пользователя",
+        "additionalProperties": false
+      },
+      "ActionResponse_Output": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Статус операции"
+          },
+          "message": {
+            "type": "string",
+            "description": "Сообщение для пользователя"
+          }
+        },
+        "required": ["success"],
+        "additionalProperties": false
+      },
+      "VerifyDto_Output": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$",
+            "description": "Email пользователя, на который был отправлен код"
+          },
+          "code": {
+            "type": "string",
+            "minLength": 6,
+            "maxLength": 6,
+            "description": "6-значный OTP код подтверждения"
+          }
+        },
+        "required": ["email", "code"],
+        "description": "Схема верификации OTP кода",
+        "additionalProperties": false
+      },
+      "SignInDto_Output": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$",
+            "description": "Email пользователя"
+          },
+          "password": {
+            "type": "string",
+            "description": "Пароль пользователя"
+          }
+        },
+        "required": ["email", "password"],
+        "description": "Схема входа в систему",
+        "additionalProperties": false
+      },
+      "ResetPasswordDto_Output": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$",
+            "description": "Email для восстановления"
+          }
+        },
+        "required": ["email"],
+        "additionalProperties": false
+      },
+      "VerifyResetCodeDto_Output": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+          },
+          "code": {
+            "type": "string",
+            "minLength": 6,
+            "maxLength": 6,
+            "description": "Код из письма"
+          }
+        },
+        "required": ["email", "code"],
+        "additionalProperties": false
+      },
+      "PasswordResetConfirmDto_Output": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 32,
+            "description": "Новый пароль"
+          },
+          "confirmPassword": {
+            "type": "string",
+            "description": "Повторите новый пароль"
+          }
+        },
+        "required": ["email", "password", "confirmPassword"],
+        "additionalProperties": false
+      },
+      "UserResponse_Output": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Уникальный идентификатор (CUID/UUID)"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$",
+            "description": "Электронная почта"
+          },
+          "profile": {
+            "type": "object",
+            "properties": {
+              "firstName": {
+                "type": "string",
+                "description": "Имя пользователя"
+              },
+              "lastName": {
+                "type": "string",
+                "description": "Фамилия"
+              },
+              "middleName": {
+                "type": "string",
+                "description": "Отчество",
+                "nullable": true
+              },
+              "bio": {
+                "type": "string",
+                "description": "О себе",
+                "nullable": true
+              },
+              "avatarUrl": {
+                "type": "string",
+                "format": "uri",
+                "description": "Ссылка на аватар в S3",
+                "nullable": true
+              },
+              "timezone": {
+                "type": "string",
+                "description": "Временная зона"
+              },
+              "language": {
+                "type": "string",
+                "description": "Язык интерфейса"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$",
+                "description": "Дата регистрации"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$",
+                "description": "Дата последнего обновления профиля"
+              }
+            },
+            "required": [
+              "firstName",
+              "lastName",
+              "middleName",
+              "bio",
+              "avatarUrl",
+              "timezone",
+              "language",
+              "createdAt",
+              "updatedAt"
+            ],
+            "additionalProperties": false
+          },
+          "security": {
+            "type": "object",
+            "properties": {
+              "is2faEnabled": {
+                "type": "boolean",
+                "description": "Статус двухфакторной аутентификации"
+              },
+              "lastPasswordChange": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$",
+                "description": "Дата последнего изменения пароля"
+              }
+            },
+            "required": ["is2faEnabled", "lastPasswordChange"],
+            "additionalProperties": false,
+            "description": "Данные безопасности аккаунта"
+          },
+          "notifications": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "object",
+                "properties": {
+                  "task_assigned": {
+                    "type": "boolean",
+                    "description": "Уведомление на почту при назначении задачи"
+                  },
+                  "mentions": {
+                    "type": "boolean",
+                    "description": "Уведомление на почту при упоминании в комментариях"
+                  },
+                  "daily_summary": {
+                    "type": "boolean",
+                    "description": "Ежедневная сводка задач на почту"
+                  }
+                },
+                "required": ["task_assigned", "mentions", "daily_summary"],
+                "additionalProperties": false
+              },
+              "push": {
+                "type": "object",
+                "properties": {
+                  "task_assigned": {
+                    "type": "boolean",
+                    "description": "Push-уведомление при назначении задачи"
+                  },
+                  "reminders": {
+                    "type": "boolean",
+                    "description": "Push-уведомления о дедлайнах"
+                  }
+                },
+                "required": ["task_assigned", "reminders"],
+                "additionalProperties": false
+              }
+            },
+            "required": ["email", "push"],
+            "additionalProperties": false,
+            "description": "Настройки уведомлений пользователя"
+          }
+        },
+        "required": ["id", "email", "profile", "security", "notifications"],
+        "additionalProperties": false
+      },
+      "UpdateProfileDto_Output": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 50
+          },
+          "lastName": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 50
+          },
+          "middleName": {
+            "type": "string",
+            "maxLength": 50,
+            "nullable": true
+          },
+          "bio": {
+            "type": "string",
+            "maxLength": 1000,
+            "nullable": true
+          },
+          "timezone": {
+            "type": "string",
+            "maxLength": 50
+          },
+          "language": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 2
+          }
+        },
+        "description": "Схема для частичного обновления данных профиля",
+        "additionalProperties": false
+      },
+      "UpdateNotificationsDto_Output": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "object",
+            "properties": {
+              "task_assigned": {
+                "type": "boolean",
+                "description": "Уведомление на почту при назначении задачи"
+              },
+              "mentions": {
+                "type": "boolean",
+                "description": "Уведомление на почту при упоминании в комментариях"
+              },
+              "daily_summary": {
+                "type": "boolean",
+                "description": "Ежедневная сводка задач на почту"
+              }
+            },
+            "required": ["task_assigned", "mentions", "daily_summary"],
+            "additionalProperties": false
+          },
+          "push": {
+            "type": "object",
+            "properties": {
+              "task_assigned": {
+                "type": "boolean",
+                "description": "Push-уведомление при назначении задачи"
+              },
+              "reminders": {
+                "type": "boolean",
+                "description": "Push-уведомления о дедлайнах"
+              }
+            },
+            "required": ["task_assigned", "reminders"],
+            "additionalProperties": false
+          }
+        },
+        "description": "Схема для частичного обновления настроек уведомлений",
+        "additionalProperties": false
+      },
+      "HealthResponse_Output": {
+        "type": "object",
+        "properties": {
+          "service": {
+            "type": "string",
+            "description": "Название сервиса"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["up", "down"],
+            "description": "Текущий статус"
+          },
+          "info": {
+            "type": "object",
+            "properties": {
+              "version": {
+                "type": "string",
+                "description": "Версия приложения"
+              },
+              "node": {
+                "type": "string",
+                "description": "Версия Node.js"
+              },
+              "pid": {
+                "type": "number",
+                "description": "ID процесса"
+              }
+            },
+            "required": ["version", "node", "pid"],
+            "additionalProperties": false
+          },
+          "time": {
+            "type": "object",
+            "properties": {
+              "now": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$",
+                "description": "Текущее время сервера"
+              },
+              "startedAt": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$",
+                "description": "Время старта сервера"
+              },
+              "uptime": {
+                "type": "string",
+                "description": "Аптайм в формате ч/м/с"
+              },
+              "uptimeSeconds": {
+                "type": "number",
+                "description": "Аптайм в секундах"
+              }
+            },
+            "required": ["now", "startedAt", "uptime", "uptimeSeconds"],
+            "additionalProperties": false
+          },
+          "metrics": {
+            "type": "object",
+            "properties": {
+              "rss": {
+                "type": "string",
+                "description": "Resident Set Size (общая память)"
+              },
+              "heapUsed": {
+                "type": "string",
+                "description": "Использованная память в куче"
+              },
+              "loadAverage": {
+                "type": "string",
+                "description": "Средняя нагрузка на CPU"
+              }
+            },
+            "required": ["rss", "heapUsed", "loadAverage"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["service", "status", "info", "time", "metrics"],
+        "additionalProperties": false
+      },
+      "GlobalErrorResponse_Output": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Уникальный бизнес-код ошибки (например, \"INSUFFICIENT_FUNDS\", \"TEAM_NOT_FOUND\")"
+          },
+          "message": {
+            "type": "string",
+            "description": "Краткое описание ошибки для пользователя или разработчика"
+          },
+          "retryable": {
+            "type": "boolean",
+            "description": "Флаг, указывающий клиенту, есть ли смысл повторять запрос без изменений (например, при 503 или Lock Timeout)"
+          },
+          "details": {
+            "type": "array",
+            "description": "Список ошибок валидации (заполняется только для 400 ошибок)",
+            "items": {
+              "type": "object",
+              "properties": {
+                "field": {
+                  "type": "string",
+                  "description": "Путь к полю в формате dot-notation (например, \"user.email\")"
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Человекочитаемое сообщение о конкретной ошибке в этом поле"
+                },
+                "code": {
+                  "type": "string",
+                  "description": "Машиночитаемый код ошибки валидации (например, \"invalid_email\", \"too_short\")"
+                }
+              },
+              "required": ["field", "message", "code"],
+              "additionalProperties": false,
+              "description": "Детальная информация о конкретном нарушении в запросе"
+            }
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "requestId": {
+                "type": "string",
+                "description": "Уникальный ID запроса (Trace ID). Используется для поиска логов в Sentry/ELK/Kibana"
+              },
+              "timestamp": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$",
+                "description": "Точное время возникновения ошибки в формате ISO 8601"
+              },
+              "path": {
+                "type": "string",
+                "description": "URL-путь эндпоинта, который вернул ошибку"
+              },
+              "method": {
+                "type": "string",
+                "description": "HTTP метод запроса (GET, POST, etc.)"
+              },
+              "service": {
+                "description": "Имя микросервиса, в котором произошел сбой (полезно для будущего масштабирования)",
+                "type": "string"
+              }
+            },
+            "required": ["requestId", "timestamp", "path", "method"],
+            "additionalProperties": false,
+            "description": "Техническая мета-информация для мониторинга и отладки"
+          }
+        },
+        "required": ["code", "message", "retryable", "meta"],
+        "additionalProperties": false
+      }
+    }
+  }
+}
