@@ -56,7 +56,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:46.839Z",
+                      "timestamp": "2026-04-15T17:35:24.197Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -83,7 +83,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:46.839Z",
+                      "timestamp": "2026-04-15T17:35:24.197Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -110,7 +110,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:46.846Z",
+                      "timestamp": "2026-04-15T17:35:24.199Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -172,7 +172,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:46.840Z",
+                      "timestamp": "2026-04-15T17:35:24.198Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -199,7 +199,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:46.846Z",
+                      "timestamp": "2026-04-15T17:35:24.199Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -261,7 +261,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:46.842Z",
+                      "timestamp": "2026-04-15T17:35:24.198Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -288,7 +288,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:46.842Z",
+                      "timestamp": "2026-04-15T17:35:24.198Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -315,7 +315,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:46.846Z",
+                      "timestamp": "2026-04-15T17:35:24.199Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -363,7 +363,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:46.844Z",
+                      "timestamp": "2026-04-15T17:35:24.198Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -390,7 +390,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:46.846Z",
+                      "timestamp": "2026-04-15T17:35:24.199Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -416,11 +416,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "example": {
-                    "success": true,
-                    "token": "eyJhbGciOiJIUzI1NiIsInR5c...",
-                    "message": "def50200508a1768c7e..."
-                  }
+                  "$ref": "#/components/schemas/RefreshTokenResponse_Output"
+                },
+                "example": {
+                  "success": true,
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5c...",
+                  "message": "def50200508a1768c7e..."
                 }
               }
             }
@@ -442,7 +443,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:46.845Z",
+                      "timestamp": "2026-04-15T17:35:24.198Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -469,7 +470,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:46.845Z",
+                      "timestamp": "2026-04-15T17:35:24.199Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -496,7 +497,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:46.846Z",
+                      "timestamp": "2026-04-15T17:35:24.199Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -554,7 +555,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:46.845Z",
+                      "timestamp": "2026-04-15T17:35:24.199Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -581,7 +582,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:46.845Z",
+                      "timestamp": "2026-04-15T17:35:24.199Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -608,7 +609,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:46.845Z",
+                      "timestamp": "2026-04-15T17:35:24.199Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -635,7 +636,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:46.846Z",
+                      "timestamp": "2026-04-15T17:35:24.199Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -693,7 +694,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:46.845Z",
+                      "timestamp": "2026-04-15T17:35:24.199Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -720,7 +721,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:46.846Z",
+                      "timestamp": "2026-04-15T17:35:24.199Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -778,7 +779,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:46.846Z",
+                      "timestamp": "2026-04-15T17:35:24.199Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -805,7 +806,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:46.846Z",
+                      "timestamp": "2026-04-15T17:35:24.199Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -832,7 +833,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:46.846Z",
+                      "timestamp": "2026-04-15T17:35:24.199Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -880,7 +881,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:45.955Z",
+                      "timestamp": "2026-04-15T17:35:23.751Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -907,7 +908,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:45.965Z",
+                      "timestamp": "2026-04-15T17:35:23.758Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -969,7 +970,7 @@
                     ],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:45.961Z",
+                      "timestamp": "2026-04-15T17:35:23.755Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -996,7 +997,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:45.961Z",
+                      "timestamp": "2026-04-15T17:35:23.755Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -1023,7 +1024,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:45.965Z",
+                      "timestamp": "2026-04-15T17:35:23.758Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -1081,7 +1082,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:45.963Z",
+                      "timestamp": "2026-04-15T17:35:23.756Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -1108,7 +1109,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:45.963Z",
+                      "timestamp": "2026-04-15T17:35:23.757Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -1135,7 +1136,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:45.965Z",
+                      "timestamp": "2026-04-15T17:35:23.758Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -1170,13 +1171,13 @@
             "name": "limit",
             "required": false,
             "in": "query",
-            "description": "Количество записей для вывода (по умолчанию 10)",
+            "description": "Количество записей для вывода (по умолчанию 20)",
             "schema": {
               "minimum": 1,
               "maximum": 100,
               "default": 20,
-              "example": "15",
-              "type": "string"
+              "example": 15,
+              "type": "integer"
             }
           }
         ],
@@ -1226,7 +1227,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:45.964Z",
+                      "timestamp": "2026-04-15T17:35:23.758Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -1253,7 +1254,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:45.965Z",
+                      "timestamp": "2026-04-15T17:35:23.758Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -1278,13 +1279,7 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "file": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
+                "$ref": "#/components/schemas/UserController_UploadAvatarBody"
               }
             }
           }
@@ -1317,7 +1312,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:45.965Z",
+                      "timestamp": "2026-04-15T17:35:23.758Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -1344,7 +1339,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:45.965Z",
+                      "timestamp": "2026-04-15T17:35:23.758Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -1371,7 +1366,7 @@
                     "details": [],
                     "meta": {
                       "requestId": "req-clj1abc230000jk78",
-                      "timestamp": "2026-04-14T16:34:45.965Z",
+                      "timestamp": "2026-04-15T17:35:23.758Z",
                       "path": "/api/v1/...",
                       "method": "POST",
                       "service": "main-backend"
@@ -1384,6 +1379,2045 @@
         },
         "summary": "Загрузить новую аватарку",
         "tags": ["Users"]
+      }
+    },
+    "/api/v1/teams": {
+      "post": {
+        "operationId": "TeamsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTeamDto_Output"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Команда успешно создана",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResponse_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка валидации входных данных",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "VALIDATION_FAILED",
+                    "message": "Ошибка валидации входных данных",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.293Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Сессия истекла или токен не валиден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "AUTH_REQUIRED",
+                    "message": "Сессия истекла или токен не валиден",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.293Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Команда с таким slug уже существует",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "CONFLICT",
+                    "message": "Команда с таким slug уже существует",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.293Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.297Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Создать новую команду",
+        "tags": ["Teams"]
+      }
+    },
+    "/api/v1/teams/check-slug/{slug}": {
+      "get": {
+        "description": "Проверяет, свободен ли уникальный адрес команды для использования.",
+        "operationId": "TeamsController_checkSlug",
+        "parameters": [
+          {
+            "name": "slug",
+            "required": true,
+            "in": "path",
+            "description": "Желаемый слаг команды",
+            "schema": {
+              "example": "my-super-team",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Результат проверки доступности",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CheckSlugResponse_Output"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Сессия истекла или токен не валиден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "AUTH_REQUIRED",
+                    "message": "Сессия истекла или токен не валиден",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.294Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.297Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Проверить доступность слага",
+        "tags": ["Teams"]
+      }
+    },
+    "/api/v1/teams/my": {
+      "get": {
+        "description": "Возвращает все команды, в которых текущий пользователь является участником или владельцем.",
+        "operationId": "TeamsController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Список команд получен",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserTeamResponse_Output"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Сессия истекла или токен не валиден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "AUTH_REQUIRED",
+                    "message": "Сессия истекла или токен не валиден",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.294Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.297Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Получить список команд пользователя",
+        "tags": ["Teams"]
+      }
+    },
+    "/api/v1/teams/my/invites": {
+      "get": {
+        "description": "Возвращает все активные приглашения в команды, отправленные на email текущего пользователя.",
+        "operationId": "TeamsController_findAllInvites",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Список приглашений успешно получен",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserInviteResponse_Output"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Сессия истекла или токен не валиден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "AUTH_REQUIRED",
+                    "message": "Сессия истекла или токен не валиден",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.294Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.297Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Получить список входящих приглашений",
+        "tags": ["Teams"]
+      }
+    },
+    "/api/v1/teams/{slug}": {
+      "get": {
+        "operationId": "TeamsController_findOne",
+        "parameters": [
+          {
+            "name": "slug",
+            "required": true,
+            "in": "path",
+            "description": "Уникальный идентификатор (слаг) команды",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Данные команды получены",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Сессия истекла или токен не валиден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "AUTH_REQUIRED",
+                    "message": "Сессия истекла или токен не валиден",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.294Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Команда не найдена",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "NOT_FOUND",
+                    "message": "Команда не найдена",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.294Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.297Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Получить детальную информацию о команде по slug",
+        "tags": ["Teams"]
+      },
+      "patch": {
+        "operationId": "TeamsController_update",
+        "parameters": [
+          {
+            "name": "slug",
+            "required": true,
+            "in": "path",
+            "description": "Слаг команды для редактирования",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTeamDto_Output"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Команда успешно обновлена",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResponse_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка валидации входных данных",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "VALIDATION_FAILED",
+                    "message": "Ошибка валидации входных данных",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.295Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Сессия истекла или токен не валиден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "AUTH_REQUIRED",
+                    "message": "Сессия истекла или токен не валиден",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.295Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "У вас недостаточно прав для этого действия",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "ACCESS_DENIED",
+                    "message": "У вас недостаточно прав для этого действия",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.295Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ресурс не найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "NOT_FOUND",
+                    "message": "Ресурс не найден",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.295Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.297Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Обновить данные команды",
+        "tags": ["Teams"]
+      },
+      "delete": {
+        "operationId": "TeamsController_remove",
+        "parameters": [
+          {
+            "name": "slug",
+            "required": true,
+            "in": "path",
+            "description": "Слаг команды для удаления",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Команда успешно удалена",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResponse_Output"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Сессия истекла или токен не валиден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "AUTH_REQUIRED",
+                    "message": "Сессия истекла или токен не валиден",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.295Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "У вас недостаточно прав для этого действия",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "ACCESS_DENIED",
+                    "message": "У вас недостаточно прав для этого действия",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.295Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ресурс не найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "NOT_FOUND",
+                    "message": "Ресурс не найден",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.295Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.297Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Удалить команду",
+        "tags": ["Teams"]
+      }
+    },
+    "/api/v1/teams/{slug}/tags": {
+      "put": {
+        "operationId": "TeamsController_syncTags",
+        "parameters": [
+          {
+            "name": "slug",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SyncTagsDto_Output"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Теги обновлены",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResponse_Output"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Сессия истекла или токен не валиден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "AUTH_REQUIRED",
+                    "message": "Сессия истекла или токен не валиден",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.296Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "У вас недостаточно прав для этого действия",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "ACCESS_DENIED",
+                    "message": "У вас недостаточно прав для этого действия",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.296Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ресурс не найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "NOT_FOUND",
+                    "message": "Ресурс не найден",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.296Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.297Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Синхронизировать теги команды",
+        "tags": ["Teams"]
+      }
+    },
+    "/api/v1/teams/{slug}/avatar": {
+      "patch": {
+        "description": "Загрузка файла изображения для профиля команды.",
+        "operationId": "TeamsController_updateTeamAvatar",
+        "parameters": [
+          {
+            "name": "slug",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/TeamsController_UpdateTeamAvatarBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Аватар команды успешно обновлен.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileUploadResponse_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Файл не передан или имеет неверный формат",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "BAD_REQUEST",
+                    "message": "Файл не передан или имеет неверный формат",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.296Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Сессия истекла или токен не валиден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "AUTH_REQUIRED",
+                    "message": "Сессия истекла или токен не валиден",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.296Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "У вас недостаточно прав для этого действия",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "ACCESS_DENIED",
+                    "message": "У вас недостаточно прав для этого действия",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.296Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Команда не найдена",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "NOT_FOUND",
+                    "message": "Команда не найдена",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.296Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.297Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Обновить аватар команды",
+        "tags": ["Teams"]
+      }
+    },
+    "/api/v1/teams/{slug}/banner": {
+      "patch": {
+        "description": "Загрузка файла изображения для обложки (баннера) команды.",
+        "operationId": "TeamsController_updateTeamBanner",
+        "parameters": [
+          {
+            "name": "slug",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/TeamsController_UpdateTeamBannerBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Баннер команды успешно обновлен.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileUploadResponse_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Файл не передан или имеет неверный форм��т",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "BAD_REQUEST",
+                    "message": "Файл не передан или имеет неверный форм��т",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.297Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Сессия истекла или токен не валиден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "AUTH_REQUIRED",
+                    "message": "Сессия истекла или токен не валиден",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.297Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "У вас недостаточно прав для этого действия",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "ACCESS_DENIED",
+                    "message": "У вас недостаточно прав для этого действия",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.297Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Команда не найдена",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "NOT_FOUND",
+                    "message": "Команда не найдена",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.297Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.297Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Обновить баннер команды",
+        "tags": ["Teams"]
+      }
+    },
+    "/api/v1/teams/{slug}/members": {
+      "get": {
+        "operationId": "MembersController_getMembers",
+        "parameters": [
+          {
+            "name": "slug",
+            "required": true,
+            "in": "path",
+            "description": "Слаг команды",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Список участников получен",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TeamMemberResponse_Output"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Сессия истекла или токен не валиден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "AUTH_REQUIRED",
+                    "message": "Сессия истекла или токен не валиден",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.297Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "У вас недостаточно прав для этого действия",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "ACCESS_DENIED",
+                    "message": "У вас недостаточно прав для этого действия",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.297Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.299Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Получить список всех участников команды",
+        "tags": ["Teams"]
+      }
+    },
+    "/api/v1/teams/{slug}/invitations": {
+      "post": {
+        "description": "Создает запись об участнике со статусом \"pending\". Если пользователь уже зарегистрирован — он увидит приглашение в разделе \"my/invites\". Если нет — ему уйдет письмо на указанный Email.",
+        "operationId": "MembersController_invite",
+        "parameters": [
+          {
+            "name": "slug",
+            "required": true,
+            "in": "path",
+            "description": "Слаг команды, в которую приглашаем",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InviteMemberDto_Output"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Инвайт создан и отправлен",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResponse_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Некорректный формат Email или роль не поддерживается",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "VALIDATION_FAILED",
+                    "message": "Некорректный формат Email или роль не поддерживается",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.298Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Сессия истекла или токен не валиден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "AUTH_REQUIRED",
+                    "message": "Сессия истекла или токен не валиден",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.298Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "У вас недостаточно прав для этого действия",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "ACCESS_DENIED",
+                    "message": "У вас недостаточно прав для этого действия",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.298Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.299Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Пригласить пользователя в команду по Email",
+        "tags": ["Teams"]
+      }
+    },
+    "/api/v1/teams/{slug}/invitations/{code}/accept": {
+      "post": {
+        "description": "Активирует участие пользователя в команде по уникальному коду приглашения. После успешного принятия статус участника меняется с \"pending\" на \"active\". Система автоматически связывает текущего авторизованного пользователя с инвайтом через Email.",
+        "operationId": "MembersController_accept",
+        "parameters": [
+          {
+            "name": "slug",
+            "required": true,
+            "in": "path",
+            "description": "Слаг команды",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "code",
+            "required": true,
+            "in": "path",
+            "description": "Уникальный код/токен приглашения (из ссылки или письма)",
+            "schema": {
+              "example": "7df1-4a2b-9e8c",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Приглашение успешно принято. Пользователь теперь участник команды.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResponse_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Невалидный код, срок действия приглашения истек или оно уже использовано",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "BAD_REQUEST",
+                    "message": "Невалидный код, срок действия приглашения истек или оно уже использовано",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.298Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Сессия истекла или токен не валиден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "AUTH_REQUIRED",
+                    "message": "Сессия истекла или токен не валиден",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.298Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Приглашение с таким кодом не найдено",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "NOT_FOUND",
+                    "message": "Приглашение с таким кодом не найдено",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.298Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Пользователь уже является участником этой команды",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "CONFLICT",
+                    "message": "Пользователь уже является участником этой команды",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.298Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.299Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Принять приглашение в команду",
+        "tags": ["Teams"]
+      }
+    },
+    "/api/v1/teams/{slug}/members/{userId}": {
+      "patch": {
+        "description": "Позволяет изменить роль участника (member -> admin) или вручную изменить его статус. Владелец команды (Owner) не может понизить свою роль через этот эндпоинт.",
+        "operationId": "MembersController_updateMember",
+        "parameters": [
+          {
+            "name": "slug",
+            "required": true,
+            "in": "path",
+            "description": "Слаг команды",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "required": true,
+            "in": "path",
+            "description": "ID пользователя, чьи права редактируются",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMemberDto_Output"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Данные участника обновлены",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResponse_Output"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Сессия истекла или токен не валиден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "AUTH_REQUIRED",
+                    "message": "Сессия истекла или токен не валиден",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.298Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "У вас недостаточно прав для этого действия",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "ACCESS_DENIED",
+                    "message": "У вас недостаточно прав для этого действия",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.298Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Участник или команда не найдены",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "NOT_FOUND",
+                    "message": "Участник или команда не найдены",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.298Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.299Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Изменить роль или статус участника",
+        "tags": ["Teams"]
+      },
+      "delete": {
+        "operationId": "MembersController_removeMember",
+        "parameters": [
+          {
+            "name": "slug",
+            "required": true,
+            "in": "path",
+            "description": "Слаг команды",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "required": true,
+            "in": "path",
+            "description": "ID пользователя",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Участник успешно удален",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResponse_Output"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Сессия истекла или токен не валиден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "AUTH_REQUIRED",
+                    "message": "Сессия истекла или токен не валиден",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.299Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "У вас недостаточно прав для этого действия",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "ACCESS_DENIED",
+                    "message": "У вас недостаточно прав для этого действия",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.299Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ресурс не найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "NOT_FOUND",
+                    "message": "Ресурс не найден",
+                    "retryable": false,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.299Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Произошла критическая ошибка на стороне сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/GlobalErrorResponse_Output"
+                    }
+                  ],
+                  "example": {
+                    "code": "INTERNAL_SERVER_ERROR",
+                    "message": "Произошла критическая ошибка на стороне сервера",
+                    "retryable": true,
+                    "details": [],
+                    "meta": {
+                      "requestId": "req-clj1abc230000jk78",
+                      "timestamp": "2026-04-15T17:35:24.299Z",
+                      "path": "/api/v1/...",
+                      "method": "POST",
+                      "service": "main-backend"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Удалить участника из команды",
+        "tags": ["Teams"]
       }
     },
     "/api/v1/health": {
@@ -1513,6 +3547,59 @@
         },
         "required": ["success"],
         "additionalProperties": false
+      },
+      "RefreshTokenResponse_Output": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Успешное обновление токенов"
+          },
+          "token": {
+            "type": "string",
+            "description": "Новый access token (JWT)"
+          },
+          "message": {
+            "type": "string",
+            "description": "Дополнительное сообщение (опционально)"
+          }
+        },
+        "required": ["success", "token"],
+        "additionalProperties": false,
+        "description": "Ответ при обновлении пары access/refresh токенов"
+      },
+      "UserController_UploadAvatarBody": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "description": "Файл изображения аватара"
+          }
+        },
+        "description": "Тело запроса загрузки аватара пользователя (multipart/form-data)"
+      },
+      "TeamsController_UpdateTeamAvatarBody": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "description": "Файл изображения аватара команды"
+          }
+        },
+        "description": "Тело запроса обновления аватара команды (multipart/form-data)"
+      },
+      "TeamsController_UpdateTeamBannerBody": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "description": "Файл изображения баннера команды"
+          }
+        },
+        "description": "Тело запроса обновления баннера команды (multipart/form-data)"
       },
       "VerifyDto_Output": {
         "type": "object",
@@ -1705,7 +3792,7 @@
                 "properties": {
                   "task_assigned": {
                     "type": "boolean",
-                    "description": "Уведомление на почту при назначении задачи"
+                    "description": "Уведомление на п��чту при назначении задачи"
                   },
                   "mentions": {
                     "type": "boolean",
@@ -1787,7 +3874,7 @@
             "properties": {
               "task_assigned": {
                 "type": "boolean",
-                "description": "Уведомление на почту при назначении задачи"
+                "description": "Уведомление на п��чту при назначении задачи"
               },
               "mentions": {
                 "type": "boolean",
@@ -1818,6 +3905,313 @@
           }
         },
         "description": "Схема для частичного обновления настроек уведомлений",
+        "additionalProperties": false
+      },
+      "CreateTeamDto_Output": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 100,
+            "description": "Название команды, отображаемое в интерфейсе"
+          },
+          "description": {
+            "type": "string",
+            "description": "Краткое описание деятельнос��и или целей команды",
+            "maxLength": 500
+          },
+          "slug": {
+            "type": "string",
+            "description": "Уникальная ссылка на изображение команду"
+          },
+          "tags": {
+            "type": "array",
+            "description": "Список строковых названий тегов для классификации",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": ["name"],
+        "additionalProperties": false
+      },
+      "CheckSlugResponse_Output": {
+        "type": "object",
+        "properties": {
+          "available": {
+            "type": "boolean",
+            "description": "Флаг доступности: true — адрес свободен, false — уже занят или некорректен"
+          }
+        },
+        "required": ["available"],
+        "additionalProperties": false
+      },
+      "UserTeamResponse_Output": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+            "description": "Уникальный ID команды"
+          },
+          "name": {
+            "type": "string",
+            "description": "Название команды"
+          },
+          "slug": {
+            "type": "string",
+            "description": "Уникальный URL-путь команды"
+          },
+          "description": {
+            "type": "string",
+            "description": "Краткое описание команды",
+            "nullable": true
+          },
+          "avatarUrl": {
+            "type": "string",
+            "description": "URL изображения профиля команды",
+            "nullable": true
+          },
+          "role": {
+            "type": "string",
+            "description": "Системное название роли пользователя"
+          },
+          "joinedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$",
+            "description": "Дата, когда пользователь вступил в команду"
+          },
+          "permissions": {
+            "type": "object",
+            "properties": {
+              "canEdit": {
+                "type": "boolean",
+                "description": "Разрешено ли редактировать настройки и профиль команды"
+              },
+              "canDelete": {
+                "type": "boolean",
+                "description": "Разрешено ли полностью удалить команду (только для владельца)"
+              },
+              "canManageMembers": {
+                "type": "boolean",
+                "description": "Разрешено ли менять роли и исключать участников"
+              },
+              "canInvite": {
+                "type": "boolean",
+                "description": "Разрешено ли приглашать новых участников"
+              },
+              "isOwner": {
+                "type": "boolean",
+                "description": "Является ли текущий пользователь владельцем (Owner)"
+              }
+            },
+            "required": ["canEdit", "canDelete", "canManageMembers", "canInvite", "isOwner"],
+            "additionalProperties": false,
+            "description": "Объект прав доступа текущего пользователя"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "slug",
+          "description",
+          "avatarUrl",
+          "role",
+          "joinedAt",
+          "permissions"
+        ],
+        "additionalProperties": false
+      },
+      "UserInviteResponse_Output": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Код инвайта"
+          },
+          "teamName": {
+            "type": "string",
+            "description": "Название команды"
+          },
+          "teamAvatar": {
+            "type": "string",
+            "description": "Аватар команды",
+            "nullable": true
+          },
+          "role": {
+            "type": "string",
+            "description": "Роль"
+          },
+          "inviterName": {
+            "type": "string",
+            "description": "Имя пригласившего"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$",
+            "description": "Дата истечения"
+          }
+        },
+        "required": ["code", "teamName", "teamAvatar", "role", "inviterName", "expiresAt"],
+        "additionalProperties": false
+      },
+      "UpdateTeamDto_Output": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 100,
+            "description": "Название команды, отображаемое в интерфейсе"
+          },
+          "description": {
+            "type": "string",
+            "description": "Краткое описание деятельнос��и или целей команды",
+            "maxLength": 500
+          },
+          "slug": {
+            "type": "string",
+            "description": "Уникальная ссылка на изображение команду"
+          },
+          "tags": {
+            "type": "array",
+            "description": "Список строковых названий тегов для классификации",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "SyncTagsDto_Output": {
+        "type": "object",
+        "properties": {
+          "tags": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 15,
+            "items": {
+              "type": "string"
+            },
+            "description": "Массив названий тегов для привязки к команде. Если тега нет в базе, он будет создан."
+          }
+        },
+        "required": ["tags"],
+        "additionalProperties": false
+      },
+      "FileUploadResponse_Output": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Статус операции"
+          },
+          "url": {
+            "type": "string",
+            "description": "URL загруженного файла"
+          },
+          "message": {
+            "type": "string",
+            "description": "Сообщение для пользователя"
+          }
+        },
+        "required": ["success", "url"],
+        "additionalProperties": false
+      },
+      "TeamMemberResponse_Output": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Уникальный ID пользователя (UUID или ULID)"
+          },
+          "role": {
+            "type": "string",
+            "enum": ["owner", "admin", "member"],
+            "description": "Роль участника в рамках конкретной команды"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["active", "pending", "blocked"],
+            "description": "Текущий статус членства (активен, ожидает приглашения, заблокирован)"
+          },
+          "fullName": {
+            "type": "string",
+            "description": "Полное имя для отображения (Фамилия Имя Отчество)"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "Имя пользователя"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Фамилия пользователя"
+          },
+          "avatarUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "Прямая ссылка на изображение профиля или null, если не задано",
+            "nullable": true
+          },
+          "initials": {
+            "type": "string",
+            "maxLength": 2,
+            "description": "Две буквы для аватара-заглушки (например, \"ИИ\")"
+          },
+          "joinedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$",
+            "description": "Дата и время вступления в команду в формате ISO 8601"
+          }
+        },
+        "required": [
+          "id",
+          "role",
+          "status",
+          "fullName",
+          "firstName",
+          "lastName",
+          "avatarUrl",
+          "initials",
+          "joinedAt"
+        ],
+        "additionalProperties": false
+      },
+      "InviteMemberDto_Output": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$",
+            "description": "Email пользователя, которого нужно пригласить"
+          },
+          "role": {
+            "type": "string",
+            "default": "member",
+            "description": "Роль, которая будет назначена пользователю после принятия инвайта"
+          }
+        },
+        "required": ["email", "role"],
+        "additionalProperties": false
+      },
+      "UpdateMemberDto_Output": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string",
+            "description": "Новая роль участника"
+          },
+          "status": {
+            "type": "string",
+            "description": "Новый статус (active, blocked и т.д.)"
+          }
+        },
         "additionalProperties": false
       },
       "HealthResponse_Output": {

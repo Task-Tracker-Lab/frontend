@@ -19,7 +19,7 @@ export default defineConfig({
       target: './endpoints',
       schemas: {
         path: './schemas',
-        type: 'typescript', //можно установить zod, есть проблемы с генерацией
+        type: 'zod',
       },
       tsconfig: 'tsconfig.json',
       httpClient: 'axios',
@@ -35,21 +35,4 @@ export default defineConfig({
       afterAllFilesWrite: 'prettier --write .',
     },
   },
-  /*  zod: {
-    //тоже проблемный вариант
-    input: {
-      target: path.resolve(__dirname, WORK_SPACE, 'openapi', 'openapi.json'),
-      filters: {
-        mode: 'exclude',
-        tags: ['Prometheus', 'System'],
-      },
-    },
-    output: {
-      workspace: WORK_SPACE,
-      mode: 'tags-split',
-      client: 'zod',
-      target: './endpoints',
-      fileExtension: '.zod.ts',
-    },
-  },*/
 });

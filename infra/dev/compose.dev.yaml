@@ -35,7 +35,7 @@ services:
     hostname: api
     container_name: api
     platform: linux/amd64
-    image: ghcr.io/task-tracker-lab/task-tracker-backend:feat-user
+    image: ghcr.io/task-tracker-lab/task-tracker-backend:dev
     env_file:
       - .env
     ports:

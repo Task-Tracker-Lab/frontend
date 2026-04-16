@@ -15,6 +15,13 @@ const eslintConfig = defineConfig([
   ...nextTs,
   ...pluginQuery.configs['flat/recommended'],
   ...storybook.configs['flat/recommended'],
+  //исключение для сгенерированных схем
+  {
+    files: ['src/shared/api/schemas/**/*.{ts,js}'],
+    rules: {
+      'no-useless-escape': 'off',
+    },
+  },
   globalIgnores(['.next/**', 'out/**', 'build/**', 'next-env.d.ts']),
 ]);
 

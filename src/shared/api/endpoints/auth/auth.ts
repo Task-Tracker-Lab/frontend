@@ -17,6 +17,7 @@ import type {
   ActionResponseOutput,
   GlobalErrorResponseOutput,
   PasswordResetConfirmDtoOutput,
+  RefreshTokenResponseOutput,
   ResetPasswordDtoOutput,
   SignInDtoOutput,
   SignUpDtoOutput,
@@ -375,7 +376,10 @@ export const authControllerRefresh = (
   options?: SecondParameter<typeof instance>,
   signal?: AbortSignal
 ) => {
-  return instance<unknown>({ url: `/api/v1/auth/refresh`, method: 'POST', signal }, options);
+  return instance<RefreshTokenResponseOutput>(
+    { url: `/api/v1/auth/refresh`, method: 'POST', signal },
+    options
+  );
 };
 
 export const getAuthControllerRefreshMutationOptions = <
