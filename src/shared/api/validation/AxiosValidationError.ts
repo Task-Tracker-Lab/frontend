@@ -1,4 +1,9 @@
-import { AxiosError, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios';
+import {
+  AxiosError,
+  isAxiosError,
+  type AxiosResponse,
+  type InternalAxiosRequestConfig,
+} from 'axios';
 import type { ZodIssue } from 'zod';
 
 /**
@@ -10,6 +15,15 @@ export class AxiosValidationError<T = unknown> extends AxiosError {
    * Static property representing the error code for bad validation.
    */
   static readonly ERR_BAD_VALIDATION = 'ERR_BAD_VALIDATION';
+  readonly isAxiosValidationError = true;
+
+  static isAxiosValidationError<T = unknown>(error: unknown): error is AxiosValidationError<T> {
+    return (
+      error instanceof AxiosValidationError ||
+      (isAxiosError(error) &&
+        (error as { isAxiosValidationError?: boolean }).isAxiosValidationError === true)
+    );
+  }
 
   /**
    * Constructor for the AxiosValidationError class.
@@ -33,4 +47,10 @@ export class AxiosValidationError<T = unknown> extends AxiosError {
       response
     );
   }
+}
+
+export function isAxiosValidationError<T = unknown>(
+  error: unknown
+): error is AxiosValidationError<T> {
+  return AxiosValidationError.isAxiosValidationError(error);
 }

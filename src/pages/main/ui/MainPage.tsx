@@ -1,44 +1,17 @@
-import { FC } from 'react';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-  Button,
-} from 'shared/ui';
+import { Link } from 'shared/ui';
+import { routes } from 'shared/config';
 
 interface MainPageProps {
   className?: string;
 }
 
-const MainPage: FC<MainPageProps> = ({ className }) => {
+function MainPage({ className }: MainPageProps) {
   return (
     <div className={className}>
-      <AlertDialog>
-        <AlertDialogTrigger asChild>
-          <Button variant="default">Click me!</Button>
-        </AlertDialogTrigger>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your account from our
-              servers.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction>Continue</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <h1>main page</h1>
+      <Link href={routes.auth.signup()}>Signup</Link>
     </div>
   );
-};
+}
 
-export default MainPage;
+export { MainPage };

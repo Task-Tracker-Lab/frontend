@@ -1,28 +1,22 @@
-import { AxiosError, AxiosInstance } from 'axios';
-import { AxiosContracts } from './validation/AxiosContracts';
-import { authControllerRefresh } from './endpoints/auth/auth';
+import { AxiosInstance } from 'axios';
 import { createAuthRefresh } from 'axios-auth-refresh';
-import { RefreshTokenResponseOutput } from './schemas';
+import { accessToken, refreshAuth } from './token';
+import { AxiosContracts } from 'shared/api/validation';
 
 export function applyInterceptors(instance: AxiosInstance) {
-  const refreshAuth = (failedRequest: AxiosError): Promise<void> =>
-    authControllerRefresh({
-      contracts: {
-        response: RefreshTokenResponseOutput,
-      },
-    }).then((data) => {
-      if (data.success) {
-        localStorage.setItem('token', data.token);
-        failedRequest.response?.config.headers.set('Authorization', `Bearer ${data.token}`);
-      }
-    });
-
+  //установка актуального токена доступа
+  instance.interceptors.request.use((config) => {
+    if (accessToken.header) {
+      config.headers.set('Authorization', accessToken.header);
+    }
+    return config;
+  });
   //валидация запросов
   instance.interceptors.request.use(AxiosContracts.requestContractInterceptor);
-  createAuthRefresh(instance, refreshAuth);
+
+  //обновление токена доступа
+  createAuthRefresh(instance, refreshAuth(instance));
 
   //валидация ответов
-  instance.interceptors.response.use(AxiosContracts.responseContractInterceptor, (error) =>
-    Promise.reject(error)
-  );
+  instance.interceptors.response.use(AxiosContracts.responseContractInterceptor);
 }

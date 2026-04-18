@@ -20,7 +20,7 @@
     "build-storybook": "storybook build",
     "test": "vitest",
     "test:ci": "vitest run",
-    "openapi:pull": "node src/shared/api/openapi/pullOpenapi.mjs",
+    "openapi:pull": "node src/shared/api/openapi/pull-openapi.mjs",
     "openapi:orval": "orval",
     "openapi:sync": "pnpm openapi:pull && pnpm openapi:orval",
     "prepare": "husky"
