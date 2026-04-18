@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { AppCopyright } from './app-copyright';
+import { AppCopyright } from './AppCopyright';
 
 const meta = {
   title: 'Shared/AppCopyright',

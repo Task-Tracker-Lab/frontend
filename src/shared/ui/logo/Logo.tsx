@@ -35,7 +35,7 @@ function Logo({
       {...props}
     >
       <Image src={LogoImage} alt="Logo" />
-      <span>TaskTracker Lab</span>
+      <span>Task Tracker</span>
     </div>
   );
 }

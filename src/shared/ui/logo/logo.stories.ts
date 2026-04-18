@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { Button } from './button';
+import { Logo } from './Logo';
 
 const meta = {
-  title: 'Shared/Button',
-  component: Button,
+  title: 'Shared/Logo',
+  component: Logo,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
-} satisfies Meta<typeof Button>;
+} satisfies Meta<typeof Logo>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -17,22 +17,26 @@ export const Default: Story = {
   args: {
     size: 'default',
     variant: 'default',
-    children: 'Button',
   },
 };
 
-export const Destructive: Story = {
+export const Sm: Story = {
   args: {
-    size: 'default',
-    variant: 'destructive',
-    children: 'Button',
+    size: 'sm',
+    variant: 'default',
   },
 };
 
-export const Outline: Story = {
+export const Icon: Story = {
   args: {
     size: 'default',
-    variant: 'outline',
-    children: 'Button',
+    variant: 'icon',
+  },
+};
+
+export const IconSm: Story = {
+  args: {
+    size: 'sm',
+    variant: 'icon',
   },
 };

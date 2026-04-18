@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { InputEmail } from './input-email';
+import { InputEmail } from './InputEmail';
 
 const meta = {
   title: 'Shared/InputEmail',

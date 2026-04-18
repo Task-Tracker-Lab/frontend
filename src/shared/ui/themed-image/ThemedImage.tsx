@@ -10,11 +10,11 @@ interface ThemedImageProps extends Omit<
   srcDark: React.ComponentProps<typeof Image>['src'];
 }
 
-function ThemedImage({ className, srcDark, srcLight, ...props }: ThemedImageProps) {
+function ThemedImage({ className, srcDark, srcLight, alt, ...props }: ThemedImageProps) {
   return (
     <>
-      <Image {...props} className={cn(className, 'dark:hidden')} src={srcLight} />
-      <Image {...props} className={cn(className, 'light:hidden !hidden')} src={srcDark} />
+      <Image {...props} className={cn(className, 'dark:hidden')} src={srcLight} alt={alt} />
+      <Image {...props} className={cn(className, 'light:hidden !hidden')} src={srcDark} alt={alt} />
     </>
   );
 }

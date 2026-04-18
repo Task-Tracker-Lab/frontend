@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { Link } from './link';
+import { Link } from './Link';
 
 const meta = {
   title: 'Shared/Link',

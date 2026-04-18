@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { InputPassword } from './input-password';
+import { InputPassword } from './InputPassword';
 
 const meta = {
   title: 'Shared/InputPassword',
