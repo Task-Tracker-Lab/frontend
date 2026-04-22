@@ -15,7 +15,7 @@ export function applyInterceptors(instance: AxiosInstance) {
   instance.interceptors.request.use(AxiosContracts.requestContractInterceptor);
 
   //обновление токена доступа
-  createAuthRefresh(instance, refreshAuth(instance));
+  createAuthRefresh(instance, refreshAuth(instance), { maxRetries: 1 });
 
   //валидация ответов
   instance.interceptors.response.use(AxiosContracts.responseContractInterceptor);

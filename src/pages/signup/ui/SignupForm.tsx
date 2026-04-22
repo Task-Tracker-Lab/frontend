@@ -29,9 +29,8 @@ import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { signup } from '../model/services/signup';
 import { fieldNameMapper } from '../model/utils/field-name-mapper';
-import { isAxiosError } from 'axios';
-import { GlobalErrorResponseType, isAxiosValidationError } from 'shared/api';
 import { prepareFullName } from '../model/utils/prepare-fullname';
+import { extractValidationIssues, ValidationIssue } from 'shared/api';
 
 type FSchema = z.infer<typeof SignupFormSchema>;
 type BSchema = z.infer<typeof SignupBody>;
@@ -62,7 +61,7 @@ export function SignupForm({ className, onSuccess, ...props }: SignupFormProps) 
     },
   });
 
-  function setFormErrors<P = string>(errors: { message: string; path: P[] }[]) {
+  function setFormErrors(errors: ValidationIssue[]) {
     if (Array.isArray(errors)) {
       errors.forEach(({ message, path: [path] }) => {
         const typedPath = path as FieldPath<BSchema>;
@@ -85,14 +84,7 @@ export function SignupForm({ className, onSuccess, ...props }: SignupFormProps) 
         onSuccess?.(body, res);
       },
       onError: (err) => {
-        //ошибка валидации локальная
-        if (isAxiosValidationError(err)) {
-          setFormErrors(err?.issues ?? []);
-        }
-        //ошибка валидации серверная
-        if (isAxiosError<GlobalErrorResponseType>(err)) {
-          setFormErrors(err?.response?.data?.details ?? []);
-        }
+        setFormErrors(extractValidationIssues(err));
       },
     });
   };

@@ -10,6 +10,8 @@ function MainPage({ className }: MainPageProps) {
     <div className={className}>
       <h1>main page</h1>
       <Link href={routes.auth.signup()}>Signup</Link>
+      <br />
+      <Link href={routes.auth.signin()}>Signin</Link>
     </div>
   );
 }

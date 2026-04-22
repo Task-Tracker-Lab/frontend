@@ -7,6 +7,8 @@ export {
   AxiosValidationError,
   type GlobalErrorResponseType,
   isAxiosValidationError,
+  extractValidationIssues,
+  type ValidationIssue,
 } from './validation';
 export { accessToken } from './token';
 export { queryClient } from './query-client';

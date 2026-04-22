@@ -33,11 +33,12 @@ function handleServerError(error: unknown, meta?: AppQueryMeta): boolean {
 
   if (!data) return false;
 
-  if (data.code === SERVER_BAD_VALIDATION_CODE && meta?.skipGlobalValidationToast) return true;
+  if (data.error.code === SERVER_BAD_VALIDATION_CODE && meta?.skipGlobalValidationToast)
+    return true;
 
   if (meta?.skipGlobalErrorToast) return true;
 
-  toast.error(data.message, { description: data.details?.[0]?.message });
+  toast.error(data.error.message, { description: data.details?.[0]?.message });
   return true;
 }
 
