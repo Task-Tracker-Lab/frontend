@@ -3,7 +3,7 @@ import { z } from 'zod';
 const MIN_PASS_LENGTH = 8;
 const MAX_PASS_LENGTH = 32;
 
-export const SignUpBody = z
+export const SignupBody = z
   .object({
     email: z.email('Некорректный формат email').describe('Email пользователя'),
     password: z
@@ -33,7 +33,7 @@ export const SignUpBody = z
   })
   .describe('Схема регистрации пользователя');
 
-export const SignUpResponse = z.object({
+export const SignupResponse = z.object({
   success: z.boolean().describe('Статус операции'),
   message: z.string().optional().describe('Сообщение для пользователя'),
 });

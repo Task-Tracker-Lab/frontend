@@ -18,7 +18,7 @@ import {
   InputOTPSlot,
   Spinner,
 } from 'shared/ui';
-import { ConfirmBody, ConfirmFormSchema, ConfirmResponse } from '../model/schemas/ConfirmSchema';
+import { ConfirmBody, ConfirmFormSchema, ConfirmResponse } from '../model/schemas/confirm-schema';
 import { cn } from 'shared/lib/utils';
 import { z } from 'zod';
 import { useMutation } from '@tanstack/react-query';

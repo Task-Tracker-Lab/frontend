@@ -30,9 +30,9 @@ const eslintConfig = defineConfig([
           '**/!({page,layout,loading,error,not-found,template,default,route}).{jsx,tsx}':
             'PASCAL_CASE',
           '**/use*.{ts,tsx}': 'CAMEL_CASE',
-          '**/*{Schema,Error,Type,Types,Interface,Props,Dto,Response,Request,Contract,Contracts}.ts':
+          '**/*{Error,Type,Types,Interface,Props,Dto,Response,Request,Contract,Contracts}.ts':
             'PASCAL_CASE',
-          '**/!(*{Schema,Error,Type,Types,Interface,Props,Dto,Response,Request,Contract,Contracts}|use*).ts':
+          '**/!(*{Error,Type,Types,Interface,Props,Dto,Response,Request,Contract,Contracts}|use*).ts':
             'KEBAB_CASE',
           '**/*.{js,mjs,cjs,mts,cts}': 'KEBAB_CASE',
         },

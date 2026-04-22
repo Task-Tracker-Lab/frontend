@@ -1,7 +1,7 @@
 import { AxiosError, AxiosInstance } from 'axios';
 import type { AxiosAuthRefreshRequestConfig } from 'axios-auth-refresh';
 import { z } from 'zod';
-import { RefreshTokenResponse } from './ResponseSchema';
+import { RefreshTokenResponse } from './response-schema';
 import { accessToken } from './access-token';
 
 export const refreshAuth =

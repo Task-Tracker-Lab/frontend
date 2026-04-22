@@ -1,5 +1,5 @@
 import { api } from 'shared/api';
-import { ConfirmBody, ConfirmResponse } from '../schemas/ConfirmSchema';
+import { ConfirmBody, ConfirmResponse } from '../schemas/confirm-schema';
 import { z } from 'zod';
 
 export function confirm(

@@ -21,7 +21,7 @@ import {
   Link,
   Spinner,
 } from 'shared/ui';
-import { SignUpBody, SignupFormSchema, SignUpResponse } from '../model/schemas/SignupSchema';
+import { SignupBody, SignupFormSchema, SignupResponse } from '../model/schemas/signup-schema';
 import { cn } from 'shared/lib/utils';
 import { routes } from 'shared/config';
 import { z } from 'zod';
@@ -34,8 +34,8 @@ import { GlobalErrorResponseType, isAxiosValidationError } from 'shared/api';
 import { prepareFullName } from '../model/utils/prepare-fullname';
 
 type FSchema = z.infer<typeof SignupFormSchema>;
-type BSchema = z.infer<typeof SignUpBody>;
-type RSchema = z.infer<typeof SignUpResponse>;
+type BSchema = z.infer<typeof SignupBody>;
+type RSchema = z.infer<typeof SignupResponse>;
 
 interface SignupFormProps extends Omit<React.ComponentProps<'form'>, 'children' | 'onSubmit'> {
   onSuccess?: (body: BSchema, res: RSchema) => void;

@@ -1,8 +1,8 @@
 import { api } from 'shared/api';
-import { SignUpBody, SignUpResponse } from '../schemas/SignupSchema';
+import { SignupBody, SignupResponse } from '../schemas/signup-schema';
 import { z } from 'zod';
 
-export function signup(data: z.infer<typeof SignUpBody>): Promise<z.infer<typeof SignUpResponse>> {
+export function signup(data: z.infer<typeof SignupBody>): Promise<z.infer<typeof SignupResponse>> {
   return api(
     {
       url: '/auth/sign-up',
@@ -11,8 +11,8 @@ export function signup(data: z.infer<typeof SignUpBody>): Promise<z.infer<typeof
     },
     {
       contracts: {
-        body: SignUpBody,
-        response: SignUpResponse,
+        body: SignupBody,
+        response: SignupResponse,
       },
     }
   );
