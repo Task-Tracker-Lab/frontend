@@ -1,0 +1,36 @@
+'use client';
+
+import { SigninForm } from './SigninForm';
+import { Link, Logo } from 'shared/ui';
+import * as React from 'react';
+import { routes } from 'shared/config';
+import { accessToken } from 'shared/api';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
+
+function SigninPage() {
+  const router = useRouter();
+
+  return (
+    <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
+      <div className="flex w-full max-w-sm flex-col gap-6">
+        <Link href={routes.home()} className="flex items-center gap-2 self-center font-medium">
+          <Logo size="sm" />
+        </Link>
+        <SigninForm
+          onSuccess={(_, res) => {
+            if (res.success) {
+              accessToken.token = res.token;
+              router.replace(routes.team.profile());
+              if (res.message) {
+                toast.success(res.message);
+              }
+            }
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+export { SigninPage };

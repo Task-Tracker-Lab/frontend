@@ -2,6 +2,7 @@ import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import prettier from 'eslint-config-prettier';
 import storybook from 'eslint-plugin-storybook';
+import checkFile from 'eslint-plugin-check-file';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import nextVitals from 'eslint-config-next/core-web-vitals';
 import nextTs from 'eslint-config-next/typescript';
@@ -15,6 +16,47 @@ const eslintConfig = defineConfig([
   ...nextTs,
   ...pluginQuery.configs['flat/recommended'],
   ...storybook.configs['flat/recommended'],
+  {
+    files: ['src/**/*.{js,jsx,ts,tsx,mjs,cjs,mts,cts}'],
+    plugins: {
+      'check-file': checkFile,
+    },
+    rules: {
+      'check-file/filename-naming-convention': [
+        'error',
+        {
+          '**/{page,layout,loading,error,not-found,template,default,route}.{jsx,tsx}':
+            'NEXT_JS_PAGE_ROUTER_FILENAME_CASE',
+          '**/!({page,layout,loading,error,not-found,template,default,route}).{jsx,tsx}':
+            'PASCAL_CASE',
+          '**/use*.{ts,tsx}': 'CAMEL_CASE',
+          '**/*{Error,Type,Types,Interface,Props,Dto,Response,Request,Contract,Contracts}.ts':
+            'PASCAL_CASE',
+          '**/!(*{Error,Type,Types,Interface,Props,Dto,Response,Request,Contract,Contracts}|use*).ts':
+            'KEBAB_CASE',
+          '**/*.{js,mjs,cjs,mts,cts}': 'KEBAB_CASE',
+        },
+        {
+          ignoreMiddleExtensions: true,
+        },
+      ],
+      'check-file/folder-naming-convention': [
+        'error',
+        {
+          'src/**/': 'KEBAB_CASE',
+        },
+      ],
+    },
+  },
+  // исключения для автогенерируемых API-файлов
+  {
+    files: ['src/shared/api/endpoints/**/*.{ts,js}', 'src/shared/api/schemas/**/*.{ts,js}'],
+    rules: {
+      'check-file/filename-naming-convention': 'off',
+      'check-file/folder-naming-convention': 'off',
+      'no-useless-escape': 'off',
+    },
+  },
   globalIgnores(['.next/**', 'out/**', 'build/**', 'next-env.d.ts']),
 ]);
 
