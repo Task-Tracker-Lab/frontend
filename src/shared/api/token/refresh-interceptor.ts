@@ -35,10 +35,11 @@ export const refreshInterceptor = (instance: AxiosInstance) => {
     (response) => response,
     async (error: AxiosError<GlobalErrorResponseType>) => {
       const originalRequest = error.config as RetryRequestConfig;
+
       if (
         error.response?.status === 401 &&
         !originalRequest._retry &&
-        error.request.skipAuthRefresh
+        !error.response.config.skipAuthRefresh
       ) {
         if (isRefreshing) {
           return new Promise<string>((resolve, reject) => {
