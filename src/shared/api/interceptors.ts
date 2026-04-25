@@ -1,13 +1,12 @@
 import { AxiosInstance } from 'axios';
-import { createAuthRefresh } from 'axios-auth-refresh';
-import { accessToken, refreshAuth } from './token';
-import { AxiosContracts } from 'shared/api/validation';
+import { AccessToken, refreshInterceptor } from './token';
+import { AxiosContracts } from './validation';
 
 export function applyInterceptors(instance: AxiosInstance) {
   //установка актуального токена доступа
   instance.interceptors.request.use((config) => {
-    if (accessToken.header) {
-      config.headers.set('Authorization', accessToken.header);
+    if (AccessToken.header) {
+      config.headers.set('Authorization', AccessToken.header);
     }
     return config;
   });
@@ -15,7 +14,7 @@ export function applyInterceptors(instance: AxiosInstance) {
   instance.interceptors.request.use(AxiosContracts.requestContractInterceptor);
 
   //обновление токена доступа
-  createAuthRefresh(instance, refreshAuth(instance), { maxRetries: 1 });
+  refreshInterceptor(instance);
 
   //валидация ответов
   instance.interceptors.response.use(AxiosContracts.responseContractInterceptor);

@@ -9,8 +9,6 @@ services:
     build:
       context: ../..
       dockerfile: Dockerfile.dev
-    environment:
-      WATCHPACK_POLLING: 'true'
     ports:
       - '4000:4000'
     command: pnpm run dev -p 4000
@@ -35,7 +33,7 @@ services:
     hostname: api
     container_name: api
     platform: linux/amd64
-    image: ghcr.io/task-tracker-lab/task-tracker-backend:dev
+    image: ghcr.io/task-tracker-lab/backend:sha-9b66ff7
     env_file:
       - .env
     ports:

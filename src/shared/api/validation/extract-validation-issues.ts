@@ -1,6 +1,6 @@
 import { isAxiosError } from 'axios';
 import { isAxiosValidationError } from './AxiosValidationError';
-import { GlobalErrorResponseType } from './GlobalErrorResponse';
+import { GlobalErrorResponseType } from '../errors';
 
 export interface ValidationIssue {
   message: string;

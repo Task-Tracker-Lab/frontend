@@ -9,7 +9,7 @@ const ValidationIssueSchema = z
   })
   .catchall(z.unknown());
 
-export const GlobalErrorResponse = z.object({
+export const GlobalErrorSchema = z.object({
   success: z.boolean().describe('Признак успешного выполнения запроса'),
   error: z.object({
     code: z.string().describe('Уникальный бизнес-код ошибки'),
@@ -48,4 +48,4 @@ export const GlobalErrorResponse = z.object({
     .describe('Техническая мета-информация для мониторинга и отладки'),
 });
 
-export type GlobalErrorResponseType = z.infer<typeof GlobalErrorResponse>;
+export type GlobalErrorResponseType = z.infer<typeof GlobalErrorSchema>;

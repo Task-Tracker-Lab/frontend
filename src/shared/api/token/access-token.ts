@@ -1,23 +1,25 @@
-'use client';
-
 class AccessToken {
-  #tokenKey: string = 'token';
+  static _token: string | null = null;
 
-  set token(token: string) {
-    localStorage.setItem(this.#tokenKey, token);
+  static set token(token: string) {
+    this._token = token;
   }
 
-  get token(): string | null {
-    return localStorage.getItem(this.#tokenKey);
+  static get token(): string | null {
+    return this._token;
   }
 
-  get header() {
-    const token = this.token;
+  static get header() {
+    return this.getHeader();
+  }
 
+  static clear() {
+    this._token = null;
+  }
+
+  static getHeader(token: string | null = this.token) {
     return token && `Bearer ${token}`;
   }
 }
 
-const accessToken = new AccessToken();
-
-export { accessToken };
+export { AccessToken };

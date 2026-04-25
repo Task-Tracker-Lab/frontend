@@ -1,7 +1,7 @@
-import { isAxiosError } from 'axios';
-import { AxiosValidationError, GlobalErrorResponseType } from 'shared/api/validation';
 import { toast } from 'sonner';
 import { MutationCache, QueryCache, QueryClient } from '@tanstack/react-query';
+import { ErrorMessage, ErrorUtils } from './errors';
+import { AxiosValidationError } from './validation';
 
 interface AppQueryMeta extends Record<string, unknown> {
   skipGlobalErrorToast?: boolean;
@@ -16,52 +16,41 @@ declare module '@tanstack/react-query' {
 }
 
 const SERVER_BAD_VALIDATION_CODE = 'VALIDATION_FAILED';
+const LOCAL_BAD_VALIDATION_CODE = AxiosValidationError.ERR_BAD_VALIDATION;
 
-function handleValidationError(error: unknown, meta?: AppQueryMeta): boolean {
-  if (!(error instanceof AxiosValidationError)) return false;
-  if (error.code !== AxiosValidationError.ERR_BAD_VALIDATION) return false;
+function handleValidationError(error: ErrorMessage, meta?: AppQueryMeta): boolean {
+  if (error.code !== SERVER_BAD_VALIDATION_CODE && error.code !== LOCAL_BAD_VALIDATION_CODE) {
+    return false;
+  }
   if (meta?.skipGlobalValidationToast) return true;
 
-  toast.error(error.message, { description: error.issues?.[0]?.message });
+  toast.error(error.message, { description: error.description[0] });
   return true;
 }
 
-function handleServerError(error: unknown, meta?: AppQueryMeta): boolean {
-  if (!isAxiosError<GlobalErrorResponseType>(error)) return false;
-
-  const data = error.response?.data;
-
-  if (!data) return false;
-
-  if (data.error.code === SERVER_BAD_VALIDATION_CODE && meta?.skipGlobalValidationToast)
-    return true;
-
-  if (meta?.skipGlobalErrorToast) return true;
-
-  toast.error(data.error.message, { description: data.details?.[0]?.message });
-  return true;
-}
-
-function handleGlobalError(error: unknown, meta: AppQueryMeta | undefined, title: string): void {
+function handleGlobalError(error: ErrorMessage, meta?: AppQueryMeta): void {
   if (meta?.skipGlobalErrorToast) return;
 
-  const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
-  toast.error(title, { description: message });
+  toast.error(error.message, { description: error.description });
 }
 
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (error, query) => {
-      if (handleValidationError(error, query.meta)) return;
-      if (handleServerError(error, query.meta)) return;
-      handleGlobalError(error, query.meta, 'Ошибка загрузки данных');
+      const err = ErrorUtils.getErrors(error);
+
+      if (handleValidationError(err, query.meta)) return;
+
+      handleGlobalError(err, query.meta);
     },
   }),
   mutationCache: new MutationCache({
     onError: (error, _variables, _context, mutation) => {
-      if (handleValidationError(error, mutation.meta)) return;
-      if (handleServerError(error, mutation.meta)) return;
-      handleGlobalError(error, mutation.meta, 'Ошибка выполнения операции');
+      const err = ErrorUtils.getErrors(error);
+
+      if (handleValidationError(err, mutation.meta)) return;
+
+      handleGlobalError(err, mutation.meta);
     },
   }),
 });
