@@ -5,7 +5,7 @@ import { SignupForm } from './SignupForm';
 import { OTPForm } from './OTPForm';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { accessToken } from 'shared/api';
+import { AccessToken } from 'shared/api';
 import { routes } from 'shared/config';
 import { toast } from 'sonner';
 
@@ -28,7 +28,7 @@ function SignupPage() {
             autoFocusCode
             onSuccess={(_, res) => {
               if (res.success) {
-                accessToken.token = res.token;
+                AccessToken.token = res.token;
                 router.replace(routes.team.profile());
                 if (res.message) {
                   toast.success(res.message);
