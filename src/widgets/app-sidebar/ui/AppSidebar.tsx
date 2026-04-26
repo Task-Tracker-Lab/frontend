@@ -3,11 +3,10 @@
 import {
   AudioWaveform,
   Command,
-  Frame,
+  FolderKanban,
   GalleryVerticalEnd,
-  Map,
-  NotebookIcon,
-  PieChart,
+  ListTodo,
+  UserRound,
 } from 'lucide-react';
 import {
   Link,
@@ -22,8 +21,7 @@ import {
   SidebarRail,
 } from 'shared/ui';
 import { TeamSwitcher } from './TeamSwitcher';
-import { NavProjects } from 'widgets/app-sidebar/ui/NavProjects';
-import { NavUser } from 'widgets/app-sidebar/ui/NavUser';
+import { NavUser } from './NavUser';
 import { routes } from 'shared/config';
 
 const data = {
@@ -49,23 +47,6 @@ const data = {
       plan: 'Free',
     },
   ],
-  projects: [
-    {
-      name: 'Design Engineering',
-      url: '#',
-      icon: Frame,
-    },
-    {
-      name: 'Sales & Marketing',
-      url: '#',
-      icon: PieChart,
-    },
-    {
-      name: 'Travel',
-      url: '#',
-      icon: Map,
-    },
-  ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -79,15 +60,30 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
+                <Link href={routes.team.profile()}>
+                  <UserRound />
+                  <span>Мой профиль</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
                 <Link href={routes.team.tasks()}>
-                  <NotebookIcon />
+                  <ListTodo />
                   <span>Мои задачи</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <Link href={routes.team.projects()}>
+                  <FolderKanban />
+                  <span>Мои Проекты</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarGroup>
-        <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

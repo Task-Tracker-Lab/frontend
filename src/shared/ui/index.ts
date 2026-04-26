@@ -23,3 +23,4 @@ export * from './Tooltip';
 export * from './DropdownMenu';
 export * from './Collapsible';
 export * from './Avatar';
+export * from './Switch';
