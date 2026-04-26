@@ -29,10 +29,9 @@ const eslintConfig = defineConfig([
             'NEXT_JS_PAGE_ROUTER_FILENAME_CASE',
           '**/!({page,layout,loading,error,not-found,template,default,route}).{jsx,tsx}':
             'PASCAL_CASE',
-          '**/use*.{ts,tsx}': 'CAMEL_CASE',
           '**/*{Error,Type,Types,Interface,Props,Dto,Response,Request,Contract,Contracts}.ts':
             'PASCAL_CASE',
-          '**/!(*{Error,Type,Types,Interface,Props,Dto,Response,Request,Contract,Contracts}|use*).ts':
+          '**/!(*{Error,Type,Types,Interface,Props,Dto,Response,Request,Contract,Contracts}*).ts':
             'KEBAB_CASE',
           '**/*.{js,mjs,cjs,mts,cts}': 'KEBAB_CASE',
         },

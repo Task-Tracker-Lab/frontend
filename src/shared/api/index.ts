@@ -5,10 +5,10 @@ export * from './schemas';
 export { instance as api } from './instance';
 export {
   AxiosValidationError,
-  type GlobalErrorResponseType,
   isAxiosValidationError,
   extractValidationIssues,
   type ValidationIssue,
 } from './validation';
-export { accessToken } from './token';
+export { type GlobalErrorResponseType } from './errors';
+export { AccessToken } from './token';
 export { queryClient } from './query-client';

@@ -10,5 +10,6 @@ export const routes = {
     root: (): Route => '/team',
     projects: (): Route => '/team/projects',
     profile: (): Route => '/team/profile',
+    tasks: (): Route => '/team/tasks',
   },
 } as const;

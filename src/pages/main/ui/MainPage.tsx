@@ -12,6 +12,11 @@ function MainPage({ className }: MainPageProps) {
       <Link href={routes.auth.signup()}>Signup</Link>
       <br />
       <Link href={routes.auth.signin()}>Signin</Link>
+      <br />
+      <Link href={routes.team.root()}>team</Link>
+      <br />
+      <Link href={routes.team.profile()}>profile</Link>
+      <br />
     </div>
   );
 }

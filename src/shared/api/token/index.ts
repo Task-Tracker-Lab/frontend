@@ -1,2 +1,2 @@
-export { refreshAuth } from './refresh-auth';
-export { accessToken } from './access-token';
+export { refreshInterceptor } from './refresh-interceptor';
+export { AccessToken } from './access-token';

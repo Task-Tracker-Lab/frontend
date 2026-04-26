@@ -4,7 +4,7 @@ import { SigninForm } from './SigninForm';
 import { Link, Logo } from 'shared/ui';
 import * as React from 'react';
 import { routes } from 'shared/config';
-import { accessToken } from 'shared/api';
+import { AccessToken } from 'shared/api';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 
@@ -20,7 +20,7 @@ function SigninPage() {
         <SigninForm
           onSuccess={(_, res) => {
             if (res.success) {
-              accessToken.token = res.token;
+              AccessToken.token = res.token;
               router.replace(routes.team.profile());
               if (res.message) {
                 toast.success(res.message);
