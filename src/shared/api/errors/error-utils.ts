@@ -45,8 +45,20 @@ export class ErrorUtils {
   static getErrors(error: unknown): ErrorMessage {
     let errorMessages: ErrorMessage;
 
-    // Проверим, что ошибка является инстансом AxiosError
-    if (axios.isAxiosError(error)) {
+    // Ошибка валидации запроса/ответа
+    if (isAxiosValidationError(error)) {
+      const axiosValidationMessage = this._tryGetLocalErrorFromData(error);
+
+      if (axiosValidationMessage) {
+        errorMessages = axiosValidationMessage;
+      } else {
+        errorMessages = {
+          message: error.response ? 'Не валидный ответ от сервера' : 'Не валидный запрос к серверу',
+          description: [],
+          code: error.code ?? null,
+        };
+      }
+    } else if (axios.isAxiosError(error)) {
       if (error.response) {
         // ответ от сервера
         errorMessages = this._getResponseErrors(error.response, error.message, error.code);
