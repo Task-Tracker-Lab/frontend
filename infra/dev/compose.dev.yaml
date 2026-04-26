@@ -1,5 +1,3 @@
-version: '3.9'
-
 name: task-tracker
 
 services:
@@ -72,7 +70,11 @@ services:
     networks:
       - backend
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U "$$POSTGRES_USER" -d "$$POSTGRES_DB" -q || exit 1']
+      test: [
+        'CMD-SHELL',
+        'pg_isready -U "$$POSTGRES_USER" -d "$$POSTGRES_DB" -q
+                    || exit 1',
+      ]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -84,7 +86,7 @@ services:
     image: redis:7-alpine
     restart: always
     ports:
-      - '7001:6379'
+      - '${REDIS_PORT:-6999}:6379'
     command: redis-server --save 60 1 --loglevel notice
     volumes:
       - redis_data:/data
@@ -97,10 +99,45 @@ services:
       retries: 5
     profiles: ['infra']
 
+  minio:
+    hostname: minio
+    container_name: minio
+    image: minio/minio:latest
+    restart: always
+    environment:
+      MINIO_ROOT_USER: ${S3_ACCESS_KEY}
+      MINIO_ROOT_PASSWORD: ${S3_SECRET_KEY}
+    ports:
+      - '9000:9000' # API
+      - '9001:9001' # Console (UI)
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+    networks:
+      - backend
+    profiles: ['infra']
+
+  minio-init:
+    image: minio/mc:latest
+    depends_on:
+      - minio
+    environment:
+      MINIO_ROOT_USER: ${S3_ACCESS_KEY}
+      MINIO_ROOT_PASSWORD: ${S3_SECRET_KEY}
+    networks:
+      - backend
+    profiles: ['infra']
+    entrypoint: >
+      /bin/sh -c " sleep 5; mc alias set myminio http://minio:9000
+      ${S3_ACCESS_KEY} ${S3_SECRET_KEY}; mc mb myminio/${S3_BUCKET_NAME}
+      --ignore-existing; mc anonymous set download
+      myminio/${S3_BUCKET_NAME}; exit 0; "
+
 volumes:
+  frontend_node_modules:
   postgres_data:
   redis_data:
-  frontend_node_modules:
+  minio_data:
 
 networks:
   backend:
