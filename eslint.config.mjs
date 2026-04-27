@@ -47,15 +47,6 @@ const eslintConfig = defineConfig([
       ],
     },
   },
-  // исключения для автогенерируемых API-файлов
-  {
-    files: ['src/shared/api/endpoints/**/*.{ts,js}', 'src/shared/api/schemas/**/*.{ts,js}'],
-    rules: {
-      'check-file/filename-naming-convention': 'off',
-      'check-file/folder-naming-convention': 'off',
-      'no-useless-escape': 'off',
-    },
-  },
   globalIgnores(['.next/**', 'out/**', 'build/**', 'next-env.d.ts']),
 ]);
 
