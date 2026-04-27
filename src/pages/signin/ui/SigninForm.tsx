@@ -2,7 +2,7 @@
 
 import { Controller, type FieldPath, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { SigninBody, SigninFormSchema, SigninResponse } from '../model/schemas/login-schema';
+import { SigninFormSchema } from '../model/schemas/sign-in-form-schema';
 import {
   Button,
   Card,
@@ -23,8 +23,13 @@ import { cn } from 'shared/lib/utils';
 import { routes } from 'shared/config';
 import * as z from 'zod';
 import { useMutation } from '@tanstack/react-query';
-import { signin } from '../model/services/signin';
-import { extractValidationIssues, ValidationIssue } from 'shared/api';
+import {
+  extractValidationIssues,
+  signin,
+  SigninBody,
+  SigninResponse,
+  ValidationIssue,
+} from 'shared/api';
 
 type FSchema = z.infer<typeof SigninFormSchema>;
 type BSchema = z.infer<typeof SigninBody>;

@@ -8,6 +8,7 @@ import { ProfilePageSkeleton } from './ProfilePage.skeleton';
 import { ProfileIdentityCard } from './ProfileIdentityCard';
 import { ProfileSecurityCard } from './ProfileSecurityCard';
 import { ProfileNotificationsCard } from './ProfileNotificationsCard';
+import { SignOut } from './SignOut';
 
 interface ProfilePageProps {
   className?: string;
@@ -38,6 +39,7 @@ function ProfilePage({ className }: ProfilePageProps) {
   }
   return (
     <div className={cn('mx-auto w-full max-w-5xl space-y-6 pb-6', className)}>
+      <SignOut />
       <ProfileIdentityCard />
 
       <div className="grid items-start gap-4 lg:grid-cols-2">

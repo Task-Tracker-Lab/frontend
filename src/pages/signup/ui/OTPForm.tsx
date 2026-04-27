@@ -18,20 +18,26 @@ import {
   InputOTPSlot,
   Spinner,
 } from 'shared/ui';
-import { ConfirmBody, ConfirmFormSchema, ConfirmResponse } from '../model/schemas/confirm-schema';
+import { ConfirmFormSchema } from '../model/schemas/confirm-form-schema';
 import { cn } from 'shared/lib/utils';
 import { z } from 'zod';
 import { useMutation } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
-import { GlobalErrorResponseType, isAxiosValidationError } from 'shared/api';
-import { confirm } from '../model/services/confirm';
+import {
+  GlobalErrorResponseType,
+  isAxiosValidationError,
+  signupConfirm,
+  SignupConfirmBody,
+  SignupConfirmResponse,
+} from 'shared/api';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
+import { ComponentProps } from 'react';
 
 type FSchema = z.infer<typeof ConfirmFormSchema>;
-type BSchema = z.infer<typeof ConfirmBody>;
-type RSchema = z.infer<typeof ConfirmResponse>;
+type BSchema = z.infer<typeof SignupConfirmBody>;
+type RSchema = z.infer<typeof SignupConfirmResponse>;
 
-interface OTPFormProps extends Omit<React.ComponentProps<'form'>, 'children'> {
+interface OTPFormProps extends Omit<ComponentProps<'form'>, 'children'> {
   email: string;
   onSuccess?: (body: BSchema, res: RSchema) => void;
   autoFocusCode?: boolean;
@@ -46,7 +52,7 @@ export function OTPForm({
 }: OTPFormProps) {
   const sendConfirm = useMutation({
     mutationFn: (data: BSchema) => {
-      return confirm(data);
+      return signupConfirm(data);
     },
     meta: {
       skipGlobalValidationToast: true,
