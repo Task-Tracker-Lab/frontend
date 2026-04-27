@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { RefreshTokenResponse } from './response-schema';
 import { AccessToken } from './access-token';
 import { GlobalErrorResponseType } from '../errors';
+import { signout } from '../auth';
 
 declare module 'axios' {
   export interface AxiosRequestConfig {
@@ -85,10 +86,7 @@ export const refreshInterceptor = (instance: AxiosInstance) => {
         } catch (refreshError) {
           processQueue(refreshError);
           try {
-            await instance.request({
-              url: '/auth/sign-out',
-              method: 'POST',
-            });
+            await signout();
           } catch (err) {
             return Promise.reject(err);
           }

@@ -21,16 +21,21 @@ import {
   Link,
   Spinner,
 } from 'shared/ui';
-import { SignupBody, SignupFormSchema, SignupResponse } from '../model/schemas/signup-schema';
+import { SignupFormSchema } from '../model/schemas/signup-form-schema';
 import { cn } from 'shared/lib/utils';
 import { routes } from 'shared/config';
 import { z } from 'zod';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { signup } from '../model/services/signup';
 import { fieldNameMapper } from '../model/utils/field-name-mapper';
 import { prepareFullName } from '../model/utils/prepare-fullname';
-import { extractValidationIssues, ValidationIssue } from 'shared/api';
+import {
+  extractValidationIssues,
+  signup,
+  SignupBody,
+  SignupResponse,
+  ValidationIssue,
+} from 'shared/api';
 
 type FSchema = z.infer<typeof SignupFormSchema>;
 type BSchema = z.infer<typeof SignupBody>;
