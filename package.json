@@ -20,9 +20,6 @@
     "build-storybook": "storybook build",
     "test": "vitest",
     "test:ci": "vitest run",
-    "openapi:pull": "node src/shared/api/openapi/pull-openapi.mjs",
-    "openapi:orval": "orval",
-    "openapi:sync": "pnpm openapi:pull && pnpm openapi:orval",
     "prepare": "husky"
   },
   "dependencies": {
@@ -69,7 +66,6 @@
     "husky": "^9.1.7",
     "jsdom": "^29.0.1",
     "lint-staged": "^16.3.1",
-    "orval": "^8.7.0",
     "postcss": "8.5.10",
     "prettier": "^3.0.0",
     "prettier-plugin-tailwindcss": "^0.7.2",
