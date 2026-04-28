@@ -5,20 +5,14 @@ import {
   ResetPasswordConfirmResponse,
 } from '../schemas/reset-password-confirm-schema';
 
-export function resetPasswordConfirm(
-  data: z.infer<typeof ResetPasswordConfirmBody>
-): Promise<z.infer<typeof ResetPasswordConfirmResponse>> {
-  return api(
-    {
-      url: '/auth/password/reset/confirm',
-      method: 'POST',
-      data: data,
+export function resetPasswordConfirm(data: z.infer<typeof ResetPasswordConfirmBody>) {
+  return api<z.infer<typeof ResetPasswordConfirmResponse>>({
+    url: '/auth/password/reset/confirm',
+    method: 'POST',
+    data: data,
+    contracts: {
+      body: ResetPasswordConfirmBody,
+      response: ResetPasswordConfirmResponse,
     },
-    {
-      contracts: {
-        body: ResetPasswordConfirmBody,
-        response: ResetPasswordConfirmResponse,
-      },
-    }
-  );
+  });
 }

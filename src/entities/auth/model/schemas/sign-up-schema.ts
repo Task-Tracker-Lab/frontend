@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { PasswordSchema } from './fields/password-schema';
 import { EmailSchema } from './fields/email-schema';
+import { GlobalSuccessSchema } from 'shared/api';
 
 export const SignupBody = z.object({
   email: EmailSchema,
@@ -10,7 +11,4 @@ export const SignupBody = z.object({
   middleName: z.string().max(50).trim().optional().or(z.literal('')),
 });
 
-export const SignupResponse = z.object({
-  success: z.boolean(),
-  message: z.string().optional(),
-});
+export const SignupResponse = GlobalSuccessSchema;

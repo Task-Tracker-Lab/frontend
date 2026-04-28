@@ -1,6 +1,3 @@
-import { z } from 'zod';
+import { GlobalSuccessSchema } from 'shared/api';
 
-export const SignoutResponse = z.object({
-  success: z.boolean(),
-  message: z.string().optional(),
-});
+export const SignoutResponse = GlobalSuccessSchema;

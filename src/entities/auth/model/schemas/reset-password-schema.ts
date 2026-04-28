@@ -1,11 +1,9 @@
 import { z } from 'zod';
 import { EmailSchema } from './fields/email-schema';
+import { GlobalSuccessSchema } from 'shared/api';
 
 export const ResetPasswordBody = z.object({
   email: EmailSchema,
 });
 
-export const ResetPasswordResponse = z.object({
-  success: z.boolean(),
-  message: z.string().optional(),
-});
+export const ResetPasswordResponse = GlobalSuccessSchema;
