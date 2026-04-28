@@ -1,18 +1,18 @@
-import { z as zod } from 'zod';
+import { z } from 'zod/v4';
 import { GlobalSuccessSchema } from 'shared/api';
 
-export const NotificationsUpdateBody = zod.object({
-  email: zod
+export const NotificationsUpdateBody = z.object({
+  email: z
     .object({
-      task_assigned: zod.boolean(),
-      mentions: zod.boolean(),
-      daily_summary: zod.boolean(),
+      task_assigned: z.boolean(),
+      mentions: z.boolean(),
+      daily_summary: z.boolean(),
     })
     .optional(),
-  push: zod
+  push: z
     .object({
-      task_assigned: zod.boolean(),
-      reminders: zod.boolean(),
+      task_assigned: z.boolean(),
+      reminders: z.boolean(),
     })
     .optional(),
 });

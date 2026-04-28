@@ -21,7 +21,7 @@ import { resetPassword, ResetPasswordBody, ResetPasswordResponse } from 'entitie
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { extractValidationIssues } from 'shared/api';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import { EmailFormSchema } from '../model/schemas/email-form-schema';
 import { setFormErrors } from 'shared/lib/utils';
 import { ComponentProps } from 'react';

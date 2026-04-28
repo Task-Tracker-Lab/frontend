@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import { SignupBody, SignupResponse } from '../schemas/sign-up-schema';
 import { api } from 'shared/api';
 

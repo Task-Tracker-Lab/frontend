@@ -12,7 +12,7 @@ import {
   Switch,
 } from 'shared/ui';
 import { toast } from 'sonner';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import { updateNotificationsConfig, useCurrentUser, UserResponse } from 'entities/user';
 
 const SAVE_DEBOUNCE_MS = 500;

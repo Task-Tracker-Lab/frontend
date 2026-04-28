@@ -4,7 +4,7 @@ import {
   type AxiosResponse,
   type InternalAxiosRequestConfig,
 } from 'axios';
-import type { ZodIssue } from 'zod';
+import type { ZodIssue } from 'zod/v4';
 
 /**
  * Custom error class for handling validation errors in axios requests.

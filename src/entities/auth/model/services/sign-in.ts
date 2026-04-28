@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import { SigninBody, SigninResponse } from '../schemas/sign-in-schema';
 import { api } from 'shared/api';
 

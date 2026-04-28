@@ -19,7 +19,7 @@ import {
 } from 'shared/ui';
 import { OtpFormSchema } from '../model/schemas/otp-form-schema';
 import { cn, setFormErrors } from 'shared/lib/utils';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import { DefaultError, UseMutationResult } from '@tanstack/react-query';
 import { extractValidationIssues } from 'shared/api';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';

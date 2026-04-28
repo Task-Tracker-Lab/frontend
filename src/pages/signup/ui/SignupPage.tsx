@@ -10,7 +10,7 @@ import { routes } from 'shared/config';
 import { toast } from 'sonner';
 import { useMutation } from '@tanstack/react-query';
 import { signupConfirm, SignupConfirmBody } from 'entities/auth';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
 function SignupPage() {
   const [email, setEmail] = useState<string>('');

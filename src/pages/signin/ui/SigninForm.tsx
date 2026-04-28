@@ -21,7 +21,7 @@ import {
 } from 'shared/ui';
 import { cn, setFormErrors } from 'shared/lib/utils';
 import { routes } from 'shared/config';
-import * as z from 'zod';
+import { z } from 'zod/v4';
 import { useMutation } from '@tanstack/react-query';
 import { extractValidationIssues } from 'shared/api';
 import { signin, SigninBody, SigninResponse } from 'entities/auth';

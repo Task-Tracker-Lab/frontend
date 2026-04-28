@@ -23,7 +23,7 @@ import {
 import { SignupFormSchema } from '../model/schemas/signup-form-schema';
 import { cn, setFormErrors } from 'shared/lib/utils';
 import { routes } from 'shared/config';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import { ComponentProps, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { fieldNameMapper } from '../model/utils/field-name-mapper';

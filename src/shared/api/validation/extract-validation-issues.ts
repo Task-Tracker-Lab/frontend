@@ -1,7 +1,7 @@
 import { isAxiosError } from 'axios';
 import { isAxiosValidationError } from './AxiosValidationError';
 import { GlobalErrorSchema } from '../schemas';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
 export interface ValidationIssue {
   message: string;

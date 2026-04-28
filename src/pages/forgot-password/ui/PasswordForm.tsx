@@ -28,7 +28,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { setFormErrors } from 'shared/lib/utils';
 import { extractValidationIssues } from 'shared/api';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import { PasswordFormSchema } from '../model/schemas/password-form-scema';
 
 type FSchema = z.infer<typeof PasswordFormSchema>;

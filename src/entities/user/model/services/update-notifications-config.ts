@@ -3,7 +3,7 @@ import {
   NotificationsUpdateBody,
   NotificationsUpdateResponse,
 } from '../schema/notifications-update-schema';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
 type Body = z.infer<typeof NotificationsUpdateBody>;
 

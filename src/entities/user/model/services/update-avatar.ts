@@ -1,6 +1,6 @@
 import { api } from 'shared/api';
 import { AvatarUpdateResponse } from '../schema/avatar-update-schema';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
 export const updateAvatar = (file: File) => {
   const formData = new FormData();

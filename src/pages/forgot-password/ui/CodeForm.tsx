@@ -3,7 +3,7 @@
 import { OTPForm } from 'features/otp-form';
 import { ComponentProps } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import { resetPasswordVerify, ResetPasswordVerifyBody } from 'entities/auth';
 
 function CodeForm(props: Omit<ComponentProps<typeof OTPForm>, 'query'>) {

@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import { SignoutResponse } from '../schemas/sign-out-schema';
 import { api } from 'shared/api';
 

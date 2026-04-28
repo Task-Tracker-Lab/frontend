@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import { api } from 'shared/api';
 import { ResetPasswordBody, ResetPasswordResponse } from '../schemas/reset-password-schema';
 

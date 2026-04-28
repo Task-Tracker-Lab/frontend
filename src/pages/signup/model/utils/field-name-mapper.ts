@@ -1,6 +1,6 @@
 import type { FieldPath } from 'react-hook-form';
 import { SignupFormSchema } from '../schemas/signup-form-schema';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import { SignupBody } from 'entities/auth';
 
 export const fieldNameMapper = (

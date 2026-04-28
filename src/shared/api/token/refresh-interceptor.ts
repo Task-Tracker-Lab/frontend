@@ -1,5 +1,5 @@
 import { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import { RefreshTokenResponse } from './response-schema';
 import { AccessToken } from './access-token';
 import { GlobalErrorSchema } from '../schemas';

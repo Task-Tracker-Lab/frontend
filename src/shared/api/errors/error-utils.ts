@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse, HttpStatusCode } from 'axios';
 import { AxiosValidationError, isAxiosValidationError } from '../validation';
 import { GlobalErrorSchema } from '../schemas';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
 export type ErrorMessage = {
   message: string;

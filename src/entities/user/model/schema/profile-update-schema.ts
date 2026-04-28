@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import { GlobalSuccessSchema } from 'shared/api';
 
 export const ProfileUpdateBody = z.object({

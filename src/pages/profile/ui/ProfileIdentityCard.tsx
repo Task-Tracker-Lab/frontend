@@ -18,7 +18,7 @@ import { Controller, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ProfileAvatarSection } from './ProfileAvatarSection';
 import { ProfileUpdateBody, updateUserConfig, useCurrentUser } from 'entities/user';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import { ProfileFormSchema } from '../model/schemas/profile-form';
 
 type ProfileFormSchemaType = z.infer<typeof ProfileFormSchema>;

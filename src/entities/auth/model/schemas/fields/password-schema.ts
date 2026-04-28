@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
 const MIN_PASS_LENGTH = 8;
 const MAX_PASS_LENGTH = 32;
