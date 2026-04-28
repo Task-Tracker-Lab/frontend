@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { ComponentProps, useEffect, useId, useReducer } from 'react';
 import { useQueuedDebouncedMutation } from 'shared/lib/hooks';
 import {
@@ -13,7 +13,7 @@ import {
 } from 'shared/ui';
 import { toast } from 'sonner';
 import { z } from 'zod/v4';
-import { updateNotificationsConfig, useCurrentUser, UserResponse } from 'entities/user';
+import { UserHttp, UserQueries, UserResponse } from 'entities/user';
 
 const SAVE_DEBOUNCE_MS = 500;
 
@@ -62,14 +62,14 @@ function SwitchItem({ label, ...props }: SwitchItemProps) {
 }
 
 function ProfileNotificationsCard() {
-  const query = useCurrentUser();
+  const query = useQuery(UserQueries.getMe());
   const notifications = query.data?.notifications;
   const [localNotifications, dispatchLocalNotifications] = useReducer(
     notificationsReducer,
     notifications ?? null
   );
   const sendSettings = useMutation({
-    mutationFn: updateNotificationsConfig,
+    mutationFn: UserHttp.updateNotificationsConfig,
     onSuccess: () => {
       toast.success('Настройки уведомлений обновлены');
       query.refetch();

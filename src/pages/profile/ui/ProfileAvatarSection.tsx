@@ -3,7 +3,7 @@ import { Pencil } from 'lucide-react';
 import { type ChangeEvent, useRef } from 'react';
 import { Avatar, AvatarFallback, AvatarImage, Button } from 'shared/ui';
 import { toast } from 'sonner';
-import { updateAvatar } from 'entities/user';
+import { UserHttp } from 'entities/user';
 
 interface ProfileAvatarSectionProps {
   avatarUrl: string | null;
@@ -23,7 +23,7 @@ function ProfileAvatarSection({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const uploadAvatarMutation = useMutation({
-    mutationFn: updateAvatar,
+    mutationFn: UserHttp.updateAvatar,
     onSuccess: async () => {
       toast.success('Аватар обновлён');
       await onUploaded();

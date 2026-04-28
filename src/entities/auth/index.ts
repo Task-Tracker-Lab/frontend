@@ -16,10 +16,4 @@ export {
   ResetPasswordConfirmResponse,
 } from './model/schemas/reset-password-confirm-schema';
 
-export { signin } from './model/services/sign-in';
-export { signout } from './model/services/sign-out';
-export { signup } from './model/services/sign-up';
-export { signupConfirm } from './model/services/sign-up-confirm';
-export { resetPassword } from './model/services/reset-password';
-export { resetPasswordVerify } from './model/services/reset-password-verify';
-export { resetPasswordConfirm } from './model/services/reset-password-confirm';
+export { AuthHttp } from './api/http';

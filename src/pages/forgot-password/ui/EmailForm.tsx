@@ -17,7 +17,7 @@ import {
 } from 'shared/ui';
 import { routes } from 'shared/config';
 import { useMutation } from '@tanstack/react-query';
-import { resetPassword, ResetPasswordBody, ResetPasswordResponse } from 'entities/auth';
+import { AuthHttp, ResetPasswordBody, ResetPasswordResponse } from 'entities/auth';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { extractValidationIssues } from 'shared/api';
@@ -37,7 +37,7 @@ interface EmailFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSu
 function EmailForm({ onSuccess, ...props }: EmailFormProps) {
   const requestResetPassword = useMutation({
     mutationFn: (data: BSchema) => {
-      return resetPassword(data);
+      return AuthHttp.resetPassword(data);
     },
     meta: {
       skipGlobalValidationToast: true,

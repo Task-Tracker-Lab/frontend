@@ -24,7 +24,7 @@ import { routes } from 'shared/config';
 import { z } from 'zod/v4';
 import { useMutation } from '@tanstack/react-query';
 import { extractValidationIssues } from 'shared/api';
-import { signin, SigninBody, SigninResponse } from 'entities/auth';
+import { AuthHttp, SigninBody, SigninResponse } from 'entities/auth';
 import { ComponentProps } from 'react';
 
 type FSchema = z.infer<typeof SigninFormSchema>;
@@ -38,7 +38,7 @@ interface SigninFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onS
 export function SigninForm({ className, onSuccess, ...props }: SigninFormProps) {
   const sendUserData = useMutation({
     mutationFn: (data: BSchema) => {
-      return signin(data);
+      return AuthHttp.signin(data);
     },
     meta: {
       skipGlobalValidationToast: true,

@@ -15,15 +15,10 @@ import {
   InputPassword,
   Link,
 } from 'shared/ui';
-import * as React from 'react';
 import { ComponentProps, useState } from 'react';
 import { routes } from 'shared/config';
 import { useMutation } from '@tanstack/react-query';
-import {
-  resetPasswordConfirm,
-  ResetPasswordConfirmBody,
-  ResetPasswordConfirmResponse,
-} from 'entities/auth';
+import { AuthHttp, ResetPasswordConfirmBody, ResetPasswordConfirmResponse } from 'entities/auth';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { setFormErrors } from 'shared/lib/utils';
@@ -45,7 +40,7 @@ function PasswordForm({ onSuccess, email, ...props }: PasswordFormProps) {
 
   const requestResetPassword = useMutation({
     mutationFn: (data: BSchema) => {
-      return resetPasswordConfirm(data);
+      return AuthHttp.resetPasswordConfirm(data);
     },
     meta: {
       skipGlobalValidationToast: true,

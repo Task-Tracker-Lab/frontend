@@ -2,7 +2,7 @@ import { LogOut } from 'lucide-react';
 import { ComponentProps } from 'react';
 import { Button } from 'shared/ui';
 import { AccessToken } from 'shared/api';
-import { signout } from 'entities/auth';
+import { AuthHttp } from 'entities/auth';
 import { routes } from 'shared/config';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
@@ -13,7 +13,7 @@ function SignOut(props: Omit<ComponentProps<typeof Button>, 'children'>) {
   const queryClient = useQueryClient();
 
   const signoutMutation = useMutation({
-    mutationFn: signout,
+    mutationFn: AuthHttp.signout,
     onSuccess: (response) => {
       AccessToken.clear();
       queryClient.clear();

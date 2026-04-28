@@ -6,14 +6,8 @@ export {
 } from './model/schema/notifications-update-schema';
 export { ProfileUpdateBody, ProfileUpdateResponse } from './model/schema/profile-update-schema';
 
-export { getUser } from './model/services/get-user';
-export { getUserActivity } from './model/services/get-user-activity';
-export { updateAvatar } from './model/services/update-avatar';
-export { updateNotificationsConfig } from './model/services/update-notifications-config';
-export { updateUserConfig } from './model/services/update-user-config';
+export { UserHttp } from './api/http';
 
-export { currentUserQueryKey, useCurrentUser } from './model/queries/use-current-user';
-export {
-  currentUserActivityQueryKey,
-  useCurrentUserActivity,
-} from './model/queries/use-current-user-activity';
+export { UserQueries } from './api/queries';
+
+export { userFabricKeys } from './model/const';

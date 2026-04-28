@@ -9,7 +9,7 @@ import { AccessToken } from 'shared/api';
 import { routes } from 'shared/config';
 import { toast } from 'sonner';
 import { useMutation } from '@tanstack/react-query';
-import { signupConfirm, SignupConfirmBody } from 'entities/auth';
+import { AuthHttp, SignupConfirmBody } from 'entities/auth';
 import { z } from 'zod/v4';
 
 function SignupPage() {
@@ -18,7 +18,7 @@ function SignupPage() {
 
   const sendConfirm = useMutation({
     mutationFn: (data: z.infer<typeof SignupConfirmBody>) => {
-      return signupConfirm(data);
+      return AuthHttp.signupConfirm(data);
     },
     meta: {
       skipGlobalValidationToast: true,

@@ -1,13 +1,14 @@
 'use client';
 
-import { useCurrentUserActivity } from 'entities/user';
+import { UserQueries } from 'entities/user';
+import { useQuery } from '@tanstack/react-query';
 
 interface ProjectsPageProps {
   className?: string;
 }
 
 function ProjectsPage({ className }: ProjectsPageProps) {
-  useCurrentUserActivity(); //todo временно для линтера fsd
+  useQuery(UserQueries.getMe()); //todo временно для линтера fsd
   return <div className={className}>Проекты</div>;
 }
 

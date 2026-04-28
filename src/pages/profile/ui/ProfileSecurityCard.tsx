@@ -9,10 +9,11 @@ import {
 } from 'shared/ui';
 import { ComponentProps } from 'react';
 import { formatDate } from 'shared/lib/utils';
-import { useCurrentUser } from 'entities/user';
+import { useQuery } from '@tanstack/react-query';
+import { UserQueries } from 'entities/user';
 
 function ProfileSecurityCard(props: Omit<ComponentProps<typeof Card>, 'children'>) {
-  const query = useCurrentUser();
+  const query = useQuery(UserQueries.getMe());
   const is2faEnabled = query.data?.security.is2faEnabled ?? false;
   const lastPasswordChange = formatDate(query.data?.security.lastPasswordChange ?? '');
 

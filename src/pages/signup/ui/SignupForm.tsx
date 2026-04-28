@@ -29,7 +29,7 @@ import { useMutation } from '@tanstack/react-query';
 import { fieldNameMapper } from '../model/utils/field-name-mapper';
 import { prepareFullName } from '../model/utils/prepare-fullname';
 import { extractValidationIssues } from 'shared/api';
-import { signup, SignupBody, SignupResponse } from 'entities/auth';
+import { AuthHttp, SignupBody, SignupResponse } from 'entities/auth';
 
 type FSchema = z.infer<typeof SignupFormSchema>;
 type BSchema = z.infer<typeof SignupBody>;
@@ -43,7 +43,7 @@ export function SignupForm({ className, onSuccess, ...props }: SignupFormProps) 
   const [showPassword, setShowPassword] = useState(false);
   const sendUserData = useMutation({
     mutationFn: (data: BSchema) => {
-      return signup(data);
+      return AuthHttp.signup(data);
     },
     meta: {
       skipGlobalValidationToast: true,

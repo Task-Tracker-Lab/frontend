@@ -12,19 +12,19 @@ import {
   Input,
   Textarea,
 } from 'shared/ui';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ProfileAvatarSection } from './ProfileAvatarSection';
-import { ProfileUpdateBody, updateUserConfig, useCurrentUser } from 'entities/user';
+import { ProfileUpdateBody, UserHttp, UserQueries } from 'entities/user';
 import { z } from 'zod/v4';
 import { ProfileFormSchema } from '../model/schemas/profile-form';
 
 type ProfileFormSchemaType = z.infer<typeof ProfileFormSchema>;
 
 function ProfileIdentityCard(props: Omit<ComponentProps<typeof Card>, 'children'>) {
-  const query = useCurrentUser();
+  const query = useQuery(UserQueries.getMe());
   const profile = query.data?.profile;
   const email = query.data?.email;
 
@@ -39,7 +39,7 @@ function ProfileIdentityCard(props: Omit<ComponentProps<typeof Card>, 'children'
   const formValues = useWatch({ control: form.control });
 
   const updateProfileMutation = useMutation({
-    mutationFn: updateUserConfig,
+    mutationFn: UserHttp.updateUserConfig,
     onSuccess: async () => {
       toast.success('Профиль обновлён');
       await query.refetch();
