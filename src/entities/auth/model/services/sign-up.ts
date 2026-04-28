@@ -1,9 +1,9 @@
 import { z } from 'zod';
-import { instance } from '../../instance';
 import { SignupBody, SignupResponse } from '../schemas/sign-up-schema';
+import { api } from 'shared/api';
 
 export function signup(data: z.infer<typeof SignupBody>): Promise<z.infer<typeof SignupResponse>> {
-  return instance(
+  return api(
     {
       url: '/auth/sign-up',
       method: 'POST',

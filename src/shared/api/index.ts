@@ -8,4 +8,3 @@ export {
 export { type GlobalErrorResponseType } from './errors';
 export { AccessToken } from './token';
 export { queryClient } from './query-client';
-export * from './auth';

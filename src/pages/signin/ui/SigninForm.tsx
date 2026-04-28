@@ -23,13 +23,8 @@ import { cn } from 'shared/lib/utils';
 import { routes } from 'shared/config';
 import * as z from 'zod';
 import { useMutation } from '@tanstack/react-query';
-import {
-  extractValidationIssues,
-  signin,
-  SigninBody,
-  SigninResponse,
-  ValidationIssue,
-} from 'shared/api';
+import { extractValidationIssues, ValidationIssue } from 'shared/api';
+import { signin, SigninBody, SigninResponse } from 'entities/auth';
 
 type FSchema = z.infer<typeof SigninFormSchema>;
 type BSchema = z.infer<typeof SigninBody>;
@@ -118,7 +113,7 @@ export function SigninForm({ className, onSuccess, ...props }: SigninFormProps) 
                 <Field data-invalid={fieldState.invalid}>
                   <div className="flex items-center">
                     <FieldLabel htmlFor="password">Пароль</FieldLabel>
-                    <Link href="#" className="ml-auto text-sm">
+                    <Link href={routes.auth.forgotPassword()} className="ml-auto text-sm">
                       Забыли пароль?
                     </Link>
                   </div>

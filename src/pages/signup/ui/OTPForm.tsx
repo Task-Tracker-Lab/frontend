@@ -23,15 +23,10 @@ import { cn } from 'shared/lib/utils';
 import { z } from 'zod';
 import { useMutation } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
-import {
-  GlobalErrorResponseType,
-  isAxiosValidationError,
-  signupConfirm,
-  SignupConfirmBody,
-  SignupConfirmResponse,
-} from 'shared/api';
+import { GlobalErrorResponseType, isAxiosValidationError } from 'shared/api';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
 import { ComponentProps } from 'react';
+import { signupConfirm, SignupConfirmBody, SignupConfirmResponse } from 'entities/auth';
 
 type FSchema = z.infer<typeof ConfirmFormSchema>;
 type BSchema = z.infer<typeof SignupConfirmBody>;

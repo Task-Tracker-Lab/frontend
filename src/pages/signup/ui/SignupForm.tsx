@@ -29,13 +29,8 @@ import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { fieldNameMapper } from '../model/utils/field-name-mapper';
 import { prepareFullName } from '../model/utils/prepare-fullname';
-import {
-  extractValidationIssues,
-  signup,
-  SignupBody,
-  SignupResponse,
-  ValidationIssue,
-} from 'shared/api';
+import { extractValidationIssues, ValidationIssue } from 'shared/api';
+import { signup, SignupBody, SignupResponse } from 'entities/auth';
 
 type FSchema = z.infer<typeof SignupFormSchema>;
 type BSchema = z.infer<typeof SignupBody>;
