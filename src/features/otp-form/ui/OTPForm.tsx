@@ -1,6 +1,5 @@
 'use client';
 
-import type { FieldPath } from 'react-hook-form';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -18,81 +17,57 @@ import {
   InputOTPSlot,
   Spinner,
 } from 'shared/ui';
-import { ConfirmFormSchema } from '../model/schemas/confirm-form-schema';
-import { cn } from 'shared/lib/utils';
+import { OtpFormSchema } from '../model/schemas/otp-form-schema';
+import { cn, setFormErrors } from 'shared/lib/utils';
 import { z } from 'zod';
-import { useMutation } from '@tanstack/react-query';
-import { isAxiosError } from 'axios';
-import { GlobalErrorResponseType, isAxiosValidationError } from 'shared/api';
+import { DefaultError, UseMutationResult } from '@tanstack/react-query';
+import { extractValidationIssues } from 'shared/api';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
 import { ComponentProps } from 'react';
-import { signupConfirm, SignupConfirmBody, SignupConfirmResponse } from 'entities/auth';
+import { otpFormBody } from '../model/schemas/otp-form-body';
 
-type FSchema = z.infer<typeof ConfirmFormSchema>;
-type BSchema = z.infer<typeof SignupConfirmBody>;
-type RSchema = z.infer<typeof SignupConfirmResponse>;
+type FSchema = z.infer<typeof OtpFormSchema>;
+type BSchema = z.infer<typeof otpFormBody>;
 
-interface OTPFormProps extends Omit<ComponentProps<'form'>, 'children'> {
+interface OTPFormProps<TData> extends Omit<ComponentProps<'form'>, 'children'> {
   email: string;
-  onSuccess?: (body: BSchema, res: RSchema) => void;
+  onSuccess?: (body: BSchema, res: TData) => void;
   autoFocusCode?: boolean;
+  query: UseMutationResult<TData, DefaultError, BSchema>;
 }
 
-export function OTPForm({
+export function OTPForm<TData>({
   className,
   email,
   onSuccess,
   autoFocusCode = false,
+  query,
   ...props
-}: OTPFormProps) {
-  const sendConfirm = useMutation({
-    mutationFn: (data: BSchema) => {
-      return signupConfirm(data);
-    },
-    meta: {
-      skipGlobalValidationToast: true,
-    },
-  });
-
+}: OTPFormProps<TData>) {
   const form = useForm<FSchema>({
-    resolver: zodResolver(ConfirmFormSchema),
+    resolver: zodResolver(OtpFormSchema),
     defaultValues: {
       code: '',
     },
   });
 
-  function setFormErrors<P = string>(errors: { message: string; path: P[] }[]) {
-    errors.forEach(({ message, path: [path] }) => {
-      const typedPath = path as FieldPath<FSchema>;
-
-      form.setError(typedPath, { message });
-    });
-  }
-
   const onSubmit = (data: FSchema) => {
     const body: BSchema = {
       code: data.code,
-      email: email,
+      email,
     };
 
-    sendConfirm.mutate(body, {
+    query.mutate(body, {
       onSuccess: (res) => {
         onSuccess?.(body, res);
       },
       onError: (err) => {
-        //ошибка валидации локальная
-        if (isAxiosValidationError(err)) {
-          setFormErrors(err?.issues ?? []);
-        }
-        //ошибка валидации серверная
-        if (isAxiosError<GlobalErrorResponseType>(err)) {
-          setFormErrors(err?.response?.data?.details ?? []);
-        }
+        setFormErrors(extractValidationIssues(err), form);
       },
     });
   };
 
-  const disabled = sendConfirm.isPending || sendConfirm.isSuccess;
+  const disabled = query.isPending || query.isSuccess;
 
   return (
     <Card>
