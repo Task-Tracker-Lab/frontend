@@ -1,7 +1,6 @@
 import { z } from 'zod/v4';
+import { GlobalSuccessSchema } from 'shared/api';
 
-export const RefreshTokenResponse = z.object({
-  success: z.boolean(),
+export const RefreshTokenResponse = GlobalSuccessSchema.extend({
   token: z.string(),
-  message: z.string().optional(),
 });
