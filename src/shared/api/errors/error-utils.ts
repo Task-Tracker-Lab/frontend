@@ -1,5 +1,7 @@
 import axios, { AxiosError, AxiosResponse, HttpStatusCode } from 'axios';
-import { AxiosValidationError, GlobalErrorResponseType, isAxiosValidationError } from 'shared/api';
+import { AxiosValidationError, isAxiosValidationError } from '../validation';
+import { GlobalErrorSchema } from '../schemas';
+import { z } from 'zod';
 
 export type ErrorMessage = {
   message: string;
@@ -115,7 +117,7 @@ export class ErrorUtils {
     }
     // здесь может быть несколько моделей ошибок
 
-    const data = response.data as GlobalErrorResponseType;
+    const data = response.data as z.infer<typeof GlobalErrorSchema>;
     let description: string[] = [];
 
     if (data.details && data.details.length > 0) {

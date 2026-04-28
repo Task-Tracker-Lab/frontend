@@ -5,6 +5,6 @@ export {
   extractValidationIssues,
   type ValidationIssue,
 } from './validation';
-export { type GlobalErrorResponseType } from './errors';
+export { GlobalSuccessSchema, GlobalErrorSchema } from './schemas';
 export { AccessToken } from './token';
 export { queryClient } from './query-client';

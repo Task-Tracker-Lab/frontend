@@ -1,7 +1,6 @@
 import { z } from 'zod';
 
-export const RefreshTokenResponse = z.object({
+export const GlobalSuccessSchema = z.object({
   success: z.boolean(),
-  token: z.string(),
   message: z.string().optional(),
 });

@@ -2,7 +2,7 @@ import { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { z } from 'zod';
 import { RefreshTokenResponse } from './response-schema';
 import { AccessToken } from './access-token';
-import { GlobalErrorResponseType } from '../errors';
+import { GlobalErrorSchema } from '../schemas';
 
 declare module 'axios' {
   export interface AxiosRequestConfig {
@@ -33,7 +33,7 @@ export const refreshInterceptor = (instance: AxiosInstance) => {
 
   instance.interceptors.response.use(
     (response) => response,
-    async (error: AxiosError<GlobalErrorResponseType>) => {
+    async (error: AxiosError<z.infer<typeof GlobalErrorSchema>>) => {
       const originalRequest = error.config as RetryRequestConfig;
 
       if (
