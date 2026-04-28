@@ -2,18 +2,17 @@ import { LogOut } from 'lucide-react';
 import { ComponentProps } from 'react';
 import { Button } from 'shared/ui';
 import { AccessToken } from 'shared/api';
-import { AuthHttp } from 'entities/auth';
 import { routes } from 'shared/config';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
+import { useSignOut } from '../model/useSignOut';
 
 function SignOut(props: Omit<ComponentProps<typeof Button>, 'children'>) {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const signoutMutation = useMutation({
-    mutationFn: AuthHttp.signout,
+  const signoutMutation = useSignOut({
     onSuccess: (response) => {
       AccessToken.clear();
       queryClient.clear();

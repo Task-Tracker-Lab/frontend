@@ -16,30 +16,21 @@ import {
   Link,
 } from 'shared/ui';
 import { routes } from 'shared/config';
-import { useMutation } from '@tanstack/react-query';
-import { AuthHttp, TAuth } from 'entities/auth';
+import { TAuth } from 'entities/auth';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { extractValidationIssues } from 'shared/api';
 import type { EmailFormValues } from '../model/types';
 import { EmailForm as EmailFormSchema } from '../model/schemas';
-import { setFormErrors } from 'shared/lib/utils';
 import { ComponentProps } from 'react';
+import { useResetPassword } from '../model/useResetPassword';
+import { setFormErrors } from 'shared/lib/utils';
+import { extractValidationIssues } from 'shared/api';
 
 interface EmailFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
   onSuccess?: (body: TAuth.ResetPasswordBody, res: TAuth.ResetPasswordResponse) => void;
 }
 
 function EmailForm({ onSuccess, ...props }: EmailFormProps) {
-  const requestResetPassword = useMutation({
-    mutationFn: (data: TAuth.ResetPasswordBody) => {
-      return AuthHttp.resetPassword(data);
-    },
-    meta: {
-      skipGlobalValidationToast: true,
-    },
-  });
-
   const form = useForm<EmailFormValues>({
     resolver: zodResolver(EmailFormSchema),
     defaultValues: {
@@ -47,22 +38,20 @@ function EmailForm({ onSuccess, ...props }: EmailFormProps) {
     },
   });
 
+  const resetPassword = useResetPassword({
+    onSuccess,
+    onError: (err) => setFormErrors(extractValidationIssues(err), form),
+  });
+
   const onSubmit = (data: EmailFormValues) => {
     const body: TAuth.ResetPasswordBody = {
       email: data.email,
     };
 
-    requestResetPassword.mutate(body, {
-      onSuccess: (res) => {
-        onSuccess?.(body, res);
-      },
-      onError: (err) => {
-        setFormErrors(extractValidationIssues(err), form);
-      },
-    });
+    resetPassword.mutate(body);
   };
 
-  const disabled = requestResetPassword.isPending || requestResetPassword.isSuccess;
+  const disabled = resetPassword.isPending || resetPassword.isSuccess;
 
   return (
     <Card>

@@ -1,4 +1,3 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
 import { ComponentProps, useEffect, useId, useReducer } from 'react';
 import { useQueuedDebouncedMutation } from 'shared/lib/hooks';
 import {
@@ -12,7 +11,9 @@ import {
   Switch,
 } from 'shared/ui';
 import { toast } from 'sonner';
-import { TUser, UserHttp, UserQueries } from 'entities/user';
+import { TUser, UserQueries } from 'entities/user';
+import { useUpdateNotifications } from '../model/useUpdateNotifications';
+import { useQuery } from '@tanstack/react-query';
 
 const SAVE_DEBOUNCE_MS = 500;
 
@@ -67,8 +68,7 @@ function ProfileNotificationsCard() {
     notificationsReducer,
     notifications ?? null
   );
-  const sendSettings = useMutation({
-    mutationFn: UserHttp.updateNotificationsConfig,
+  const sendSettings = useUpdateNotifications({
     onSuccess: () => {
       toast.success('Настройки уведомлений обновлены');
       query.refetch();

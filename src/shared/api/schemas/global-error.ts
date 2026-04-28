@@ -29,11 +29,6 @@ export const GlobalError = z.object({
         })
         .optional(),
       timestamp: z.iso.datetime({}),
-      debug: z
-        .object({
-          stack: z.string().optional(),
-        })
-        .optional(),
     })
     .catchall(z.unknown()),
 });

@@ -6,13 +6,15 @@ import { EmailForm } from './EmailForm';
 import { PasswordForm } from './PasswordForm';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { CodeForm } from './CodeForm';
 import { toast } from 'sonner';
+import { OTPForm } from 'features/otp-form';
+import { useSendCode } from '../model/useSendCode';
 
 function ForgotPasswordPage() {
   const [email, setEmail] = useState<string>('');
   const [step, setStep] = useState<'email' | 'password' | 'otp'>('email');
   const router = useRouter();
+  const sendCode = useSendCode();
 
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
@@ -29,7 +31,12 @@ function ForgotPasswordPage() {
           />
         )}
         {step === 'otp' && (
-          <CodeForm autoFocusCode email={email} onSuccess={() => setStep('password')} />
+          <OTPForm
+            autoFocusCode
+            email={email}
+            query={sendCode}
+            onSuccess={() => setStep('password')}
+          />
         )}
         {step === 'password' && (
           <PasswordForm

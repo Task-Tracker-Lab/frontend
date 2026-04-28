@@ -17,14 +17,14 @@ import {
 } from 'shared/ui';
 import { ComponentProps, useState } from 'react';
 import { routes } from 'shared/config';
-import { useMutation } from '@tanstack/react-query';
-import { AuthHttp, TAuth } from 'entities/auth';
+import { TAuth } from 'entities/auth';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { setFormErrors } from 'shared/lib/utils';
 import { extractValidationIssues } from 'shared/api';
 import { PasswordForm as PasswordFormSchema } from '../model/schemas';
 import type { PasswordFormValues } from '../model/types';
+import { useSendPassword } from '../model/useSendPassword';
 
 interface PasswordFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
   onSuccess?: (
@@ -37,13 +37,9 @@ interface PasswordFormProps extends Omit<ComponentProps<'form'>, 'children' | 'o
 function PasswordForm({ onSuccess, email, ...props }: PasswordFormProps) {
   const [showPassword, setShowPassword] = useState(false);
 
-  const requestResetPassword = useMutation({
-    mutationFn: (data: TAuth.ResetPasswordConfirmBody) => {
-      return AuthHttp.resetPasswordConfirm(data);
-    },
-    meta: {
-      skipGlobalValidationToast: true,
-    },
+  const sendPassword = useSendPassword({
+    onSuccess,
+    onError: (err) => setFormErrors(extractValidationIssues(err), form),
   });
 
   const form = useForm<PasswordFormValues>({
@@ -61,17 +57,10 @@ function PasswordForm({ onSuccess, email, ...props }: PasswordFormProps) {
       confirmPassword: data.confirmPassword,
     };
 
-    requestResetPassword.mutate(body, {
-      onSuccess: (res) => {
-        onSuccess?.(body, res);
-      },
-      onError: (err) => {
-        setFormErrors(extractValidationIssues(err), form);
-      },
-    });
+    sendPassword.mutate(body);
   };
 
-  const disabled = requestResetPassword.isPending || requestResetPassword.isSuccess;
+  const disabled = sendPassword.isPending || sendPassword.isSuccess;
 
   return (
     <Card>

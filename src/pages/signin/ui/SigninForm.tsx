@@ -22,30 +22,28 @@ import {
 } from 'shared/ui';
 import { cn, setFormErrors } from 'shared/lib/utils';
 import { routes } from 'shared/config';
-import { useMutation } from '@tanstack/react-query';
 import { extractValidationIssues } from 'shared/api';
-import { AuthHttp, TAuth } from 'entities/auth';
+import { TAuth } from 'entities/auth';
 import { ComponentProps } from 'react';
+import { useSignin } from '../model/useSignin';
 
 interface SigninFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
   onSuccess?: (body: TAuth.SigninBody, res: TAuth.SigninResponse) => void;
 }
 
 export function SigninForm({ className, onSuccess, ...props }: SigninFormProps) {
-  const sendUserData = useMutation({
-    mutationFn: (data: TAuth.SigninBody) => {
-      return AuthHttp.signin(data);
-    },
-    meta: {
-      skipGlobalValidationToast: true,
-    },
-  });
-
   const form = useForm<SigninFormValues>({
     resolver: zodResolver(SigninFormSchema),
     defaultValues: {
       email: '',
       password: '',
+    },
+  });
+
+  const sendUserData = useSignin({
+    onSuccess,
+    onError: (err) => {
+      setFormErrors(extractValidationIssues(err), form);
     },
   });
 
@@ -55,14 +53,7 @@ export function SigninForm({ className, onSuccess, ...props }: SigninFormProps) 
       password: data.password,
     };
 
-    sendUserData.mutate(body, {
-      onSuccess: (res) => {
-        onSuccess?.(body, res);
-      },
-      onError: (err) => {
-        setFormErrors(extractValidationIssues(err), form);
-      },
-    });
+    sendUserData.mutate(body);
   };
 
   return (
@@ -116,7 +107,9 @@ export function SigninForm({ className, onSuccess, ...props }: SigninFormProps) 
               )}
             />
             <Field>
-              <Button type="submit">Войти</Button>
+              <Button type="submit" disabled={sendUserData.isPending}>
+                Войти
+              </Button>
             </Field>
             <Field>
               <FieldDescription className="text-center">

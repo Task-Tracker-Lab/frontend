@@ -12,14 +12,15 @@ import {
   Input,
   Textarea,
 } from 'shared/ui';
-import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ProfileAvatarSection } from './ProfileAvatarSection';
-import { TUser, UserHttp, UserQueries } from 'entities/user';
+import { TUser, UserQueries } from 'entities/user';
 import { ProfileForm as ProfileFormSchema } from '../model/schemas';
 import type { ProfileFormValues } from '../model/types';
+import { useUpdateProfile } from '../model/useUpdateProfile';
+import { useQuery } from '@tanstack/react-query';
 
 function ProfileIdentityCard(props: Omit<ComponentProps<typeof Card>, 'children'>) {
   const query = useQuery(UserQueries.getMe());
@@ -36,8 +37,7 @@ function ProfileIdentityCard(props: Omit<ComponentProps<typeof Card>, 'children'
   });
   const formValues = useWatch({ control: form.control });
 
-  const updateProfileMutation = useMutation({
-    mutationFn: UserHttp.updateUserConfig,
+  const updateProfileMutation = useUpdateProfile({
     onSuccess: async () => {
       toast.success('Профиль обновлён');
       await query.refetch();

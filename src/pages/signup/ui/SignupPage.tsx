@@ -8,21 +8,13 @@ import { useRouter } from 'next/navigation';
 import { AccessToken } from 'shared/api';
 import { routes } from 'shared/config';
 import { toast } from 'sonner';
-import { useMutation } from '@tanstack/react-query';
-import { AuthHttp, TAuth } from 'entities/auth';
+import { useSignupConfirm } from '../model/useSignupConfirm';
 
 function SignupPage() {
   const [email, setEmail] = useState<string>('');
   const router = useRouter();
 
-  const sendConfirm = useMutation({
-    mutationFn: (data: TAuth.SignupConfirmBody) => {
-      return AuthHttp.signupConfirm(data);
-    },
-    meta: {
-      skipGlobalValidationToast: true,
-    },
-  });
+  const sendConfirm = useSignupConfirm();
 
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">

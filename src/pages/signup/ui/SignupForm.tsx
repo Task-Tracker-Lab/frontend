@@ -25,11 +25,11 @@ import { SignupForm as SignupFormSchema } from '../model/schemas';
 import { cn, setFormErrors } from 'shared/lib/utils';
 import { routes } from 'shared/config';
 import { ComponentProps, useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
 import { fieldNameMapper } from '../model/utils/field-name-mapper';
 import { prepareFullName } from '../model/utils/prepare-fullname';
 import { extractValidationIssues } from 'shared/api';
-import { AuthHttp, TAuth } from 'entities/auth';
+import { TAuth } from 'entities/auth';
+import { useSignup } from '../model/useSignup';
 
 interface SignupFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
   onSuccess?: (body: TAuth.SignupBody, res: TAuth.SignupResponse) => void;
@@ -37,14 +37,6 @@ interface SignupFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onS
 
 export function SignupForm({ className, onSuccess, ...props }: SignupFormProps) {
   const [showPassword, setShowPassword] = useState(false);
-  const sendUserData = useMutation({
-    mutationFn: (data: TAuth.SignupBody) => {
-      return AuthHttp.signup(data);
-    },
-    meta: {
-      skipGlobalValidationToast: true,
-    },
-  });
 
   const form = useForm<SignupFormValues>({
     resolver: zodResolver(SignupFormSchema),
@@ -56,6 +48,17 @@ export function SignupForm({ className, onSuccess, ...props }: SignupFormProps) 
     },
   });
 
+  const sendUserData = useSignup({
+    onSuccess,
+    onError: (err) => {
+      setFormErrors<SignupFormValues, TAuth.SignupBody>(
+        extractValidationIssues(err),
+        form,
+        fieldNameMapper
+      );
+    },
+  });
+
   const onSubmit = (data: SignupFormValues) => {
     const body: TAuth.SignupBody = {
       email: data.email,
@@ -63,18 +66,7 @@ export function SignupForm({ className, onSuccess, ...props }: SignupFormProps) 
       ...prepareFullName(data.name),
     };
 
-    sendUserData.mutate(body, {
-      onSuccess: (res) => {
-        onSuccess?.(body, res);
-      },
-      onError: (err) => {
-        setFormErrors<SignupFormValues, TAuth.SignupBody>(
-          extractValidationIssues(err),
-          form,
-          fieldNameMapper
-        );
-      },
-    });
+    sendUserData.mutate(body);
   };
 
   return (

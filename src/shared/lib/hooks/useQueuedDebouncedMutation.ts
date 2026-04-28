@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useRef } from 'react';
-import { useDebouncedCallback } from './use-debounced-callback';
+import { useDebouncedCallback } from './useDebouncedCallback';
 
 interface UseQueuedDebouncedMutationOptions<TValue> {
   delayMs: number;
