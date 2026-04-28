@@ -2,16 +2,28 @@
 
 import { Link, Logo } from 'shared/ui';
 import { SignupForm } from './SignupForm';
-import { OTPForm } from './OTPForm';
+import { OTPForm } from 'features/otp-form';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AccessToken } from 'shared/api';
 import { routes } from 'shared/config';
 import { toast } from 'sonner';
+import { useMutation } from '@tanstack/react-query';
+import { signupConfirm, SignupConfirmBody } from 'entities/auth';
+import { z } from 'zod';
 
 function SignupPage() {
   const [email, setEmail] = useState<string>('');
   const router = useRouter();
+
+  const sendConfirm = useMutation({
+    mutationFn: (data: z.infer<typeof SignupConfirmBody>) => {
+      return signupConfirm(data);
+    },
+    meta: {
+      skipGlobalValidationToast: true,
+    },
+  });
 
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
@@ -26,6 +38,7 @@ function SignupPage() {
           <OTPForm
             email={email}
             autoFocusCode
+            query={sendConfirm}
             onSuccess={(_, res) => {
               if (res.success) {
                 AccessToken.token = res.token;

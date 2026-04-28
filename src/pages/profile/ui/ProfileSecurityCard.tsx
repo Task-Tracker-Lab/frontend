@@ -8,8 +8,8 @@ import {
   Switch,
 } from 'shared/ui';
 import { ComponentProps } from 'react';
-import { useCurrentUser } from '../model/queries/use-current-user';
-import { formatDate } from '../model/utils/format-date';
+import { formatDate } from 'shared/lib/utils';
+import { useCurrentUser } from 'entities/user';
 
 function ProfileSecurityCard(props: Omit<ComponentProps<typeof Card>, 'children'>) {
   const query = useCurrentUser();

@@ -1,6 +1,5 @@
 'use client';
 
-import type { FieldPath } from 'react-hook-form';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -22,21 +21,21 @@ import {
   Spinner,
 } from 'shared/ui';
 import { SignupFormSchema } from '../model/schemas/signup-form-schema';
-import { cn } from 'shared/lib/utils';
+import { cn, setFormErrors } from 'shared/lib/utils';
 import { routes } from 'shared/config';
 import { z } from 'zod';
-import { useState } from 'react';
+import { ComponentProps, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { fieldNameMapper } from '../model/utils/field-name-mapper';
 import { prepareFullName } from '../model/utils/prepare-fullname';
-import { extractValidationIssues, ValidationIssue } from 'shared/api';
+import { extractValidationIssues } from 'shared/api';
 import { signup, SignupBody, SignupResponse } from 'entities/auth';
 
 type FSchema = z.infer<typeof SignupFormSchema>;
 type BSchema = z.infer<typeof SignupBody>;
 type RSchema = z.infer<typeof SignupResponse>;
 
-interface SignupFormProps extends Omit<React.ComponentProps<'form'>, 'children' | 'onSubmit'> {
+interface SignupFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
   onSuccess?: (body: BSchema, res: RSchema) => void;
 }
 
@@ -61,17 +60,6 @@ export function SignupForm({ className, onSuccess, ...props }: SignupFormProps) 
     },
   });
 
-  function setFormErrors(errors: ValidationIssue[]) {
-    if (Array.isArray(errors)) {
-      errors.forEach(({ message, path: [path] }) => {
-        const typedPath = path as FieldPath<BSchema>;
-        const filedName = fieldNameMapper(typedPath);
-
-        form.setError(filedName, { message });
-      });
-    }
-  }
-
   const onSubmit = (data: FSchema) => {
     const body: BSchema = {
       email: data.email,
@@ -84,7 +72,7 @@ export function SignupForm({ className, onSuccess, ...props }: SignupFormProps) 
         onSuccess?.(body, res);
       },
       onError: (err) => {
-        setFormErrors(extractValidationIssues(err));
+        setFormErrors<FSchema, BSchema>(extractValidationIssues(err), form, fieldNameMapper);
       },
     });
   };
@@ -107,7 +95,7 @@ export function SignupForm({ className, onSuccess, ...props }: SignupFormProps) 
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="name">Имя</FieldLabel>
+                  <FieldLabel htmlFor="name">Имя и фамилия</FieldLabel>
                   <Input
                     {...field}
                     id="name"
@@ -116,6 +104,7 @@ export function SignupForm({ className, onSuccess, ...props }: SignupFormProps) 
                     aria-invalid={fieldState.invalid}
                     type="text"
                     placeholder="Алексей Смирнов"
+                    autoComplete="name"
                     disabled={sendUserData.isPending}
                   />
                   {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
@@ -147,10 +136,17 @@ export function SignupForm({ className, onSuccess, ...props }: SignupFormProps) 
                   <FieldLabel htmlFor="password">Пароль</FieldLabel>
                   <InputPassword
                     {...field}
+                    onChange={(event) => {
+                      field.onChange(event);
+                      if (form.getFieldState('confirmPassword').isTouched) {
+                        void form.trigger('confirmPassword');
+                      }
+                    }}
                     id="password"
                     aria-invalid={fieldState.invalid}
                     visible={showPassword}
                     onVisibleChange={setShowPassword}
+                    autoComplete="new-password"
                     disabled={sendUserData.isPending}
                   />
                   {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
@@ -170,6 +166,7 @@ export function SignupForm({ className, onSuccess, ...props }: SignupFormProps) 
                     aria-invalid={fieldState.invalid}
                     aria-label="Повторите пароль"
                     visible={showPassword}
+                    autoComplete="new-password"
                     disabled={sendUserData.isPending}
                   />
                   {fieldState.invalid && <FieldError errors={[fieldState.error]} />}

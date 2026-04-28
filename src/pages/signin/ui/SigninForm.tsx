@@ -1,6 +1,6 @@
 'use client';
 
-import { Controller, type FieldPath, useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SigninFormSchema } from '../model/schemas/sign-in-form-schema';
 import {
@@ -19,18 +19,19 @@ import {
   InputPassword,
   Link,
 } from 'shared/ui';
-import { cn } from 'shared/lib/utils';
+import { cn, setFormErrors } from 'shared/lib/utils';
 import { routes } from 'shared/config';
 import * as z from 'zod';
 import { useMutation } from '@tanstack/react-query';
-import { extractValidationIssues, ValidationIssue } from 'shared/api';
+import { extractValidationIssues } from 'shared/api';
 import { signin, SigninBody, SigninResponse } from 'entities/auth';
+import { ComponentProps } from 'react';
 
 type FSchema = z.infer<typeof SigninFormSchema>;
 type BSchema = z.infer<typeof SigninBody>;
 type RSchema = z.infer<typeof SigninResponse>;
 
-interface SigninFormProps extends Omit<React.ComponentProps<'form'>, 'children' | 'onSubmit'> {
+interface SigninFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
   onSuccess?: (body: BSchema, res: RSchema) => void;
 }
 
@@ -52,15 +53,6 @@ export function SigninForm({ className, onSuccess, ...props }: SigninFormProps) 
     },
   });
 
-  function setFormErrors(errors: ValidationIssue[]) {
-    if (Array.isArray(errors)) {
-      errors.forEach(({ message, path: [path] }) => {
-        const filedName = path as FieldPath<FSchema>;
-        form.setError(filedName, { message });
-      });
-    }
-  }
-
   const onSubmit = (data: FSchema) => {
     const body: BSchema = {
       email: data.email,
@@ -72,7 +64,7 @@ export function SigninForm({ className, onSuccess, ...props }: SigninFormProps) 
         onSuccess?.(body, res);
       },
       onError: (err) => {
-        setFormErrors(extractValidationIssues(err));
+        setFormErrors(extractValidationIssues(err), form);
       },
     });
   };
@@ -117,7 +109,12 @@ export function SigninForm({ className, onSuccess, ...props }: SigninFormProps) 
                       Забыли пароль?
                     </Link>
                   </div>
-                  <InputPassword {...field} id="password" aria-invalid={fieldState.invalid} />
+                  <InputPassword
+                    {...field}
+                    id="password"
+                    aria-invalid={fieldState.invalid}
+                    autoComplete="current-password"
+                  />
                   {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                 </Field>
               )}

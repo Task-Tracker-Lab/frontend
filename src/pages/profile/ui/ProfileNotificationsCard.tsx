@@ -1,8 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
 import { ComponentProps, useEffect, useId, useReducer } from 'react';
-import { useCurrentUser } from '../model/queries/use-current-user';
-import { patchUser as patchNotifications } from '../model/services/patch-notifications';
-import { type UserResponseSchemaType } from '../model/schemas/user-response';
 import { useQueuedDebouncedMutation } from 'shared/lib/hooks';
 import {
   Card,
@@ -15,10 +12,12 @@ import {
   Switch,
 } from 'shared/ui';
 import { toast } from 'sonner';
+import { z } from 'zod';
+import { updateNotificationsConfig, useCurrentUser, UserResponse } from 'entities/user';
 
 const SAVE_DEBOUNCE_MS = 500;
 
-type Notifications = UserResponseSchemaType['notifications'];
+type Notifications = z.infer<typeof UserResponse>['notifications'];
 type NotificationsState = Notifications | null;
 type NotificationChannel = keyof Pick<Notifications, 'email' | 'push'>;
 
@@ -70,7 +69,7 @@ function ProfileNotificationsCard() {
     notifications ?? null
   );
   const sendSettings = useMutation({
-    mutationFn: patchNotifications,
+    mutationFn: updateNotificationsConfig,
     onSuccess: () => {
       toast.success('Настройки уведомлений обновлены');
       query.refetch();

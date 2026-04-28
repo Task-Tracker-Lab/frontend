@@ -12,15 +12,16 @@ import {
   Input,
   Textarea,
 } from 'shared/ui';
-import { useCurrentUser } from '../model/queries/use-current-user';
 import { useMutation } from '@tanstack/react-query';
-import { patchUser } from '../model/services/patch-user';
 import { toast } from 'sonner';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ProfileFormSchema, ProfileFormSchemaType } from '../model/schemas/profile-form';
-import { ProfileUpdateSchemaType } from '../model/schemas/profile-update';
 import { ProfileAvatarSection } from './ProfileAvatarSection';
+import { ProfileUpdateBody, updateUserConfig, useCurrentUser } from 'entities/user';
+import { z } from 'zod';
+import { ProfileFormSchema } from '../model/schemas/profile-form';
+
+type ProfileFormSchemaType = z.infer<typeof ProfileFormSchema>;
 
 function ProfileIdentityCard(props: Omit<ComponentProps<typeof Card>, 'children'>) {
   const query = useCurrentUser();
@@ -38,7 +39,7 @@ function ProfileIdentityCard(props: Omit<ComponentProps<typeof Card>, 'children'
   const formValues = useWatch({ control: form.control });
 
   const updateProfileMutation = useMutation({
-    mutationFn: patchUser,
+    mutationFn: updateUserConfig,
     onSuccess: async () => {
       toast.success('Профиль обновлён');
       await query.refetch();
@@ -75,7 +76,7 @@ function ProfileIdentityCard(props: Omit<ComponentProps<typeof Card>, 'children'
   );
 
   const onSubmit = (data: ProfileFormSchemaType) => {
-    const body: ProfileUpdateSchemaType = {
+    const body: z.infer<typeof ProfileUpdateBody> = {
       firstName: data.firstName.trim(),
       lastName: data.lastName.trim(),
       bio: data.bio ? data.bio.trim() : '',
