@@ -20,29 +20,25 @@ import {
   Link,
   Spinner,
 } from 'shared/ui';
-import { SignupFormSchema } from '../model/schemas/signup-form-schema';
+import type { SignupFormValues } from '../model/types';
+import { SignupForm as SignupFormSchema } from '../model/schemas';
 import { cn, setFormErrors } from 'shared/lib/utils';
 import { routes } from 'shared/config';
-import { z } from 'zod/v4';
 import { ComponentProps, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { fieldNameMapper } from '../model/utils/field-name-mapper';
 import { prepareFullName } from '../model/utils/prepare-fullname';
 import { extractValidationIssues } from 'shared/api';
-import { AuthHttp, SignupBody, SignupResponse } from 'entities/auth';
-
-type FSchema = z.infer<typeof SignupFormSchema>;
-type BSchema = z.infer<typeof SignupBody>;
-type RSchema = z.infer<typeof SignupResponse>;
+import { AuthHttp, TAuth } from 'entities/auth';
 
 interface SignupFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
-  onSuccess?: (body: BSchema, res: RSchema) => void;
+  onSuccess?: (body: TAuth.SignupBody, res: TAuth.SignupResponse) => void;
 }
 
 export function SignupForm({ className, onSuccess, ...props }: SignupFormProps) {
   const [showPassword, setShowPassword] = useState(false);
   const sendUserData = useMutation({
-    mutationFn: (data: BSchema) => {
+    mutationFn: (data: TAuth.SignupBody) => {
       return AuthHttp.signup(data);
     },
     meta: {
@@ -50,7 +46,7 @@ export function SignupForm({ className, onSuccess, ...props }: SignupFormProps) 
     },
   });
 
-  const form = useForm<FSchema>({
+  const form = useForm<SignupFormValues>({
     resolver: zodResolver(SignupFormSchema),
     defaultValues: {
       name: '',
@@ -60,8 +56,8 @@ export function SignupForm({ className, onSuccess, ...props }: SignupFormProps) 
     },
   });
 
-  const onSubmit = (data: FSchema) => {
-    const body: BSchema = {
+  const onSubmit = (data: SignupFormValues) => {
+    const body: TAuth.SignupBody = {
       email: data.email,
       password: data.password,
       ...prepareFullName(data.name),
@@ -72,7 +68,11 @@ export function SignupForm({ className, onSuccess, ...props }: SignupFormProps) 
         onSuccess?.(body, res);
       },
       onError: (err) => {
-        setFormErrors<FSchema, BSchema>(extractValidationIssues(err), form, fieldNameMapper);
+        setFormErrors<SignupFormValues, TAuth.SignupBody>(
+          extractValidationIssues(err),
+          form,
+          fieldNameMapper
+        );
       },
     });
   };

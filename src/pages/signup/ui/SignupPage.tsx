@@ -9,15 +9,14 @@ import { AccessToken } from 'shared/api';
 import { routes } from 'shared/config';
 import { toast } from 'sonner';
 import { useMutation } from '@tanstack/react-query';
-import { AuthHttp, SignupConfirmBody } from 'entities/auth';
-import { z } from 'zod/v4';
+import { AuthHttp, TAuth } from 'entities/auth';
 
 function SignupPage() {
   const [email, setEmail] = useState<string>('');
   const router = useRouter();
 
   const sendConfirm = useMutation({
-    mutationFn: (data: z.infer<typeof SignupConfirmBody>) => {
+    mutationFn: (data: TAuth.SignupConfirmBody) => {
       return AuthHttp.signupConfirm(data);
     },
     meta: {

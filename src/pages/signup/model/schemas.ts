@@ -1,7 +1,7 @@
 import { z } from 'zod/v4';
-import { EmailSchema, PasswordSchema } from 'entities/auth';
+import { SAuth } from 'entities/auth';
 
-export const SignupFormSchema = z
+export const SignupForm = z
   .object({
     name: z
       .string()
@@ -9,9 +9,9 @@ export const SignupFormSchema = z
       .min(1, 'Обязательное поле')
       .min(2, 'Слишком короткое имя')
       .max(100, 'Слишком длинное имя'),
-    email: EmailSchema,
-    password: PasswordSchema,
-    confirmPassword: PasswordSchema,
+    email: SAuth.Email,
+    password: SAuth.Password,
+    confirmPassword: SAuth.Password,
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Пароли не совпадают',

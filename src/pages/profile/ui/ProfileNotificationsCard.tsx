@@ -12,12 +12,11 @@ import {
   Switch,
 } from 'shared/ui';
 import { toast } from 'sonner';
-import { z } from 'zod/v4';
-import { UserHttp, UserQueries, UserResponse } from 'entities/user';
+import { TUser, UserHttp, UserQueries } from 'entities/user';
 
 const SAVE_DEBOUNCE_MS = 500;
 
-type Notifications = z.infer<typeof UserResponse>['notifications'];
+type Notifications = TUser.UserResponse['notifications'];
 type NotificationsState = Notifications | null;
 type NotificationChannel = keyof Pick<Notifications, 'email' | 'push'>;
 

@@ -2,7 +2,8 @@
 
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { SigninFormSchema } from '../model/schemas/sign-in-form-schema';
+import { SigninForm as SigninFormSchema } from '../model/schemas';
+import type { SigninFormValues } from '../model/types';
 import {
   Button,
   Card,
@@ -21,23 +22,18 @@ import {
 } from 'shared/ui';
 import { cn, setFormErrors } from 'shared/lib/utils';
 import { routes } from 'shared/config';
-import { z } from 'zod/v4';
 import { useMutation } from '@tanstack/react-query';
 import { extractValidationIssues } from 'shared/api';
-import { AuthHttp, SigninBody, SigninResponse } from 'entities/auth';
+import { AuthHttp, TAuth } from 'entities/auth';
 import { ComponentProps } from 'react';
 
-type FSchema = z.infer<typeof SigninFormSchema>;
-type BSchema = z.infer<typeof SigninBody>;
-type RSchema = z.infer<typeof SigninResponse>;
-
 interface SigninFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
-  onSuccess?: (body: BSchema, res: RSchema) => void;
+  onSuccess?: (body: TAuth.SigninBody, res: TAuth.SigninResponse) => void;
 }
 
 export function SigninForm({ className, onSuccess, ...props }: SigninFormProps) {
   const sendUserData = useMutation({
-    mutationFn: (data: BSchema) => {
+    mutationFn: (data: TAuth.SigninBody) => {
       return AuthHttp.signin(data);
     },
     meta: {
@@ -45,7 +41,7 @@ export function SigninForm({ className, onSuccess, ...props }: SigninFormProps) 
     },
   });
 
-  const form = useForm<FSchema>({
+  const form = useForm<SigninFormValues>({
     resolver: zodResolver(SigninFormSchema),
     defaultValues: {
       email: '',
@@ -53,8 +49,8 @@ export function SigninForm({ className, onSuccess, ...props }: SigninFormProps) 
     },
   });
 
-  const onSubmit = (data: FSchema) => {
-    const body: BSchema = {
+  const onSubmit = (data: SigninFormValues) => {
+    const body: TAuth.SigninBody = {
       email: data.email,
       password: data.password,
     };

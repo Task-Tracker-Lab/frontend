@@ -17,23 +17,19 @@ import {
   InputOTPSlot,
   Spinner,
 } from 'shared/ui';
-import { OtpFormSchema } from '../model/schemas/otp-form-schema';
+import { OtpForm as OtpFormSchema } from '../model/schemas';
 import { cn, setFormErrors } from 'shared/lib/utils';
-import { z } from 'zod/v4';
 import { DefaultError, UseMutationResult } from '@tanstack/react-query';
 import { extractValidationIssues } from 'shared/api';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
 import { ComponentProps } from 'react';
-import { otpFormBody } from '../model/schemas/otp-form-body';
-
-type FSchema = z.infer<typeof OtpFormSchema>;
-type BSchema = z.infer<typeof otpFormBody>;
+import type { FormBody, OtpForm } from '../model/types';
 
 interface OTPFormProps<TData> extends Omit<ComponentProps<'form'>, 'children'> {
   email: string;
-  onSuccess?: (body: BSchema, res: TData) => void;
+  onSuccess?: (body: FormBody, res: TData) => void;
   autoFocusCode?: boolean;
-  query: UseMutationResult<TData, DefaultError, BSchema>;
+  query: UseMutationResult<TData, DefaultError, FormBody>;
 }
 
 export function OTPForm<TData>({
@@ -44,15 +40,15 @@ export function OTPForm<TData>({
   query,
   ...props
 }: OTPFormProps<TData>) {
-  const form = useForm<FSchema>({
+  const form = useForm<OtpForm>({
     resolver: zodResolver(OtpFormSchema),
     defaultValues: {
       code: '',
     },
   });
 
-  const onSubmit = (data: FSchema) => {
-    const body: BSchema = {
+  const onSubmit = (data: OtpForm) => {
+    const body: FormBody = {
       code: data.code,
       email,
     };

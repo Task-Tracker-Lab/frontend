@@ -17,18 +17,16 @@ import { toast } from 'sonner';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ProfileAvatarSection } from './ProfileAvatarSection';
-import { ProfileUpdateBody, UserHttp, UserQueries } from 'entities/user';
-import { z } from 'zod/v4';
-import { ProfileFormSchema } from '../model/schemas/profile-form';
-
-type ProfileFormSchemaType = z.infer<typeof ProfileFormSchema>;
+import { TUser, UserHttp, UserQueries } from 'entities/user';
+import { ProfileForm as ProfileFormSchema } from '../model/schemas';
+import type { ProfileFormValues } from '../model/types';
 
 function ProfileIdentityCard(props: Omit<ComponentProps<typeof Card>, 'children'>) {
   const query = useQuery(UserQueries.getMe());
   const profile = query.data?.profile;
   const email = query.data?.email;
 
-  const form = useForm<ProfileFormSchemaType>({
+  const form = useForm<ProfileFormValues>({
     resolver: zodResolver(ProfileFormSchema),
     defaultValues: {
       firstName: '',
@@ -70,13 +68,13 @@ function ProfileIdentityCard(props: Omit<ComponentProps<typeof Card>, 'children'
   }
 
   const fullName = `${profile.firstName} ${profile.lastName}`;
-  const profileFormKeys: Array<keyof ProfileFormSchemaType> = ['firstName', 'lastName', 'bio'];
+  const profileFormKeys: Array<keyof ProfileFormValues> = ['firstName', 'lastName', 'bio'];
   const hasProfileChanges = profileFormKeys.some(
     (key) => (formValues[key] ?? '').trim() !== (profile[key] ?? '').trim()
   );
 
-  const onSubmit = (data: ProfileFormSchemaType) => {
-    const body: z.infer<typeof ProfileUpdateBody> = {
+  const onSubmit = (data: ProfileFormValues) => {
+    const body: TUser.ProfileUpdateBody = {
       firstName: data.firstName.trim(),
       lastName: data.lastName.trim(),
       bio: data.bio ? data.bio.trim() : '',

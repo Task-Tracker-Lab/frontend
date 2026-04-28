@@ -1,20 +1,14 @@
-import { z } from 'zod/v4';
 import { api } from 'shared/api';
-import { UserResponse } from '../model/schema/user-response-schema';
-import { AvatarUpdateResponse } from '../model/schema/avatar-update-schema';
-import {
-  NotificationsUpdateBody,
-  NotificationsUpdateResponse,
-} from '../model/schema/notifications-update-schema';
-import { ProfileUpdateBody, ProfileUpdateResponse } from '../model/schema/profile-update-schema';
+import * as TUser from '../model/types';
+import * as SUser from '../model/schemas';
 
 export class UserHttp {
   static getUser(signal?: AbortSignal) {
-    return api<z.infer<typeof UserResponse>>({
+    return api<TUser.UserResponse>({
       url: '/users/me',
       method: 'GET',
       contracts: {
-        response: UserResponse,
+        response: SUser.UserResponse,
       },
       signal,
     });
@@ -35,7 +29,7 @@ export class UserHttp {
 
     formData.append('file', file);
 
-    return api<z.infer<typeof AvatarUpdateResponse>>({
+    return api<TUser.AvatarUpdateResponse>({
       url: '/users/me/avatar',
       method: 'POST',
       data: formData,
@@ -43,31 +37,31 @@ export class UserHttp {
         'Content-Type': 'multipart/form-data',
       },
       contracts: {
-        response: AvatarUpdateResponse,
+        response: SUser.AvatarUpdateResponse,
       },
     });
   }
 
-  static updateNotificationsConfig(data: z.infer<typeof NotificationsUpdateBody>) {
-    return api<z.infer<typeof NotificationsUpdateBody>>({
+  static updateNotificationsConfig(data: TUser.NotificationsUpdateBody) {
+    return api<TUser.NotificationsUpdateResponse>({
       url: '/users/me/notifications',
       method: 'PATCH',
       data,
       contracts: {
-        body: NotificationsUpdateBody,
-        response: NotificationsUpdateResponse,
+        body: SUser.NotificationsUpdateBody,
+        response: SUser.NotificationsUpdateResponse,
       },
     });
   }
 
-  static updateUserConfig(data: z.infer<typeof ProfileUpdateBody>) {
-    return api<z.infer<typeof ProfileUpdateBody>>({
+  static updateUserConfig(data: TUser.ProfileUpdateBody) {
+    return api<TUser.ProfileUpdateResponse>({
       url: '/users/me',
       method: 'PATCH',
       data,
       contracts: {
-        body: ProfileUpdateBody,
-        response: ProfileUpdateResponse,
+        body: SUser.ProfileUpdateBody,
+        response: SUser.ProfileUpdateResponse,
       },
     });
   }

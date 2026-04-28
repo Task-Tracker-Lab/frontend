@@ -1,6 +1,6 @@
 import { z } from 'zod/v4';
 
-const ValidationIssueSchema = z
+const ValidationIssue = z
   .object({
     origin: z.string().optional(),
     code: z.string(),
@@ -9,14 +9,14 @@ const ValidationIssueSchema = z
   })
   .catchall(z.unknown());
 
-export const GlobalErrorSchema = z.object({
+export const GlobalError = z.object({
   success: z.boolean(),
   error: z.object({
     code: z.string(),
     message: z.string(),
     retryable: z.boolean(),
   }),
-  details: z.array(ValidationIssueSchema).optional(),
+  details: z.array(ValidationIssue).optional(),
   meta: z
     .object({
       service: z.string().optional(),

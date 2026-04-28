@@ -1,2 +1,2 @@
-export { GlobalSuccessSchema } from './global-success-schema';
-export { GlobalErrorSchema } from './global-error-schema';
+export { GlobalSuccess } from './global-success';
+export { GlobalError } from './global-error';

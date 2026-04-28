@@ -1,6 +1,6 @@
 import { z } from 'zod/v4';
 
-export const ProfileFormSchema = z.object({
+export const ProfileForm = z.object({
   firstName: z
     .string()
     .trim()
@@ -15,5 +15,3 @@ export const ProfileFormSchema = z.object({
     .max(100, 'Слишком длинная фамилия'),
   bio: z.string().trim().max(512, 'Слишком длинное описание').optional().or(z.literal('')),
 });
-
-export type ProfileFormSchemaType = z.infer<typeof ProfileFormSchema>;

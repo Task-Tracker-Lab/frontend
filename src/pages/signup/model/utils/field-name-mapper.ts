@@ -1,11 +1,10 @@
 import type { FieldPath } from 'react-hook-form';
-import { SignupFormSchema } from '../schemas/signup-form-schema';
-import { z } from 'zod/v4';
-import { SignupBody } from 'entities/auth';
+import type { SignupFormValues } from '../types';
+import { TAuth } from 'entities/auth';
 
 export const fieldNameMapper = (
-  fieldName: FieldPath<z.infer<typeof SignupBody>>
-): FieldPath<z.infer<typeof SignupFormSchema>> => {
+  fieldName: FieldPath<TAuth.SignupBody>
+): FieldPath<SignupFormValues> => {
   switch (fieldName) {
     case 'firstName':
     case 'lastName':

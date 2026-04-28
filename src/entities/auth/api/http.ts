@@ -1,100 +1,88 @@
-import { z } from 'zod/v4';
 import { api } from 'shared/api';
-import { SigninBody, SigninResponse } from '../model/schemas/sign-in-schema';
-import { SignoutResponse } from '../model/schemas/sign-out-schema';
-import { SignupBody, SignupResponse } from '../model/schemas/sign-up-schema';
-import { SignupConfirmBody, SignupConfirmResponse } from '../model/schemas/sign-up-confirm-schema';
-import { ResetPasswordBody, ResetPasswordResponse } from '../model/schemas/reset-password-schema';
-import {
-  ResetPasswordVerifyBody,
-  ResetPasswordVerifyResponse,
-} from '../model/schemas/reset-password-verify-schema';
-import {
-  ResetPasswordConfirmBody,
-  ResetPasswordConfirmResponse,
-} from '../model/schemas/reset-password-confirm-schema';
+import * as SAuth from '../model/schemas';
+import * as TAuth from '../model/types';
 
 export class AuthHttp {
-  static signin(data: z.infer<typeof SigninBody>) {
-    return api<z.infer<typeof SigninResponse>>({
+  static signin(data: TAuth.SigninBody) {
+    return api<TAuth.SigninResponse>({
       url: '/auth/sign-in',
       method: 'POST',
       data: data,
       skipAuthRefresh: true,
       contracts: {
-        body: SigninBody,
-        response: SigninResponse,
+        body: SAuth.SigninBody,
+        response: SAuth.SigninResponse,
       },
     });
   }
 
   static signout() {
-    return api<z.infer<typeof SignoutResponse>>({
+    return api<TAuth.SignoutResponse>({
       url: '/auth/sign-out',
       method: 'POST',
       contracts: {
-        response: SignoutResponse,
+        response: SAuth.SignoutResponse,
       },
     });
   }
 
-  static signup(data: z.infer<typeof SignupBody>) {
-    return api<z.infer<typeof SignupResponse>>({
+  static signup(data: TAuth.SignupBody) {
+    return api<TAuth.SignupResponse>({
       url: '/auth/sign-up',
       method: 'POST',
       data: data,
       contracts: {
-        body: SignupBody,
-        response: SignupResponse,
+        body: SAuth.SignupBody,
+        response: SAuth.SignupResponse,
       },
     });
   }
 
-  static signupConfirm(data: z.infer<typeof SignupConfirmBody>) {
-    return api<z.infer<typeof SignupConfirmResponse>>({
+  static signupConfirm(data: TAuth.SignupConfirmBody) {
+    return api<TAuth.SignupConfirmResponse>({
       url: '/auth/sign-up/confirm',
       method: 'POST',
       data: data,
       skipAuthRefresh: true,
       contracts: {
-        body: SignupConfirmBody,
-        response: SignupConfirmResponse,
+        body: SAuth.SignupConfirmBody,
+        response: SAuth.SignupConfirmResponse,
       },
     });
   }
 
-  static resetPassword(data: z.infer<typeof ResetPasswordBody>) {
-    return api<z.infer<typeof ResetPasswordResponse>>({
+  static resetPassword(data: TAuth.ResetPasswordBody) {
+    return api<TAuth.ResetPasswordResponse>({
       url: '/auth/password/reset',
       method: 'POST',
       data: data,
       contracts: {
-        body: ResetPasswordBody,
-        response: ResetPasswordResponse,
+        body: SAuth.ResetPasswordBody,
+        response: SAuth.ResetPasswordResponse,
       },
     });
   }
 
-  static resetPasswordVerify(data: z.infer<typeof ResetPasswordVerifyBody>) {
-    return api<z.infer<typeof ResetPasswordVerifyResponse>>({
+  static resetPasswordVerify(data: TAuth.ResetPasswordVerifyBody) {
+    return api<TAuth.ResetPasswordVerifyResponse>({
       url: '/auth/password/reset/verify',
       method: 'POST',
       data: data,
       contracts: {
-        body: ResetPasswordVerifyBody,
-        response: ResetPasswordVerifyResponse,
+        body: SAuth.ResetPasswordVerifyBody,
+        response: SAuth.ResetPasswordVerifyResponse,
       },
     });
   }
 
-  static resetPasswordConfirm(data: z.infer<typeof ResetPasswordConfirmBody>) {
-    return api<z.infer<typeof ResetPasswordConfirmResponse>>({
+  static resetPasswordConfirm(data: TAuth.ResetPasswordConfirmBody) {
+    return api<TAuth.ResetPasswordConfirmResponse>({
       url: '/auth/password/reset/confirm',
       method: 'POST',
       data: data,
       contracts: {
-        body: ResetPasswordConfirmBody,
-        response: ResetPasswordConfirmResponse,
+        body: SAuth.ResetPasswordConfirmBody,
+        response: SAuth.ResetPasswordConfirmResponse,
       },
     });
   }

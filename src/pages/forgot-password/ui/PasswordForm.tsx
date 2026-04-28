@@ -18,20 +18,19 @@ import {
 import { ComponentProps, useState } from 'react';
 import { routes } from 'shared/config';
 import { useMutation } from '@tanstack/react-query';
-import { AuthHttp, ResetPasswordConfirmBody, ResetPasswordConfirmResponse } from 'entities/auth';
+import { AuthHttp, TAuth } from 'entities/auth';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { setFormErrors } from 'shared/lib/utils';
 import { extractValidationIssues } from 'shared/api';
-import { z } from 'zod/v4';
-import { PasswordFormSchema } from '../model/schemas/password-form-scema';
-
-type FSchema = z.infer<typeof PasswordFormSchema>;
-type BSchema = z.infer<typeof ResetPasswordConfirmBody>;
-type RSchema = z.infer<typeof ResetPasswordConfirmResponse>;
+import { PasswordForm as PasswordFormSchema } from '../model/schemas';
+import type { PasswordFormValues } from '../model/types';
 
 interface PasswordFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
-  onSuccess?: (body: BSchema, res: RSchema) => void;
+  onSuccess?: (
+    body: TAuth.ResetPasswordConfirmBody,
+    res: TAuth.ResetPasswordConfirmResponse
+  ) => void;
   email: string;
 }
 
@@ -39,7 +38,7 @@ function PasswordForm({ onSuccess, email, ...props }: PasswordFormProps) {
   const [showPassword, setShowPassword] = useState(false);
 
   const requestResetPassword = useMutation({
-    mutationFn: (data: BSchema) => {
+    mutationFn: (data: TAuth.ResetPasswordConfirmBody) => {
       return AuthHttp.resetPasswordConfirm(data);
     },
     meta: {
@@ -47,7 +46,7 @@ function PasswordForm({ onSuccess, email, ...props }: PasswordFormProps) {
     },
   });
 
-  const form = useForm<FSchema>({
+  const form = useForm<PasswordFormValues>({
     resolver: zodResolver(PasswordFormSchema),
     defaultValues: {
       password: '',
@@ -55,8 +54,8 @@ function PasswordForm({ onSuccess, email, ...props }: PasswordFormProps) {
     },
   });
 
-  const onSubmit = (data: FSchema) => {
-    const body: BSchema = {
+  const onSubmit = (data: PasswordFormValues) => {
+    const body: TAuth.ResetPasswordConfirmBody = {
       email,
       password: data.password,
       confirmPassword: data.confirmPassword,

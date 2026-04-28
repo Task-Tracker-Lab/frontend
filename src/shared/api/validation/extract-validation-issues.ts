@@ -1,7 +1,6 @@
 import { isAxiosError } from 'axios';
 import { isAxiosValidationError } from './AxiosValidationError';
-import { GlobalErrorSchema } from '../schemas';
-import { z } from 'zod/v4';
+import { GlobalError } from '../types';
 
 export interface ValidationIssue {
   message: string;
@@ -21,7 +20,7 @@ export function extractValidationIssues(err: unknown): ValidationIssue[] {
 
   // Ошибка валидации с бэкенда.
   if (
-    isAxiosError<z.infer<typeof GlobalErrorSchema>>(err) &&
+    isAxiosError<GlobalError>(err) &&
     VALIDATE_ERRORS_CODE.some((code) => code === err.response?.data?.error?.code)
   ) {
     return (

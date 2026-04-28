@@ -3,12 +3,11 @@
 import { OTPForm } from 'features/otp-form';
 import { ComponentProps } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { z } from 'zod/v4';
-import { AuthHttp, ResetPasswordVerifyBody } from 'entities/auth';
+import { AuthHttp, TAuth } from 'entities/auth';
 
 function CodeForm(props: Omit<ComponentProps<typeof OTPForm>, 'query'>) {
   const sendCode = useMutation({
-    mutationFn: (data: z.infer<typeof ResetPasswordVerifyBody>) => {
+    mutationFn: (data: TAuth.ResetPasswordVerifyBody) => {
       return AuthHttp.resetPasswordVerify(data);
     },
     meta: {
