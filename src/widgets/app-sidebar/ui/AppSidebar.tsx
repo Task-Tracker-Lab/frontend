@@ -60,7 +60,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
-                <Link href={routes.team.profile()}>
+                <Link href={routes.profile()}>
                   <UserRound />
                   <span>Мой профиль</span>
                 </Link>
@@ -68,7 +68,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
-                <Link href={routes.team.tasks()}>
+                <Link href={routes.tasks()}>
                   <ListTodo />
                   <span>Мои задачи</span>
                 </Link>
@@ -76,7 +76,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
-                <Link href={routes.team.projects()}>
+                <Link href={routes.projects()}>
                   <FolderKanban />
                   <span>Мои Проекты</span>
                 </Link>

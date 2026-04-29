@@ -74,7 +74,7 @@ export function NavUser({
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <BadgeCheck />
-                <Link href={routes.team.profile()}>Account</Link>
+                <Link href={routes.profile()}>Account</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Bell />
