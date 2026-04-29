@@ -14,7 +14,7 @@ COPY package.json ./
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --offline --frozen-lockfile
 
 FROM base AS builder
-ARG NEXT_PUBLIC_API_BASE_URL=__REPLACE_API_URL_BUILD__
+ARG NEXT_PUBLIC_API_BASE_URL
 
 ENV NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL \
     NEXT_TELEMETRY_DISABLED=1
