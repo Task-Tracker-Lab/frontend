@@ -1,12 +1,12 @@
 class AccessToken {
-  static _token: string | null = null;
+  static #token: string | null = null;
 
   static set token(token: string) {
-    this._token = token;
+    this.#token = token;
   }
 
   static get token(): string | null {
-    return this._token;
+    return this.#token;
   }
 
   static get header() {
@@ -14,7 +14,7 @@ class AccessToken {
   }
 
   static clear() {
-    this._token = null;
+    this.#token = null;
   }
 
   static getHeader(token: string | null = this.token) {

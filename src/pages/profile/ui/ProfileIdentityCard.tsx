@@ -12,22 +12,22 @@ import {
   Input,
   Textarea,
 } from 'shared/ui';
-import { useCurrentUser } from '../model/queries/use-current-user';
-import { useMutation } from '@tanstack/react-query';
-import { patchUser } from '../model/services/patch-user';
 import { toast } from 'sonner';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ProfileFormSchema, ProfileFormSchemaType } from '../model/schemas/profile-form';
-import { ProfileUpdateSchemaType } from '../model/schemas/profile-update';
 import { ProfileAvatarSection } from './ProfileAvatarSection';
+import { TUser, UserQueries } from 'entities/user';
+import { ProfileForm as ProfileFormSchema } from '../model/schemas';
+import type { ProfileFormValues } from '../model/types';
+import { useUpdateProfile } from '../model/useUpdateProfile';
+import { useQuery } from '@tanstack/react-query';
 
 function ProfileIdentityCard(props: Omit<ComponentProps<typeof Card>, 'children'>) {
-  const query = useCurrentUser();
+  const query = useQuery(UserQueries.getMe());
   const profile = query.data?.profile;
   const email = query.data?.email;
 
-  const form = useForm<ProfileFormSchemaType>({
+  const form = useForm<ProfileFormValues>({
     resolver: zodResolver(ProfileFormSchema),
     defaultValues: {
       firstName: '',
@@ -37,8 +37,7 @@ function ProfileIdentityCard(props: Omit<ComponentProps<typeof Card>, 'children'
   });
   const formValues = useWatch({ control: form.control });
 
-  const updateProfileMutation = useMutation({
-    mutationFn: patchUser,
+  const updateProfileMutation = useUpdateProfile({
     onSuccess: async () => {
       toast.success('Профиль обновлён');
       await query.refetch();
@@ -69,13 +68,13 @@ function ProfileIdentityCard(props: Omit<ComponentProps<typeof Card>, 'children'
   }
 
   const fullName = `${profile.firstName} ${profile.lastName}`;
-  const profileFormKeys: Array<keyof ProfileFormSchemaType> = ['firstName', 'lastName', 'bio'];
+  const profileFormKeys: Array<keyof ProfileFormValues> = ['firstName', 'lastName', 'bio'];
   const hasProfileChanges = profileFormKeys.some(
     (key) => (formValues[key] ?? '').trim() !== (profile[key] ?? '').trim()
   );
 
-  const onSubmit = (data: ProfileFormSchemaType) => {
-    const body: ProfileUpdateSchemaType = {
+  const onSubmit = (data: ProfileFormValues) => {
+    const body: TUser.ProfileUpdateBody = {
       firstName: data.firstName.trim(),
       lastName: data.lastName.trim(),
       bio: data.bio ? data.bio.trim() : '',

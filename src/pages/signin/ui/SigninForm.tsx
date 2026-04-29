@@ -1,8 +1,9 @@
 'use client';
 
-import { Controller, type FieldPath, useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { SigninFormSchema } from '../model/schemas/sign-in-form-schema';
+import { SigninForm as SigninFormSchema } from '../model/schemas';
+import type { SigninFormValues } from '../model/types';
 import {
   Button,
   Card,
@@ -19,37 +20,19 @@ import {
   InputPassword,
   Link,
 } from 'shared/ui';
-import { cn } from 'shared/lib/utils';
+import { cn, setFormErrors } from 'shared/lib/utils';
 import { routes } from 'shared/config';
-import * as z from 'zod';
-import { useMutation } from '@tanstack/react-query';
-import {
-  extractValidationIssues,
-  signin,
-  SigninBody,
-  SigninResponse,
-  ValidationIssue,
-} from 'shared/api';
+import { extractValidationIssues } from 'shared/api';
+import { TAuth } from 'entities/auth';
+import { ComponentProps } from 'react';
+import { useSignin } from '../model/useSignin';
 
-type FSchema = z.infer<typeof SigninFormSchema>;
-type BSchema = z.infer<typeof SigninBody>;
-type RSchema = z.infer<typeof SigninResponse>;
-
-interface SigninFormProps extends Omit<React.ComponentProps<'form'>, 'children' | 'onSubmit'> {
-  onSuccess?: (body: BSchema, res: RSchema) => void;
+interface SigninFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
+  onSuccess?: (body: TAuth.SigninBody, res: TAuth.SigninResponse) => void;
 }
 
 export function SigninForm({ className, onSuccess, ...props }: SigninFormProps) {
-  const sendUserData = useMutation({
-    mutationFn: (data: BSchema) => {
-      return signin(data);
-    },
-    meta: {
-      skipGlobalValidationToast: true,
-    },
-  });
-
-  const form = useForm<FSchema>({
+  const form = useForm<SigninFormValues>({
     resolver: zodResolver(SigninFormSchema),
     defaultValues: {
       email: '',
@@ -57,29 +40,20 @@ export function SigninForm({ className, onSuccess, ...props }: SigninFormProps) 
     },
   });
 
-  function setFormErrors(errors: ValidationIssue[]) {
-    if (Array.isArray(errors)) {
-      errors.forEach(({ message, path: [path] }) => {
-        const filedName = path as FieldPath<FSchema>;
-        form.setError(filedName, { message });
-      });
-    }
-  }
+  const sendUserData = useSignin({
+    onSuccess,
+    onError: (err) => {
+      setFormErrors(extractValidationIssues(err), form);
+    },
+  });
 
-  const onSubmit = (data: FSchema) => {
-    const body: BSchema = {
+  const onSubmit = (data: SigninFormValues) => {
+    const body: TAuth.SigninBody = {
       email: data.email,
       password: data.password,
     };
 
-    sendUserData.mutate(body, {
-      onSuccess: (res) => {
-        onSuccess?.(body, res);
-      },
-      onError: (err) => {
-        setFormErrors(extractValidationIssues(err));
-      },
-    });
+    sendUserData.mutate(body);
   };
 
   return (
@@ -118,17 +92,24 @@ export function SigninForm({ className, onSuccess, ...props }: SigninFormProps) 
                 <Field data-invalid={fieldState.invalid}>
                   <div className="flex items-center">
                     <FieldLabel htmlFor="password">Пароль</FieldLabel>
-                    <Link href="#" className="ml-auto text-sm">
+                    <Link href={routes.auth.forgotPassword()} className="ml-auto text-sm">
                       Забыли пароль?
                     </Link>
                   </div>
-                  <InputPassword {...field} id="password" aria-invalid={fieldState.invalid} />
+                  <InputPassword
+                    {...field}
+                    id="password"
+                    aria-invalid={fieldState.invalid}
+                    autoComplete="current-password"
+                  />
                   {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                 </Field>
               )}
             />
             <Field>
-              <Button type="submit">Войти</Button>
+              <Button type="submit" disabled={sendUserData.isPending}>
+                Войти
+              </Button>
             </Field>
             <Field>
               <FieldDescription className="text-center">

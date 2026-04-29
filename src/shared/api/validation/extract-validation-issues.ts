@@ -1,11 +1,13 @@
 import { isAxiosError } from 'axios';
 import { isAxiosValidationError } from './AxiosValidationError';
-import { GlobalErrorResponseType } from '../errors';
+import { GlobalError } from '../types';
 
 export interface ValidationIssue {
   message: string;
   path: string[];
 }
+
+const VALIDATE_ERRORS_CODE: string[] = ['VALIDATION_FAILED'];
 
 export function extractValidationIssues(err: unknown): ValidationIssue[] {
   // Локальная ошибка валидации (например, от контрактов на клиенте).
@@ -17,7 +19,10 @@ export function extractValidationIssues(err: unknown): ValidationIssue[] {
   }
 
   // Ошибка валидации с бэкенда.
-  if (isAxiosError<GlobalErrorResponseType>(err)) {
+  if (
+    isAxiosError<GlobalError>(err) &&
+    VALIDATE_ERRORS_CODE.some((code) => code === err.response?.data?.error?.code)
+  ) {
     return (
       err.response?.data?.details?.map(({ message, path }) => ({
         message,

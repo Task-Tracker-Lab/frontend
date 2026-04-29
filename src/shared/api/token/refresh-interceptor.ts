@@ -1,9 +1,8 @@
 import { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
-import { z } from 'zod';
-import { RefreshTokenResponse } from './response-schema';
+import { RefreshTokenResponse } from './response';
+import type { RefreshTokenResponse as RefreshTokenResponseType } from './types';
 import { AccessToken } from './access-token';
-import { GlobalErrorResponseType } from '../errors';
-import { signout } from '../auth';
+import { GlobalError } from '../types';
 
 declare module 'axios' {
   export interface AxiosRequestConfig {
@@ -34,7 +33,7 @@ export const refreshInterceptor = (instance: AxiosInstance) => {
 
   instance.interceptors.response.use(
     (response) => response,
-    async (error: AxiosError<GlobalErrorResponseType>) => {
+    async (error: AxiosError<GlobalError>) => {
       const originalRequest = error.config as RetryRequestConfig;
 
       if (
@@ -58,7 +57,7 @@ export const refreshInterceptor = (instance: AxiosInstance) => {
         isRefreshing = true;
 
         try {
-          const response = await instance.request<z.infer<typeof RefreshTokenResponse>>({
+          const response = await instance.request<RefreshTokenResponseType>({
             url: `/auth/refresh`,
             method: 'POST',
             contracts: {
@@ -85,11 +84,6 @@ export const refreshInterceptor = (instance: AxiosInstance) => {
           return instance(originalRequest);
         } catch (refreshError) {
           processQueue(refreshError);
-          try {
-            await signout();
-          } catch (err) {
-            return Promise.reject(err);
-          }
           AccessToken.clear();
           return Promise.reject(refreshError);
         } finally {

@@ -5,6 +5,7 @@ export const routes = {
   auth: {
     signin: (): Route => '/signin',
     signup: (): Route => '/signup',
+    forgotPassword: (): Route => '/forgot-password',
   },
   team: {
     root: (): Route => '/team',

@@ -1,5 +1,5 @@
 import { AxiosHeaders, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios';
-import type { ZodType } from 'zod';
+import type { ZodType } from 'zod/v4';
 import { AxiosValidationError } from './AxiosValidationError';
 
 declare module 'axios' {

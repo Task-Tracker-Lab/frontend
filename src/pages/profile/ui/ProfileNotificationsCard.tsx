@@ -1,8 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
 import { ComponentProps, useEffect, useId, useReducer } from 'react';
-import { useCurrentUser } from '../model/queries/use-current-user';
-import { patchUser as patchNotifications } from '../model/services/patch-notifications';
-import { type UserResponseSchemaType } from '../model/schemas/user-response';
 import { useQueuedDebouncedMutation } from 'shared/lib/hooks';
 import {
   Card,
@@ -15,10 +11,13 @@ import {
   Switch,
 } from 'shared/ui';
 import { toast } from 'sonner';
+import { TUser, UserQueries } from 'entities/user';
+import { useUpdateNotifications } from '../model/useUpdateNotifications';
+import { useQuery } from '@tanstack/react-query';
 
 const SAVE_DEBOUNCE_MS = 500;
 
-type Notifications = UserResponseSchemaType['notifications'];
+type Notifications = TUser.UserResponse['notifications'];
 type NotificationsState = Notifications | null;
 type NotificationChannel = keyof Pick<Notifications, 'email' | 'push'>;
 
@@ -63,14 +62,13 @@ function SwitchItem({ label, ...props }: SwitchItemProps) {
 }
 
 function ProfileNotificationsCard() {
-  const query = useCurrentUser();
+  const query = useQuery(UserQueries.getMe());
   const notifications = query.data?.notifications;
   const [localNotifications, dispatchLocalNotifications] = useReducer(
     notificationsReducer,
     notifications ?? null
   );
-  const sendSettings = useMutation({
-    mutationFn: patchNotifications,
+  const sendSettings = useUpdateNotifications({
     onSuccess: () => {
       toast.success('Настройки уведомлений обновлены');
       query.refetch();

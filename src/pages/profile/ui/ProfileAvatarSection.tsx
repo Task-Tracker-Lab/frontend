@@ -1,9 +1,8 @@
-import { useMutation } from '@tanstack/react-query';
 import { Pencil } from 'lucide-react';
 import { type ChangeEvent, useRef } from 'react';
-import { postAvatar } from '../model/services/post-avatar';
 import { Avatar, AvatarFallback, AvatarImage, Button } from 'shared/ui';
 import { toast } from 'sonner';
+import { useUpdateAvatar } from '../model/useUpdateAvatar';
 
 interface ProfileAvatarSectionProps {
   avatarUrl: string | null;
@@ -22,8 +21,7 @@ function ProfileAvatarSection({
 }: ProfileAvatarSectionProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const uploadAvatarMutation = useMutation({
-    mutationFn: postAvatar,
+  const uploadAvatarMutation = useUpdateAvatar({
     onSuccess: async () => {
       toast.success('Аватар обновлён');
       await onUploaded();

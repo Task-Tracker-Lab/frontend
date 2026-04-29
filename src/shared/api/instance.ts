@@ -1,4 +1,4 @@
-import Axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import Axios, { AxiosRequestConfig } from 'axios';
 import { applyInterceptors } from './interceptors';
 
 const AXIOS_INSTANCE = Axios.create({
@@ -8,12 +8,6 @@ const AXIOS_INSTANCE = Axios.create({
 
 applyInterceptors(AXIOS_INSTANCE);
 
-export const instance = <Res>(
-  config: AxiosRequestConfig,
-  options: AxiosRequestConfig = {}
-): Promise<Res> => {
-  return AXIOS_INSTANCE({ ...config, ...options }).then(({ data }) => data);
+export const instance = <Res>(config: AxiosRequestConfig): Promise<Res> => {
+  return AXIOS_INSTANCE(config).then(({ data }) => data);
 };
-
-export type ErrorType<Error> = AxiosError<Error>;
-export type BodyType<BodyData> = BodyData;

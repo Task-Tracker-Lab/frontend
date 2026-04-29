@@ -1,6 +1,5 @@
 'use client';
 
-import type { FieldPath } from 'react-hook-form';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -21,42 +20,25 @@ import {
   Link,
   Spinner,
 } from 'shared/ui';
-import { SignupFormSchema } from '../model/schemas/signup-form-schema';
-import { cn } from 'shared/lib/utils';
+import type { SignupFormValues } from '../model/types';
+import { SignupForm as SignupFormSchema } from '../model/schemas';
+import { cn, setFormErrors } from 'shared/lib/utils';
 import { routes } from 'shared/config';
-import { z } from 'zod';
-import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { ComponentProps, useState } from 'react';
 import { fieldNameMapper } from '../model/utils/field-name-mapper';
 import { prepareFullName } from '../model/utils/prepare-fullname';
-import {
-  extractValidationIssues,
-  signup,
-  SignupBody,
-  SignupResponse,
-  ValidationIssue,
-} from 'shared/api';
+import { extractValidationIssues } from 'shared/api';
+import { TAuth } from 'entities/auth';
+import { useSignup } from '../model/useSignup';
 
-type FSchema = z.infer<typeof SignupFormSchema>;
-type BSchema = z.infer<typeof SignupBody>;
-type RSchema = z.infer<typeof SignupResponse>;
-
-interface SignupFormProps extends Omit<React.ComponentProps<'form'>, 'children' | 'onSubmit'> {
-  onSuccess?: (body: BSchema, res: RSchema) => void;
+interface SignupFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
+  onSuccess?: (body: TAuth.SignupBody, res: TAuth.SignupResponse) => void;
 }
 
 export function SignupForm({ className, onSuccess, ...props }: SignupFormProps) {
   const [showPassword, setShowPassword] = useState(false);
-  const sendUserData = useMutation({
-    mutationFn: (data: BSchema) => {
-      return signup(data);
-    },
-    meta: {
-      skipGlobalValidationToast: true,
-    },
-  });
 
-  const form = useForm<FSchema>({
+  const form = useForm<SignupFormValues>({
     resolver: zodResolver(SignupFormSchema),
     defaultValues: {
       name: '',
@@ -66,32 +48,25 @@ export function SignupForm({ className, onSuccess, ...props }: SignupFormProps) 
     },
   });
 
-  function setFormErrors(errors: ValidationIssue[]) {
-    if (Array.isArray(errors)) {
-      errors.forEach(({ message, path: [path] }) => {
-        const typedPath = path as FieldPath<BSchema>;
-        const filedName = fieldNameMapper(typedPath);
+  const sendUserData = useSignup({
+    onSuccess,
+    onError: (err) => {
+      setFormErrors<SignupFormValues, TAuth.SignupBody>(
+        extractValidationIssues(err),
+        form,
+        fieldNameMapper
+      );
+    },
+  });
 
-        form.setError(filedName, { message });
-      });
-    }
-  }
-
-  const onSubmit = (data: FSchema) => {
-    const body: BSchema = {
+  const onSubmit = (data: SignupFormValues) => {
+    const body: TAuth.SignupBody = {
       email: data.email,
       password: data.password,
       ...prepareFullName(data.name),
     };
 
-    sendUserData.mutate(body, {
-      onSuccess: (res) => {
-        onSuccess?.(body, res);
-      },
-      onError: (err) => {
-        setFormErrors(extractValidationIssues(err));
-      },
-    });
+    sendUserData.mutate(body);
   };
 
   return (
@@ -112,7 +87,7 @@ export function SignupForm({ className, onSuccess, ...props }: SignupFormProps) 
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="name">Имя</FieldLabel>
+                  <FieldLabel htmlFor="name">Имя и фамилия</FieldLabel>
                   <Input
                     {...field}
                     id="name"
@@ -121,6 +96,7 @@ export function SignupForm({ className, onSuccess, ...props }: SignupFormProps) 
                     aria-invalid={fieldState.invalid}
                     type="text"
                     placeholder="Алексей Смирнов"
+                    autoComplete="name"
                     disabled={sendUserData.isPending}
                   />
                   {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
@@ -152,10 +128,17 @@ export function SignupForm({ className, onSuccess, ...props }: SignupFormProps) 
                   <FieldLabel htmlFor="password">Пароль</FieldLabel>
                   <InputPassword
                     {...field}
+                    onChange={(event) => {
+                      field.onChange(event);
+                      if (form.getFieldState('confirmPassword').isTouched) {
+                        void form.trigger('confirmPassword');
+                      }
+                    }}
                     id="password"
                     aria-invalid={fieldState.invalid}
                     visible={showPassword}
                     onVisibleChange={setShowPassword}
+                    autoComplete="new-password"
                     disabled={sendUserData.isPending}
                   />
                   {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
@@ -175,6 +158,7 @@ export function SignupForm({ className, onSuccess, ...props }: SignupFormProps) 
                     aria-invalid={fieldState.invalid}
                     aria-label="Повторите пароль"
                     visible={showPassword}
+                    autoComplete="new-password"
                     disabled={sendUserData.isPending}
                   />
                   {fieldState.invalid && <FieldError errors={[fieldState.error]} />}

@@ -2,13 +2,13 @@
 
 import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle } from 'shared/ui';
 import { cn } from 'shared/lib/utils';
-import { currentUserQueryKey, useCurrentUser } from '../model/queries/use-current-user';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { ProfilePageSkeleton } from './ProfilePage.skeleton';
 import { ProfileIdentityCard } from './ProfileIdentityCard';
 import { ProfileSecurityCard } from './ProfileSecurityCard';
 import { ProfileNotificationsCard } from './ProfileNotificationsCard';
 import { SignOut } from './SignOut';
+import { userFabricKeys, UserQueries } from 'entities/user';
 
 interface ProfilePageProps {
   className?: string;
@@ -17,9 +17,9 @@ interface ProfilePageProps {
 function ProfilePage({ className }: ProfilePageProps) {
   const queryClient = useQueryClient();
   const invalidateUser = async () =>
-    await queryClient.invalidateQueries({ queryKey: currentUserQueryKey });
+    await queryClient.invalidateQueries({ queryKey: userFabricKeys.me() });
 
-  const query = useCurrentUser();
+  const query = useQuery(UserQueries.getMe());
   if (query.isLoading) {
     return <ProfilePageSkeleton />;
   }

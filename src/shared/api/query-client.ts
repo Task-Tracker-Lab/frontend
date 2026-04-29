@@ -1,6 +1,6 @@
 import { toast } from 'sonner';
 import { MutationCache, QueryCache, QueryClient } from '@tanstack/react-query';
-import { ErrorMessage, ErrorUtils } from './errors';
+import { ErrorMessage, ErrorUtils } from './error-utils';
 import { AxiosValidationError } from './validation';
 
 interface AppQueryMeta extends Record<string, unknown> {
