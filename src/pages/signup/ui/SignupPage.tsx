@@ -60,7 +60,7 @@ function SignupPage() {
               if (res.success) {
                 clearDraft();
                 AccessToken.token = res.token;
-                router.replace(routes.team.profile());
+                router.replace(routes.profile());
                 if (res.message) {
                   toast.success(res.message);
                 }
