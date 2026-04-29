@@ -8,15 +8,12 @@ import {
   CardHeader,
   CardTitle,
   Field,
-  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
   InputPassword,
-  Link,
 } from 'shared/ui';
 import { ComponentProps, useState } from 'react';
-import { routes } from 'shared/config';
 import { TAuth } from 'entities/auth';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -120,11 +117,6 @@ function PasswordForm({ onSuccess, email, ...props }: PasswordFormProps) {
               <Button type="submit" disabled={disabled}>
                 Сохранить пароль
               </Button>
-            </Field>
-            <Field>
-              <FieldDescription className="text-center">
-                Вспомнили пароль? <Link href={routes.auth.signin()}>Войти</Link>
-              </FieldDescription>
             </Field>
           </FieldGroup>
         </form>

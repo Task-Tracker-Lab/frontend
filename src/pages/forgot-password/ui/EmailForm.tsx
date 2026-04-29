@@ -8,14 +8,11 @@ import {
   CardHeader,
   CardTitle,
   Field,
-  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
   InputEmail,
-  Link,
 } from 'shared/ui';
-import { routes } from 'shared/config';
 import { TAuth } from 'entities/auth';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -83,11 +80,6 @@ function EmailForm({ onSuccess, ...props }: EmailFormProps) {
               <Button type="submit" disabled={disabled}>
                 Отправить код
               </Button>
-            </Field>
-            <Field>
-              <FieldDescription className="text-center">
-                Вспомнили пароль? <Link href={routes.auth.signin()}>Войти</Link>
-              </FieldDescription>
             </Field>
           </FieldGroup>
         </form>
