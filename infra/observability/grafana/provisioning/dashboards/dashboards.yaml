@@ -1,0 +1,11 @@
+apiVersion: 1
+
+providers:
+  - name: task-tracker-observability
+    orgId: 1
+    folder: Task Tracker
+    type: file
+    disableDeletion: false
+    editable: true
+    options:
+      path: /etc/grafana/dashboards

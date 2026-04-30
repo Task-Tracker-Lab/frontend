@@ -2,6 +2,7 @@ import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { routes } from 'shared/config';
 import type { Route } from 'next';
+import { trace } from '@opentelemetry/api';
 
 const REFRESH_COOKIE = 'refresh';
 
@@ -28,7 +29,18 @@ export function proxy(req: NextRequest) {
     return NextResponse.redirect(new URL(routes.profile(), req.url));
   }
 
-  return NextResponse.next();
+  const response = NextResponse.next();
+  const current = trace.getActiveSpan();
+
+  // set server-timing header with traceparent
+  if (current) {
+    response.headers.set(
+      'server-timing',
+      `traceparent;desc="00-${current.spanContext().traceId}-${current.spanContext().spanId}-01"`
+    );
+  }
+
+  return response;
 }
 
 export const config = {
