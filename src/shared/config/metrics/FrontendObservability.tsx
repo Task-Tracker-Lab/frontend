@@ -8,44 +8,65 @@ let isFaroInitialized = false;
 
 export default function FrontendObservability() {
   useEffect(() => {
-    if (isFaroInitialized || faro.api) {
-      return;
+    const initializeWhenIdle = () => {
+      if (isFaroInitialized || faro.api) {
+        return;
+      }
+
+      const faroUrl = process.env.NEXT_PUBLIC_FARO_URL;
+      const appName = process.env.NEXT_PUBLIC_FARO_APP_NAME;
+
+      if (!faroUrl || !appName) {
+        return;
+      }
+
+      const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+      const traceHeaderCorsUrls = apiBaseUrl ? [new URL(apiBaseUrl).origin] : [];
+
+      try {
+        initializeFaro({
+          url: faroUrl,
+          // Basic metadata allows filtering by env/release in Grafana Explore.
+          app: {
+            name: appName,
+            namespace: process.env.NEXT_PUBLIC_FARO_APP_NAMESPACE || undefined,
+            version: process.env.NEXT_PUBLIC_FARO_APP_VERSION || '1.0.0',
+            environment: process.env.NEXT_PUBLIC_APP_ENV || process.env.NODE_ENV || 'development',
+          },
+          instrumentations: [
+            ...getWebInstrumentations(),
+            new TracingInstrumentation({
+              instrumentationOptions: {
+                propagateTraceHeaderCorsUrls: traceHeaderCorsUrls,
+              },
+            }),
+          ],
+        });
+
+        isFaroInitialized = true;
+      } catch {
+        // Silent fail: observability should never break user flows.
+      }
+    };
+
+    let idleCallbackId: number | null = null;
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+    if ('requestIdleCallback' in window) {
+      idleCallbackId = window.requestIdleCallback(() => initializeWhenIdle(), { timeout: 2000 });
+    } else {
+      timeoutId = setTimeout(initializeWhenIdle, 0);
     }
 
-    const faroUrl = process.env.NEXT_PUBLIC_FARO_URL;
-    const appName = process.env.NEXT_PUBLIC_FARO_APP_NAME;
+    return () => {
+      if (idleCallbackId !== null && 'cancelIdleCallback' in window) {
+        window.cancelIdleCallback(idleCallbackId);
+      }
 
-    if (!faroUrl || !appName) {
-      return;
-    }
-
-    const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-    const traceHeaderCorsUrls = apiBaseUrl ? [new URL(apiBaseUrl).origin] : [];
-
-    try {
-      initializeFaro({
-        url: faroUrl,
-        // Basic metadata allows filtering by env/release in Grafana Explore.
-        app: {
-          name: appName,
-          namespace: process.env.NEXT_PUBLIC_FARO_APP_NAMESPACE || undefined,
-          version: process.env.NEXT_PUBLIC_FARO_APP_VERSION || '1.0.0',
-          environment: process.env.NEXT_PUBLIC_APP_ENV || process.env.NODE_ENV || 'development',
-        },
-        instrumentations: [
-          ...getWebInstrumentations(),
-          new TracingInstrumentation({
-            instrumentationOptions: {
-              propagateTraceHeaderCorsUrls: traceHeaderCorsUrls,
-            },
-          }),
-        ],
-      });
-
-      isFaroInitialized = true;
-    } catch {
-      // Silent fail: observability should never break user flows.
-    }
+      if (timeoutId !== null) {
+        clearTimeout(timeoutId);
+      }
+    };
   }, []);
 
   return null;
