@@ -1,0 +1,102 @@
+name: task-tracker-observability
+
+services:
+  grafana:
+    image: grafana/grafana-enterprise:latest
+    container_name: grafana
+    env_file:
+      - .env
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-admin}
+    ports:
+      - '${GRAFANA_PORT:-3010}:3000'
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/etc/grafana/dashboards
+    depends_on:
+      - loki
+      - tempo
+    networks:
+      - observability
+
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    command:
+      - -config.file=/etc/loki/local-config.yaml
+      - -config.expand-env=true
+    env_file:
+      - .env
+    environment:
+      LOKI_HTTP_PORT: ${LOKI_HTTP_PORT:-3100}
+      LOKI_GRPC_PORT: ${LOKI_GRPC_PORT:-9096}
+    ports:
+      - '${LOKI_HTTP_PORT:-3100}:3100'
+      - '${LOKI_GRPC_PORT:-9096}:9096'
+    volumes:
+      - ./loki/loki-config.yaml:/etc/loki/local-config.yaml
+      - loki_data:/loki
+    networks:
+      - observability
+
+  tempo:
+    image: grafana/tempo:latest
+    container_name: tempo
+    command:
+      - -config.file=/etc/tempo/tempo.yaml
+      - -config.expand-env=true
+    env_file:
+      - .env
+    environment:
+      TEMPO_PORT: ${TEMPO_PORT:-3200}
+      TEMPO_OTLP_GRPC_PORT: ${TEMPO_OTLP_GRPC_PORT:-4317}
+      TEMPO_OTLP_HTTP_PORT: ${TEMPO_OTLP_HTTP_PORT:-4318}
+    ports:
+      - '${TEMPO_PORT:-3200}:3200'
+      - '${TEMPO_OTLP_GRPC_PORT:-4317}:4317'
+      - '${TEMPO_OTLP_HTTP_PORT:-4318}:4318'
+    volumes:
+      - ./tempo/tempo-config.yaml:/etc/tempo/tempo.yaml
+      - tempo_data:/var/tempo
+    networks:
+      - observability
+
+  alloy:
+    image: grafana/alloy:latest
+    container_name: alloy
+    env_file:
+      - .env
+    environment:
+      LOKI_HOST: loki
+      LOKI_HTTP_PORT: ${LOKI_HTTP_PORT:-3100}
+      TEMPO_HOST: tempo
+      TEMPO_OTLP_GRPC_PORT: ${TEMPO_OTLP_GRPC_PORT:-4317}
+      ALLOY_OTLP_GRPC_PORT: ${ALLOY_OTLP_GRPC_PORT:-4319}
+    command:
+      - run
+      - --server.http.listen-addr=0.0.0.0:${ALLOY_UI_PORT:-12345}
+      - --storage.path=/var/lib/alloy/data
+      - /etc/alloy/config.alloy
+    ports:
+      - '${ALLOY_UI_PORT:-12345}:${ALLOY_UI_PORT:-12345}'
+      - '${ALLOY_FARO_PORT:-12347}:12347'
+      - '${ALLOY_OTLP_GRPC_PORT:-4319}:4319'
+    volumes:
+      - ./alloy/config.alloy:/etc/alloy/config.alloy
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      - loki
+      - tempo
+    networks:
+      - observability
+
+volumes:
+  grafana_data:
+  loki_data:
+  tempo_data:
+
+networks:
+  observability:
+    name: task-tracker-observability
