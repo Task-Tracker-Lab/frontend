@@ -45,7 +45,7 @@ export class LocalStorageDraft<T extends DraftRecord> {
     }
   }
 
-  set(payload: T, ttlMs: number): DraftWithTTL<T> {
+  set(payload: T, ttlMs?: number): DraftWithTTL<T> {
     const nextDraft = this._create(payload, ttlMs);
 
     if (typeof window !== 'undefined') {
@@ -74,11 +74,21 @@ export class LocalStorageDraft<T extends DraftRecord> {
     this._notify(this.read());
   }
 
-  private _create(payload: T, ttlMs: number): DraftWithTTL<T> {
-    return {
-      ...payload,
-      ttl: Date.now() + ttlMs,
-    };
+  private _create(payload: T, ttlMs?: number): DraftWithTTL<T> {
+    const ttl = this.read()?.ttl;
+    if (ttl && ttlMs === undefined) {
+      return {
+        ...payload,
+        ttl,
+      };
+    } else if (typeof ttlMs === 'number') {
+      return {
+        ...payload,
+        ttl: Date.now() + ttlMs,
+      };
+    }
+
+    throw new Error('ttlMs is required');
   }
 
   private _notify(draft: DraftWithTTL<T> | null): void {

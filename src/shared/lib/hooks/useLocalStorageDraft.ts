@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { DraftRecord, DraftWithTTL, LocalStorageDraft } from '../classes';
 
 interface UseLocalStorageDraftOptions<T extends DraftRecord> {
@@ -11,6 +11,7 @@ interface UseLocalStorageDraftOptions<T extends DraftRecord> {
 interface UseLocalStorageDraftReturn<T extends DraftRecord> {
   draft: DraftWithTTL<T> | null;
   setDraft: (payload: T, ttlMs?: number) => void;
+  resetDraft: () => void;
   clearDraft: () => void;
   draftStorage: LocalStorageDraft<T>;
 }
@@ -20,12 +21,14 @@ export function useLocalStorageDraft<T extends DraftRecord>(
   options: UseLocalStorageDraftOptions<T> = {}
 ): UseLocalStorageDraftReturn<T> {
   const defaultTTLms = options.defaultTTLms ?? 15 * 60 * 1000;
-  const defaultValues = options.defaultValues ?? null;
+  const defaultValuesRef = useRef(options.defaultValues ?? null);
   const draftStorage = useMemo(() => new LocalStorageDraft<T>(storageKey), [storageKey]);
 
   const [draft, setDraft] = useState<DraftWithTTL<T> | null>(null);
 
   useEffect(() => {
+    const defaultValues = defaultValuesRef.current;
+
     if (defaultValues && !draftStorage.read()) {
       draftStorage.set(defaultValues, defaultTTLms);
     }
@@ -36,7 +39,7 @@ export function useLocalStorageDraft<T extends DraftRecord>(
     draftStorage.emitCurrent();
 
     return unsubscribe;
-  }, [draftStorage]);
+  }, [defaultTTLms, draftStorage]);
 
   const setDraftWithTTL = useCallback(
     (payload: T, ttlMs = defaultTTLms) => {
@@ -49,9 +52,21 @@ export function useLocalStorageDraft<T extends DraftRecord>(
     draftStorage.clear();
   }, [draftStorage]);
 
+  const resetDraft = useCallback(() => {
+    const defaultValues = defaultValuesRef.current;
+
+    if (!defaultValues) {
+      draftStorage.clear();
+      return;
+    }
+
+    draftStorage.set(defaultValues, defaultTTLms);
+  }, [defaultTTLms, draftStorage]);
+
   return {
     draft,
     setDraft: setDraftWithTTL,
+    resetDraft,
     clearDraft,
     draftStorage,
   };

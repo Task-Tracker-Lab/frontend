@@ -1,69 +1,75 @@
 'use client';
 
-import { Controller, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import {
-  Button,
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
-  Field,
-  FieldError,
-  FieldGroup,
   InputOtp,
   InputOTPGroup,
   InputOTPSlot,
-  Spinner,
 } from 'shared/ui';
-import { OtpForm as OtpFormSchema } from '../model/schemas';
-import { cn, setFormErrors } from 'shared/lib/utils';
-import { DefaultError, UseMutationResult } from '@tanstack/react-query';
-import { extractValidationIssues } from 'shared/api';
+import { DefaultError, MutateOptions, UseMutationResult } from '@tanstack/react-query';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
-import { ComponentProps } from 'react';
-import type { FormBody, OtpForm } from '../model/types';
+import { ComponentProps, useState } from 'react';
+import { CAuth } from 'entities/auth';
+import type { OTPFormBody } from '../model/types';
+import { classNames } from 'shared/lib/utils';
 
-interface OTPFormProps<TData> extends Omit<ComponentProps<'form'>, 'children'> {
+interface OTPFormProps<TData> extends Omit<ComponentProps<typeof CardContent>, 'onAnimationEnd'> {
   email: string;
-  onSuccess?: (body: FormBody, res: TData) => void;
-  autoFocusCode?: boolean;
-  query: UseMutationResult<TData, DefaultError, FormBody>;
+  mutation: UseMutationResult<TData, DefaultError, OTPFormBody>;
+  mutateOptions?: MutateOptions<TData, DefaultError, OTPFormBody>;
+  codeLength?: number;
 }
 
-export function OTPForm<TData>({
-  className,
-  email,
-  onSuccess,
-  autoFocusCode = false,
-  query,
-  ...props
-}: OTPFormProps<TData>) {
-  const form = useForm<OtpForm>({
-    resolver: zodResolver(OtpFormSchema),
-    defaultValues: {
-      code: '',
-    },
-  });
+export function OTPForm<TData>(props: OTPFormProps<TData>) {
+  const {
+    email,
+    mutation,
+    mutateOptions = {},
+    codeLength = CAuth.OTP_LENGTH,
+    children,
+    ...containerProps
+  } = props;
+  const { onError, onSuccess, ...restMutateOptions } = mutateOptions;
+  const [code, setCode] = useState('');
+  const [hasCodeError, setHasCodeError] = useState(false);
 
-  const onSubmit = (data: OtpForm) => {
-    const body: FormBody = {
-      code: data.code,
-      email,
-    };
+  const triggerCodeErrorAnimation = () => {
+    setHasCodeError(false);
 
-    query.mutate(body, {
-      onSuccess: (res) => {
-        onSuccess?.(body, res);
-      },
-      onError: (err) => {
-        setFormErrors(extractValidationIssues(err), form);
-      },
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setHasCodeError(true);
+        setCode('');
+      });
     });
   };
 
-  const disabled = query.isPending || query.isSuccess;
+  const handleCodeChange = (value: string) => {
+    if (value.length <= codeLength) {
+      setCode(value);
+    }
+
+    if (value.length >= codeLength) {
+      mutation.mutate(
+        { code: value, email },
+        {
+          onSuccess: (...args) => {
+            onSuccess?.(...args);
+          },
+          onError: (...args) => {
+            triggerCodeErrorAnimation();
+            onError?.(...args);
+          },
+          ...restMutateOptions,
+        }
+      );
+    }
+  };
 
   return (
     <Card>
@@ -71,53 +77,40 @@ export function OTPForm<TData>({
         <CardTitle className="text-xl">Введите код</CardTitle>
         <CardDescription>Код подтверждения отправлен на вашу почту.</CardDescription>
       </CardHeader>
-      <CardContent>
-        <form
-          className={cn('flex flex-col gap-6', className)}
-          onSubmit={form.handleSubmit(onSubmit)}
-          {...props}
+      <CardContent onAnimationEnd={() => setHasCodeError(false)} {...containerProps}>
+        <InputOtp
+          containerClassName="justify-center gap-3"
+          maxLength={codeLength}
+          pattern={REGEXP_ONLY_DIGITS}
+          inputMode="numeric"
+          autoComplete="one-time-code"
+          autoFocus
+          aria-label={`Код подтверждения из ${codeLength} цифр`}
+          value={code}
+          onChange={handleCodeChange}
+          readOnly={mutation.isPending || mutation.isSuccess}
         >
-          <FieldGroup>
-            <Controller
-              name="code"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <InputOtp
-                    {...field}
-                    containerClassName="justify-center"
-                    maxLength={6}
-                    pattern={REGEXP_ONLY_DIGITS}
-                    inputMode="numeric"
-                    autoComplete="one-time-code"
-                    autoFocus={autoFocusCode}
-                    aria-label="Код подтверждения из 6 цифр"
-                    disabled={disabled}
-                  >
-                    <InputOTPGroup>
-                      <InputOTPSlot index={0} aria-invalid={fieldState.invalid} />
-                      <InputOTPSlot index={1} aria-invalid={fieldState.invalid} />
-                      <InputOTPSlot index={2} aria-invalid={fieldState.invalid} />
-                      <InputOTPSlot index={3} aria-invalid={fieldState.invalid} />
-                      <InputOTPSlot index={4} aria-invalid={fieldState.invalid} />
-                      <InputOTPSlot index={5} aria-invalid={fieldState.invalid} />
-                    </InputOTPGroup>
-                  </InputOtp>
-                  {fieldState.invalid && (
-                    <FieldError className="text-center" errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-            <Field>
-              <Button type="submit" disabled={disabled}>
-                {disabled ? <Spinner className="size-4" /> : <div className="size-4" />}
-                Продолжить
-              </Button>
-            </Field>
-          </FieldGroup>
-        </form>
+          <InputOTPGroup
+            className={classNames('', {
+              'animate-head-shake': hasCodeError,
+              'opacity-40': mutation.isPending,
+            })}
+          >
+            {Array.from({ length: codeLength }, (_, index) => (
+              <InputOTPSlot
+                className={classNames('', {
+                  'animate-fade-destructive-input': hasCodeError,
+                })}
+                key={index}
+                index={index}
+              />
+            ))}
+          </InputOTPGroup>
+        </InputOtp>
       </CardContent>
+      {children ? (
+        <CardFooter className="flex items-center justify-between gap-3">{children}</CardFooter>
+      ) : null}
     </Card>
   );
 }

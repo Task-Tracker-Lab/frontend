@@ -3,3 +3,4 @@ export { useIsMobile } from './useMobile';
 export { useDebouncedCallback } from './useDebouncedCallback';
 export { useQueuedDebouncedMutation } from './useQueuedDebouncedMutation';
 export { useLocalStorageDraft, type DraftWithTTL } from './useLocalStorageDraft';
+export { useTimer, type UseTimerOptions, type UseTimerReturn } from './use-timer/useTimer';
