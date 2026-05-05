@@ -1,0 +1,56 @@
+@theme {
+  --animate-head-shake: headShake 0.7s ease-in-out;
+  --animate-fade-destructive-input: fadeDestructiveInput 0.7s ease-in-out;
+  --animate-fade-in: fadeIn 0.7s ease-in-out forwards;
+  --animate-fade-out: fadeOut 0.7s ease-in-out forwards;
+
+  @keyframes headShake {
+    0% {
+      transform: translateX(0);
+    }
+    6.5% {
+      transform: translateX(-6px) rotateY(-9deg);
+    }
+    18.5% {
+      transform: translateX(5px) rotateY(7deg);
+    }
+    31.5% {
+      transform: translateX(-3px) rotateY(-5deg);
+    }
+    43.5% {
+      transform: translateX(2px) rotateY(3deg);
+    }
+    50% {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeDestructiveInput {
+    from {
+      border-color: var(--destructive);
+      background-color: color-mix(in oklch, var(--destructive) 10%, transparent);
+    }
+    to {
+      border-color: var(--input);
+      background-color: unset;
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+}

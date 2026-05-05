@@ -1,9 +1,6 @@
 import { z } from 'zod/v4';
 import { GlobalSuccess } from 'shared/api';
-
-const MIN_PASS_LENGTH = 8;
-const MAX_PASS_LENGTH = 32;
-const OTP_LENGTH = 6;
+import { MAX_PASS_LENGTH, MIN_PASS_LENGTH, OTP_LENGTH } from './const';
 
 export const Email = z.string().min(1, 'Обязательное поле').check(z.email('Неверный формат email'));
 

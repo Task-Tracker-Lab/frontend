@@ -1,8 +1,8 @@
 'use client';
 
-import { Link, Logo, Spinner } from 'shared/ui';
+import { FieldDescription, Link, Logo, Spinner } from 'shared/ui';
 import { SignupForm } from './SignupForm';
-import { OTPForm } from 'features/otp-form';
+import { DRAFT_TTL_MS, OTPForm, OTPFormLoader, ResendCodeControl } from 'features/otp-form';
 import { useRouter } from 'next/navigation';
 import { AccessToken } from 'shared/api';
 import { routes } from 'shared/config';
@@ -18,18 +18,17 @@ interface SignupDraft extends Record<string, unknown> {
 }
 
 const DRAFT_KEY = 'drafted-signup';
-const DRAFT_TTL_MS = 15 * 60 * 1000;
 
 function SignupPage() {
   const router = useRouter();
   const sendConfirm = useSignupConfirm();
-  const { draft, setDraft, clearDraft } = useLocalStorageDraft<SignupDraft>(DRAFT_KEY, {
-    defaultTTLms: DRAFT_TTL_MS,
+  const { draft, setDraft, resetDraft, clearDraft } = useLocalStorageDraft<SignupDraft>(DRAFT_KEY, {
     defaultValues: { email: '', step: 'signup' },
   });
 
   const email = draft?.email ?? '';
   const step: SignupStep = draft?.step ?? null;
+  const resendCodeStorageKey = `${DRAFT_KEY}:last-sent-code:${email}`;
 
   if (!step) {
     return (
@@ -49,24 +48,36 @@ function SignupPage() {
         </Link>
 
         {step === 'signup' ? (
-          <SignupForm onSuccess={({ email }) => setDraft({ email, step: 'otp' })} />
+          <SignupForm onSuccess={({ email }) => setDraft({ email, step: 'otp' }, DRAFT_TTL_MS)} />
         ) : null}
         {step === 'otp' ? (
           <OTPForm
             email={email}
-            autoFocusCode
-            query={sendConfirm}
-            onSuccess={(_, res) => {
-              if (res.success) {
-                clearDraft();
-                AccessToken.token = res.token;
-                router.replace(routes.profile());
-                if (res.message) {
-                  toast.success(res.message);
+            mutation={sendConfirm}
+            mutateOptions={{
+              onSuccess: (res) => {
+                if (res.success) {
+                  clearDraft();
+                  AccessToken.token = res.token;
+                  router.replace(routes.profile());
+                  if (res.message) {
+                    toast.success(res.message);
+                  }
                 }
-              }
+              },
             }}
-          />
+          >
+            <ResendCodeControl storageKey={resendCodeStorageKey} />
+            <OTPFormLoader status={sendConfirm.status} />
+          </OTPForm>
+        ) : null}
+        {step === 'otp' ? (
+          <FieldDescription className="text-center">
+            Передумали?{' '}
+            <Link className="font-medium" href={routes.auth.signup()} onClick={resetDraft}>
+              Назад
+            </Link>
+          </FieldDescription>
         ) : null}
       </div>
     </div>
