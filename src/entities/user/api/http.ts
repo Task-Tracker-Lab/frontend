@@ -65,4 +65,26 @@ export class UserHttp {
       },
     });
   }
+
+  static getMyTeams(signal?: AbortSignal) {
+    return api<TUser.UserTeamResponse[]>({
+      url: '/users/me/teams',
+      method: 'GET',
+      contracts: {
+        response: SUser.UserTeamResponse.array(),
+      },
+      signal,
+    });
+  }
+
+  static getMyInvites(signal?: AbortSignal) {
+    return api<TUser.UserInviteResponse[]>({
+      url: '/users/me/invites',
+      method: 'GET',
+      contracts: {
+        response: SUser.UserInviteResponse.array(),
+      },
+      signal,
+    });
+  }
 }

@@ -62,3 +62,31 @@ export const ProfileUpdateBody = z.object({
 });
 
 export const ProfileUpdateResponse = GlobalSuccess;
+
+export const TeamPermissions = z.object({
+  canEdit: z.boolean(),
+  canDelete: z.boolean(),
+  canManageMembers: z.boolean(),
+  canInvite: z.boolean(),
+  isOwner: z.boolean(),
+});
+
+export const UserTeamResponse = z.object({
+  id: z.string().uuid(),
+  name: z.string(),
+  slug: z.string(),
+  description: z.string().nullable(),
+  avatarUrl: z.string().nullable(),
+  role: z.string(),
+  joinedAt: z.iso.datetime({}),
+  permissions: TeamPermissions,
+});
+
+export const UserInviteResponse = z.object({
+  code: z.string(),
+  teamName: z.string(),
+  teamAvatar: z.string().nullable(),
+  role: z.string(),
+  inviterName: z.string(),
+  expiresAt: z.iso.datetime({}),
+});
