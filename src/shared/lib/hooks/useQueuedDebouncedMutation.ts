@@ -1,7 +1,7 @@
 'use client';
 
-import { useCallback, useRef } from 'react';
-import { useDebouncedCallback } from './useDebouncedCallback';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { debounce } from '../utils';
 
 interface UseQueuedDebouncedMutationOptions<TValue> {
   delayMs: number;
@@ -62,16 +62,24 @@ export function useQueuedDebouncedMutation<TValue>({
     }
   }, [isEqual, mutationFn, onError, onSuccess]);
 
-  const { debouncedCallback } = useDebouncedCallback(() => {
-    void flushQueue();
-  }, delayMs);
+  const flushQueueRef = useRef(flushQueue);
+  useEffect(() => {
+    flushQueueRef.current = flushQueue;
+  }, [flushQueue]);
+
+  const { debouncedCallback: debouncedFlush, cancelDebouncedCallback } = useMemo(
+    () => debounce(() => void flushQueueRef.current(), delayMs),
+    [delayMs]
+  );
+
+  useEffect(() => cancelDebouncedCallback, [cancelDebouncedCallback]);
 
   const enqueueMutation = useCallback(
     (value: TValue) => {
       queuedValueRef.current = value;
-      debouncedCallback();
+      debouncedFlush();
     },
-    [debouncedCallback]
+    [debouncedFlush]
   );
 
   const syncPersistedValue = useCallback((value: TValue | null) => {

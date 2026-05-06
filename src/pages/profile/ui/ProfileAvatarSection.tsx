@@ -46,9 +46,7 @@ function ProfileAvatarSection({
     <div className="relative">
       <Avatar className="ring-background size-28 shadow-md ring-4">
         <AvatarImage src={avatarUrl ?? undefined} alt={fullName} />
-        <AvatarFallback className="text-xl font-semibold">
-          {`${firstName[0] ?? ''}${lastName[0] ?? ''}`.toUpperCase()}
-        </AvatarFallback>
+        <AvatarFallback firstName={firstName} lastName={lastName} />
       </Avatar>
       <Button
         type="button"

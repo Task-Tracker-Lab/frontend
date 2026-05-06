@@ -14,8 +14,9 @@ import { toast } from 'sonner';
 import { TUser, UserQueries } from 'entities/user';
 import { useUpdateNotifications } from '../model/useUpdateNotifications';
 import { useQuery } from '@tanstack/react-query';
+import { TeamHttp } from 'entities/team';
 
-const SAVE_DEBOUNCE_MS = 500;
+const SAVE_DEBOUNCE_MS = 800;
 
 type Notifications = TUser.UserResponse['notifications'];
 type NotificationsState = Notifications | null;
@@ -112,6 +113,7 @@ function ProfileNotificationsCard() {
     enqueueMutation(nextNotifications);
   };
 
+  TeamHttp.getTeam; //todo временно для линтера fsd
   return (
     <Card>
       <CardHeader className="pb-2">

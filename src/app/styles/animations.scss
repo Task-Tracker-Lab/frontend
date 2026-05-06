@@ -3,6 +3,7 @@
   --animate-fade-destructive-input: fadeDestructiveInput 0.7s ease-in-out;
   --animate-fade-in: fadeIn 0.7s ease-in-out forwards;
   --animate-fade-out: fadeOut 0.7s ease-in-out forwards;
+  --animate-slad-in-up: slideInUp 0.2s ease-in-out forwards;
 
   @keyframes headShake {
     0% {
@@ -51,6 +52,17 @@
     }
     to {
       opacity: 0;
+    }
+  }
+
+  @keyframes slideInUp {
+    from {
+      transform: translate3d(0, 100%, 0);
+      visibility: visible;
+    }
+
+    to {
+      transform: translate3d(0, 0, 0);
     }
   }
 }
