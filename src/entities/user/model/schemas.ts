@@ -1,6 +1,15 @@
 import { z } from 'zod/v4';
 import { GlobalSuccess } from 'shared/api';
 
+export const UserAvatarSchema = z
+  .object({
+    small: z.string().url(),
+    medium: z.string().url(),
+    large: z.string().url(),
+    original: z.string().url(),
+  })
+  .nullish();
+
 export const UserResponse = z.object({
   id: z.string(),
   email: z.email(),
@@ -9,7 +18,7 @@ export const UserResponse = z.object({
     lastName: z.string(),
     middleName: z.string().nullable(),
     bio: z.string().nullable(),
-    avatarUrl: z.url().nullable(),
+    avatar: UserAvatarSchema,
     timezone: z.string(),
     language: z.string(),
     createdAt: z.iso.datetime({}),
