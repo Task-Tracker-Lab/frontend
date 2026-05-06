@@ -31,11 +31,6 @@ import { routes } from 'shared/config';
 import Link from 'next/link';
 
 const data = {
-  user: {
-    name: 'whoami',
-    email: 'mail@example.com',
-    avatar: 'https://cdn.ttopen.ru/test.jpeg',
-  },
   teams: [
     {
       name: 'Task Tracker Frontend',
@@ -107,7 +102,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

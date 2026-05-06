@@ -12,7 +12,6 @@ import {
   Input,
   Textarea,
 } from 'shared/ui';
-import { toast } from 'sonner';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ProfileAvatarSection } from './ProfileAvatarSection';
@@ -37,12 +36,7 @@ function ProfileIdentityCard(props: Omit<ComponentProps<typeof Card>, 'children'
   });
   const formValues = useWatch({ control: form.control });
 
-  const updateProfileMutation = useUpdateProfile({
-    onSuccess: async () => {
-      toast.success('Профиль обновлён');
-      await query.refetch();
-    },
-  });
+  const updateProfileMutation = useUpdateProfile();
 
   useEffect(() => {
     if (!profile) {
@@ -93,13 +87,10 @@ function ProfileIdentityCard(props: Omit<ComponentProps<typeof Card>, 'children'
         <div className="bg-muted/30 flex flex-col gap-4 rounded-lg border p-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
             <ProfileAvatarSection
-              avatarUrl={profile.avatarUrl}
+              avatar={profile?.avatar?.medium ?? null}
               fullName={fullName}
               firstName={profile.firstName}
               lastName={profile.lastName}
-              onUploaded={async () => {
-                await query.refetch();
-              }}
             />
             <div className="space-y-1">
               <p className="text-xl font-semibold">{fullName}</p>

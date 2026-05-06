@@ -1,32 +1,24 @@
 import { Pencil } from 'lucide-react';
 import { type ChangeEvent, useRef } from 'react';
 import { Avatar, AvatarFallback, AvatarImage, Button } from 'shared/ui';
-import { toast } from 'sonner';
 import { useUpdateAvatar } from '../model/useUpdateAvatar';
 
 interface ProfileAvatarSectionProps {
-  avatarUrl: string | null;
+  avatar: string | null;
   fullName: string;
   firstName: string;
   lastName: string;
-  onUploaded: () => Promise<void>;
 }
 
 function ProfileAvatarSection({
-  avatarUrl,
+  avatar,
   fullName,
   firstName,
   lastName,
-  onUploaded,
 }: ProfileAvatarSectionProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const uploadAvatarMutation = useUpdateAvatar({
-    onSuccess: async () => {
-      toast.success('Аватар обновлён');
-      await onUploaded();
-    },
-  });
+  const uploadAvatarMutation = useUpdateAvatar();
 
   const handleAvatarPick = () => {
     fileInputRef.current?.click();
@@ -45,7 +37,7 @@ function ProfileAvatarSection({
   return (
     <div className="relative">
       <Avatar className="ring-background size-28 shadow-md ring-4">
-        <AvatarImage src={avatarUrl ?? undefined} alt={fullName} />
+        <AvatarImage src={avatar ?? undefined} alt={fullName} />
         <AvatarFallback firstName={firstName} lastName={lastName} />
       </Avatar>
       <Button

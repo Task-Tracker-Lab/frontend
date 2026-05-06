@@ -1,5 +1,6 @@
 import { type DefaultError, useMutation } from '@tanstack/react-query';
 import { TUser, UserHttp } from 'entities/user';
+import { toast } from 'sonner';
 
 interface UseUpdateAvatarProps {
   onSuccess?: (file: File, res: TUser.AvatarUpdateResponse) => void;
@@ -12,8 +13,9 @@ export function useUpdateAvatar({ onSuccess, onError }: UseUpdateAvatarProps = {
     onError: (err) => {
       onError?.(err);
     },
-    onSuccess: (res, file) => {
+    onSuccess: async (res, file) => {
       onSuccess?.(file, res);
+      toast.success(res.message ?? 'Профиль успешно обновлен');
     },
   });
 }
