@@ -19,7 +19,7 @@ export function PageLayout({
 }: PageLayoutProps) {
   return (
     <main className="min-h-screen bg-white">
-      <div className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
+      <div className="mx-auto px-6 py-10 lg:px-8">
         <header>
           <div className="flex items-center gap-3">
             <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
