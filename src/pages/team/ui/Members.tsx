@@ -18,7 +18,19 @@ export function Members() {
 
   UserHttp.getMyInvites; //todo временно для fsd
 
-  const onFilter = useMemo(() => debounce(setFiltered, 300), []);
+  const onFilter = useMemo(
+    () =>
+      debounce((value: string) => {
+        setFiltered(
+          members.filter(
+            (m) =>
+              m.fullName.toLowerCase().includes(value.trim().toLowerCase()) ||
+              m.role.toLowerCase().includes(value.trim().toLowerCase())
+          )
+        );
+      }, 300),
+    []
+  );
 
   useEffect(() => {
     const t = setTimeout(() => setLoading(false), 700);
@@ -29,13 +41,7 @@ export function Members() {
     const value = e.target.value;
 
     setSearch(value);
-    onFilter.debouncedCallback(
-      members.filter(
-        (m) =>
-          m.fullName.toLowerCase().includes(value.trim().toLowerCase()) ||
-          m.role.toLowerCase().includes(value.trim().toLowerCase())
-      )
-    );
+    onFilter.debouncedCallback(value);
   };
 
   return (
