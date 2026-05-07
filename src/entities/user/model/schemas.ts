@@ -41,8 +41,6 @@ export const UserResponse = z.object({
   }),
 });
 
-export const AvatarUpdateResponse = GlobalSuccess;
-
 export const NotificationsUpdateBody = z.object({
   email: z
     .object({

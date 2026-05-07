@@ -170,23 +170,6 @@ export class TeamHttp {
     });
   }
 
-  static updateAvatar(slug: string, file: File) {
-    const formData = new FormData();
-    formData.append('file', file);
-
-    return api<TTeam.FileUploadResponse>({
-      url: `/teams/${slug}/avatar`,
-      method: 'PATCH',
-      data: formData,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      contracts: {
-        response: STeam.FileUploadResponse,
-      },
-    });
-  }
-
   static updateBanner(slug: string, file: File) {
     const formData = new FormData();
     formData.append('file', file);

@@ -24,27 +24,6 @@ export class UserHttp {
     });
   }
 
-  // TODO: add to global point, to reusable include
-  static updateAvatar(file: File) {
-    const formData = new FormData();
-
-    formData.append('file', file);
-    // INCLUDED: SEE AT SWAGGER DOCS TO CONTEXT AND PROPS TOO
-    formData.append('context', 'user.avatar');
-
-    return api<TUser.AvatarUpdateResponse>({
-      url: '/upload',
-      method: 'POST',
-      data: formData,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      contracts: {
-        response: SUser.AvatarUpdateResponse,
-      },
-    });
-  }
-
   static updateNotificationsConfig(data: TUser.NotificationsUpdateBody) {
     return api<TUser.NotificationsUpdateResponse>({
       url: '/users/me/notifications',
