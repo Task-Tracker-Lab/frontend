@@ -126,4 +126,7 @@
   body {
     @apply bg-background text-foreground;
   }
+  .input-max-w {
+    @apply md:max-w-[380px];
+  }
 }

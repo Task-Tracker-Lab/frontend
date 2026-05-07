@@ -1,5 +1,5 @@
-import { Invites } from 'pages/team';
+import { InvitesPage } from 'pages/team';
 
-export default function PendingPage() {
-  return <Invites />;
+export default function Page() {
+  return <InvitesPage />;
 }

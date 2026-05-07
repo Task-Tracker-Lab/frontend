@@ -1,5 +1,5 @@
-import { Roles } from 'pages/team';
+import { RolesPage } from 'pages/team';
 
-export default function RolesPage() {
-  return <Roles />;
+export default function Page() {
+  return <RolesPage />;
 }

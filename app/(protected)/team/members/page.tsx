@@ -1,5 +1,5 @@
-import { Members } from 'pages/team';
+import { MembersPage } from 'pages/team';
 
-export default function ActivePage() {
-  return <Members />;
+export default function Page() {
+  return <MembersPage />;
 }
