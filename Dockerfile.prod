@@ -14,9 +14,18 @@ COPY package.json ./
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --offline --frozen-lockfile
 
 FROM base AS builder
+
 ARG NEXT_PUBLIC_API_BASE_URL
+ARG NEXT_PUBLIC_FARO_URL
+ARG NEXT_PUBLIC_FARO_APP_VERSION
+ARG NEXT_PUBLIC_APP_ENV
 
 ENV NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL \
+    NEXT_PUBLIC_FARO_URL=$NEXT_PUBLIC_FARO_URL \
+    NEXT_PUBLIC_FARO_APP_NAME="frontend" \
+    NEXT_PUBLIC_FARO_APP_NAMESPACE="frontend" \
+    NEXT_PUBLIC_FARO_APP_VERSION=$NEXT_PUBLIC_FARO_APP_VERSION \
+    NEXT_PUBLIC_APP_ENV=$NEXT_PUBLIC_APP_ENV \
     NEXT_TELEMETRY_DISABLED=1
 
 COPY --from=deps /app/node_modules ./node_modules
@@ -27,11 +36,14 @@ RUN --mount=type=cache,target=/app/.next/cache pnpm run build
 FROM node:20-alpine AS runner
 WORKDIR /app
 
-ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production \
+    NEXT_TELEMETRY_DISABLED=1 \
+    PORT=3000 \
+    HOSTNAME="0.0.0.0"
 
-ENV PORT=${PORT:-3001}
-ENV HOSTNAME="0.0.0.0"
+ENV OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf \
+    OTEL_SERVICE_NAME="frontend-ssr" \
+    OTEL_RESOURCE_ATTRIBUTES="service.namespace=frontend"
 
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 frontend
