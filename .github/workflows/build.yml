@@ -2,7 +2,7 @@ name: Build and Push
 
 on:
   push:
-    branches: [dev, main, feat/**]
+    branches: [ dev, main, feat/** ]
 
 env:
   REGISTRY: ghcr.io
@@ -61,6 +61,9 @@ jobs:
           file: ./Dockerfile.prod
           build-args: |
             NEXT_PUBLIC_API_BASE_URL=${{ vars.NEXT_PUBLIC_API_BASE_URL }}
+            NEXT_PUBLIC_FARO_URL=${{ vars.NEXT_PUBLIC_FARO_URL }}
+            NEXT_PUBLIC_FARO_APP_VERSION=${{ vars.NEXT_PUBLIC_FARO_APP_VERSION }}
+            NEXT_PUBLIC_APP_ENV=${{ vars.NEXT_PUBLIC_APP_ENV }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
