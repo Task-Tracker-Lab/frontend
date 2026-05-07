@@ -8,7 +8,10 @@ export type PermissionKey =
   | 'project.create'
   | 'billing.view';
 
-export const PERMISSION_GROUPS: { label: string; items: { key: PermissionKey; label: string }[] }[] = [
+export const PERMISSION_GROUPS: {
+  label: string;
+  items: { key: PermissionKey; label: string }[];
+}[] = [
   {
     label: 'Управление задачами',
     items: [

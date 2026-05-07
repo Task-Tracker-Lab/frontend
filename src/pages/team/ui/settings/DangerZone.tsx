@@ -1,12 +1,5 @@
 import { AlertTriangle } from 'lucide-react';
-import {
-  Item,
-  ItemActions,
-  ItemContent,
-  ItemDescription,
-  ItemMedia,
-  ItemTitle,
-} from 'shared/ui';
+import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from 'shared/ui';
 import { DeleteWorkspaceDialog } from './DeleteWorkspaceDialog';
 
 interface Props {
