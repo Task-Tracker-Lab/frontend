@@ -1,5 +1,6 @@
 import { type DefaultError, useMutation } from '@tanstack/react-query';
-import { TUser, UserHttp } from 'entities/user';
+import { TUser, userFabricKeys, UserHttp } from 'entities/user';
+import { toast } from 'sonner';
 
 interface UseUpdateNotificationsProps {
   onSuccess?: (body: TUser.NotificationsUpdateBody, res: TUser.NotificationsUpdateResponse) => void;
@@ -18,6 +19,9 @@ export function useUpdateNotifications({ onSuccess, onError }: UseUpdateNotifica
     },
     onSuccess: (res, body) => {
       onSuccess?.(body, res);
+      toast.success('Настройки уведомлений обновлены');
     },
+    onSettled: async (_d, _e, _v, _m, { client }) =>
+      client.invalidateQueries({ queryKey: userFabricKeys.me() }),
   });
 }
