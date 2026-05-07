@@ -1,5 +1,1 @@
-import { Settings } from 'pages/team';
-
-export default function Page() {
-  return <Settings />;
-}
+export { Settings as default } from 'pages/team';

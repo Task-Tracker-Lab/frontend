@@ -1,5 +1,1 @@
-import { RolesPage } from 'pages/team';
-
-export default function Page() {
-  return <RolesPage />;
-}
+export { RolesPage as default } from 'pages/team';

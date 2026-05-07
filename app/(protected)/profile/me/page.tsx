@@ -1,5 +1,1 @@
-import { MePage } from 'pages/profile';
-
-export default function Page() {
-  return <MePage />;
-}
+export { MePage as default } from 'pages/profile';
