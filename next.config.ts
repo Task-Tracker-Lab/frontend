@@ -1,3 +1,4 @@
+import 'shared/config/env';
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
@@ -5,6 +6,7 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: __dirname,
   },
+
   output: 'standalone',
 };
 
