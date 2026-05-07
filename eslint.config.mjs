@@ -27,7 +27,7 @@ const eslintConfig = defineConfig([
         {
           '**/{page,layout,loading,error,not-found,template,default,route}.{jsx,tsx}':
             'NEXT_JS_PAGE_ROUTER_FILENAME_CASE',
-          '**/!({page,layout,loading,error,not-found,template,default,route}).{jsx,tsx}':
+          '**/!({page,layout,loading,error,not-found,template,default,route,index,*.stories}).{jsx,tsx}':
             'PASCAL_CASE',
           '**/*{Error,Type,Types,Interface,Props,Dto,Response,Request,Contract,Contracts}.ts':
             'PASCAL_CASE',
@@ -35,6 +35,8 @@ const eslintConfig = defineConfig([
             'KEBAB_CASE',
           '**/*.{js,mjs,cjs,mts,cts}': 'KEBAB_CASE',
           '**/use*.{ts,tsx}': 'CAMEL_CASE',
+          '**/*.stories.{jsx,tsx}': 'KEBAB_CASE',
+          '**/index.tsx': 'KEBAB_CASE',
         },
         {
           ignoreMiddleExtensions: true,

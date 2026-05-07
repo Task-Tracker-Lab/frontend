@@ -1,5 +1,6 @@
 import { type DefaultError, useMutation } from '@tanstack/react-query';
-import { TUser, UserHttp } from 'entities/user';
+import { type TUser, userFabricKeys, UserHttp } from 'entities/user';
+import { toast } from 'sonner';
 
 interface UseUpdateProfileProps {
   onSuccess?: (body: TUser.ProfileUpdateBody, res: TUser.ProfileUpdateResponse) => void;
@@ -12,8 +13,11 @@ export function useUpdateProfile({ onSuccess, onError }: UseUpdateProfileProps =
     onError: (err) => {
       onError?.(err);
     },
-    onSuccess: (res, body) => {
+    onSuccess: async (res, body) => {
       onSuccess?.(body, res);
+      toast.success(res.message ?? 'Профиль успешно обновлен');
     },
+    onSettled: async (_d, _e, _v, _m, { client }) =>
+      client.invalidateQueries({ queryKey: userFabricKeys.me() }),
   });
 }

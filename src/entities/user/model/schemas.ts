@@ -1,6 +1,15 @@
 import { z } from 'zod/v4';
 import { GlobalSuccess } from 'shared/api';
 
+export const UserAvatarSchema = z
+  .object({
+    small: z.string().url(),
+    medium: z.string().url(),
+    large: z.string().url(),
+    original: z.string().url(),
+  })
+  .nullish();
+
 export const UserResponse = z.object({
   id: z.string(),
   email: z.email(),
@@ -9,7 +18,7 @@ export const UserResponse = z.object({
     lastName: z.string(),
     middleName: z.string().nullable(),
     bio: z.string().nullable(),
-    avatarUrl: z.url().nullable(),
+    avatar: UserAvatarSchema,
     timezone: z.string(),
     language: z.string(),
     createdAt: z.iso.datetime({}),
@@ -31,8 +40,6 @@ export const UserResponse = z.object({
     }),
   }),
 });
-
-export const AvatarUpdateResponse = GlobalSuccess;
 
 export const NotificationsUpdateBody = z.object({
   email: z
@@ -62,3 +69,31 @@ export const ProfileUpdateBody = z.object({
 });
 
 export const ProfileUpdateResponse = GlobalSuccess;
+
+export const TeamPermissions = z.object({
+  canEdit: z.boolean(),
+  canDelete: z.boolean(),
+  canManageMembers: z.boolean(),
+  canInvite: z.boolean(),
+  isOwner: z.boolean(),
+});
+
+export const UserTeamResponse = z.object({
+  id: z.string().uuid(),
+  name: z.string(),
+  slug: z.string(),
+  description: z.string().nullable(),
+  avatarUrl: z.string().nullable(),
+  role: z.string(),
+  joinedAt: z.iso.datetime({}),
+  permissions: TeamPermissions,
+});
+
+export const UserInviteResponse = z.object({
+  code: z.string(),
+  teamName: z.string(),
+  teamAvatar: z.string().nullable(),
+  role: z.string(),
+  inviterName: z.string(),
+  expiresAt: z.iso.datetime({}),
+});

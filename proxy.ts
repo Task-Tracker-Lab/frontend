@@ -6,7 +6,7 @@ import { trace } from '@opentelemetry/api';
 
 const REFRESH_COOKIE = 'refresh';
 
-const PROTECTED_PREFIXES = [routes.profile(), routes.projects(), routes.tasks()];
+const PROTECTED_PREFIXES = [routes.profile.root(), routes.team.root()];
 const PUBLIC_ONLY_ROUTES = [routes.auth.signin(), routes.auth.signup()];
 
 function startsWithOneOf(pathname: string, prefixes: string[]) {
@@ -26,7 +26,7 @@ export function proxy(req: NextRequest) {
   }
 
   if (isPublicOnly && hasRefreshCookie) {
-    return NextResponse.redirect(new URL(routes.profile(), req.url));
+    return NextResponse.redirect(new URL(routes.profile.root(), req.url));
   }
 
   const response = NextResponse.next();

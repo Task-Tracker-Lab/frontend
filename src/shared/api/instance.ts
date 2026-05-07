@@ -8,6 +8,6 @@ const AXIOS_INSTANCE = Axios.create({
 
 applyInterceptors(AXIOS_INSTANCE);
 
-export const instance = <Res>(config: AxiosRequestConfig): Promise<Res> => {
+export const instance = async <T>(config: AxiosRequestConfig): Promise<T> => {
   return AXIOS_INSTANCE(config).then(({ data }) => data);
 };

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { UserIcon } from 'lucide-react';
 import { Avatar as AvatarPrimitive } from 'radix-ui';
 
 import { cn } from 'shared/lib/utils';
@@ -15,7 +16,7 @@ function Avatar({
       data-slot="avatar"
       data-size={size}
       className={cn(
-        'group/avatar after:border-border relative flex size-8 shrink-0 rounded-full select-none after:absolute after:inset-0 after:rounded-full after:border after:mix-blend-darken data-[size=lg]:size-10 data-[size=sm]:size-6 dark:after:mix-blend-lighten',
+        'group/avatar after:border-border relative flex size-8 shrink-0 rounded-full select-none after:absolute after:inset-0 after:rounded-full after:border after:mix-blend-darken data-[size=lg]:size-12 data-[size=sm]:size-6 dark:after:mix-blend-lighten',
         className
       )}
       {...props}
@@ -35,18 +36,40 @@ function AvatarImage({ className, ...props }: React.ComponentProps<typeof Avatar
 
 function AvatarFallback({
   className,
+  firstName,
+  lastName,
+  children,
   ...props
-}: React.ComponentProps<typeof AvatarPrimitive.Fallback>) {
+}: React.ComponentProps<typeof AvatarPrimitive.Fallback> & {
+  firstName?: string;
+  lastName?: string;
+}) {
+  const content = children ?? getInitials(firstName, lastName);
+
   return (
     <AvatarPrimitive.Fallback
       data-slot="avatar-fallback"
       className={cn(
-        'bg-muted text-muted-foreground flex size-full items-center justify-center rounded-full text-sm group-data-[size=sm]/avatar:text-xs',
+        'bg-muted text-muted-foreground flex size-full items-center justify-center rounded-full text-sm font-semibold group-data-[size=sm]/avatar:text-xs',
         className
       )}
       {...props}
-    />
+    >
+      {content ?? (
+        <UserIcon className="size-4 group-data-[size=lg]/avatar:size-5 group-data-[size=sm]/avatar:size-3" />
+      )}
+    </AvatarPrimitive.Fallback>
   );
+}
+
+function getInitials(firstName?: string, lastName?: string): string | undefined {
+  const first = firstName?.trim()[0]?.toUpperCase();
+  const last = lastName?.trim()[0]?.toUpperCase();
+
+  if (first && last) return `${first}${last}`;
+  if (first) return first;
+  if (last) return last;
+  return undefined;
 }
 
 function AvatarBadge({ className, ...props }: React.ComponentProps<'span'>) {

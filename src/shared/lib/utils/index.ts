@@ -6,3 +6,4 @@ export { setFormErrors } from './set-form-errors';
 export { createEntityKeys } from './create-entity-keys';
 export { classNames } from './class-names/class-names';
 export { throttle } from './throttle/throttle';
+export { debounce } from './debounce/debounce';

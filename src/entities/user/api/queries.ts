@@ -20,4 +20,22 @@ export class UserQueries {
       refetchOnMount: false,
     });
   }
+
+  static getMyTeams() {
+    return queryOptions({
+      queryKey: userFabricKeys.myTeams(),
+      queryFn: async ({ signal }) => UserHttp.getMyTeams(signal),
+      staleTime: 60_000,
+      refetchOnMount: false,
+    });
+  }
+
+  static getMyInvites() {
+    return queryOptions({
+      queryKey: userFabricKeys.myInvites(),
+      queryFn: async ({ signal }) => UserHttp.getMyInvites(signal),
+      staleTime: 60_000,
+      refetchOnMount: false,
+    });
+  }
 }

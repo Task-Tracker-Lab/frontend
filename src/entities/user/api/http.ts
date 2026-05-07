@@ -24,24 +24,6 @@ export class UserHttp {
     });
   }
 
-  static updateAvatar(file: File) {
-    const formData = new FormData();
-
-    formData.append('file', file);
-
-    return api<TUser.AvatarUpdateResponse>({
-      url: '/users/me/avatar',
-      method: 'POST',
-      data: formData,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      contracts: {
-        response: SUser.AvatarUpdateResponse,
-      },
-    });
-  }
-
   static updateNotificationsConfig(data: TUser.NotificationsUpdateBody) {
     return api<TUser.NotificationsUpdateResponse>({
       url: '/users/me/notifications',
@@ -63,6 +45,28 @@ export class UserHttp {
         body: SUser.ProfileUpdateBody,
         response: SUser.ProfileUpdateResponse,
       },
+    });
+  }
+
+  static getMyTeams(signal?: AbortSignal) {
+    return api<TUser.UserTeamResponse[]>({
+      url: '/users/me/teams',
+      method: 'GET',
+      contracts: {
+        response: SUser.UserTeamResponse.array(),
+      },
+      signal,
+    });
+  }
+
+  static getMyInvites(signal?: AbortSignal) {
+    return api<TUser.UserInviteResponse[]>({
+      url: '/users/me/invites',
+      method: 'GET',
+      contracts: {
+        response: SUser.UserInviteResponse.array(),
+      },
+      signal,
     });
   }
 }

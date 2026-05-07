@@ -1,13 +1,10 @@
 import * as React from 'react';
-import { EyeOffIcon, EyeIcon } from 'lucide-react';
+import { HTMLInputTypeAttribute } from 'react';
+import { EyeIcon, EyeOffIcon } from 'lucide-react';
 import { Button, InputGroup, InputGroupAddon, InputGroupInput } from 'shared/ui';
 import { useControllableState } from 'shared/lib/hooks';
-import { HTMLInputTypeAttribute } from 'react';
 
-interface InputPasswordProps extends Omit<
-  React.ComponentProps<typeof InputGroupInput>,
-  'children'
-> {
+interface InputPasswordProps extends React.ComponentProps<typeof InputGroupInput> {
   showEyeIcon?: boolean;
   visible?: boolean;
   defaultVisibleValue?: boolean;
