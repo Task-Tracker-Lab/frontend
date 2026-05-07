@@ -1,9 +1,29 @@
+# Сборка и зависимости
 node_modules
 .next
-coverage
-pnpm-lock.yaml
+out
+build
+dist
+
+# Статика и кэш
+public
+.pnpm-home
+.pnpm-store
 *.tsbuildinfo
+
+# Логи и отчеты
+coverage
 *.log
-Dockefile*
-env*.
-.github/*
+.npm
+
+# Конфиги и инфраструктура (обычно их не форматируют так же, как код)
+Dockerfile*
+pnpm-lock.yaml
+.dockerignore
+.gitignore
+
+# Секреты
+.env*
+
+.prettierignore
+.github/

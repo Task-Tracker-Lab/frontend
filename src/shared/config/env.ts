@@ -1,5 +1,7 @@
 import { z } from 'zod/v4';
 
+const isTest = process.env.NODE_ENV === 'test' || process.env.SKIP_ENV_VALIDATION === 'true';
+
 const envSchema = z.object({
   NODE_ENV: z
     .enum(['development', 'production', 'test'], {
@@ -57,7 +59,7 @@ const envSchema = z.object({
     .includes('service.namespace=', { message: 'Атрибуты должны содержать service.namespace' }),
 });
 
-const _env = envSchema.safeParse(process.env);
+const _env = isTest ? envSchema.partial().safeParse(process.env) : envSchema.safeParse(process.env);
 
 const isServer = typeof window === 'undefined';
 if (!_env.success) {

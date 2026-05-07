@@ -2,9 +2,9 @@ name: CI workflow
 
 on:
   pull_request:
-    branches: ['dev', 'main']
+    branches: [ "dev", "main" ]
     paths-ignore:
-      - '*.md'
+      - "*.md"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -25,7 +25,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: Install deps
         run: pnpm install --frozen-lockfile
@@ -44,9 +44,13 @@ jobs:
 
       - name: Unit tests
         run: pnpm test:ci
+        env:
+          NODE_ENV: test
 
       - name: Build
         run: pnpm build
-
+        env:
+          SKIP_ENV_VALIDATION: true
+          NODE_ENV: production
     #      - name: Build Storybook
     #        run: pnpm build-storybook
