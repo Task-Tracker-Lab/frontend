@@ -52,5 +52,9 @@ jobs:
         env:
           SKIP_ENV_VALIDATION: true
           NODE_ENV: production
+          NEXT_PUBLIC_API_BASE_URL: ${{ vars.NEXT_PUBLIC_API_BASE_URL }}
+          NEXT_PUBLIC_FARO_URL: ${{ vars.NEXT_PUBLIC_FARO_URL }}
+          NEXT_PUBLIC_FARO_APP_VERSION: ${{ vars.NEXT_PUBLIC_FARO_APP_VERSION }}
+          NEXT_PUBLIC_APP_ENV: ${{ vars.NEXT_PUBLIC_APP_ENV }}
     #      - name: Build Storybook
     #        run: pnpm build-storybook
