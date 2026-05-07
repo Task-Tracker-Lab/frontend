@@ -21,9 +21,11 @@ export function TabsNav({ className, ...props }: ComponentProps<'div'>) {
 
   return (
     <div
-      className={classNames('border-border relative flex items-center gap-1 border-b', {}, [
-        className,
-      ])}
+      className={classNames(
+        'border-border relative flex flex-wrap items-center gap-1 border-b',
+        {},
+        [className]
+      )}
       {...props}
     >
       {tabs.map((t) => {
@@ -34,7 +36,7 @@ export function TabsNav({ className, ...props }: ComponentProps<'div'>) {
             key={t.key}
             href={t.key}
             className={classNames(
-              'relative flex items-center gap-2 p-3 text-sm font-medium transition-colors duration-200',
+              'relative flex items-center gap-2 p-3 text-sm font-medium whitespace-nowrap transition-colors duration-200',
               {},
               [active ? 'hover:cursor-default' : 'hover:text-muted-foreground']
             )}

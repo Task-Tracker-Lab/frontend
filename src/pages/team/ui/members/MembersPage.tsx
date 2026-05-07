@@ -2,15 +2,15 @@
 
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { Filter, Plus, SlidersHorizontal } from 'lucide-react';
-import { MemberCardSkeleton } from './components/MemberCard.skeleton';
-import { MemberCard } from './components/MemberCard';
-import { InviteModal } from './components/InviteModal';
-import { members } from '../model/mock';
+import { MemberCardSkeleton } from './MemberCard.skeleton';
+import { MemberCard } from './MemberCard';
+import { InviteModal } from '../invites/InviteModal';
+import { members } from '../../model/mock';
 import { Button, Search } from 'shared/ui';
 import { debounce } from 'shared/lib/utils';
 import { UserHttp } from 'entities/user';
 
-export function Members() {
+export function MembersPage() {
   const [search, setSearch] = useState('');
   const [filtered, setFiltered] = useState(members);
   const [open, setOpen] = useState(false);

@@ -75,7 +75,9 @@ export function MemberCard({ className, member, ...props }: MemberCardProps) {
             </div>
           </div>
           <Progress
-            className={'[&>[data-slot=progress-indicator]]: h-1.5' + cfg.workloadColor(workload)}
+            className={classNames('h-1.5', {}, [
+              '[&>[data-slot=progress-indicator]]:' + cfg.workloadColor(workload),
+            ])}
             value={workload}
           />
           {backOn && (

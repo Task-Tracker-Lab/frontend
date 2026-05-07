@@ -1,11 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { invites } from '../model/mock';
-import { InviteCard } from './components/InviteCard';
-import { InviteCardSkeleton } from './components/InviteCard.skeleton';
+import { invites } from '../../model/mock';
+import { InviteCard } from './InviteCard';
+import { InviteCardSkeleton } from './InviteCard.skeleton';
 
-export function Invites() {
+export function InvitesPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
