@@ -1,6 +1,6 @@
 'use client';
 
-import { BadgeCheck, Bell, ChevronsUpDown } from 'lucide-react';
+import { BadgeCheck, ChevronsUpDown } from 'lucide-react';
 import {
   Avatar,
   AvatarFallback,
@@ -12,7 +12,6 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  Link,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -20,8 +19,9 @@ import {
 } from 'shared/ui';
 import { routes } from 'shared/config';
 import { UserQueries } from 'entities/user';
-import { SignOut } from 'features/auth/sign-out';
 import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
+import { SignOut } from 'features/auth/sign-out';
 
 export function NavUser() {
   const { isMobile } = useSidebar();
@@ -73,11 +73,7 @@ export function NavUser() {
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <BadgeCheck />
-                <Link href={routes.profile()}>Account</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Bell />
-                Notifications
+                <Link href={routes.profile.root()}>Account</Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />

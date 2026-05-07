@@ -27,16 +27,14 @@ export function WorkspaceIdentity({ settings, set }: Props) {
       description="Публичная информация о команде."
     >
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-[120px_1fr]">
-        <div className="h-min w-min">
-          <UploadAvatar
-            context="team.avatar"
-            avatar="hhhh"
-            alt="skdskdsk"
-            fallback={{
-              children: <UsersIcon />,
-            }}
-          />
-        </div>
+        <UploadAvatar
+          context="team.avatar"
+          avatar="hhhh"
+          alt="skdskdsk"
+          fallback={{
+            children: <UsersIcon />,
+          }}
+        />
         <div className="gap-4 space-y-4">
           <Field className="input-max-w">
             <FieldLabel htmlFor={idName}>Название команды</FieldLabel>

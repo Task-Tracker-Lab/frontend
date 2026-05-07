@@ -2,7 +2,12 @@ import type { Route } from 'next';
 
 export const routes = {
   home: (): Route => '/',
-  profile: (): Route => '/profile',
+  profile: {
+    root: (): Route => '/profile',
+    me: (): Route => '/profile/me',
+    security: (): Route => '/profile/security',
+    notifications: (): Route => '/profile/notifications',
+  },
   team: {
     root: (): Route => '/team',
     members: (): Route => '/team/members',

@@ -41,7 +41,7 @@ function UploadAvatar({
   };
 
   return (
-    <div className={classNames('relative', {}, [className])}>
+    <div className={classNames('relative h-min w-min', {}, [className])}>
       <Avatar className="ring-background size-28 shadow-md ring-4">
         <AvatarImage src={avatar ?? undefined} alt={alt} />
         <AvatarFallback {...fallback} />

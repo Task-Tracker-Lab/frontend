@@ -21,7 +21,7 @@ function SigninPage() {
           onSuccess={(_, res) => {
             if (res.success) {
               AccessToken.token = res.token;
-              router.replace(routes.profile());
+              router.replace(routes.profile.root());
               if (res.message) {
                 toast.success(res.message);
               }
