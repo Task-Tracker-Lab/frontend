@@ -38,6 +38,8 @@ const itemVariants = cva(
         default: 'border-transparent',
         outline: 'border-border',
         muted: 'border-transparent bg-muted/50',
+        destructive:
+          'border-destructive/20 bg-destructive/10 text-destructive focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:focus-visible:ring-destructive/40',
       },
       size: {
         default: 'gap-2.5 px-3 py-2.5',
