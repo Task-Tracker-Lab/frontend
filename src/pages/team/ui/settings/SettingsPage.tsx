@@ -32,7 +32,7 @@ export function Settings() {
         <WorkspaceIdentity settings={settings} set={set} />
         <DefaultSettings settings={settings} set={set} />
         <InviteSecurity settings={settings} set={set} />
-        <DangerZone workspaceName={settings.teamName} />
+        <DangerZone teamName={settings.teamName} slug={settings.slug} />
       </div>
 
       <FloatingSaveBar

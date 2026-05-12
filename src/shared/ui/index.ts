@@ -17,7 +17,7 @@ export * from './Sonner';
 export * from './InputOtp';
 export * from './Spinner';
 export * from './Sheet';
-export * from './Sidebar';
+export * from './sidebar';
 export * from './Skeleton';
 export * from './Tooltip';
 export * from './DropdownMenu';
