@@ -1,4 +1,4 @@
-import { NotificationItem } from './types';
+import { NotificationItem } from '../model/notifications';
 
 export const notificationItems: {
   email: NotificationItem<'email'>[];

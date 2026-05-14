@@ -2,7 +2,7 @@
 
 import { Controller, UseFormReturn } from 'react-hook-form';
 import { Field, FieldError, FieldGroup, FieldLabel, Input, Textarea } from 'shared/ui';
-import type { ProfileFormValues } from '../../model/types';
+import type { ProfileFormValues } from '../../model/profile';
 
 type AccountProfileFormProps = {
   form: UseFormReturn<ProfileFormValues>;

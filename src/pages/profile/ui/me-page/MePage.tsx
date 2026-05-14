@@ -1,6 +1,10 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useQuery } from '@tanstack/react-query';
+import { TUser, UserQueries } from 'entities/user';
 import { ComponentProps, useEffect } from 'react';
+import { useForm, useWatch } from 'react-hook-form';
 import {
   Card,
   CardDescription,
@@ -10,16 +14,11 @@ import {
   FloatingSaveBar,
   Separator,
 } from 'shared/ui';
-import { useForm, useWatch } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { TUser, UserQueries } from 'entities/user';
-import { ProfileForm as ProfileFormSchema } from '../../model/schemas';
-import type { ProfileFormValues } from '../../model/types';
-import { useUpdateProfile } from '../../model/useUpdateProfile';
-import { useQuery } from '@tanstack/react-query';
+import { useUpdateProfile } from '../../api/useUpdateProfile';
+import type { ProfileFormValues } from '../../model/profile';
+import { ProfileForm as ProfileFormSchema } from '../../model/profile';
 import { IdentityItem } from './IdentityItem';
 import { ProfileForm } from './ProfileForm';
-import { UploadHttp } from 'entities/file';
 
 function MePage(props: Omit<ComponentProps<typeof Card>, 'children'>) {
   const query = useQuery(UserQueries.getMe());
@@ -74,8 +73,6 @@ function MePage(props: Omit<ComponentProps<typeof Card>, 'children'>) {
 
     updateProfileMutation.mutate(body);
   };
-
-  void UploadHttp.uploadFile; //todo temporary. fsd linter
 
   return (
     <>

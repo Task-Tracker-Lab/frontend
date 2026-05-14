@@ -3,11 +3,10 @@
 import { useReducer } from 'react';
 import { CardSection, FloatingSaveBar, OptionGroup, Switch } from 'shared/ui';
 import { UserQueries } from 'entities/user';
-import { useUpdateNotifications } from '../../model/useUpdateNotifications';
+import { useUpdateNotifications } from '../../api/useUpdateNotifications';
 import { useQuery } from '@tanstack/react-query';
-import { TeamHttp } from 'entities/team';
-import { notificationItems } from '../../model/config';
-import { NotificationChannel, Notifications } from '../../model/types';
+import { notificationItems } from '../../config/notifications';
+import { NotificationChannel, Notifications } from '../../model/notifications';
 
 type NotificationsState = Notifications | null;
 
@@ -57,8 +56,6 @@ function NotificationsPage() {
 
     dispatchLocalNotifications({ type: 'set', payload: nextNotifications });
   };
-
-  void TeamHttp.getTeam; //todo временно для линтера fsd
 
   return (
     <>
