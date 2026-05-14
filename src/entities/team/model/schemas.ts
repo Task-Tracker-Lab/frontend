@@ -1,6 +1,15 @@
 import { z } from 'zod/v4';
 import { GlobalSuccess } from 'shared/api';
 
+export const TeamAvatarSchema = z
+  .object({
+    small: z.string().url(),
+    medium: z.string().url(),
+    large: z.string().url(),
+    original: z.string().url(),
+  })
+  .nullish();
+
 export const TeamRole = z.enum([
   'owner',
   'admin', // управление юзерами, настройками
@@ -52,7 +61,7 @@ export const TeamDetailsResponse = z.object({
   name: z.string(),
   slug: z.string(),
   description: z.string().nullable(),
-  avatarUrl: z.string().nullable(),
+  avatar: TeamAvatarSchema,
   coverUrl: z.string().nullable(),
   ownerId: z.string().nullable(),
   createdAt: z.iso.datetime({}),
@@ -64,7 +73,7 @@ export const TeamInvitationResponse = z.object({
   code: z.string(),
   teamId: z.string(),
   teamName: z.string(),
-  teamAvatar: z.string().nullable(),
+  avatar: TeamAvatarSchema,
   email: z.email(),
   role: TeamRole,
   inviterId: z.string(),
@@ -89,7 +98,7 @@ export const TeamMemberResponse = z.object({
   fullName: z.string(),
   firstName: z.string(),
   lastName: z.string(),
-  avatarUrl: z.url().nullable(),
+  avatar: TeamAvatarSchema,
   initials: z.string().max(2),
   joinedAt: z.iso.datetime({}),
 });

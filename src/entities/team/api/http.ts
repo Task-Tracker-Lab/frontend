@@ -93,9 +93,9 @@ export class TeamHttp {
     });
   }
 
-  static acceptInvitation(slug: string, code: string) {
+  static acceptInvitation(code: string) {
     return api<TTeam.ActionResponse>({
-      url: `/teams/${slug}/invitations/${code}/accept`,
+      url: `/teams/invitations/${code}/accept`,
       method: 'POST',
       contracts: {
         response: STeam.ActionResponse,
@@ -115,9 +115,9 @@ export class TeamHttp {
     });
   }
 
-  static removeInvitation(slug: string, code: string) {
+  static removeInvitation(code: string) {
     return api<TTeam.ActionResponse>({
-      url: `/teams/${slug}/invitations/${code}`,
+      url: `/teams/invitations/${code}`,
       method: 'DELETE',
       contracts: {
         response: STeam.ActionResponse,

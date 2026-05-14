@@ -1,6 +1,8 @@
 import { z } from 'zod/v4';
 import * as STeam from './schemas';
+import { TeamAvatarSchema } from './schemas';
 
+export type TeamAvatar = z.infer<typeof TeamAvatarSchema>;
 export type TeamRole = z.infer<typeof STeam.TeamRole>;
 export type MemberStatus = z.infer<typeof STeam.MemberStatus>;
 
