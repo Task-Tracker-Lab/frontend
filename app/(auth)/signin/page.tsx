@@ -1,1 +1,1 @@
-export { SigninPage as default } from 'pages/signin';
+export { SigninPage as default } from 'pages/auth/signin';

@@ -1,6 +1,6 @@
 import { z } from 'zod/v4';
 import { GlobalSuccess } from 'shared/api';
-import { MAX_PASS_LENGTH, MIN_PASS_LENGTH, OTP_LENGTH } from './const';
+import { MAX_NAME_LENGTH, MAX_PASS_LENGTH, MIN_NAME_LENGTH, MIN_PASS_LENGTH, OTP_LENGTH, } from './const';
 
 export const Email = z.string().min(1, 'Обязательное поле').check(z.email('Неверный формат email'));
 
@@ -26,9 +26,17 @@ export const SignoutResponse = GlobalSuccess;
 export const SignupBody = z.object({
   email: Email,
   password: Password,
-  firstName: z.string().min(2, 'Имя должно содержать минимум 2 символа').max(50).trim(),
-  lastName: z.string().min(2, 'Фамилия должна содержать минимум 2 символа').max(50).trim(),
-  middleName: z.string().max(50).trim().optional().or(z.literal('')),
+  firstName: z
+    .string()
+    .min(MIN_NAME_LENGTH, `Имя должно содержать минимум ${MIN_NAME_LENGTH} символа`)
+    .max(MAX_NAME_LENGTH)
+    .trim(),
+  lastName: z
+    .string()
+    .min(MIN_NAME_LENGTH, `Фамилия должна содержать минимум ${MIN_NAME_LENGTH} символа`)
+    .max(MAX_NAME_LENGTH)
+    .trim(),
+  middleName: z.string().max(MAX_NAME_LENGTH).trim().optional().or(z.literal('')),
 });
 
 export const SignupResponse = GlobalSuccess;
