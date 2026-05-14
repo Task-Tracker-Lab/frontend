@@ -1,15 +1,16 @@
 import { type DefaultError, useMutation, UseMutationOptions } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { TFile, UploadHttp } from 'entities/file';
+import { AssetHttp, TAsset } from 'entities/asset';
 
 export type UseUploadFileOptions = Omit<
-  UseMutationOptions<TFile.UploadResponse, DefaultError, TFile.UploadFileData>,
+  UseMutationOptions<TAsset.UploadAssetResponse, DefaultError, TAsset.UploadAssetData>,
   'mutationFn'
 >;
 
-export function useUploadAvatar({ onSuccess, onError, ...props }: UseUploadFileOptions = {}) {
-  return useMutation<TFile.UploadResponse, DefaultError, TFile.UploadFileData>({
-    mutationFn: UploadHttp.uploadFile,
+export function useUploadAvatar({ onSuccess, onError, ...rest }: UseUploadFileOptions = {}) {
+  return useMutation<TAsset.UploadAssetResponse, DefaultError, TAsset.UploadAssetData>({
+    ...rest,
+    mutationFn: AssetHttp.uploadFile,
     onError: (...args) => {
       onError?.(...args);
     },
@@ -17,6 +18,5 @@ export function useUploadAvatar({ onSuccess, onError, ...props }: UseUploadFileO
       onSuccess?.(res, ...args);
       toast.success(res.message ?? 'Аватар успешно загружен');
     },
-    ...props,
   });
 }

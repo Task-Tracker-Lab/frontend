@@ -3,14 +3,14 @@ import { type ChangeEvent, ComponentProps, useRef } from 'react';
 import { Avatar, AvatarFallback, AvatarImage, Button } from 'shared/ui';
 import { classNames } from 'shared/lib/utils';
 import { useUploadAvatar, UseUploadFileOptions } from '../model/useUploadAvatar';
-import { TFile } from 'entities/file';
+import { TAsset } from 'entities/asset';
 
 interface UploadAvatarProps {
   className?: string;
   avatar: string | null;
   alt: string;
   fallback?: ComponentProps<typeof AvatarFallback>;
-  context: TFile.UploadFileData['context'];
+  context: TAsset.UploadAssetData['context'];
   mutationOptions?: UseUploadFileOptions;
 }
 

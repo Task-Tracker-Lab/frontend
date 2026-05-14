@@ -1,16 +1,16 @@
 import { api } from 'shared/api';
-import { UploadFileData, UploadResponse } from '../model/types';
-import { UploadResponse as UploadResponseSchema } from '../model/schemas';
+import { UploadAssetData, UploadAssetResponse } from '../model/types';
+import { UploadAssetResponse as UploadResponseSchema } from '../model/schemas';
 
-export class UploadHttp {
-  static uploadFile(data: UploadFileData): Promise<UploadResponse> {
+export class AssetHttp {
+  static uploadFile(data: UploadAssetData): Promise<UploadAssetResponse> {
     const formData = new FormData();
 
     formData.append('file', data.file);
     // INCLUDED: SEE AT SWAGGER DOCS TO CONTEXT AND PROPS TOO
     formData.append('context', data.context);
 
-    return api<UploadResponse>({
+    return api<UploadAssetResponse>({
       url: '/upload',
       method: 'POST',
       data: formData,
