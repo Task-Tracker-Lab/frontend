@@ -8,7 +8,7 @@ import {
   ItemMedia,
   ItemTitle,
 } from 'shared/ui';
-import { RemoveTeamDialog } from 'features/teams';
+import { RemoveTeamDialog } from 'features/teams/remove';
 
 interface Props {
   teamName: string;

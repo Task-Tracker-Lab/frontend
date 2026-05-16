@@ -1,4 +1,6 @@
+import { useId } from 'react';
 import {
+  Badge,
   CardSection,
   Field,
   FieldLabel,
@@ -11,31 +13,24 @@ import {
   SelectValue,
   Switch,
 } from 'shared/ui';
-import { type SettingsSetter, type SettingsValues } from '../../model/types';
-import { useId } from 'react';
 
-type Props = {
-  settings: SettingsValues;
-  set: SettingsSetter;
-};
-
-export function InviteSecurity({ settings, set }: Props) {
+export function InviteSecurity() {
   const id = useId();
 
   return (
     <CardSection
       className="space-y-4"
-      title="Безопасность приглашений"
+      title={
+        <span className="flex items-center gap-2">
+          Безопасность приглашений
+          <Badge variant="destructive">Не реализовано</Badge>
+        </span>
+      }
       description="Настройте поведение приглашений."
     >
       <Field>
         <FieldLabel htmlFor={id}>Срок действия ссылки приглашения</FieldLabel>
-        <Select
-          value={settings.linkExpiration}
-          onValueChange={(value) =>
-            set('linkExpiration', value as SettingsValues['linkExpiration'])
-          }
-        >
+        <Select>
           <SelectTrigger id={id} className="input-max-w">
             <SelectValue placeholder="Срок действия" />
           </SelectTrigger>
@@ -51,13 +46,7 @@ export function InviteSecurity({ settings, set }: Props) {
       <OptionItem
         label="Требовать одобрения администратора"
         hint="Все новые приглашения должны быть одобрены администратором перед активацией."
-        input={(props) => (
-          <Switch
-            checked={settings.requireApproval}
-            onCheckedChange={(v) => set('requireApproval', v)}
-            {...props}
-          />
-        )}
+        input={(props) => <Switch {...props} />}
       />
     </CardSection>
   );
