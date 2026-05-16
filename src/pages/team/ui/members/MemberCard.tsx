@@ -12,7 +12,7 @@ import {
 } from 'shared/ui';
 import { classNames } from 'shared/lib/utils';
 import { TTeam } from 'entities/team';
-import { memberCardConfig as cfg } from '../../model/config';
+import { memberCardConfig as cfg } from '../../config/member';
 import { ComponentProps } from 'react';
 
 const workload = 61; //todo: mock
@@ -47,7 +47,7 @@ export function MemberCard({ className, member, ...props }: MemberCardProps) {
               cfg.ringColor[member.status],
             ])}
           >
-            <AvatarImage src={member.avatarUrl ?? undefined} alt={member.fullName} />
+            <AvatarImage src={member.avatar?.small ?? undefined} alt={member.fullName} />
             <AvatarFallback firstName={member.firstName} lastName={member.lastName} />
           </Avatar>
           <div>
