@@ -7,12 +7,12 @@ import { useQueryTeam } from '../../api/useQueryTeam';
 import { TeamSettingsFormSchema, type TeamSettingsFormValues } from '../../model/settings';
 import { DangerZone } from './DangerZone';
 import { DefaultSettings } from './DefaultSettings';
-import { InviteSecurity } from './InviteSecurity';
+import { InvitationSecurity } from './InvitationSecurity';
 import { SaveBar } from './SaveBar';
 import { TeamIdentity } from './TeamIdentity';
 import { DangerZoneSkeleton } from './skeletons/DangerZone.skeleton';
 import { DefaultSettingsSkeleton } from './skeletons/DefaultSettings.skeleton';
-import { InviteSecuritySkeleton } from './skeletons/InviteSecurity.skeleton';
+import { InvitationSecuritySkeleton } from './skeletons/InvitationSecurity.skeleton';
 import { TeamIdentitySkeleton } from './skeletons/TeamIdentity.skeleton';
 
 export function Settings() {
@@ -56,7 +56,7 @@ export function Settings() {
         <form className="space-y-5">
           {team ? <TeamIdentity team={team} /> : <TeamIdentitySkeleton />}
           {team ? <DefaultSettings /> : <DefaultSettingsSkeleton />}
-          {team ? <InviteSecurity /> : <InviteSecuritySkeleton />}
+          {team ? <InvitationSecurity /> : <InvitationSecuritySkeleton />}
           {team ? <DangerZone teamName={team?.name} slug={team?.slug} /> : <DangerZoneSkeleton />}
         </form>
         {team ? <SaveBar team={team} /> : null}

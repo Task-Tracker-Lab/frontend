@@ -1,22 +1,13 @@
 'use client';
 
+import { SlugField } from 'entities/team';
 import { ComponentProps, useId } from 'react';
 import { Controller, useFormContext, useFormState } from 'react-hook-form';
-import {
-  Field,
-  FieldError,
-  FieldLabel,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-  Textarea,
-} from 'shared/ui';
+import { Field, FieldError, FieldLabel, Input, Textarea } from 'shared/ui';
 import { getTeamPathPrefix } from '../../model/team-identity';
 
 export function TeamIdentityForm(props: Omit<ComponentProps<'div'>, 'children'>) {
   const idName = useId();
-  const idSlug = useId();
   const idDescription = useId();
   const teamPathPrefix = getTeamPathPrefix();
 
@@ -37,37 +28,22 @@ export function TeamIdentityForm(props: Omit<ComponentProps<'div'>, 'children'>)
                 aria-invalid={fieldState.invalid}
                 disabled={isSubmitting}
                 aria-label="Название команды"
+                autoComplete="off"
                 {...field}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
-        <Controller
-          name="slug"
+        <SlugField
           control={form.control}
-          render={({ field, fieldState }) => (
-            <Field className="input-max-w" data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={idSlug}>URL рабочего пространства</FieldLabel>
-              <InputGroup>
-                <InputGroupAddon>{teamPathPrefix}</InputGroupAddon>
-                <InputGroupInput
-                  id={idSlug}
-                  aria-invalid={fieldState.invalid}
-                  disabled={isSubmitting}
-                  value={field.value}
-                  onChange={(e) => {
-                    const v = e.target.value.toLowerCase();
-                    field.onChange(v);
-                  }}
-                  onBlur={field.onBlur}
-                  name={field.name}
-                  ref={field.ref}
-                />
-              </InputGroup>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-            </Field>
-          )}
+          name="slug"
+          label="URL рабочего пространства"
+          prefix={teamPathPrefix}
+          setError={form.setError}
+          clearErrors={form.clearErrors}
+          disabled={isSubmitting}
+          className="input-max-w"
         />
       </div>
       <Controller
