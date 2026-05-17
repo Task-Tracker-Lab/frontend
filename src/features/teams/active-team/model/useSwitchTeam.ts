@@ -1,0 +1,45 @@
+'use client';
+
+import { useTeamStore } from 'entities/team';
+import { TUser } from 'entities/user';
+import { useRouter } from 'next/navigation';
+import { useCallback } from 'react';
+import { routes } from 'shared/config';
+import { toast } from 'sonner';
+
+interface SwitchTeamOptions {
+  redirect?: boolean;
+  showToast?: boolean;
+}
+
+interface UseSwitchTeamProps {
+  teams?: TUser.UserTeamResponse[];
+  defaultOptions?: SwitchTeamOptions;
+}
+
+export function useSwitchTeam({ teams = [], defaultOptions = {} }: UseSwitchTeamProps = {}) {
+  const router = useRouter();
+  const setSlug = useTeamStore.use.setSlug();
+
+  const switchTeam = useCallback(
+    (slug: string, options: SwitchTeamOptions = {}) => {
+      const { redirect = false, showToast = true } = { ...defaultOptions, ...options };
+      const team = teams.find((t) => t.slug === slug);
+
+      if (!team) {
+        if (showToast) toast.error('Команда не найдена!');
+        return;
+      }
+
+      setSlug(slug);
+      if (showToast) toast.success(`Вы сменили команду на "${team.name}"`);
+
+      if (redirect) {
+        router.push(routes.team.root());
+      }
+    },
+    [setSlug, teams, router, defaultOptions]
+  );
+
+  return { switchTeam };
+}

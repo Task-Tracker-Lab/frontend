@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ComponentProps, useState } from 'react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,43 +9,45 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-  Button,
   Input,
 } from 'shared/ui';
+import { useRemoveTeam } from '../model/useRemoveTeam';
 
-interface Props {
-  workspaceName: string;
+interface Props extends ComponentProps<typeof AlertDialogTrigger> {
+  teamName: string;
+  slug: string;
 }
 
-export function DeleteWorkspaceDialog({ workspaceName }: Props) {
+export function RemoveTeamDialog({ teamName, slug, ...props }: Props) {
   const [inputValue, setInputValue] = useState('');
+  const removeTeam = useRemoveTeam();
 
-  const isMatch = inputValue.trim() === workspaceName.trim();
+  const isMatch = inputValue.trim() === teamName.trim();
+
+  const onRemove = () => {
+    removeTeam.mutate(slug);
+  };
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button variant="destructive" size="sm">
-          Удалить рабочее пространство
-        </Button>
-      </AlertDialogTrigger>
+      <AlertDialogTrigger {...props} />
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Удалить рабочее пространство?</AlertDialogTitle>
           <AlertDialogDescription>
             Это действие необратимо. Для подтверждения введите название рабочего пространства:
-            <span className="text-foreground mt-1 block font-medium">{workspaceName}</span>
+            <span className="text-foreground mt-1 block font-medium">{teamName}</span>
           </AlertDialogDescription>
         </AlertDialogHeader>
         <Input
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          placeholder={workspaceName}
-          aria-label="Название рабочего пространства для подтверждения удаления"
+          placeholder={teamName}
+          aria-label="Название команды для подтверждения удаления"
         />
         <AlertDialogFooter>
           <AlertDialogCancel onClick={() => setInputValue('')}>Отмена</AlertDialogCancel>
-          <AlertDialogAction variant="destructive" disabled={!isMatch}>
+          <AlertDialogAction variant="destructive" disabled={!isMatch} onClick={onRemove}>
             Удалить
           </AlertDialogAction>
         </AlertDialogFooter>
