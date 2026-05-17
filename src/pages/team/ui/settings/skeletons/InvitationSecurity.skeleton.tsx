@@ -1,6 +1,6 @@
 import { CardSection, Skeleton } from 'shared/ui';
 
-export function InviteSecuritySkeleton() {
+export function InvitationSecuritySkeleton() {
   return (
     <CardSection
       className="space-y-4"

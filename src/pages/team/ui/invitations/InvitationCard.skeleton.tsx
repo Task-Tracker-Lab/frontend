@@ -1,6 +1,6 @@
 import { Skeleton } from 'shared/ui';
 
-export function InviteCardSkeleton() {
+export function InvitationCardSkeleton() {
   return (
     <div className="bg-primary/2 rounded-xl border border-dashed p-3">
       <div className="flex items-start justify-between gap-4">

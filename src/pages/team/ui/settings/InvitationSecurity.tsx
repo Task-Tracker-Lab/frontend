@@ -14,7 +14,7 @@ import {
   Switch,
 } from 'shared/ui';
 
-export function InviteSecurity() {
+export function InvitationSecurity() {
   const id = useId();
 
   return (

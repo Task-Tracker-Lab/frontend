@@ -1,5 +1,5 @@
 export { TabsNav } from './ui/TabsNav';
 export { MembersPage } from './ui/members/MembersPage';
-export { InvitesPage } from './ui/invites/InvitesPage';
+export { InvitationsPage } from './ui/invitations/InvitationsPage';
 export { RolesPage } from './ui/roles/RolesPage';
 export { Settings } from './ui/settings/SettingsPage';

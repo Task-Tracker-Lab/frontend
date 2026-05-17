@@ -1,5 +1,5 @@
 import { TUser } from 'entities/user';
-import { useAcceptTeamInvite } from '../../api/useAcceptTeamInvite';
+import { useAcceptTeamInvitation } from '../../api/useAcceptTeamInvitation';
 import { MailIcon } from 'lucide-react';
 import { formatDate } from 'shared/lib/utils';
 import {
@@ -15,8 +15,8 @@ import {
   ItemTitle,
 } from 'shared/ui';
 
-export function InviteItem(props: TUser.UserInviteResponse) {
-  const acceptInvite = useAcceptTeamInvite();
+export function InvitationItem(props: TUser.UserInvitationResponse) {
+  const acceptInvitation = useAcceptTeamInvitation();
 
   return (
     <Item variant="outline">
@@ -38,10 +38,10 @@ export function InviteItem(props: TUser.UserInviteResponse) {
         <Button
           type="button"
           size="sm"
-          disabled={acceptInvite.isPending}
-          onClick={() => acceptInvite.mutate(props.code)}
+          disabled={acceptInvitation.isPending}
+          onClick={() => acceptInvitation.mutate(props.code)}
         >
-          {acceptInvite.isPending ? 'Принимаем…' : 'Принять'}
+          {acceptInvitation.isPending ? 'Принимаем…' : 'Принять'}
         </Button>
       </ItemActions>
     </Item>

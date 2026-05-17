@@ -3,12 +3,12 @@ import { TeamHttp, type TTeam } from 'entities/team';
 import { userFabricKeys } from 'entities/user';
 import { toast } from 'sonner';
 
-type UseAcceptTeamInviteOptions = Omit<
+type UseAcceptTeamInvitationOptions = Omit<
   UseMutationOptions<TTeam.ActionResponse, DefaultError, string>,
   'mutationFn'
 >;
 
-export function useAcceptTeamInvite(options: UseAcceptTeamInviteOptions = {}) {
+export function useAcceptTeamInvitation(options: UseAcceptTeamInvitationOptions = {}) {
   const { onSuccess, onSettled, ...rest } = options;
 
   return useMutation<TTeam.ActionResponse, DefaultError, string>({
@@ -20,8 +20,10 @@ export function useAcceptTeamInvite(options: UseAcceptTeamInviteOptions = {}) {
     },
     onSettled: async (_d, _e, _v, _m, context) => {
       onSettled?.(_d, _e, _v, _m, context);
-      context.client.invalidateQueries({ queryKey: userFabricKeys.myTeams() });
-      context.client.invalidateQueries({ queryKey: userFabricKeys.myInvites() });
+      await Promise.all([
+        context.client.invalidateQueries({ queryKey: userFabricKeys.myTeams() }),
+        context.client.invalidateQueries({ queryKey: userFabricKeys.myInvitations() }),
+      ]);
     },
   });
 }

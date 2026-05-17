@@ -1,7 +1,7 @@
 import { ComponentProps } from 'react';
 import { Item, ItemActions, ItemContent, ItemMedia, Skeleton } from 'shared/ui';
 
-export function InviteItemSkeleton(props: Omit<ComponentProps<typeof Item>, 'children'>) {
+export function InvitationItemSkeleton(props: Omit<ComponentProps<typeof Item>, 'children'>) {
   return (
     <Item {...props}>
       <ItemMedia>
