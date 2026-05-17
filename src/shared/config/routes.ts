@@ -12,7 +12,7 @@ export const routes = {
   team: {
     root: (): Route => '/team',
     members: (): Route => '/team/members',
-    invites: (): Route => '/team/invites',
+    invitations: (): Route => '/team/invitations',
     roles: (): Route => '/team/roles',
     settings: (): Route => '/team/settings',
   },

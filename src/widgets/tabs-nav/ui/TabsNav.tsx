@@ -1,20 +1,22 @@
 'use client';
 
-import { ComponentProps } from 'react';
-import type { Route } from 'next';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { routes } from 'shared/config';
+import { ComponentProps } from 'react';
 import { classNames } from 'shared/lib/utils';
+import { Badge } from 'shared/ui';
+import { TabNavItem } from '../model/types';
 
-const tabs: { key: Route; label: string }[] = [
-  { key: routes.profile.me(), label: 'Пользователь' },
-  { key: routes.profile.security(), label: 'Безопасность' },
-  { key: routes.profile.notifications(), label: 'Уведомления' },
-];
+interface TabsNavProps extends Omit<ComponentProps<'div'>, 'children'> {
+  tabs: TabNavItem[];
+}
 
-export function TabsNav({ className, ...props }: ComponentProps<'div'>) {
+export function TabsNav({ className, tabs, ...props }: TabsNavProps) {
   const pathname = usePathname();
+
+  if (tabs.length === 0) {
+    return null;
+  }
 
   return (
     <div
@@ -33,12 +35,17 @@ export function TabsNav({ className, ...props }: ComponentProps<'div'>) {
             key={tab.key}
             href={tab.key}
             className={classNames(
-              'relative p-3 text-sm font-medium whitespace-nowrap transition-colors duration-200',
+              'relative space-x-1 p-3 text-sm font-medium whitespace-nowrap transition-colors duration-200',
               {},
               [active ? 'hover:cursor-default' : 'hover:text-muted-foreground']
             )}
           >
-            {tab.label}
+            <span>{tab.label}</span>
+            {tab.badge && (
+              <Badge className="relative -translate-y-1/2 p-1.5" variant={tab.badge.variant}>
+                {tab.badge.value}
+              </Badge>
+            )}
             {active && <span className="bg-primary absolute inset-x-0 -bottom-px h-0.5" />}
           </Link>
         );

@@ -1,10 +1,12 @@
 import { ComponentProps } from 'react';
+import { TeamSlugSync } from 'features/teams/active-team';
 import { Separator, SidebarInset, SidebarProvider, SidebarTrigger } from 'shared/ui';
 import { AppSidebar } from 'widgets/app-sidebar';
 
 export function SidebarLayout({ children, ...props }: ComponentProps<typeof SidebarProvider>) {
   return (
     <SidebarProvider {...props}>
+      <TeamSlugSync />
       <AppSidebar />
       <SidebarInset>
         <header className="flex h-14 shrink-0 items-center gap-2 border-b px-4">
