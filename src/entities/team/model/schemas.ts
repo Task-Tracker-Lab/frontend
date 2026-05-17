@@ -1,5 +1,5 @@
-import { z } from 'zod/v4';
 import { GlobalSuccess } from 'shared/api';
+import { z } from 'zod/v4';
 
 export const TeamAvatarSchema = z
   .object({
@@ -18,6 +18,7 @@ export const TeamRole = z.enum([
   'member', // обычный работяга
   'viewer', // просто смотрит
 ]);
+
 export const MemberStatus = z.enum([
   'active', // Полноценный участник
   'banned', // Заблокирован не может вернуться по инвайту
@@ -25,9 +26,20 @@ export const MemberStatus = z.enum([
 ]);
 
 export const CreateTeamBody = z.object({
-  name: z.string().min(2).max(100),
-  description: z.string().min(10).max(500),
-  slug: z.string().optional(),
+  name: z
+    .string()
+    .min(1, 'Укажите название команды')
+    .min(2, 'Название должно содержать не менее 2 символов')
+    .max(100, 'Название не может быть длиннее 100 символов'),
+  description: z
+    .string()
+    .min(1, 'Добавьте описание команды')
+    .min(10, 'Описание должно содержать не менее 10 символов')
+    .max(256, 'Описание не может быть длиннее 256 символов'),
+  slug: z
+    .string()
+    .max(100, 'Короткий адрес в ссылке не может быть длиннее 100 символов')
+    .optional(),
   tags: z
     .array(z.string())
     .optional()
@@ -37,7 +49,7 @@ export const CreateTeamBody = z.object({
       if (hasDuplicates) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: 'Теги в списке не должны повторяться (регистр не важен)',
+          message: 'Теги в списке не должны повторяться',
         });
       }
     }),
@@ -84,7 +96,7 @@ export const TeamInvitationResponse = z.object({
 
 export const InviteMemberBody = z.object({
   email: z.email(),
-  role: TeamRole.default('member'),
+  role: TeamRole,
 });
 
 export const UpdateInvitationBody = z.object({
@@ -95,6 +107,8 @@ export const TeamMemberResponse = z.object({
   id: z.string(),
   role: TeamRole,
   status: MemberStatus,
+  email: z.email(),
+  middleName: z.string().nullable(),
   fullName: z.string(),
   firstName: z.string(),
   lastName: z.string(),
@@ -127,12 +141,6 @@ export const SyncTagsBody = z.object({
         });
       }
     }),
-});
-
-export const FileUploadResponse = z.object({
-  success: z.boolean(),
-  url: z.string(),
-  message: z.string().optional(),
 });
 
 export const ActionResponse = GlobalSuccess;
