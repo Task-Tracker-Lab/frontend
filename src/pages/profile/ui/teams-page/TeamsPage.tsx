@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
 import { CreateTeamDialog } from 'features/teams/create';
 import { Plus } from 'lucide-react';
 import { Button, CardSection, Separator } from 'shared/ui';
-import { Invites } from './Invites';
+import { Invitations } from './Invitations';
 import { TeamsList } from './TeamList';
 
 function TeamsPage() {
@@ -31,7 +31,7 @@ function TeamsPage() {
 
         <div className="space-y-3">
           <h3 className="text-sm font-semibold">Приглашения</h3>
-          <Invites />
+          <Invitations />
         </div>
       </CardSection>
     </>

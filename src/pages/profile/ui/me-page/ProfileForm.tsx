@@ -1,15 +1,13 @@
-'use client';
-
 import { Controller, UseFormReturn } from 'react-hook-form';
 import { Field, FieldError, FieldGroup, FieldLabel, Input, Textarea } from 'shared/ui';
 import type { ProfileFormValues } from '../../model/profile';
 
-type AccountProfileFormProps = {
+interface ProfileFormProps {
   form: UseFormReturn<ProfileFormValues>;
   onSubmit: (data: ProfileFormValues) => void;
-};
+}
 
-function ProfileForm({ form, onSubmit }: AccountProfileFormProps) {
+function ProfileForm({ form, onSubmit }: ProfileFormProps) {
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
       <FieldGroup className="grid gap-3 sm:grid-cols-2">

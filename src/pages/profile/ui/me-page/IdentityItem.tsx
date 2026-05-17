@@ -3,7 +3,7 @@
 import { Item, ItemActions, ItemContent, ItemMedia } from 'shared/ui';
 import { UploadAvatar } from 'features/upload-avatar';
 import { SignOut } from 'features/auth/sign-out';
-import { TUser } from 'entities/user';
+import { TUser, UserAvatar } from 'entities/user';
 
 type AccountIdentityItemProps = {
   profile: TUser.UserResponse['profile'];
@@ -17,13 +17,15 @@ function IdentityItem({ profile, email }: AccountIdentityItemProps) {
     <Item className="items-start gap-4">
       <ItemMedia>
         <UploadAvatar
-          avatar={profile.avatar?.medium ?? null}
-          alt={fullName}
           context="user.avatar"
-          fallback={{
-            firstName: profile.firstName,
-            lastName: profile.lastName,
-          }}
+          avatar={
+            <UserAvatar
+              wrap={{ className: 'ring-background size-28 shadow-md ring-4' }}
+              src={profile.avatar?.medium}
+              alt={fullName}
+              fallback={{ firstName: profile.firstName, lastName: profile.lastName }}
+            />
+          }
         />
       </ItemMedia>
       <ItemContent className="self-center">

@@ -1,10 +1,5 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useQuery } from '@tanstack/react-query';
-import { TUser, UserQueries } from 'entities/user';
-import { ComponentProps, useEffect } from 'react';
-import { useForm, useWatch } from 'react-hook-form';
 import {
   Card,
   CardDescription,
@@ -14,43 +9,16 @@ import {
   FloatingSaveBar,
   Separator,
 } from 'shared/ui';
-import { useUpdateProfile } from '../../api/useUpdateProfile';
-import type { ProfileFormValues } from '../../model/profile';
-import { ProfileForm as ProfileFormSchema } from '../../model/profile';
 import { IdentityItem } from './IdentityItem';
 import { ProfileForm } from './ProfileForm';
+import { useMePage } from '../../model/useMePage';
 
-function MePage(props: Omit<ComponentProps<typeof Card>, 'children'>) {
-  const query = useQuery(UserQueries.getMe());
-  const profile = query.data?.profile;
-  const email = query.data?.email;
-
-  const form = useForm<ProfileFormValues>({
-    resolver: zodResolver(ProfileFormSchema),
-    defaultValues: {
-      firstName: '',
-      lastName: '',
-      bio: '',
-    },
-  });
-  const formValues = useWatch({ control: form.control });
-  const updateProfileMutation = useUpdateProfile();
-
-  useEffect(() => {
-    if (!profile) {
-      return;
-    }
-
-    form.reset({
-      firstName: profile.firstName,
-      lastName: profile.lastName,
-      bio: profile.bio || '',
-    });
-  }, [form, profile]);
+function MePage() {
+  const { form, profile, email, isDirty, isPending, onSubmit, onDiscard } = useMePage();
 
   if (!profile || !email) {
     return (
-      <Card {...props}>
+      <Card>
         <CardHeader>
           <CardTitle>Профиль</CardTitle>
           <CardDescription>Данные профиля пока недоступны.</CardDescription>
@@ -58,21 +26,6 @@ function MePage(props: Omit<ComponentProps<typeof Card>, 'children'>) {
       </Card>
     );
   }
-
-  const profileFormKeys: Array<keyof ProfileFormValues> = ['firstName', 'lastName', 'bio'];
-  const dirty = profileFormKeys.some(
-    (key) => (formValues[key] ?? '').trim() !== (profile[key] ?? '').trim()
-  );
-
-  const onSubmit = (data: ProfileFormValues) => {
-    const body: TUser.ProfileUpdateBody = {
-      firstName: data.firstName.trim(),
-      lastName: data.lastName.trim(),
-      bio: data.bio ? data.bio.trim() : '',
-    };
-
-    updateProfileMutation.mutate(body);
-  };
 
   return (
     <>
@@ -86,16 +39,10 @@ function MePage(props: Omit<ComponentProps<typeof Card>, 'children'>) {
         <ProfileForm form={form} onSubmit={onSubmit} />
       </CardSection>
       <FloatingSaveBar
-        visible={dirty}
+        visible={isDirty}
         onSave={form.handleSubmit(onSubmit)}
-        onDiscard={() =>
-          form.reset({
-            firstName: profile.firstName,
-            lastName: profile.lastName,
-            bio: profile.bio || '',
-          })
-        }
-        pending={updateProfileMutation.isPending}
+        onDiscard={onDiscard}
+        pending={isPending}
       />
     </>
   );
