@@ -1,5 +1,5 @@
-import { userFabricKeys } from '../model/const';
 import { queryOptions } from '@tanstack/react-query';
+import { userFabricKeys } from '../model/const';
 import { UserHttp } from './http';
 
 export class UserQueries {
@@ -8,7 +8,6 @@ export class UserQueries {
       queryKey: userFabricKeys.me(),
       queryFn: async ({ signal }) => UserHttp.getUser(signal),
       staleTime: 60_000,
-      refetchOnMount: false,
     });
   }
 
@@ -17,7 +16,6 @@ export class UserQueries {
       queryKey: userFabricKeys.meActivity(),
       queryFn: async ({ signal }) => UserHttp.getUserActivity(signal),
       staleTime: 60_000,
-      refetchOnMount: false,
     });
   }
 
@@ -26,16 +24,14 @@ export class UserQueries {
       queryKey: userFabricKeys.myTeams(),
       queryFn: async ({ signal }) => UserHttp.getMyTeams(signal),
       staleTime: 60_000,
-      refetchOnMount: false,
     });
   }
 
-  static getMyInvites() {
+  static getMyInvitations() {
     return queryOptions({
-      queryKey: userFabricKeys.myInvites(),
-      queryFn: async ({ signal }) => UserHttp.getMyInvites(signal),
+      queryKey: userFabricKeys.myInvitations(),
+      queryFn: async ({ signal }) => UserHttp.getMyInvitations(signal),
       staleTime: 60_000,
-      refetchOnMount: false,
     });
   }
 }

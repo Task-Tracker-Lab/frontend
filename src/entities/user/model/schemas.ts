@@ -89,7 +89,7 @@ export const UserTeamResponse = z.object({
   permissions: TeamPermissions,
 });
 
-export const UserInviteResponse = z.object({
+export const UserInvitationResponse = z.object({
   code: z.string(),
   teamName: z.string(),
   teamAvatar: UserAvatarSchema,

@@ -59,12 +59,12 @@ export class UserHttp {
     });
   }
 
-  static getMyInvites(signal?: AbortSignal) {
-    return api<TUser.UserInviteResponse[]>({
+  static getMyInvitations(signal?: AbortSignal) {
+    return api<TUser.UserInvitationResponse[]>({
       url: '/users/me/invites',
       method: 'GET',
       contracts: {
-        response: SUser.UserInviteResponse.array(),
+        response: SUser.UserInvitationResponse.array(),
       },
       signal,
     });
