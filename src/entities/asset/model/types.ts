@@ -5,5 +5,5 @@ export type UploadAssetResponse = z.infer<typeof UploadAssetResponse>;
 
 export type UploadAssetData = {
   file: File;
-  context: string; //TODO: typify
+  context: 'user.avatar' | 'team.avatar' | 'team.banner';
 };
