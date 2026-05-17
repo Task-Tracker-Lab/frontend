@@ -3,15 +3,14 @@
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { Slot } from 'radix-ui';
-
 import { useIsMobile } from 'shared/lib/hooks';
 import { cn } from 'shared/lib/utils';
-import { Button } from '../../button/Button';
-import { Input } from '../../Input';
-import { Separator } from '../../Separator';
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '../../Sheet';
-import { Skeleton } from '../../Skeleton';
-import { Tooltip, TooltipContent, TooltipTrigger } from '../../Tooltip';
+import { Button } from '../button/Button';
+import { Input } from '../Input';
+import { Separator } from '../Separator';
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '../Sheet';
+import { Skeleton } from '../Skeleton';
+import { Tooltip, TooltipContent, TooltipTrigger } from '../Tooltip';
 import {
   SIDEBAR_COOKIE_MAX_AGE,
   SIDEBAR_COOKIE_NAME,
@@ -19,7 +18,7 @@ import {
   SIDEBAR_WIDTH,
   SIDEBAR_WIDTH_ICON,
   SIDEBAR_WIDTH_MOBILE,
-} from '../model/const';
+} from './const';
 import { PanelLeftIcon } from 'lucide-react';
 
 type SidebarContextProps = {

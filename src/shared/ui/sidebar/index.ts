@@ -1,2 +1,2 @@
-export { SIDEBAR_COOKIE_NAME } from './model/const';
-export * from './ui/Sidebar';
+export { SIDEBAR_COOKIE_NAME } from './const';
+export * from './Sidebar';
