@@ -9,13 +9,13 @@ export function useTeamsQueryWithSlugSync() {
   const setCurrentTeamSlug = useTeamStore.use.setSlug();
 
   useEffect(() => {
-    if (query.data) {
-      const hasTeamSlug = !!slug && query.data.some((d) => d.slug === slug);
+    if (!query.data) return;
 
-      if (!hasTeamSlug) {
-        setCurrentTeamSlug(query.data[0]?.slug);
-      }
-    }
+    const hasTeamSlug = !!slug && query.data.some((d) => d.slug === slug);
+
+    if (hasTeamSlug) return;
+
+    setCurrentTeamSlug(query.data[0]?.slug);
   }, [slug, setCurrentTeamSlug, query.data]);
 
   return { query, slug };

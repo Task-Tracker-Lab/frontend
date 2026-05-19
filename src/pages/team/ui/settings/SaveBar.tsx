@@ -6,7 +6,7 @@ import { type TeamSettingsFormValues } from '../../model/settings';
 
 export function SaveBar({ team }: { team: TTeam.TeamDetailsResponse }) {
   const form = useFormContext();
-  const { isDirty, dirtyFields } = useFormState({ control: form.control });
+  const { isDirty, dirtyFields, isValidating, isValid } = useFormState({ control: form.control });
 
   const updateTeam = useUpdateTeam({
     onSuccess: () => {
@@ -28,7 +28,8 @@ export function SaveBar({ team }: { team: TTeam.TeamDetailsResponse }) {
       visible={isDirty}
       onSave={form.handleSubmit(onSubmit)}
       onDiscard={() => form.reset(team)}
-      pending={updateTeam.isPending}
+      pending={updateTeam.isPending || isValidating}
+      disabledSave={!isValid}
     />
   );
 }

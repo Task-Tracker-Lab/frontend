@@ -15,6 +15,8 @@ export class TeamQueries {
     return queryOptions({
       queryKey: teamFabricKeys.checkSlug(slug),
       queryFn: async ({ signal }) => TeamHttp.checkSlug(slug, signal),
+      gcTime: 5000,
+      staleTime: 5000,
     });
   }
 

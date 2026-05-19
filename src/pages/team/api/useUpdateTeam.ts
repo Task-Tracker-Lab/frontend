@@ -10,6 +10,7 @@ type UseUpdateTeamProps = Omit<
 
 export function useUpdateTeam({ onSuccess, ...rest }: UseUpdateTeamProps = {}) {
   const slug = useTeamStore.use.slug();
+  const setSlug = useTeamStore.use.setSlug();
 
   return useMutation<TTeam.ActionResponse, DefaultError, TTeam.UpdateTeamBody>({
     ...rest,
@@ -31,6 +32,10 @@ export function useUpdateTeam({ onSuccess, ...rest }: UseUpdateTeamProps = {}) {
           queryKey: userFabricKeys.myTeams(),
         }),
       ]);
+
+      if (v.slug) {
+        setSlug(v.slug);
+      }
     },
   });
 }

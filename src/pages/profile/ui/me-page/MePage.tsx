@@ -42,7 +42,8 @@ function MePage() {
         visible={isDirty}
         onSave={form.handleSubmit(onSubmit)}
         onDiscard={onDiscard}
-        pending={isPending}
+        pending={isPending && form.formState.isValidating}
+        disabledSave={!form.formState.isValid}
       />
     </>
   );

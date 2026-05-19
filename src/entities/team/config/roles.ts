@@ -5,7 +5,7 @@ export const ROLE_LABELS: Record<Exclude<TeamRole, 'owner'>, string> = {
   lead: 'Лид',
   moderator: 'Модератор',
   member: 'Участник',
-  viewer: 'Наблюдатель',
+  viewer: 'Гость',
 } as const;
 
 export const INVITATION_ROLES = [

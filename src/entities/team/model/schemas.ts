@@ -1,5 +1,6 @@
 import { GlobalSuccess } from 'shared/api';
 import { z } from 'zod/v4';
+import { MAX_SLUG_LENGTH, MIN_SLUG_LENGTH } from './const';
 
 export const TeamAvatarSchema = z
   .object({
@@ -38,8 +39,21 @@ export const CreateTeamBody = z.object({
     .max(256, 'Описание не может быть длиннее 256 символов'),
   slug: z
     .string()
-    .max(100, 'Короткий адрес в ссылке не может быть длиннее 100 символов')
-    .optional(),
+    .optional()
+    .transform((val) => (val === '' || val === undefined ? undefined : val))
+    .pipe(
+      z
+        .string()
+        .min(
+          MIN_SLUG_LENGTH,
+          `Короткий адрес должен содержать не менее ${MIN_SLUG_LENGTH} символов`
+        )
+        .max(
+          MAX_SLUG_LENGTH,
+          `Короткий адрес в ссылке не может быть длиннее ${MAX_SLUG_LENGTH} символов`
+        )
+        .optional()
+    ),
   tags: z
     .array(z.string())
     .optional()

@@ -36,12 +36,9 @@ export function TeamIdentityForm(props: Omit<ComponentProps<'div'>, 'children'>)
           )}
         />
         <SlugField
-          control={form.control}
           name="slug"
           label="URL рабочего пространства"
           prefix={teamPathPrefix}
-          setError={form.setError}
-          clearErrors={form.clearErrors}
           disabled={isSubmitting}
           className="input-max-w"
         />

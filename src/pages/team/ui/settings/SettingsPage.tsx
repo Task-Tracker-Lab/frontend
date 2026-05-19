@@ -1,8 +1,9 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useCheckSlug, validateTeamSlugAsync } from 'entities/team';
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useZodValidationWithAsyncCheck } from 'shared/lib/hooks';
 import { useQueryTeam } from '../../api/useQueryTeam';
 import { TeamSettingsFormSchema, type TeamSettingsFormValues } from '../../model/settings';
 import { DangerZone } from './DangerZone';
@@ -18,9 +19,13 @@ import { TeamIdentitySkeleton } from './skeletons/TeamIdentity.skeleton';
 export function Settings() {
   const teamQuery = useQueryTeam();
   const team = teamQuery.data;
+  const checkSlug = useCheckSlug(team?.slug ?? '');
 
   const form = useForm<TeamSettingsFormValues>({
-    resolver: zodResolver(TeamSettingsFormSchema),
+    resolver: useZodValidationWithAsyncCheck(TeamSettingsFormSchema, (...args) =>
+      validateTeamSlugAsync(checkSlug, ...args)
+    ),
+    mode: 'onChange',
     defaultValues: {
       name: '',
       slug: '',

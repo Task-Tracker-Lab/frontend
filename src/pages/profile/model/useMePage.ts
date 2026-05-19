@@ -1,10 +1,10 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@tanstack/react-query';
 import { TUser, UserQueries } from 'entities/user';
 import { useEffect } from 'react';
 import { useForm, useFormState } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useUpdateProfile } from '../api/useUpdateProfile';
 import { ProfileForm as ProfileFormSchema, type ProfileFormValues } from './profile';
 
@@ -15,6 +15,7 @@ export function useMePage() {
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(ProfileFormSchema),
+    mode: 'onChange',
     defaultValues: {
       firstName: '',
       lastName: '',
