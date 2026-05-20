@@ -1,12 +1,21 @@
 import { AlertTriangle } from 'lucide-react';
-import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from 'shared/ui';
-import { DeleteWorkspaceDialog } from './DeleteWorkspaceDialog';
+import {
+  Button,
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemMedia,
+  ItemTitle,
+} from 'shared/ui';
+import { RemoveTeamDialog } from 'features/teams/remove';
 
 interface Props {
-  workspaceName: string;
+  teamName: string;
+  slug: string;
 }
 
-export function DangerZone({ workspaceName }: Props) {
+export function DangerZone({ teamName, slug }: Props) {
   return (
     <Item variant="destructive">
       <ItemMedia>
@@ -20,7 +29,11 @@ export function DangerZone({ workspaceName }: Props) {
         </ItemDescription>
       </ItemContent>
       <ItemActions>
-        <DeleteWorkspaceDialog workspaceName={workspaceName} />
+        <RemoveTeamDialog teamName={teamName} slug={slug} asChild>
+          <Button variant="destructive" size="sm">
+            Удалить рабочее пространство
+          </Button>
+        </RemoveTeamDialog>
       </ItemActions>
     </Item>
   );

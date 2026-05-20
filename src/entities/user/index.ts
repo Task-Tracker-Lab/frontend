@@ -1,5 +1,6 @@
 export * as SUser from './model/schemas';
-export * as TUser from './model/types';
+export type * as TUser from './model/types';
 export { UserHttp } from './api/http';
 export { UserQueries } from './api/queries';
 export { userFabricKeys } from './model/const';
+export { UserAvatar } from './ui/UserAvatar';

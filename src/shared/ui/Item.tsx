@@ -110,7 +110,7 @@ function ItemContent({ className, ...props }: React.ComponentProps<'div'>) {
     <div
       data-slot="item-content"
       className={cn(
-        'flex flex-1 flex-col gap-1 group-data-[size=xs]/item:gap-0 [&+[data-slot=item-content]]:flex-none',
+        'flex flex-1 flex-col gap-0 group-data-[size=xs]/item:gap-0 [&+[data-slot=item-content]]:flex-none',
         className
       )}
       {...props}
@@ -172,13 +172,13 @@ function ItemFooter({ className, ...props }: React.ComponentProps<'div'>) {
 
 export {
   Item,
-  ItemMedia,
-  ItemContent,
   ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemFooter,
   ItemGroup,
+  ItemHeader,
+  ItemMedia,
   ItemSeparator,
   ItemTitle,
-  ItemDescription,
-  ItemHeader,
-  ItemFooter,
 };

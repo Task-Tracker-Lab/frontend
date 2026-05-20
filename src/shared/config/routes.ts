@@ -7,11 +7,12 @@ export const routes = {
     me: (): Route => '/profile/me',
     security: (): Route => '/profile/security',
     notifications: (): Route => '/profile/notifications',
+    teams: (): Route => '/profile/teams',
   },
   team: {
     root: (): Route => '/team',
     members: (): Route => '/team/members',
-    invites: (): Route => '/team/invites',
+    invitations: (): Route => '/team/invitations',
     roles: (): Route => '/team/roles',
     settings: (): Route => '/team/settings',
   },

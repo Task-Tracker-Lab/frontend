@@ -79,20 +79,20 @@ export const TeamPermissions = z.object({
 });
 
 export const UserTeamResponse = z.object({
-  id: z.string().uuid(),
+  id: z.string(),
   name: z.string(),
   slug: z.string(),
-  description: z.string().nullable(),
-  avatarUrl: z.string().nullable(),
+  description: z.string(),
+  avatar: UserAvatarSchema,
   role: z.string(),
   joinedAt: z.iso.datetime({}),
   permissions: TeamPermissions,
 });
 
-export const UserInviteResponse = z.object({
+export const UserInvitationResponse = z.object({
   code: z.string(),
   teamName: z.string(),
-  teamAvatar: z.string().nullable(),
+  teamAvatar: UserAvatarSchema,
   role: z.string(),
   inviterName: z.string(),
   expiresAt: z.iso.datetime({}),

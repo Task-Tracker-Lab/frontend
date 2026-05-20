@@ -1,27 +1,18 @@
+import { TAsset } from 'entities/asset';
 import { Pencil } from 'lucide-react';
-import { type ChangeEvent, ComponentProps, useRef } from 'react';
-import { Avatar, AvatarFallback, AvatarImage, Button } from 'shared/ui';
+import { type ChangeEvent, type ComponentProps, type ReactElement, useRef } from 'react';
 import { classNames } from 'shared/lib/utils';
+import { type Avatar, Button } from 'shared/ui';
 import { useUploadAvatar, UseUploadFileOptions } from '../model/useUploadAvatar';
-import { TFile } from 'entities/file';
 
 interface UploadAvatarProps {
   className?: string;
-  avatar: string | null;
-  alt: string;
-  fallback?: ComponentProps<typeof AvatarFallback>;
-  context: TFile.UploadFileData['context'];
+  avatar: ReactElement<ComponentProps<typeof Avatar>, typeof Avatar>;
+  context: TAsset.UploadAssetData['context'];
   mutationOptions?: UseUploadFileOptions;
 }
 
-function UploadAvatar({
-  className,
-  avatar,
-  alt,
-  context,
-  fallback = {},
-  mutationOptions,
-}: UploadAvatarProps) {
+function UploadAvatar({ className, avatar, context, mutationOptions }: UploadAvatarProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const uploadAvatarMutation = useUploadAvatar(mutationOptions);
@@ -42,10 +33,7 @@ function UploadAvatar({
 
   return (
     <div className={classNames('relative h-min w-min', {}, [className])}>
-      <Avatar className="ring-background size-28 shadow-md ring-4">
-        <AvatarImage src={avatar ?? undefined} alt={alt} />
-        <AvatarFallback {...fallback} />
-      </Avatar>
+      {avatar}
       <Button
         type="button"
         size="icon-sm"

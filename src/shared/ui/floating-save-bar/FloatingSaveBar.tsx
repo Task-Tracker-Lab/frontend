@@ -5,11 +5,13 @@ export function FloatingSaveBar({
   onSave,
   onDiscard,
   pending = false,
+  disabledSave = false,
 }: {
   visible: boolean;
   onSave: () => void;
   onDiscard: () => void;
   pending?: boolean;
+  disabledSave?: boolean;
 }) {
   if (visible) {
     return (
@@ -30,7 +32,7 @@ export function FloatingSaveBar({
           <Button variant="secondary" onClick={onDiscard} disabled={pending}>
             Отменить
           </Button>
-          <Button onClick={onSave} disabled={pending}>
+          <Button onClick={onSave} disabled={pending || disabledSave}>
             Сохранить
           </Button>
         </div>

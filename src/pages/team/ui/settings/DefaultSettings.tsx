@@ -1,4 +1,6 @@
+import { useId } from 'react';
 import {
+  Badge,
   CardSection,
   Field,
   FieldLabel,
@@ -12,30 +14,25 @@ import {
   SelectValue,
   Switch,
 } from 'shared/ui';
-import { type SettingsSetter, type SettingsValues } from '../../model/types';
-import { useId } from 'react';
 
-type Props = {
-  settings: SettingsValues;
-  set: SettingsSetter;
-};
-
-export function DefaultSettings({ settings, set }: Props) {
+export function DefaultSettings() {
   const roleId = useId();
   const autoJoinId = useId();
 
   return (
     <CardSection
       className="space-y-4"
-      title="Настройки по умолчанию"
+      title={
+        <span className="flex items-center gap-2">
+          Настройки по умолчанию
+          <Badge variant="destructive">Не реализовано</Badge>
+        </span>
+      }
       description="Применяется к новым участникам."
     >
       <Field>
         <FieldLabel htmlFor={roleId}>Роль по умолчанию для новых участников</FieldLabel>
-        <Select
-          value={settings.defaultRole}
-          onValueChange={(value) => set('defaultRole', value as SettingsValues['defaultRole'])}
-        >
+        <Select>
           <SelectTrigger id={roleId} className="input-max-w">
             <SelectValue placeholder="Выберите роль" />
           </SelectTrigger>
@@ -50,24 +47,12 @@ export function DefaultSettings({ settings, set }: Props) {
       </Field>
       <Field>
         <FieldLabel htmlFor={autoJoinId}>Домен для автоматического входа</FieldLabel>
-        <Input
-          className="input-max-w"
-          id={autoJoinId}
-          value={settings.autoJoinDomain}
-          onChange={(e) => set('autoJoinDomain', e.target.value)}
-          placeholder="company.com"
-        />
+        <Input className="input-max-w" id={autoJoinId} placeholder="company.com" />
       </Field>
       <OptionItem
         label="Разрешить автоматический вход по домену"
-        hint={`Все с email @${settings.autoJoinDomain || 'company.com'} входят автоматически.`}
-        input={(props) => (
-          <Switch
-            checked={settings.autoJoin}
-            onCheckedChange={(v) => set('autoJoin', v)}
-            {...props}
-          />
-        )}
+        hint="Все с email 'company.com' входят автоматически."
+        input={(props) => <Switch {...props} />}
       />
     </CardSection>
   );

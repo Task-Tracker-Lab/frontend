@@ -93,9 +93,9 @@ export class TeamHttp {
     });
   }
 
-  static acceptInvitation(slug: string, code: string) {
+  static acceptInvitation(code: string) {
     return api<TTeam.ActionResponse>({
-      url: `/teams/${slug}/invitations/${code}/accept`,
+      url: `/teams/invitations/${code}/accept`,
       method: 'POST',
       contracts: {
         response: STeam.ActionResponse,
@@ -104,13 +104,13 @@ export class TeamHttp {
   }
 
   static updateInvitation(slug: string, code: string, data: TTeam.UpdateInvitationBody) {
-    return api<TTeam.TeamInvitationResponse>({
+    return api<TTeam.ActionResponse>({
       url: `/teams/${slug}/invitations/${code}`,
       method: 'PATCH',
       data,
       contracts: {
         body: STeam.UpdateInvitationBody,
-        response: STeam.TeamInvitationResponse,
+        response: STeam.ActionResponse,
       },
     });
   }
@@ -166,23 +166,6 @@ export class TeamHttp {
       contracts: {
         body: STeam.SyncTagsBody,
         response: STeam.ActionResponse,
-      },
-    });
-  }
-
-  static updateBanner(slug: string, file: File) {
-    const formData = new FormData();
-    formData.append('file', file);
-
-    return api<TTeam.FileUploadResponse>({
-      url: `/teams/${slug}/banner`,
-      method: 'PATCH',
-      data: formData,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      contracts: {
-        response: STeam.FileUploadResponse,
       },
     });
   }

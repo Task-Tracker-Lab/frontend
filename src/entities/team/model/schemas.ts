@@ -1,5 +1,15 @@
-import { z } from 'zod/v4';
 import { GlobalSuccess } from 'shared/api';
+import { z } from 'zod/v4';
+import { MAX_SLUG_LENGTH, MIN_SLUG_LENGTH } from './const';
+
+export const TeamAvatarSchema = z
+  .object({
+    small: z.string().url(),
+    medium: z.string().url(),
+    large: z.string().url(),
+    original: z.string().url(),
+  })
+  .nullish();
 
 export const TeamRole = z.enum([
   'owner',
@@ -9,6 +19,7 @@ export const TeamRole = z.enum([
   'member', // обычный работяга
   'viewer', // просто смотрит
 ]);
+
 export const MemberStatus = z.enum([
   'active', // Полноценный участник
   'banned', // Заблокирован не может вернуться по инвайту
@@ -16,9 +27,33 @@ export const MemberStatus = z.enum([
 ]);
 
 export const CreateTeamBody = z.object({
-  name: z.string().min(2).max(100),
-  description: z.string().min(10).max(500),
-  slug: z.string().optional(),
+  name: z
+    .string()
+    .min(1, 'Укажите название команды')
+    .min(2, 'Название должно содержать не менее 2 символов')
+    .max(100, 'Название не может быть длиннее 100 символов'),
+  description: z
+    .string()
+    .min(1, 'Добавьте описание команды')
+    .min(10, 'Описание должно содержать не менее 10 символов')
+    .max(256, 'Описание не может быть длиннее 256 символов'),
+  slug: z
+    .string()
+    .optional()
+    .transform((val) => (val === '' || val === undefined ? undefined : val))
+    .pipe(
+      z
+        .string()
+        .min(
+          MIN_SLUG_LENGTH,
+          `Короткий адрес должен содержать не менее ${MIN_SLUG_LENGTH} символов`
+        )
+        .max(
+          MAX_SLUG_LENGTH,
+          `Короткий адрес в ссылке не может быть длиннее ${MAX_SLUG_LENGTH} символов`
+        )
+        .optional()
+    ),
   tags: z
     .array(z.string())
     .optional()
@@ -28,7 +63,7 @@ export const CreateTeamBody = z.object({
       if (hasDuplicates) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: 'Теги в списке не должны повторяться (регистр не важен)',
+          message: 'Теги в списке не должны повторяться',
         });
       }
     }),
@@ -52,7 +87,7 @@ export const TeamDetailsResponse = z.object({
   name: z.string(),
   slug: z.string(),
   description: z.string().nullable(),
-  avatarUrl: z.string().nullable(),
+  avatar: TeamAvatarSchema,
   coverUrl: z.string().nullable(),
   ownerId: z.string().nullable(),
   createdAt: z.iso.datetime({}),
@@ -64,7 +99,7 @@ export const TeamInvitationResponse = z.object({
   code: z.string(),
   teamId: z.string(),
   teamName: z.string(),
-  teamAvatar: z.string().nullable(),
+  avatar: TeamAvatarSchema,
   email: z.email(),
   role: TeamRole,
   inviterId: z.string(),
@@ -75,7 +110,7 @@ export const TeamInvitationResponse = z.object({
 
 export const InviteMemberBody = z.object({
   email: z.email(),
-  role: TeamRole.default('member'),
+  role: TeamRole,
 });
 
 export const UpdateInvitationBody = z.object({
@@ -86,10 +121,12 @@ export const TeamMemberResponse = z.object({
   id: z.string(),
   role: TeamRole,
   status: MemberStatus,
+  email: z.email(),
+  middleName: z.string().nullable(),
   fullName: z.string(),
   firstName: z.string(),
   lastName: z.string(),
-  avatarUrl: z.url().nullable(),
+  avatar: TeamAvatarSchema,
   initials: z.string().max(2),
   joinedAt: z.iso.datetime({}),
 });
@@ -118,12 +155,6 @@ export const SyncTagsBody = z.object({
         });
       }
     }),
-});
-
-export const FileUploadResponse = z.object({
-  success: z.boolean(),
-  url: z.string(),
-  message: z.string().optional(),
 });
 
 export const ActionResponse = GlobalSuccess;

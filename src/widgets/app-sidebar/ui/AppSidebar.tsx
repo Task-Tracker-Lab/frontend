@@ -1,13 +1,9 @@
 'use client';
 
-import {
-  AudioWaveform,
-  ChevronRight,
-  Command,
-  GalleryVerticalEnd,
-  UserRound,
-  UsersRound,
-} from 'lucide-react';
+import { InviteTeamMemberDialog } from 'features/teams/invite';
+import { ChevronRight, SquarePlusIcon, UserRound, UsersRound } from 'lucide-react';
+import Link from 'next/link';
+import { routes } from 'shared/config';
 import {
   Collapsible,
   CollapsibleContent,
@@ -18,6 +14,7 @@ import {
   SidebarGroup,
   SidebarHeader,
   SidebarMenu,
+  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
@@ -25,77 +22,41 @@ import {
   SidebarMenuSubItem,
   SidebarRail,
 } from 'shared/ui';
-import { TeamSwitcher } from './TeamSwitcher';
 import { NavUser } from './NavUser';
-import { routes } from 'shared/config';
-import Link from 'next/link';
-
-const data = {
-  teams: [
-    {
-      name: 'Task Tracker Frontend',
-      logo: GalleryVerticalEnd,
-      plan: 'Enterprise',
-    },
-    {
-      name: 'Task Tracker Backend',
-      logo: AudioWaveform,
-      plan: 'Startup',
-    },
-    {
-      name: 'Task Tracker Devops',
-      logo: Command,
-      plan: 'Free',
-    },
-  ],
-};
+import { TeamsDropdown } from './teams/TeamsDropdown';
 
 const team = [
-  { url: routes.team.members(), title: 'Участники' },
-  { url: routes.team.invites(), title: 'Приглашения' },
-  { url: routes.team.roles(), title: 'Роли' },
-  { url: routes.team.settings(), title: 'Настройки' },
+  {
+    url: routes.team.members(),
+    title: 'Участники',
+    action: (
+      <InviteTeamMemberDialog asChild>
+        <SquarePlusIcon />
+      </InviteTeamMemberDialog>
+    ),
+  },
+  { url: routes.team.invitations(), title: 'Приглашения', action: null },
+  { url: routes.team.roles(), title: 'Роли', action: null },
+  { url: routes.team.settings(), title: 'Настройки', action: null },
 ];
 
-const profile = [
-  { url: routes.profile.me(), title: 'Пользователь' },
-  { url: routes.profile.security(), title: 'Безопасность' },
-  { url: routes.profile.notifications(), title: 'Уведомления' },
-];
-
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ ...props }: Omit<React.ComponentProps<typeof Sidebar>, 'children'>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <TeamsDropdown />
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarMenu>
-            <Collapsible asChild defaultOpen className="group/collapsible">
-              <SidebarMenuItem>
-                <CollapsibleTrigger asChild>
-                  <SidebarMenuButton tooltip="Настройки профиля">
-                    <UserRound />
-                    <span>Профиль</span>
-                    <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                  </SidebarMenuButton>
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <SidebarMenuSub>
-                    {profile.map((subItem) => (
-                      <SidebarMenuSubItem key={subItem.title}>
-                        <SidebarMenuSubButton asChild>
-                          <Link href={subItem.url}>
-                            <span>{subItem.title}</span>
-                          </Link>
-                        </SidebarMenuSubButton>
-                      </SidebarMenuSubItem>
-                    ))}
-                  </SidebarMenuSub>
-                </CollapsibleContent>
-              </SidebarMenuItem>
-            </Collapsible>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <Link href={routes.profile.root()}>
+                  <UserRound />
+                  <span>Мой профиль</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
             <Collapsible asChild defaultOpen className="group/collapsible">
               <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
@@ -114,6 +75,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                             <span>{subItem.title}</span>
                           </a>
                         </SidebarMenuSubButton>
+                        {subItem.action ? (
+                          <SidebarMenuAction>{subItem.action}</SidebarMenuAction>
+                        ) : null}
                       </SidebarMenuSubItem>
                     ))}
                   </SidebarMenuSub>

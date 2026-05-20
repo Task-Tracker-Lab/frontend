@@ -8,7 +8,6 @@ export class TeamQueries {
       queryKey: teamFabricKeys.bySlug(slug),
       queryFn: async ({ signal }) => TeamHttp.getTeam(slug, signal),
       staleTime: 60_000,
-      refetchOnMount: false,
     });
   }
 
@@ -16,8 +15,8 @@ export class TeamQueries {
     return queryOptions({
       queryKey: teamFabricKeys.checkSlug(slug),
       queryFn: async ({ signal }) => TeamHttp.checkSlug(slug, signal),
-      staleTime: 60_000,
-      refetchOnMount: false,
+      gcTime: 5000,
+      staleTime: 5000,
     });
   }
 
@@ -26,7 +25,6 @@ export class TeamQueries {
       queryKey: teamFabricKeys.invitation(slug, code),
       queryFn: async ({ signal }) => TeamHttp.getInvitation(slug, code, signal),
       staleTime: 60_000,
-      refetchOnMount: false,
     });
   }
 
@@ -35,7 +33,6 @@ export class TeamQueries {
       queryKey: teamFabricKeys.invitations(slug),
       queryFn: async ({ signal }) => TeamHttp.getInvitations(slug, signal),
       staleTime: 60_000,
-      refetchOnMount: false,
     });
   }
 
@@ -44,7 +41,6 @@ export class TeamQueries {
       queryKey: teamFabricKeys.members(slug),
       queryFn: async ({ signal }) => TeamHttp.getMembers(slug, signal),
       staleTime: 60_000,
-      refetchOnMount: false,
     });
   }
 
@@ -53,7 +49,6 @@ export class TeamQueries {
       queryKey: teamFabricKeys.projects(slug),
       queryFn: async ({ signal }) => TeamHttp.getProjects(slug, signal),
       staleTime: 60_000,
-      refetchOnMount: false,
     });
   }
 
@@ -62,7 +57,6 @@ export class TeamQueries {
       queryKey: [...teamFabricKeys.project(slug, id), token ?? null],
       queryFn: async ({ signal }) => TeamHttp.getProject(slug, id, token, signal),
       staleTime: 60_000,
-      refetchOnMount: false,
     });
   }
 }
