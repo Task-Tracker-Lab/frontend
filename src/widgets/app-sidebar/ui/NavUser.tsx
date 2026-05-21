@@ -1,6 +1,6 @@
 'use client';
 
-import { BadgeCheck, ChevronsUpDown } from 'lucide-react';
+import { BadgeCheck, ChevronsUpDown, LogOut } from 'lucide-react';
 import {
   Avatar,
   AvatarFallback,
@@ -77,9 +77,13 @@ export function NavUser() {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <SignOut className="w-full justify-between" />
-            </DropdownMenuItem>
+
+            <SignOut asChild className="w-full justify-between">
+              <DropdownMenuItem>
+                Выйти
+                <LogOut className="size-4" />
+              </DropdownMenuItem>
+            </SignOut>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>

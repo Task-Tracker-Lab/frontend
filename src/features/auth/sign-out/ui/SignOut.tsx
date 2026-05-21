@@ -1,22 +1,46 @@
 import { LogOut } from 'lucide-react';
-import type { ComponentProps } from 'react';
-import { Button } from 'shared/ui';
-import { useSignOut } from '../model/useSignOut';
+import { type ComponentProps } from 'react';
+import { Button, buttonVariants } from 'shared/ui';
+import { useSignOut, UseSignOutOptions } from '../model/useSignOut';
+import { Slot } from 'radix-ui';
+import { cn } from 'shared/lib/utils';
 
-function SignOut(props: Omit<ComponentProps<typeof Button>, 'children'>) {
-  const signoutMutation = useSignOut();
+type SignOutProps = ComponentProps<typeof Button> & {
+  mutateOptions?: UseSignOutOptions;
+};
 
+function SignOut({
+  asChild = false,
+  className = '',
+  variant = 'link',
+  size = 'default',
+  children = null,
+  mutateOptions = {},
+  ...props
+}: SignOutProps) {
+  const { mutate, isPending } = useSignOut(mutateOptions);
+  const Com = asChild ? Slot.Root : 'button';
   return (
-    <Button
-      className="text-destructive"
-      variant="link"
-      onClick={() => signoutMutation.mutate()}
-      disabled={signoutMutation.isPending}
+    <Com
+      className={
+        asChild ? className : cn(buttonVariants({ variant, size }), 'text-destructive', className)
+      }
+      onClick={() => mutate()}
+      data-slot="button"
+      data-variant={variant}
+      data-size={size}
+      disabled={isPending}
       {...props}
     >
-      Выйти
-      <LogOut className="size-4" />
-    </Button>
+      {asChild ? (
+        children
+      ) : (
+        <>
+          Выйти
+          <LogOut className="size-4" />
+        </>
+      )}
+    </Com>
   );
 }
 
