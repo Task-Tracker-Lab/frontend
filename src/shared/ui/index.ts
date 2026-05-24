@@ -30,6 +30,7 @@ export * from './Kbd';
 export * from './Progress';
 export * from './floating-save-bar/FloatingSaveBar';
 export * from './Dialog';
+export * from './Popover';
 export * from './RadioGroup';
 export * from './search/Search';
 export * from './option-group/OptionGroup';
