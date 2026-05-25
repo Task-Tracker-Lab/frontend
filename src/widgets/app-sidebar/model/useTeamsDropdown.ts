@@ -9,7 +9,7 @@ export function useTeamsDropdown() {
   const [open, setOpen] = useState(false);
 
   const query = useQuery(UserQueries.getMyTeams());
-  const teams = useMemo(() => query.data ?? [], [query.data]);
+  const teams = useMemo(() => query.data?.items ?? [], [query.data]);
 
   const { switchTeam } = useSwitchTeam({ teams });
 

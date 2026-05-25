@@ -43,20 +43,4 @@ export class TeamQueries {
       staleTime: 60_000,
     });
   }
-
-  static getProjects(slug: string) {
-    return queryOptions({
-      queryKey: teamFabricKeys.projects(slug),
-      queryFn: async ({ signal }) => TeamHttp.getProjects(slug, signal),
-      staleTime: 60_000,
-    });
-  }
-
-  static getProject(slug: string, id: string, token?: string) {
-    return queryOptions({
-      queryKey: [...teamFabricKeys.project(slug, id), token ?? null],
-      queryFn: async ({ signal }) => TeamHttp.getProject(slug, id, token, signal),
-      staleTime: 60_000,
-    });
-  }
 }

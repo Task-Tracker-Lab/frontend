@@ -11,11 +11,12 @@ export function useTeamsQueryWithSlugSync() {
   useEffect(() => {
     if (!query.data) return;
 
-    const hasTeamSlug = !!slug && query.data.some((d) => d.slug === slug);
+    const items = query.data.items;
+    const hasTeamSlug = !!slug && items.some((d) => d.slug === slug);
 
     if (hasTeamSlug) return;
 
-    setCurrentTeamSlug(query.data[0]?.slug);
+    setCurrentTeamSlug(items[0]?.slug);
   }, [slug, setCurrentTeamSlug, query.data]);
 
   return { query, slug };

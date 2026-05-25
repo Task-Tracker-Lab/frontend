@@ -3,7 +3,7 @@ import { PageLayout as PageLayoutParent } from 'widgets/page-layout';
 import { TabsNav } from 'widgets/tabs-nav';
 
 interface PageLayoutProps extends Omit<ComponentProps<typeof PageLayoutParent>, 'nav'> {
-  tabs: ComponentProps<typeof TabsNav>['tabs'];
+  tabs?: ComponentProps<typeof TabsNav>['tabs'];
 }
 
 export function PageLayout({ children, tabs, ...props }: PageLayoutProps) {

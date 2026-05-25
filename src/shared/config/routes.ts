@@ -15,6 +15,11 @@ export const routes = {
     invitations: (): Route => '/team/invitations',
     roles: (): Route => '/team/roles',
     settings: (): Route => '/team/settings',
+    projects: (): Route => '/team/projects',
+    project: {
+      root: (projectId: string): Route => `/team/projects/${projectId}` as Route,
+      settings: (projectId: string): Route => `/team/projects/${projectId}/settings` as Route,
+    },
   },
   auth: {
     signin: (): Route => '/signin',

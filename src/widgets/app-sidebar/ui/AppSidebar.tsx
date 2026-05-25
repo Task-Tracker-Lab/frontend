@@ -8,6 +8,7 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
+  Separator,
   Sidebar,
   SidebarContent,
   SidebarFooter,
@@ -24,6 +25,7 @@ import {
 } from 'shared/ui';
 import { NavUser } from './NavUser';
 import { TeamsDropdown } from './teams/TeamsDropdown';
+import { Projects } from './Projects';
 
 const team = [
   {
@@ -46,7 +48,7 @@ export function AppSidebar({ ...props }: Omit<React.ComponentProps<typeof Sideba
       <SidebarHeader>
         <TeamsDropdown />
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="gap-2">
         <SidebarGroup>
           <SidebarMenu>
             <SidebarMenuItem>
@@ -86,6 +88,8 @@ export function AppSidebar({ ...props }: Omit<React.ComponentProps<typeof Sideba
             </Collapsible>
           </SidebarMenu>
         </SidebarGroup>
+        <Separator />
+        <Projects />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />

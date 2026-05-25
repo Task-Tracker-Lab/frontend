@@ -22,7 +22,7 @@ export function TeamsList() {
   const slug = useTeamStore.use.slug();
 
   const { switchTeam } = useSwitchTeam({
-    teams: teamsQuery.data,
+    teams: teamsQuery.data?.items,
     defaultOptions: { redirect: true },
   });
 
@@ -44,7 +44,7 @@ export function TeamsList() {
     );
   }
 
-  const teams = teamsQuery.data ?? [];
+  const teams = teamsQuery.data?.items ?? [];
   if (teams.length === 0) {
     return <TeamsEmpty />;
   }
