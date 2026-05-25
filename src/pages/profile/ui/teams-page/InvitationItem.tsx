@@ -15,7 +15,7 @@ import {
   ItemTitle,
 } from 'shared/ui';
 
-export function InvitationItem(props: TUser.UserInvitation) {
+export function InvitationItem(props: TUser.UserInvitationResponse) {
   const acceptInvitation = useAcceptTeamInvitation();
 
   return (

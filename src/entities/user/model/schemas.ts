@@ -92,7 +92,7 @@ export const UserTeamResponse = z.object({
 
 export const UserTeamsListResponse = PaginatedResponseSchema(UserTeamResponse);
 
-export const UserInvitation = z.object({
+export const UserInvitationResponse = z.object({
   code: z.string(),
   teamName: z.string(),
   teamAvatar: UserAvatarSchema,
@@ -101,4 +101,4 @@ export const UserInvitation = z.object({
   expiresAt: DateTimeString,
 });
 
-export const UserInvitationResponse = PaginatedResponseSchema(UserInvitation);
+export const UserInvitationListResponse = PaginatedResponseSchema(UserInvitationResponse);

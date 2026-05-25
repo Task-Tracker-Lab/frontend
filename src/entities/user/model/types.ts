@@ -8,6 +8,6 @@ export type ProfileUpdateBody = z.infer<typeof SUser.ProfileUpdateBody>;
 export type ProfileUpdateResponse = z.infer<typeof SUser.ProfileUpdateResponse>;
 export type UserTeamResponse = z.infer<typeof SUser.UserTeamResponse>;
 export type UserTeamsListResponse = z.infer<typeof SUser.UserTeamsListResponse>;
-export type UserInvitationResponse = z.infer<typeof SUser.UserInvitationResponse>;
+export type UserInvitationListResponse = z.infer<typeof SUser.UserInvitationListResponse>;
 
-export type UserInvitation = z.infer<typeof SUser.UserInvitation>;
+export type UserInvitationResponse = z.infer<typeof SUser.UserInvitationResponse>;
