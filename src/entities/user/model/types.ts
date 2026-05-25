@@ -7,4 +7,6 @@ export type NotificationsUpdateResponse = z.infer<typeof SUser.NotificationsUpda
 export type ProfileUpdateBody = z.infer<typeof SUser.ProfileUpdateBody>;
 export type ProfileUpdateResponse = z.infer<typeof SUser.ProfileUpdateResponse>;
 export type UserTeamResponse = z.infer<typeof SUser.UserTeamResponse>;
+export type UserTeamsListMeta = z.infer<typeof SUser.UserTeamsListMeta>;
+export type UserTeamsListResponse = z.infer<typeof SUser.UserTeamsListResponse>;
 export type UserInvitationResponse = z.infer<typeof SUser.UserInvitationResponse>;

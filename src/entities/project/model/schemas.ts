@@ -35,7 +35,15 @@ export const CreateProjectResponse = GlobalSuccess.extend({
 });
 
 export const CreateShareTokenBody = z.object({
-  ttl: z.iso.datetime({}).optional().nullable(),
+  ttl: DateTimeString.optional().nullable(),
+});
+
+export const CreateShareTokenResponse = GlobalSuccess.extend({
+  payload: z.object({
+    token: z.string(),
+    isYourself: z.boolean(),
+    expiresAt: DateTimeString.nullable(),
+  }),
 });
 
 export const ProjectListItemResponse = z.object({

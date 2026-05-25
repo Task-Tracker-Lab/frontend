@@ -90,6 +90,20 @@ export const UserTeamResponse = z.object({
   permissions: TeamPermissions,
 });
 
+export const UserTeamsListMeta = z.object({
+  hasNextPage: z.boolean(),
+  hasPrevPage: z.boolean(),
+  total: z.number(),
+  totalPages: z.number(),
+  page: z.number(),
+  limit: z.number(),
+});
+
+export const UserTeamsListResponse = z.object({
+  items: UserTeamResponse.array(),
+  meta: UserTeamsListMeta,
+});
+
 export const UserInvitationResponse = z.object({
   code: z.string(),
   teamName: z.string(),

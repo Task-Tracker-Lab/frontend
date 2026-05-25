@@ -70,14 +70,14 @@ export class ProjectHttp {
     });
   }
 
-  static createShareToken(teamSlug: string, id: string, data: TProject.CreateShareTokenBody) {
-    return api<TProject.ActionResponse>({
+  static createShareToken(teamSlug: string, id: string, data: TProject.CreateShareTokenBody = {}) {
+    return api<TProject.CreateShareTokenResponse>({
       url: `/teams/${teamSlug}/projects/${id}/share`,
       method: 'POST',
       data,
       contracts: {
         body: SProject.CreateShareTokenBody,
-        response: SProject.ActionResponse,
+        response: SProject.CreateShareTokenResponse,
       },
     });
   }
