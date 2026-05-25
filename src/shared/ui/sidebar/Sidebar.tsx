@@ -1,8 +1,9 @@
 'use client';
 
-import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
+import { PanelLeftIcon } from 'lucide-react';
 import { Slot } from 'radix-ui';
+import * as React from 'react';
 import { useIsMobile } from 'shared/lib/hooks';
 import { cn } from 'shared/lib/utils';
 import { Button } from '../button/Button';
@@ -19,7 +20,6 @@ import {
   SIDEBAR_WIDTH_ICON,
   SIDEBAR_WIDTH_MOBILE,
 } from './const';
-import { PanelLeftIcon } from 'lucide-react';
 
 type SidebarContextProps = {
   state: 'expanded' | 'collapsed';
@@ -289,7 +289,7 @@ function SidebarInset({ className, ...props }: React.ComponentProps<'main'>) {
     <main
       data-slot="sidebar-inset"
       className={cn(
-        'bg-background relative flex w-full flex-1 flex-col md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow-sm md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2',
+        'bg-background relative flex w-full min-w-0 flex-1 flex-col md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow-sm md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2',
         className
       )}
       {...props}
