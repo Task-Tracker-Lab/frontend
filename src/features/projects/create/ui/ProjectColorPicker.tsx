@@ -5,14 +5,14 @@ import { Check } from 'lucide-react';
 import { type CSSProperties } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { cn } from 'shared/lib/utils';
-import type { CreateProjectFormValues } from '../model/types';
+import type { ProjectIdentityFormValues } from '../model/types';
 
 interface ProjectColorPickerProps {
   disabled?: boolean;
 }
 
 export function ProjectColorPicker({ disabled = false }: ProjectColorPickerProps) {
-  const { control } = useFormContext<CreateProjectFormValues>();
+  const { control } = useFormContext<ProjectIdentityFormValues>();
   const selectedColor = useWatch({ control, name: 'color' });
   const activeColor = selectedColor ?? PROJECT_COLORS[0];
 

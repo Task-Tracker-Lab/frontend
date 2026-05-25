@@ -6,14 +6,14 @@ import { useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { cn } from 'shared/lib/utils';
 import { Button, Popover, PopoverContent, PopoverTrigger } from 'shared/ui';
-import type { CreateProjectFormValues } from '../model/types';
+import type { ProjectIdentityFormValues } from '../model/types';
 
 interface ProjectIconPickerProps {
   disabled?: boolean;
 }
 
 export function ProjectIconPicker({ disabled = false }: ProjectIconPickerProps) {
-  const { control } = useFormContext<CreateProjectFormValues>();
+  const { control } = useFormContext<ProjectIdentityFormValues>();
   const selectedColor = useWatch({ control, name: 'color' });
   const selectedIconCode = useWatch({ control, name: 'icon' });
   const [iconOpen, setIconOpen] = useState(false);
@@ -32,7 +32,7 @@ export function ProjectIconPicker({ disabled = false }: ProjectIconPickerProps) 
         <span className="bg-background/85 ring-border flex size-11 items-center justify-center rounded-xl text-2xl shadow-xs ring-1 backdrop-blur-[1px]">
           {projectIconCodeToEmoji(iconCode)}
         </span>
-        <div className="min-w-0">
+        <div>
           <p className="text-sm font-medium">Иконка</p>
           <p className="text-muted-foreground text-xs">Выберите иконку для проекта</p>
         </div>
