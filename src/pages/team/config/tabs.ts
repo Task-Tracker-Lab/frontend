@@ -3,6 +3,7 @@ import { TabNavItem } from 'widgets/tabs-nav';
 
 export const teamTabs: TabNavItem[] = [
   { key: routes.team.members(), label: 'Участники', badge: { value: '8', variant: 'default' } },
+  { key: routes.team.projects(), label: 'Проекты' },
   {
     key: routes.team.invitations(),
     label: 'Приглашения',

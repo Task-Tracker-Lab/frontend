@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { FloatingSaveBar } from 'shared/ui';
 import { DEFAULTS, RoleKey } from '../../model/roles-mock';
-import { RolesList } from 'pages/team/ui/roles/RolesList';
-import { Permissions } from 'pages/team/ui/roles/Permissions';
+import { RolesList } from './RolesList';
+import { Permissions } from './Permissions';
 
 export function RolesPage() {
   const [matrix, setMatrix] = useState(DEFAULTS);

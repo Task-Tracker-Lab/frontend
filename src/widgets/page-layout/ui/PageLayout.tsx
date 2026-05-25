@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 interface PageLayoutProps {
-  title: string;
+  title: string | ReactNode;
   description?: string;
   badge?: ReactNode;
   headerSlot?: ReactNode;
@@ -32,7 +32,7 @@ export function PageLayout({
 
         {nav && <div className="mt-8">{nav}</div>}
 
-        <section className="mt-6">{children}</section>
+        <section className="mt-6 p-4">{children}</section>
       </div>
     </main>
   );
