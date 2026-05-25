@@ -1,13 +1,13 @@
-import { TUser } from 'entities/user';
 import { UseQueryResult } from '@tanstack/react-query';
-import { TeamItem } from './TeamItem';
-import { TeamItemSkeleton } from './TeamItem.skeleton';
+import { useTeamStore } from 'entities/team';
+import { TUser } from 'entities/user';
 import { ChevronsUpDown } from 'lucide-react';
 import { useMemo } from 'react';
-import { useTeamStore } from 'entities/team';
+import { TeamItem } from './TeamItem';
+import { TeamItemSkeleton } from './TeamItem.skeleton';
 
 interface TeamTriggerProps {
-  query: UseQueryResult<TUser.UserTeamResponse[]>;
+  query: UseQueryResult<TUser.UserTeamsListResponse>;
 }
 
 export function TeamTrigger({ query }: TeamTriggerProps) {
@@ -15,7 +15,7 @@ export function TeamTrigger({ query }: TeamTriggerProps) {
 
   const activeTeam = useMemo(() => {
     if (query.data) {
-      return query.data.find((d) => d.slug === slug);
+      return query.data.items.find((d) => d.slug === slug);
     }
   }, [slug, query.data]);
 
