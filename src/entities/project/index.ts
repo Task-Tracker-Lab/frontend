@@ -6,3 +6,4 @@ export { projectFabricKeys } from './model/const';
 export { PROJECT_ICONS } from './config/icons';
 export { PROJECT_COLORS } from './config/colors';
 export { projectIconCodeToEmoji } from './lib/emoji';
+export { buildProjectShareUrl } from './lib/share-url';
