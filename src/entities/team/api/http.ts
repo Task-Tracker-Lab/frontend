@@ -157,16 +157,4 @@ export class TeamHttp {
       },
     });
   }
-
-  static syncTags(slug: string, data: TTeam.SyncTagsBody) {
-    return api<TTeam.ActionResponse>({
-      url: `/teams/${slug}/tags`,
-      method: 'PUT',
-      data,
-      contracts: {
-        body: STeam.SyncTagsBody,
-        response: STeam.ActionResponse,
-      },
-    });
-  }
 }

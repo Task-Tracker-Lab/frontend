@@ -36,7 +36,7 @@ export const CreateTeamBody = z.object({
     .string()
     .min(1, 'Добавьте описание команды')
     .min(10, 'Описание должно содержать не менее 10 символов')
-    .max(256, 'Описание не может быть длиннее 256 символов'),
+    .max(500, 'Описание не может быть длиннее 500 символов'),
   slug: z
     .string()
     .optional()
@@ -54,19 +54,6 @@ export const CreateTeamBody = z.object({
         )
         .optional()
     ),
-  tags: z
-    .array(z.string())
-    .optional()
-    .superRefine((items, ctx) => {
-      if (!items) return;
-      const hasDuplicates = new Set(items.map((item) => item.toLowerCase())).size !== items.length;
-      if (hasDuplicates) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: 'Теги в списке не должны повторяться',
-        });
-      }
-    }),
 });
 
 export const UpdateTeamBody = CreateTeamBody.partial().refine(
@@ -140,21 +127,5 @@ export const UpdateMemberBody = z
     error: 'Необходимо передать хотя бы одно поле для обновления',
     abort: true,
   });
-
-export const SyncTagsBody = z.object({
-  tags: z
-    .array(z.string())
-    .min(1, 'Список тегов не может быть пустым')
-    .max(15, 'Нельзя добавить более 15 тегов за раз')
-    .superRefine((items, ctx) => {
-      const hasDuplicates = new Set(items.map((item) => item.toLowerCase())).size !== items.length;
-      if (hasDuplicates) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: 'Теги в списке не должны повторяться (регистр не важен)',
-        });
-      }
-    }),
-});
 
 export const ActionResponse = GlobalSuccess;

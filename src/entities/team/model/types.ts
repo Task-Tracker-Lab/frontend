@@ -17,5 +17,4 @@ export type TeamMemberResponse = z.infer<typeof STeam.TeamMemberResponse>;
 export type InviteMemberBody = z.infer<typeof STeam.InviteMemberBody>;
 export type UpdateInvitationBody = z.infer<typeof STeam.UpdateInvitationBody>;
 export type UpdateMemberBody = z.infer<typeof STeam.UpdateMemberBody>;
-export type SyncTagsBody = z.infer<typeof STeam.SyncTagsBody>;
 export type ActionResponse = z.infer<typeof STeam.ActionResponse>;

@@ -37,7 +37,6 @@ export function useCreateTeamForm(mutateOptions: UseCreateTeamOptions = {}) {
       name: data.name.trim(),
       description: data.description.trim(),
       ...(data.slug?.trim() ? { slug: data.slug.trim() } : {}),
-      tags: [''], //todo
     };
 
     createTeam.mutate(body);
