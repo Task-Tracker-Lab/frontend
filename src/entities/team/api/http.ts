@@ -60,11 +60,11 @@ export class TeamHttp {
   }
 
   static getInvitations(slug: string, signal?: AbortSignal) {
-    return api<TTeam.TeamInvitationResponse[]>({
+    return api<TTeam.TeamInvitationListResponse>({
       url: `/teams/${slug}/invitations`,
       method: 'GET',
       contracts: {
-        response: STeam.TeamInvitationResponse.array(),
+        response: STeam.TeamInvitationListResponse,
       },
       signal,
     });
@@ -126,11 +126,11 @@ export class TeamHttp {
   }
 
   static getMembers(slug: string, signal?: AbortSignal) {
-    return api<TTeam.TeamMemberResponse[]>({
+    return api<TTeam.TeamMemberListResponse>({
       url: `/teams/${slug}/members`,
       method: 'GET',
       contracts: {
-        response: STeam.TeamMemberResponse.array(),
+        response: STeam.TeamMemberListResponse,
       },
       signal,
     });

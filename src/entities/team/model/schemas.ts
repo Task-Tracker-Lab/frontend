@@ -1,13 +1,13 @@
-import { DateTimeString, GlobalSuccess } from 'shared/api';
+import { DateTimeString, GlobalSuccess, PaginatedResponseSchema } from 'shared/api';
 import { z } from 'zod/v4';
 import { MAX_SLUG_LENGTH, MIN_SLUG_LENGTH } from './const';
 
 export const TeamAvatarSchema = z
   .object({
-    small: z.string().url(),
-    medium: z.string().url(),
-    large: z.string().url(),
-    original: z.string().url(),
+    small: z.url(),
+    medium: z.url(),
+    large: z.url(),
+    original: z.url(),
   })
   .nullish();
 
@@ -22,8 +22,8 @@ export const TeamRole = z.enum([
 
 export const MemberStatus = z.enum([
   'active', // Полноценный участник
-  'banned', // Заблокирован не может вернуться по инвайту
-  'inactive', // Доступ закрыт, но запись сохранена
+  'blocked', // Заблокирован не может вернуться по инвайту
+  'pending',
 ]);
 
 export const CreateTeamBody = z.object({
@@ -74,7 +74,7 @@ export const TeamDetailsResponse = z.object({
   name: z.string(),
   slug: z.string(),
   description: z.string().nullable(),
-  avatar: TeamAvatarSchema,
+  avatarUrl: z.string().nullable(),
   coverUrl: z.string().nullable(),
   ownerId: z.string().nullable(),
   createdAt: DateTimeString,
@@ -86,7 +86,7 @@ export const TeamInvitationResponse = z.object({
   code: z.string(),
   teamId: z.string(),
   teamName: z.string(),
-  avatar: TeamAvatarSchema,
+  teamAvatar: z.string().nullable(),
   email: z.email(),
   role: TeamRole,
   inviterId: z.string(),
@@ -94,6 +94,8 @@ export const TeamInvitationResponse = z.object({
   createdAt: DateTimeString,
   expiresAt: DateTimeString,
 });
+
+export const TeamInvitationListResponse = PaginatedResponseSchema(TeamInvitationResponse);
 
 export const InviteMemberBody = z.object({
   email: z.email(),
@@ -108,8 +110,6 @@ export const TeamMemberResponse = z.object({
   id: z.string(),
   role: TeamRole,
   status: MemberStatus,
-  email: z.email(),
-  middleName: z.string().nullable(),
   fullName: z.string(),
   firstName: z.string(),
   lastName: z.string(),
@@ -117,6 +117,8 @@ export const TeamMemberResponse = z.object({
   initials: z.string().max(2),
   joinedAt: DateTimeString,
 });
+
+export const TeamMemberListResponse = PaginatedResponseSchema(TeamMemberResponse);
 
 export const UpdateMemberBody = z
   .object({
