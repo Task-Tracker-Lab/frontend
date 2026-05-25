@@ -8,7 +8,7 @@ export function SidebarLayout({ children, ...props }: ComponentProps<typeof Side
     <SidebarProvider {...props}>
       <TeamSlugSync />
       <AppSidebar />
-      <SidebarInset>
+      <SidebarInset className="min-h-screen">
         <header className="flex h-14 shrink-0 items-center gap-2 border-b px-4">
           <SidebarTrigger className="-ml-1" />
           <Separator
@@ -16,7 +16,7 @@ export function SidebarLayout({ children, ...props }: ComponentProps<typeof Side
             className="mr-2 self-center! data-[orientation=vertical]:h-6"
           />
         </header>
-        <div className="p-4">{children}</div>
+        <div className="h-full overflow-x-hidden">{children}</div>
       </SidebarInset>
     </SidebarProvider>
   );
