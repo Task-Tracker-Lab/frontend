@@ -3,7 +3,16 @@ import { TeamAvatar, useTeamStore } from 'entities/team';
 import { UserQueries } from 'entities/user';
 import { RemoveTeamDialog } from 'features/teams/remove';
 import { Trash2Icon } from 'lucide-react';
-import { Badge, Button, Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle, } from 'shared/ui';
+import {
+  Badge,
+  Button,
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemMedia,
+  ItemTitle,
+} from 'shared/ui';
 import { TeamsEmpty } from './TeamsEmpty';
 import { TeamItemSkeleton } from './skeletons/TeamItem.skeleton';
 import { useSwitchTeam } from 'features/teams/active-team';

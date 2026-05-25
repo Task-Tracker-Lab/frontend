@@ -2,14 +2,7 @@
 
 import { useId } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import {
-  Field,
-  FieldContent,
-  FieldDescription,
-  FieldError,
-  FieldLabel,
-  Switch
-} from 'shared/ui';
+import { Field, FieldContent, FieldDescription, FieldError, FieldLabel, Switch } from 'shared/ui';
 import type { CreateProjectFormValues } from '../model/types';
 
 interface VisibilityPickerProps {
