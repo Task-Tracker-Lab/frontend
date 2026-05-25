@@ -1,6 +1,5 @@
 import { DateTimeString, GlobalSuccess } from 'shared/api';
 import { z } from 'zod/v4';
-import { GlobalSuccess } from 'shared/api';
 
 export const UserAvatarSchema = z
   .object({

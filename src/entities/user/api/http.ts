@@ -49,11 +49,11 @@ export class UserHttp {
   }
 
   static getMyTeams(signal?: AbortSignal) {
-    return api<TUser.UserTeamResponse[]>({
+    return api<TUser.UserTeamsListResponse>({
       url: '/users/me/teams',
       method: 'GET',
       contracts: {
-        response: SUser.UserTeamResponse.array(),
+        response: SUser.UserTeamsListResponse,
       },
       signal,
     });

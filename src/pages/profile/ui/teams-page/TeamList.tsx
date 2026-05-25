@@ -3,16 +3,7 @@ import { TeamAvatar, useTeamStore } from 'entities/team';
 import { UserQueries } from 'entities/user';
 import { RemoveTeamDialog } from 'features/teams/remove';
 import { Trash2Icon } from 'lucide-react';
-import {
-  Badge,
-  Button,
-  Item,
-  ItemActions,
-  ItemContent,
-  ItemDescription,
-  ItemMedia,
-  ItemTitle,
-} from 'shared/ui';
+import { Badge, Button, Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle, } from 'shared/ui';
 import { TeamsEmpty } from './TeamsEmpty';
 import { TeamItemSkeleton } from './skeletons/TeamItem.skeleton';
 import { useSwitchTeam } from 'features/teams/active-team';
@@ -22,7 +13,7 @@ export function TeamsList() {
   const slug = useTeamStore.use.slug();
 
   const { switchTeam } = useSwitchTeam({
-    teams: teamsQuery.data,
+    teams: teamsQuery.data?.items,
     defaultOptions: { redirect: true },
   });
 
@@ -44,7 +35,7 @@ export function TeamsList() {
     );
   }
 
-  const teams = teamsQuery.data ?? [];
+  const teams = teamsQuery.data?.items ?? [];
   if (teams.length === 0) {
     return <TeamsEmpty />;
   }
