@@ -1,4 +1,4 @@
-import { GlobalSuccess } from 'shared/api';
+import { DateTimeString, GlobalSuccess } from 'shared/api';
 import { z } from 'zod/v4';
 import { MAX_SLUG_LENGTH, MIN_SLUG_LENGTH } from './const';
 
@@ -90,9 +90,9 @@ export const TeamDetailsResponse = z.object({
   avatar: TeamAvatarSchema,
   coverUrl: z.string().nullable(),
   ownerId: z.string().nullable(),
-  createdAt: z.iso.datetime({}),
-  updatedAt: z.iso.datetime({}),
-  deletedAt: z.iso.datetime({}).nullable(),
+  createdAt: DateTimeString,
+  updatedAt: DateTimeString,
+  deletedAt: DateTimeString.nullable(),
 });
 
 export const TeamInvitationResponse = z.object({
@@ -104,8 +104,8 @@ export const TeamInvitationResponse = z.object({
   role: TeamRole,
   inviterId: z.string(),
   inviterName: z.string(),
-  createdAt: z.iso.datetime({}),
-  expiresAt: z.iso.datetime({}),
+  createdAt: DateTimeString,
+  expiresAt: DateTimeString,
 });
 
 export const InviteMemberBody = z.object({
@@ -128,7 +128,7 @@ export const TeamMemberResponse = z.object({
   lastName: z.string(),
   avatar: TeamAvatarSchema,
   initials: z.string().max(2),
-  joinedAt: z.iso.datetime({}),
+  joinedAt: DateTimeString,
 });
 
 export const UpdateMemberBody = z

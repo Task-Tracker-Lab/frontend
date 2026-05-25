@@ -1,4 +1,4 @@
-import { GlobalSuccess } from 'shared/api';
+import { DateTimeString, GlobalSuccess } from 'shared/api';
 import { z } from 'zod/v4';
 import { PROJECT_ICONS } from '../config/icons';
 
@@ -45,7 +45,7 @@ export const ProjectListItemResponse = z.object({
   status: z.enum(['active', 'archived', 'template']),
   color: z.string(),
   icon: z.string().nullable(),
-  createdAt: z.iso.datetime({}),
+  createdAt: DateTimeString,
   canEdit: z.boolean(),
 });
 
@@ -69,8 +69,8 @@ export const ProjectDetailResponse = z.object({
   visuals: z.object({ color: z.string(), icon: z.string().nullable() }),
   meta: z.object({
     taskSequence: z.number(),
-    createdAt: z.iso.datetime({}),
-    updatedAt: z.iso.datetime({}),
+    createdAt: DateTimeString,
+    updatedAt: DateTimeString,
   }),
   access: z.object({
     visibility: z.enum(['public', 'private']),
