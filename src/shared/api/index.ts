@@ -11,8 +11,6 @@ export {
   DateTimeString,
   PaginatedResponseSchema,
   MetaSchema,
-  type Meta,
-  type PaginatedResponse,
 } from './schemas';
 export { AccessToken } from './token';
 export { queryClient } from './query-client';
