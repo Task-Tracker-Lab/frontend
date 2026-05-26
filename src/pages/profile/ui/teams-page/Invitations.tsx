@@ -33,10 +33,10 @@ export function Invitations() {
   return (
     <div className="space-y-6">
       <ul className="flex flex-col gap-3">
-        {invitations.length === 0 ? (
+        {invitations.items.length === 0 ? (
           <p className="text-muted-foreground text-sm">Входящих приглашений нет.</p>
         ) : (
-          invitations.map((inv) => {
+          invitations.items.map((inv) => {
             return (
               <li key={inv.code}>
                 <InvitationItem {...inv} />

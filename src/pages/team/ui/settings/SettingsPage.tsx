@@ -29,7 +29,6 @@ export function Settings() {
     defaultValues: {
       name: '',
       slug: '',
-      //todo tags
       description: '',
     },
   });
@@ -41,7 +40,6 @@ export function Settings() {
       reset({
         name: team.name,
         slug: team.slug,
-        //todo tags
         description: team.description || '',
       });
     }

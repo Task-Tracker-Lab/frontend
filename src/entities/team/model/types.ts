@@ -12,10 +12,12 @@ export type CheckSlugResponse = z.infer<typeof STeam.CheckSlugResponse>;
 export type TeamDetailsResponse = z.infer<typeof STeam.TeamDetailsResponse>;
 
 export type TeamInvitationResponse = z.infer<typeof STeam.TeamInvitationResponse>;
+export type TeamInvitationListResponse = z.infer<typeof STeam.TeamInvitationListResponse>;
+
 export type TeamMemberResponse = z.infer<typeof STeam.TeamMemberResponse>;
+export type TeamMemberListResponse = z.infer<typeof STeam.TeamMemberListResponse>;
 
 export type InviteMemberBody = z.infer<typeof STeam.InviteMemberBody>;
 export type UpdateInvitationBody = z.infer<typeof STeam.UpdateInvitationBody>;
 export type UpdateMemberBody = z.infer<typeof STeam.UpdateMemberBody>;
-export type SyncTagsBody = z.infer<typeof STeam.SyncTagsBody>;
 export type ActionResponse = z.infer<typeof STeam.ActionResponse>;

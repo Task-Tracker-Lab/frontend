@@ -27,7 +27,7 @@ export function useMembersPage() {
 
   useEffect(() => {
     if (data) {
-      setMembers(searchValue.current, data);
+      setMembers(searchValue.current, data.items);
     }
   }, [data]);
 
@@ -37,7 +37,7 @@ export function useMembersPage() {
     setSearch(value);
 
     if (data) {
-      onFilter.debouncedCallback(value, data);
+      onFilter.debouncedCallback(value, data.items);
     }
   };
 
@@ -45,7 +45,7 @@ export function useMembersPage() {
     search,
     onChange,
     filtered,
-    total: data?.length ?? 0,
+    total: data?.items?.length ?? 0,
     isPending,
   };
 }

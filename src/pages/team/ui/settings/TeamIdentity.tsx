@@ -31,7 +31,7 @@ export function TeamIdentity({ team, ...props }: TeamIdentityProps) {
             avatar={
               <TeamAvatar
                 wrap={{ className: 'ring-background size-28 shadow-md ring-4' }}
-                src={team.avatar?.medium ?? undefined}
+                src={team.avatarUrl ?? undefined}
                 alt={team.name}
               />
             }
