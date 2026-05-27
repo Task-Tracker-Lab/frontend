@@ -1,26 +1,19 @@
-import { CreateTeamDialog } from 'features/teams/create';
-import { Plus } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
 import { routes } from 'shared/config';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
   SidebarMenuButton,
-  useSidebar,
 } from 'shared/ui';
 import { useTeamsDropdown } from '../../model/useTeamsDropdown';
 import { TeamItem } from './TeamItem';
 import { TeamTrigger } from './TeamTrigger';
 
 export function TeamsDropdown() {
-  const { isMobile } = useSidebar();
-  const [createTeamOpen, setCreateTeamOpen] = useState(false);
   const { open, setOpen, query, visibleTeams, teams, hasMoreTeams, switchTeam } =
     useTeamsDropdown();
 
@@ -39,7 +32,7 @@ export function TeamsDropdown() {
         <DropdownMenuContent
           className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
           align="start"
-          side={isMobile ? 'bottom' : 'right'}
+          side={'bottom'}
           sideOffset={4}
         >
           <DropdownMenuLabel className="text-muted-foreground text-xs">Команды</DropdownMenuLabel>
@@ -59,22 +52,8 @@ export function TeamsDropdown() {
               </Link>
             </DropdownMenuItem>
           )}
-          <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onSelect={(e) => {
-              e.preventDefault();
-              setOpen(false);
-              setCreateTeamOpen(true);
-            }}
-          >
-            <span className="flex items-center gap-2">
-              <Plus className="size-4" />
-              Создать команду
-            </span>
-          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <CreateTeamDialog dialog={{ open: createTeamOpen, onOpenChange: setCreateTeamOpen }} />
     </>
   );
 }
