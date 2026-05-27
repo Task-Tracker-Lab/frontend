@@ -1,3 +1,5 @@
+'use client';
+import { CreateTeamDialog } from 'features/teams/create';
 import Link from 'next/link';
 import { routes } from 'shared/config';
 import {
@@ -12,11 +14,12 @@ import {
 import { useTeamsDropdown } from '../../model/useTeamsDropdown';
 import { TeamItem } from './TeamItem';
 import { TeamTrigger } from './TeamTrigger';
+import { useIsMobile } from 'shared/lib/hooks';
 
 export function TeamsDropdown() {
   const { open, setOpen, query, visibleTeams, teams, hasMoreTeams, switchTeam } =
     useTeamsDropdown();
-
+  const isMobile = useIsMobile();
   return (
     <>
       <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -32,7 +35,7 @@ export function TeamsDropdown() {
         <DropdownMenuContent
           className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
           align="start"
-          side={'bottom'}
+          side={isMobile ? 'bottom' : 'right'}
           sideOffset={4}
         >
           <DropdownMenuLabel className="text-muted-foreground text-xs">Команды</DropdownMenuLabel>

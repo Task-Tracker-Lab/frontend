@@ -1,46 +1,16 @@
-'use client';
-
-import { InviteTeamMemberDialog } from 'features/teams/invite';
-import { ChevronRight, SquarePlusIcon, UserRound, UsersRound } from 'lucide-react';
-import Link from 'next/link';
-import { routes } from 'shared/config';
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
   Separator,
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuAction,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
   SidebarRail,
 } from 'shared/ui';
-import { NavUser } from './NavUser';
 import { TeamsDropdown } from './teams/TeamsDropdown';
 import { Projects } from './Projects';
-
-const team = [
-  {
-    url: routes.team.members(),
-    title: 'Участники',
-    action: (
-      <InviteTeamMemberDialog asChild>
-        <SquarePlusIcon />
-      </InviteTeamMemberDialog>
-    ),
-  },
-  { url: routes.team.invitations(), title: 'Приглашения', action: null },
-  { url: routes.team.roles(), title: 'Роли', action: null },
-  { url: routes.team.settings(), title: 'Настройки', action: null },
-];
+import { MyTeams } from './MyTeams';
+import { Team } from './Team';
 
 export function AppSidebar({ ...props }: Omit<React.ComponentProps<typeof Sidebar>, 'children'>) {
   return (
@@ -51,49 +21,13 @@ export function AppSidebar({ ...props }: Omit<React.ComponentProps<typeof Sideba
       <SidebarContent className="gap-2">
         <SidebarGroup>
           <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <Link href={routes.profile.root()}>
-                  <UserRound />
-                  <span>Мой профиль</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <Collapsible asChild defaultOpen className="group/collapsible">
-              <SidebarMenuItem>
-                <CollapsibleTrigger asChild>
-                  <SidebarMenuButton tooltip="Управление командой">
-                    <UsersRound />
-                    <span>Команда</span>
-                    <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                  </SidebarMenuButton>
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <SidebarMenuSub>
-                    {team.map((subItem) => (
-                      <SidebarMenuSubItem key={subItem.title}>
-                        <SidebarMenuSubButton asChild>
-                          <a href={subItem.url}>
-                            <span>{subItem.title}</span>
-                          </a>
-                        </SidebarMenuSubButton>
-                        {subItem.action ? (
-                          <SidebarMenuAction>{subItem.action}</SidebarMenuAction>
-                        ) : null}
-                      </SidebarMenuSubItem>
-                    ))}
-                  </SidebarMenuSub>
-                </CollapsibleContent>
-              </SidebarMenuItem>
-            </Collapsible>
+            <MyTeams />
+            <Team />
           </SidebarMenu>
         </SidebarGroup>
         <Separator />
         <Projects />
       </SidebarContent>
-      <SidebarFooter>
-        <NavUser />
-      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );

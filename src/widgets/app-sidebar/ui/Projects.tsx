@@ -30,6 +30,8 @@ export function Projects() {
   const { isMobile } = useSidebar();
   const [createProjectOpen, setCreateProjectOpen] = useState(false);
   const projects = useQuery({ ...ProjectQueries.getProjects(slug!), enabled: !!slug });
+  const projectList = projects.data?.items.slice(0, 6) ?? [];
+  const showOtherProjectsButton = projectList.length > 6;
 
   if (!projects.data) {
     return null;
@@ -47,7 +49,7 @@ export function Projects() {
           <Plus />
         </SidebarGroupAction>
         <SidebarMenu>
-          {projects.data.items.map((project) => {
+          {projectList.map((project) => {
             const canManage = Boolean(slug && project.canEdit);
 
             return (
@@ -116,14 +118,16 @@ export function Projects() {
               </SidebarMenuItem>
             );
           })}
-          <SidebarMenuItem>
-            <Link href={routes.team.projects()}>
-              <SidebarMenuButton>
-                <MoreHorizontal />
-                <span>Больше</span>
-              </SidebarMenuButton>
-            </Link>
-          </SidebarMenuItem>
+          {showOtherProjectsButton && (
+            <SidebarMenuItem>
+              <Link href={routes.team.projects()}>
+                <SidebarMenuButton>
+                  <MoreHorizontal />
+                  <span>Больше</span>
+                </SidebarMenuButton>
+              </Link>
+            </SidebarMenuItem>
+          )}
         </SidebarMenu>
       </SidebarGroup>
       <CreateProjectDialog
