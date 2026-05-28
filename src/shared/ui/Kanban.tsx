@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {
   createContext,
@@ -324,6 +325,7 @@ function Kanban<T>({
   return (
     <KanbanContext.Provider value={contextValue as KanbanContextProps<unknown>}>
       <DndContext
+        id="kanban"
         sensors={sensors}
         modifiers={modifiers}
         measuring={{
