@@ -1,31 +1,27 @@
 'use client';
 
 import { useState } from 'react';
-import { KanbanBoard, KanbanCard, KanbanCards, KanbanHeader, KanbanProvider } from 'shared/ui';
-import type { MockBoard, MockBoardCard } from '../../model/boards-mock';
+import type { MockBoard } from '../../model/boards-mock';
+import { Kanban, KanbanBoard, KanbanOverlay } from 'shared/ui';
+import { TaskColumn } from './TaskColumn';
 
 interface ProjectKanbanProps {
-  board: MockBoard;
+  board: Pick<MockBoard, 'columnTitles' | 'columns'>;
 }
 
 export function ProjectKanban({ board }: ProjectKanbanProps) {
-  const [cards, setCards] = useState<MockBoardCard[]>(board.cards);
+  const [columns, setColumns] = useState(board.columns);
 
   return (
-    <KanbanProvider
-      columns={board.columns}
-      data={cards}
-      onDataChange={setCards}
-      className="min-h-[420px]"
-    >
-      {(column) => (
-        <KanbanBoard key={column.id} id={column.id}>
-          <KanbanHeader>{column.name}</KanbanHeader>
-          <KanbanCards id={column.id}>
-            {(item) => <KanbanCard key={item.id} {...item} />}
-          </KanbanCards>
-        </KanbanBoard>
-      )}
-    </KanbanProvider>
+    <Kanban value={columns} onValueChange={(v) => setColumns(v)} getItemValue={(item) => item.id}>
+      <KanbanBoard>
+        {Object.entries(columns).map(([id, items]) => (
+          <TaskColumn key={id} value={id} tasks={items} columnTitles={board.columnTitles} />
+        ))}
+      </KanbanBoard>
+      <KanbanOverlay>
+        <div className="bg-muted size-full rounded-md" />
+      </KanbanOverlay>
+    </Kanban>
   );
 }
