@@ -120,7 +120,7 @@ export function Projects() {
             >
               <Link href={routes.team.projects()}>
                 <BriefcaseBusiness />
-                Все проекты {!!totalProjects && `(${totalProjects})`}
+                <span>Все проекты {!!totalProjects && `(${totalProjects})`}</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -130,7 +130,7 @@ export function Projects() {
               tooltip={'Добавить проект'}
             >
               <Plus />
-              Добавить проект
+              <span>Добавить проект</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
