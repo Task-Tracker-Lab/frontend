@@ -1,9 +1,19 @@
-export type MockBoardColumn = Record<string, MockBoardCard[]>;
+export type MockBoardColumn = Record<string, MockBoardTask[]>;
 
-export type MockBoardCard = {
+export type MockAuthor = {
+  id: string;
+  name: string;
+  avatarUrl?: string;
+};
+
+export type MockBoardTask = {
   id: string;
   name: string;
   column: string;
+  assignee: MockAuthor;
+  dueDate: string;
+  priority: 'high' | 'medium' | 'low';
+  description?: string;
 };
 
 export type MockBoard = {
@@ -26,16 +36,64 @@ export const MOCK_BOARDS: MockBoard[] = [
     columnTitles: COLUMN_TITLES,
     columns: {
       ideas: [
-        { id: '1', name: 'Сбор вдохновения', column: 'ideas' },
-        { id: '2', name: 'Цели проекта', column: 'ideas' },
+        {
+          id: '1',
+          name: 'Сбор вдохновения',
+          column: 'ideas',
+          priority: 'high',
+          assignee: { id: '1', name: 'Андрей' },
+          dueDate: '2023-10-05',
+          description: 'Description',
+        },
+        {
+          id: '2',
+          name: 'Цели проекта',
+          column: 'ideas',
+          priority: 'medium',
+          assignee: { id: '2', name: 'Мария' },
+          dueDate: '2023-10-06',
+          description: 'Description',
+        },
       ],
       plan: [
-        { id: '3', name: 'Дорожная карта', column: 'plan' },
-        { id: '4', name: 'Ресурсы', column: 'plan' },
+        {
+          id: '3',
+          name: 'Дорожная карта',
+          column: 'plan',
+          priority: 'low',
+          assignee: { id: '3', name: 'Иван' },
+          dueDate: '2023-10-07',
+          description: 'Description',
+        },
+        {
+          id: '4',
+          name: 'Ресурсы',
+          column: 'plan',
+          priority: 'medium',
+          assignee: { id: '4', name: 'Сергей' },
+          dueDate: '2023-10-08',
+          description: 'Description',
+        },
       ],
       docs: [
-        { id: '5', name: 'Техническая', column: 'docs' },
-        { id: '6', name: 'Коммуникация', column: 'docs' },
+        {
+          id: '5',
+          name: 'Техническая',
+          column: 'docs',
+          priority: 'high',
+          assignee: { id: '5', name: 'Дмитрий' },
+          dueDate: '2023-10-09',
+          description: 'Description',
+        },
+        {
+          id: '6',
+          name: 'Коммуникация',
+          column: 'docs',
+          priority: 'medium',
+          assignee: { id: '6', name: 'Анна' },
+          dueDate: '2023-10-10',
+          description: 'Description',
+        },
       ],
     },
     // { id: 'ideas', name: 'Идеи' },

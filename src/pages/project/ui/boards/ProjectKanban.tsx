@@ -11,7 +11,6 @@ interface ProjectKanbanProps {
 
 export function ProjectKanban({ board }: ProjectKanbanProps) {
   const [columns, setColumns] = useState(board.columns);
-
   return (
     <Kanban value={columns} onValueChange={(v) => setColumns(v)} getItemValue={(item) => item.id}>
       <KanbanBoard>
@@ -19,9 +18,7 @@ export function ProjectKanban({ board }: ProjectKanbanProps) {
           <TaskColumn key={id} value={id} tasks={items} columnTitles={board.columnTitles} />
         ))}
       </KanbanBoard>
-      <KanbanOverlay>
-        <div className="bg-muted size-full rounded-md" />
-      </KanbanOverlay>
+      <KanbanOverlay className="bg-muted/10 rounded-md border-2 border-dashed" />
     </Kanban>
   );
 }

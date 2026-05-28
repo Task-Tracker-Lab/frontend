@@ -1,9 +1,23 @@
-import { MockBoardCard } from 'pages/project/model/boards-mock';
+import { MockBoardTask } from 'pages/project/model/boards-mock';
 import { ComponentProps } from 'react';
-import { Card, CardContent, KanbanItem, KanbanItemHandle } from 'shared/ui';
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Card,
+  CardContent,
+  KanbanItem,
+  KanbanItemHandle,
+  Label,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  Checkbox,
+  Badge,
+} from 'shared/ui';
 
 interface TaskCardProps extends Omit<ComponentProps<typeof KanbanItem>, 'value' | 'children'> {
-  task: MockBoardCard;
+  task: MockBoardTask;
   asHandle?: boolean;
   isOverlay?: boolean;
 }
@@ -12,8 +26,45 @@ export function TaskCard({ task, asHandle, isOverlay, ...props }: TaskCardProps)
   const cardContent = (
     <Card>
       <CardContent className="space-y-2.5">
-        <div className="flex items-center justify-between gap-2">
-          <span className="line-clamp-1 text-sm font-medium">{task.name}</span>
+        <div className="flex items-start gap-1">
+          <Label className="p-1">
+            <Checkbox />
+          </Label>
+          <div>
+            <h3 className="text-foreground line-clamp-1 font-medium">{task.name}</h3>
+            <span className="text-muted-foreground line-clamp-1 text-sm">{task.description}</span>
+          </div>
+        </div>
+        <div className="text-muted-foreground flex items-center justify-between text-xs">
+          {task.assignee && (
+            <div className="flex items-center gap-2">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Avatar className="size-6">
+                    <AvatarImage src={task.assignee.avatarUrl} />
+                    <AvatarFallback>{task.assignee.name.charAt(0)}</AvatarFallback>
+                  </Avatar>
+                </TooltipTrigger>
+                <TooltipContent>{task.assignee.name}</TooltipContent>
+              </Tooltip>
+              {task.dueDate && (
+                <time className="whitespace-nowrap tabular-nums">{task.dueDate}</time>
+              )}
+            </div>
+          )}
+          {task.priority && (
+            <Badge
+              variant={
+                task.priority === 'high'
+                  ? 'destructive'
+                  : task.priority === 'medium'
+                    ? 'secondary'
+                    : 'default'
+              }
+            >
+              {task.priority}
+            </Badge>
+          )}
         </div>
       </CardContent>
     </Card>
