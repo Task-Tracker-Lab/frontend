@@ -37,7 +37,7 @@ export function MemberCard({ className, member, ...props }: MemberCardProps) {
       className={classNames(
         'border-border bg-card rounded-xl border transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-14px_rgba(15,23,42,0.18)]',
         {
-          'opacity-50 grayscale': member.status === 'inactive',
+          'opacity-50 grayscale': member.status === 'pending',
         },
         [cfg.bgColor[member.status], className]
       )}
@@ -56,7 +56,6 @@ export function MemberCard({ className, member, ...props }: MemberCardProps) {
           </Avatar>
           <div className="flex-1">
             <p className="text-sm font-semibold">{member.fullName}</p>
-            <p className="text-muted-foreground text-xs">{member.email}</p>
           </div>
           {member.role !== 'owner' && (
             <ItemActions>

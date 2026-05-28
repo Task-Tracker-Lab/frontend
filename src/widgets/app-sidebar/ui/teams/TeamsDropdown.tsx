@@ -1,7 +1,6 @@
+'use client';
 import { CreateTeamDialog } from 'features/teams/create';
-import { Plus } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
 import { routes } from 'shared/config';
 import {
   DropdownMenu,
@@ -12,18 +11,19 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
   SidebarMenuButton,
-  useSidebar,
 } from 'shared/ui';
 import { useTeamsDropdown } from '../../model/useTeamsDropdown';
 import { TeamItem } from './TeamItem';
 import { TeamTrigger } from './TeamTrigger';
+import { useIsMobile } from 'shared/lib/hooks';
+import { Plus } from 'lucide-react';
+import { useState } from 'react';
 
 export function TeamsDropdown() {
-  const { isMobile } = useSidebar();
-  const [createTeamOpen, setCreateTeamOpen] = useState(false);
   const { open, setOpen, query, visibleTeams, teams, hasMoreTeams, switchTeam } =
     useTeamsDropdown();
-
+  const isMobile = useIsMobile();
+  const [createTeamOpen, setCreateTeamOpen] = useState(false);
   return (
     <>
       <DropdownMenu open={open} onOpenChange={setOpen}>

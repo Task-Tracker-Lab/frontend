@@ -1,13 +1,13 @@
-import { DateTimeString, GlobalSuccess } from 'shared/api';
+import { DateTimeString, GlobalSuccess, PaginatedResponseSchema } from 'shared/api';
 import { z } from 'zod/v4';
 import { MAX_SLUG_LENGTH, MIN_SLUG_LENGTH } from './const';
 
 export const TeamAvatarSchema = z
   .object({
-    small: z.string().url(),
-    medium: z.string().url(),
-    large: z.string().url(),
-    original: z.string().url(),
+    small: z.url(),
+    medium: z.url(),
+    large: z.url(),
+    original: z.url(),
   })
   .nullish();
 
@@ -22,8 +22,8 @@ export const TeamRole = z.enum([
 
 export const MemberStatus = z.enum([
   'active', // Полноценный участник
-  'banned', // Заблокирован не может вернуться по инвайту
-  'inactive', // Доступ закрыт, но запись сохранена
+  'blocked', // Заблокирован не может вернуться по инвайту
+  'pending',
 ]);
 
 export const CreateTeamBody = z.object({
@@ -36,7 +36,7 @@ export const CreateTeamBody = z.object({
     .string()
     .min(1, 'Добавьте описание команды')
     .min(10, 'Описание должно содержать не менее 10 символов')
-    .max(256, 'Описание не может быть длиннее 256 символов'),
+    .max(500, 'Описание не может быть длиннее 500 символов'),
   slug: z
     .string()
     .optional()
@@ -54,19 +54,6 @@ export const CreateTeamBody = z.object({
         )
         .optional()
     ),
-  tags: z
-    .array(z.string())
-    .optional()
-    .superRefine((items, ctx) => {
-      if (!items) return;
-      const hasDuplicates = new Set(items.map((item) => item.toLowerCase())).size !== items.length;
-      if (hasDuplicates) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: 'Теги в списке не должны повторяться',
-        });
-      }
-    }),
 });
 
 export const UpdateTeamBody = CreateTeamBody.partial().refine(
@@ -87,7 +74,7 @@ export const TeamDetailsResponse = z.object({
   name: z.string(),
   slug: z.string(),
   description: z.string().nullable(),
-  avatar: TeamAvatarSchema,
+  avatarUrl: z.string().nullable(),
   coverUrl: z.string().nullable(),
   ownerId: z.string().nullable(),
   createdAt: DateTimeString,
@@ -99,7 +86,7 @@ export const TeamInvitationResponse = z.object({
   code: z.string(),
   teamId: z.string(),
   teamName: z.string(),
-  avatar: TeamAvatarSchema,
+  teamAvatar: z.string().nullable(),
   email: z.email(),
   role: TeamRole,
   inviterId: z.string(),
@@ -107,6 +94,8 @@ export const TeamInvitationResponse = z.object({
   createdAt: DateTimeString,
   expiresAt: DateTimeString,
 });
+
+export const TeamInvitationListResponse = PaginatedResponseSchema(TeamInvitationResponse);
 
 export const InviteMemberBody = z.object({
   email: z.email(),
@@ -121,8 +110,6 @@ export const TeamMemberResponse = z.object({
   id: z.string(),
   role: TeamRole,
   status: MemberStatus,
-  email: z.email(),
-  middleName: z.string().nullable(),
   fullName: z.string(),
   firstName: z.string(),
   lastName: z.string(),
@@ -130,6 +117,8 @@ export const TeamMemberResponse = z.object({
   initials: z.string().max(2),
   joinedAt: DateTimeString,
 });
+
+export const TeamMemberListResponse = PaginatedResponseSchema(TeamMemberResponse);
 
 export const UpdateMemberBody = z
   .object({
@@ -140,21 +129,5 @@ export const UpdateMemberBody = z
     error: 'Необходимо передать хотя бы одно поле для обновления',
     abort: true,
   });
-
-export const SyncTagsBody = z.object({
-  tags: z
-    .array(z.string())
-    .min(1, 'Список тегов не может быть пустым')
-    .max(15, 'Нельзя добавить более 15 тегов за раз')
-    .superRefine((items, ctx) => {
-      const hasDuplicates = new Set(items.map((item) => item.toLowerCase())).size !== items.length;
-      if (hasDuplicates) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: 'Теги в списке не должны повторяться (регистр не важен)',
-        });
-      }
-    }),
-});
 
 export const ActionResponse = GlobalSuccess;

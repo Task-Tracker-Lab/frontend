@@ -1,4 +1,5 @@
 import { DateTimeString, GlobalSuccess } from 'shared/api';
+import { PaginatedResponseSchema } from 'shared/api/';
 import { z } from 'zod/v4';
 
 export const UserAvatarSchema = z
@@ -89,19 +90,7 @@ export const UserTeamResponse = z.object({
   permissions: TeamPermissions,
 });
 
-export const UserTeamsListMeta = z.object({
-  hasNextPage: z.boolean(),
-  hasPrevPage: z.boolean(),
-  total: z.number(),
-  totalPages: z.number(),
-  page: z.number(),
-  limit: z.number(),
-});
-
-export const UserTeamsListResponse = z.object({
-  items: UserTeamResponse.array(),
-  meta: UserTeamsListMeta,
-});
+export const UserTeamsListResponse = PaginatedResponseSchema(UserTeamResponse);
 
 export const UserInvitationResponse = z.object({
   code: z.string(),
@@ -111,3 +100,5 @@ export const UserInvitationResponse = z.object({
   inviterName: z.string(),
   expiresAt: DateTimeString,
 });
+
+export const UserInvitationListResponse = PaginatedResponseSchema(UserInvitationResponse);

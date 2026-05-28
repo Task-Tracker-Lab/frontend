@@ -6,8 +6,9 @@ import { useTeamStore } from 'entities/team';
 import { ArchiveProjectDialog, RestoreProjectDialog } from 'features/projects/archive';
 import { CreateProjectDialog } from 'features/projects/create';
 import { ShareProjectDialog } from 'features/projects/share';
-import { Archive, Link2, MoreHorizontal, Plus } from 'lucide-react';
+import { Archive, BriefcaseBusiness, Link2, MoreHorizontal, Plus } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { routes } from 'shared/config';
 import {
@@ -16,7 +17,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   SidebarGroup,
-  SidebarGroupAction,
   SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuAction,
@@ -28,8 +28,11 @@ import {
 export function Projects() {
   const slug = useTeamStore.use.slug();
   const { isMobile } = useSidebar();
+  const pathname = usePathname();
   const [createProjectOpen, setCreateProjectOpen] = useState(false);
   const projects = useQuery({ ...ProjectQueries.getProjects(slug!), enabled: !!slug });
+  const projectList = projects.data?.items.slice(0, 6) ?? [];
+  const totalProjects = projects.data?.items.length ?? 0;
 
   if (!projects.data) {
     return null;
@@ -39,20 +42,13 @@ export function Projects() {
     <>
       <SidebarGroup>
         <SidebarGroupLabel>Проекты</SidebarGroupLabel>
-        <SidebarGroupAction
-          aria-label="Создать проект"
-          disabled={!slug}
-          onClick={() => setCreateProjectOpen(true)}
-        >
-          <Plus />
-        </SidebarGroupAction>
         <SidebarMenu>
-          {projects.data.items.map((project) => {
+          {projectList.map((project) => {
             const canManage = Boolean(slug && project.canEdit);
 
             return (
               <SidebarMenuItem key={project.id}>
-                <SidebarMenuButton asChild>
+                <SidebarMenuButton tooltip={project.name} asChild>
                   <Link href={routes.team.project.root(project.id)}>
                     <span>{projectIconCodeToEmoji(project.icon)}</span>
                     <span>{project.name}</span>
@@ -117,12 +113,25 @@ export function Projects() {
             );
           })}
           <SidebarMenuItem>
-            <Link href={routes.team.projects()}>
-              <SidebarMenuButton>
-                <MoreHorizontal />
-                <span>Больше</span>
-              </SidebarMenuButton>
-            </Link>
+            <SidebarMenuButton
+              tooltip="Все проекты"
+              asChild
+              isActive={routes.team.projects() === pathname}
+            >
+              <Link href={routes.team.projects()}>
+                <BriefcaseBusiness />
+                <span>Все проекты {!!totalProjects && `(${totalProjects})`}</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              onClick={() => setCreateProjectOpen(true)}
+              tooltip={'Добавить проект'}
+            >
+              <Plus />
+              <span>Добавить проект</span>
+            </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarGroup>
