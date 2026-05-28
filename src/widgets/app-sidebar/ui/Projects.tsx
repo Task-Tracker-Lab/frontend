@@ -48,7 +48,11 @@ export function Projects() {
 
             return (
               <SidebarMenuItem key={project.id}>
-                <SidebarMenuButton tooltip={project.name} asChild>
+                <SidebarMenuButton
+                  tooltip={project.name}
+                  asChild
+                  isActive={pathname === routes.team.project.root(project.id)}
+                >
                   <Link href={routes.team.project.root(project.id)}>
                     <span>{projectIconCodeToEmoji(project.icon)}</span>
                     <span>{project.name}</span>
