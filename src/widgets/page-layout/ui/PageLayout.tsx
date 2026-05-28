@@ -18,7 +18,7 @@ export function PageLayout({
   children,
 }: PageLayoutProps) {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="bg-white">
       <div className="mx-auto px-6 py-10 lg:px-8">
         <header>
           <div className="flex items-center gap-3">
