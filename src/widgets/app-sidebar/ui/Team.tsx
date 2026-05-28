@@ -1,6 +1,6 @@
 'use client';
 import { InviteTeamMemberDialog } from 'features/teams/invite';
-import { UsersRound, ChevronRight } from 'lucide-react';
+import { UsersRound, ChevronRight, Plus } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { routes } from 'shared/config';
@@ -59,7 +59,9 @@ export function Team() {
 
             <SidebarMenuSubItem>
               <SidebarMenuSubButton asChild>
-                <InviteTeamMemberDialog>+ Пригласить участника</InviteTeamMemberDialog>
+                <InviteTeamMemberDialog>
+                  <Plus /> Пригласить участника
+                </InviteTeamMemberDialog>
               </SidebarMenuSubButton>
             </SidebarMenuSubItem>
           </SidebarMenuSub>

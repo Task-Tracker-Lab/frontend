@@ -6,9 +6,9 @@ import { useTeamStore } from 'entities/team';
 import { ArchiveProjectDialog, RestoreProjectDialog } from 'features/projects/archive';
 import { CreateProjectDialog } from 'features/projects/create';
 import { ShareProjectDialog } from 'features/projects/share';
-import { Archive, Link2, MoreHorizontal, Plus } from 'lucide-react';
+import { Archive, BriefcaseBusiness, Link2, MoreHorizontal, Plus } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { routes } from 'shared/config';
 import {
   DropdownMenu,
@@ -16,7 +16,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   SidebarGroup,
-  SidebarGroupAction,
   SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuAction,
@@ -28,10 +27,10 @@ import {
 export function Projects() {
   const slug = useTeamStore.use.slug();
   const { isMobile } = useSidebar();
-  const [createProjectOpen, setCreateProjectOpen] = useState(false);
+  const pathname = usePathname();
   const projects = useQuery({ ...ProjectQueries.getProjects(slug!), enabled: !!slug });
   const projectList = projects.data?.items.slice(0, 6) ?? [];
-  const showOtherProjectsButton = projectList.length > 6;
+  const totalProjects = projects.data?.items.length ?? 0;
 
   if (!projects.data) {
     return null;
@@ -41,13 +40,6 @@ export function Projects() {
     <>
       <SidebarGroup>
         <SidebarGroupLabel>Проекты</SidebarGroupLabel>
-        <SidebarGroupAction
-          aria-label="Создать проект"
-          disabled={!slug}
-          onClick={() => setCreateProjectOpen(true)}
-        >
-          <Plus />
-        </SidebarGroupAction>
         <SidebarMenu>
           {projectList.map((project) => {
             const canManage = Boolean(slug && project.canEdit);
@@ -118,21 +110,24 @@ export function Projects() {
               </SidebarMenuItem>
             );
           })}
-          {showOtherProjectsButton && (
-            <SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild isActive={routes.team.projects() === pathname}>
               <Link href={routes.team.projects()}>
-                <SidebarMenuButton>
-                  <MoreHorizontal />
-                  <span>Больше</span>
-                </SidebarMenuButton>
+                <BriefcaseBusiness />
+                Все проекты {!!totalProjects && `(${totalProjects})`}
               </Link>
-            </SidebarMenuItem>
-          )}
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <CreateProjectDialog asChild>
+              <SidebarMenuButton>
+                <Plus />
+                Добавить проект
+              </SidebarMenuButton>
+            </CreateProjectDialog>
+          </SidebarMenuItem>
         </SidebarMenu>
       </SidebarGroup>
-      <CreateProjectDialog
-        dialog={{ open: createProjectOpen, onOpenChange: setCreateProjectOpen }}
-      />
     </>
   );
 }
