@@ -9,7 +9,11 @@ export function MyTeams() {
   const pathname = usePathname();
   return (
     <SidebarMenuItem>
-      <SidebarMenuButton isActive={pathname === routes.profile.teams()} asChild>
+      <SidebarMenuButton
+        tooltip="Мои команды"
+        isActive={pathname === routes.profile.teams()}
+        asChild
+      >
         <Link href={routes.profile.teams()}>
           <Network />
           <span>Мои команды</span>

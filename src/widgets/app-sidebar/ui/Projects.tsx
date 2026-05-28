@@ -9,6 +9,7 @@ import { ShareProjectDialog } from 'features/projects/share';
 import { Archive, BriefcaseBusiness, Link2, MoreHorizontal, Plus } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 import { routes } from 'shared/config';
 import {
   DropdownMenu,
@@ -28,6 +29,7 @@ export function Projects() {
   const slug = useTeamStore.use.slug();
   const { isMobile } = useSidebar();
   const pathname = usePathname();
+  const [createProjectOpen, setCreateProjectOpen] = useState(false);
   const projects = useQuery({ ...ProjectQueries.getProjects(slug!), enabled: !!slug });
   const projectList = projects.data?.items.slice(0, 6) ?? [];
   const totalProjects = projects.data?.items.length ?? 0;
@@ -46,7 +48,7 @@ export function Projects() {
 
             return (
               <SidebarMenuItem key={project.id}>
-                <SidebarMenuButton asChild>
+                <SidebarMenuButton tooltip={project.name} asChild>
                   <Link href={routes.team.project.root(project.id)}>
                     <span>{projectIconCodeToEmoji(project.icon)}</span>
                     <span>{project.name}</span>
@@ -111,7 +113,11 @@ export function Projects() {
             );
           })}
           <SidebarMenuItem>
-            <SidebarMenuButton asChild isActive={routes.team.projects() === pathname}>
+            <SidebarMenuButton
+              tooltip="Все проекты"
+              asChild
+              isActive={routes.team.projects() === pathname}
+            >
               <Link href={routes.team.projects()}>
                 <BriefcaseBusiness />
                 Все проекты {!!totalProjects && `(${totalProjects})`}
@@ -119,15 +125,19 @@ export function Projects() {
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <CreateProjectDialog asChild>
-              <SidebarMenuButton>
-                <Plus />
-                Добавить проект
-              </SidebarMenuButton>
-            </CreateProjectDialog>
+            <SidebarMenuButton
+              onClick={() => setCreateProjectOpen(true)}
+              tooltip={'Добавить проект'}
+            >
+              <Plus />
+              Добавить проект
+            </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarGroup>
+      <CreateProjectDialog
+        dialog={{ open: createProjectOpen, onOpenChange: setCreateProjectOpen }}
+      />
     </>
   );
 }
