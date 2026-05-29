@@ -1,13 +1,10 @@
 import { MockBoardTask } from 'pages/project/model/boards-mock';
-import { ComponentProps } from 'react';
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
   Card,
   CardContent,
-  KanbanItem,
-  KanbanItemHandle,
   Label,
   Tooltip,
   TooltipContent,
@@ -16,14 +13,12 @@ import {
   Badge,
 } from 'shared/ui';
 
-interface TaskCardProps extends Omit<ComponentProps<typeof KanbanItem>, 'value' | 'children'> {
+interface TaskCardProps {
   task: MockBoardTask;
-  asHandle?: boolean;
-  isOverlay?: boolean;
 }
 
-export function TaskCard({ task, asHandle, isOverlay, ...props }: TaskCardProps) {
-  const cardContent = (
+export function TaskCard({ task }: TaskCardProps) {
+  return (
     <Card>
       <CardContent className="space-y-2.5">
         <div className="flex items-start gap-1">
@@ -68,10 +63,5 @@ export function TaskCard({ task, asHandle, isOverlay, ...props }: TaskCardProps)
         </div>
       </CardContent>
     </Card>
-  );
-  return (
-    <KanbanItem value={task.id} {...props}>
-      {asHandle && !isOverlay ? <KanbanItemHandle>{cardContent}</KanbanItemHandle> : cardContent}
-    </KanbanItem>
   );
 }

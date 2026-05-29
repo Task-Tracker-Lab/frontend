@@ -2,10 +2,10 @@ import { Ellipsis, GripVertical, Plus } from 'lucide-react';
 import { MockBoard, MockBoardTask } from 'pages/project/model/boards-mock';
 import { ComponentProps } from 'react';
 import { Button, KanbanColumn, KanbanColumnContent, KanbanColumnHandle } from 'shared/ui';
-import { TaskCard } from './TaskCard';
 
 // TODO: вынести функцию и иконки в shared или сделать свои
 import { projectIconCodeToEmoji } from 'entities/project';
+import { Task } from './Task';
 
 interface TaskColumnProps extends Omit<ComponentProps<typeof KanbanColumn>, 'children'> {
   tasks: MockBoardTask[];
@@ -51,7 +51,7 @@ export function TaskColumn({
 
       <KanbanColumnContent value={value} className="flex flex-col gap-2.5">
         {tasks.map((task) => (
-          <TaskCard key={task.id} task={task} asHandle={!isOverlay} isOverlay={isOverlay} />
+          <Task key={task.id} task={task} asHandle={!isOverlay} isOverlay={isOverlay} />
         ))}
       </KanbanColumnContent>
     </KanbanColumn>
