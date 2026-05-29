@@ -358,12 +358,12 @@ export interface KanbanBoardProps extends HTMLAttributes<HTMLDivElement> {
 function KanbanBoard({ className, asChild = false, children, ...props }: KanbanBoardProps) {
   const { columnIds } = useContext(KanbanContext);
   const Comp = asChild ? Slot.Root : 'div';
-
+  const classNameRaw = `grid-cols-[repeat(${columnIds.length},300px)]`;
   return (
     <SortableContext items={columnIds} strategy={rectSortingStrategy}>
       <Comp
         data-slot="kanban-board"
-        className={cn('grid auto-rows-fr gap-4 sm:grid-cols-3', className)}
+        className={cn('grid gap-4', classNameRaw, className)}
         {...props}
       >
         {children}
@@ -483,7 +483,7 @@ function KanbanColumnHandle({
       {...attributes}
       {...listeners}
       className={cn(
-        'opacity-0 transition-opacity group-hover/kanban-column:opacity-100',
+        'max-w-0 opacity-0 transition-[opacity,max-width] group-hover/kanban-column:max-w-7 group-hover/kanban-column:opacity-100',
         cursor && (isDragging ? 'cursor-grabbing!' : 'cursor-grab!'),
         className
       )}
