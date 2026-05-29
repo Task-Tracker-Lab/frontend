@@ -11,6 +11,7 @@ interface ProjectKanbanProps {
 
 export function ProjectKanban({ board }: ProjectKanbanProps) {
   const [columns, setColumns] = useState(board.columns);
+
   return (
     <Kanban value={columns} onValueChange={(v) => setColumns(v)} getItemValue={(item) => item.id}>
       <KanbanBoard>
