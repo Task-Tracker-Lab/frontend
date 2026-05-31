@@ -358,14 +358,9 @@ export interface KanbanBoardProps extends HTMLAttributes<HTMLDivElement> {
 function KanbanBoard({ className, asChild = false, children, ...props }: KanbanBoardProps) {
   const { columnIds } = useContext(KanbanContext);
   const Comp = asChild ? Slot.Root : 'div';
-  const classNameRaw = `grid-cols-[repeat(${columnIds.length},300px)]`;
   return (
     <SortableContext items={columnIds} strategy={rectSortingStrategy}>
-      <Comp
-        data-slot="kanban-board"
-        className={cn('grid gap-4', classNameRaw, className)}
-        {...props}
-      >
+      <Comp data-slot="kanban-board" className={cn('flex gap-4', className)} {...props}>
         {children}
       </Comp>
     </SortableContext>
@@ -459,9 +454,16 @@ function KanbanColumn({
   );
 }
 
+const variant = {
+  default:
+    'max-w-0 opacity-0 transition-[opacity,max-width] group-hover/kanban-column:max-w-7 group-hover/kanban-column:opacity-100',
+  visible: '',
+};
+
 export interface KanbanColumnHandleProps extends HTMLAttributes<HTMLDivElement> {
   cursor?: boolean;
   asChild?: boolean;
+  variant?: keyof typeof variant;
 }
 
 function KanbanColumnHandle({
@@ -469,6 +471,7 @@ function KanbanColumnHandle({
   asChild = false,
   cursor = true,
   children,
+  variant = 'default',
   ...props
 }: KanbanColumnHandleProps) {
   const { attributes, listeners, isDragging, disabled } = useContext(ColumnContext);
@@ -483,7 +486,7 @@ function KanbanColumnHandle({
       {...attributes}
       {...listeners}
       className={cn(
-        'max-w-0 opacity-0 transition-[opacity,max-width] group-hover/kanban-column:max-w-7 group-hover/kanban-column:opacity-100',
+        variant,
         cursor && (isDragging ? 'cursor-grabbing!' : 'cursor-grab!'),
         className
       )}

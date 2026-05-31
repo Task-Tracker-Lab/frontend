@@ -13,8 +13,13 @@ export function ProjectKanban({ board }: ProjectKanbanProps) {
   const [columns, setColumns] = useState(board.columns);
 
   return (
-    <Kanban value={columns} onValueChange={(v) => setColumns(v)} getItemValue={(item) => item.id}>
-      <KanbanBoard>
+    <Kanban
+      className="h-full"
+      value={columns}
+      onValueChange={(v) => setColumns(v)}
+      getItemValue={(item) => item.id}
+    >
+      <KanbanBoard className="h-full">
         {Object.entries(columns).map(([id, items]) => (
           <TaskColumn key={id} value={id} tasks={items} columnTitles={board.columnTitles} />
         ))}
