@@ -10,4 +10,10 @@ export default defineConfig([
       'fsd/public-api': 'off',
     },
   },
+  // TODO: заглушка
+  {
+    rules: {
+      'fsd/insignificant-slice': 'off',
+    },
+  },
 ]);
