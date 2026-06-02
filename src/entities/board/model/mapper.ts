@@ -4,20 +4,19 @@ import { BoardColumnResponse, BoardResponse } from './types';
 
 export type BoardWithTasks = {
   board: BoardResponse;
-  columns: BoardColumnResponse[];
+  columns: Record<string, BoardColumnResponse>;
   tasksByColumn: Record<string, unknown[]>;
-  columnTitles: Record<string, string>;
 };
 
 export class BoardMapper {
   static toBoardWithTasks(board: BoardResponse): BoardWithTasks {
     const sortedColumns = [...board.boardColumns].sort((a, b) => a.position - b.position);
-    const columnTitles: Record<string, string> = {};
     const tasksByColumn: Record<string, unknown[]> = {};
+    const columns: Record<string, BoardColumnResponse> = {};
 
     sortedColumns.forEach((column) => {
       tasksByColumn[column.id] = [];
-      columnTitles[column.id] = column.name;
+      columns[column.id] = column;
     });
 
     // tasks?.forEach((task) => {
@@ -34,8 +33,7 @@ export class BoardMapper {
 
     return {
       board,
-      columnTitles,
-      columns: sortedColumns,
+      columns,
       tasksByColumn,
     };
   }
