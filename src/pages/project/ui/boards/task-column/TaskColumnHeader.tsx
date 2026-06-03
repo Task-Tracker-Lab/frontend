@@ -2,7 +2,7 @@ import { BOARD_COLUMN_COLORS, TBoard } from 'entities/board';
 import { RemoveColumnDialog } from 'features/boards/column/remove';
 import { CreateTaskButton } from 'features/task/create';
 import { Ellipsis } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import {
   Button,
   ColorPicker,
@@ -23,9 +23,15 @@ export interface TaskColumnHeaderProps extends TBoard.BoardColumnResponse {
 export function TaskColumnHeader({ data }: { data: TaskColumnHeaderProps }) {
   const { tasksLength, name, id, boardId, color } = data;
   const [activeColor, setActiveColor] = useState<string>(color ?? BOARD_COLUMN_COLORS[0]);
+  console.log(color);
 
-  const isExistColor = BOARD_COLUMN_COLORS.find((v) => v.toLowerCase() === data.color);
-  const newColors = isExistColor ? [...BOARD_COLUMN_COLORS] : [color, ...BOARD_COLUMN_COLORS];
+  const existColor = BOARD_COLUMN_COLORS.findIndex((v) => v.toLowerCase() === data.color);
+  const isExistColor = existColor !== -1;
+  const newColors = isExistColor
+    ? [...BOARD_COLUMN_COLORS]
+    : color
+      ? [color, ...BOARD_COLUMN_COLORS]
+      : [...BOARD_COLUMN_COLORS];
 
   return (
     <KanbanColumnHandle variant="visible" cursor={false} asChild>
@@ -33,13 +39,10 @@ export function TaskColumnHeader({ data }: { data: TaskColumnHeaderProps }) {
         <div style={{ backgroundColor: activeColor }} className="h-1.5" />
         <div className="flex h-8 items-center justify-between gap-2 rounded-xl px-2.5 py-1.5">
           <div className="flex items-center gap-2.5">
-            {/* {icon && <span>{icon}</span>} */}
             <h2 className="text-muted-foreground line-clamp-1 text-sm font-medium">{`${name} (${tasksLength})`}</h2>
           </div>
           <div className="flex items-center">
-            {/* TODO: добавить dialog/popover */}
             <CreateTaskButton id={id} />
-            {/* TODO: добавить dialog/popover */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button size={'icon-sm'} variant={'ghost'}>

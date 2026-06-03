@@ -10,12 +10,17 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from 'shared/ui';
-import { RemoveColunmnVariables, useRemoveColumn } from '../model/useRemoveColumn';
+import {
+  RemoveColunmnVariables,
+  UseDeleteColumnOptions,
+  useRemoveColumn,
+} from '../model/useRemoveColumn';
 
-type Props = ComponentProps<typeof AlertDialogTrigger> & RemoveColunmnVariables;
+type Props = ComponentProps<typeof AlertDialogTrigger> &
+  RemoveColunmnVariables & { options?: UseDeleteColumnOptions };
 
-export function RemoveColumnDialog({ columnId, boardId, ...props }: Props) {
-  const removeBoard = useRemoveColumn();
+export function RemoveColumnDialog({ columnId, boardId, options = {}, ...props }: Props) {
+  const removeBoard = useRemoveColumn(options);
 
   const onRemove = () => {
     removeBoard.mutate({ columnId, boardId });

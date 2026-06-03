@@ -33,11 +33,12 @@ export function ColorPicker({
     onClick?.(e);
     setActiveColor?.(color);
   };
+  console.log(colors ?? COLORS);
   return (
     <div className={cn('flex flex-wrap gap-2', className)}>
-      {(colors ?? COLORS).map((item) => {
+      {(colors ?? COLORS)?.map((item) => {
         const isSelected = activeColor === item;
-        const isVeryLight = item.toLowerCase() === '#ffffff';
+        const isVeryLight = item?.toLowerCase() === '#ffffff';
 
         return (
           <button
