@@ -10,8 +10,13 @@ export default defineConfig([
       'fsd/public-api': 'off',
     },
   },
-  // TODO: заглушка
   {
+    files: [
+      './src/features/boards/**',
+      './src/entities/board/**',
+      './src/entities/task/**',
+      './src/features/task/**',
+    ],
     rules: {
       'fsd/insignificant-slice': 'off',
     },
