@@ -12,8 +12,6 @@ interface ProjectKanbanProps {
 }
 
 export function ProjectKanban({ board }: ProjectKanbanProps) {
-  console.log(board);
-
   const [columns, setColumns] = useState(board.tasksByColumn);
 
   useEffect(() => {

@@ -23,7 +23,6 @@ export interface TaskColumnHeaderProps extends TBoard.BoardColumnResponse {
 export function TaskColumnHeader({ data }: { data: TaskColumnHeaderProps }) {
   const { tasksLength, name, id, boardId, color } = data;
   const [activeColor, setActiveColor] = useState<string>(color ?? BOARD_COLUMN_COLORS[0]);
-  console.log(color);
 
   const existColor = BOARD_COLUMN_COLORS.findIndex((v) => v.toLowerCase() === data.color);
   const isExistColor = existColor !== -1;

@@ -26,7 +26,7 @@ export function ProjectBoards({ projectId }: PropsWithChildren<{ projectId: stri
 
   const { data, isLoading, isError } = useBoardsPage(projectId);
   const { activeBoard, activeBoardId } = useActiveBoards(data);
-
+  // TODO: добавить скелетоны
   if (isLoading) return 'Загружаем доски';
   if (isError) return 'Ошибка загрузки';
   return (
