@@ -1,4 +1,4 @@
-import { MockBoardTask } from 'pages/project/model/boards-mock';
+import { TTask } from 'entities/task';
 import {
   Avatar,
   AvatarFallback,
@@ -14,7 +14,7 @@ import {
 } from 'shared/ui';
 
 interface TaskCardProps {
-  task: MockBoardTask;
+  task: TTask.Task;
 }
 
 export function TaskCard({ task }: TaskCardProps) {
@@ -26,7 +26,7 @@ export function TaskCard({ task }: TaskCardProps) {
             <Checkbox />
           </Label>
           <div>
-            <h3 className="text-foreground line-clamp-1 font-medium">{task.name}</h3>
+            <h3 className="text-foreground line-clamp-1 font-medium">{task.title}</h3>
             <span className="text-muted-foreground line-clamp-1 text-sm">{task.description}</span>
           </div>
         </div>
@@ -36,7 +36,7 @@ export function TaskCard({ task }: TaskCardProps) {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Avatar className="size-6">
-                    <AvatarImage src={task.assignee.avatarUrl} />
+                    <AvatarImage src={task.assignee.avatarUrl ?? undefined} />
                     <AvatarFallback>{task.assignee.name.charAt(0)}</AvatarFallback>
                   </Avatar>
                 </TooltipTrigger>

@@ -1,15 +1,15 @@
-import { MockBoardTask } from 'pages/project/model/boards-mock';
-import { ComponentProps } from 'react';
+import React, { ComponentProps } from 'react';
 import { KanbanItem, KanbanItemHandle } from 'shared/ui';
 import { TaskCard } from './TaskCard';
+import { TTask } from 'entities/task/';
 
 interface TaskCardProps extends Omit<ComponentProps<typeof KanbanItem>, 'value' | 'children'> {
-  task: MockBoardTask;
+  task: TTask.Task;
   asHandle?: boolean;
   isOverlay?: boolean;
 }
 
-export function Task({ task, asHandle, isOverlay, ...props }: TaskCardProps) {
+export function TaskComponent({ task, asHandle, isOverlay, ...props }: TaskCardProps) {
   return (
     <KanbanItem value={task.id} {...props}>
       {asHandle && !isOverlay ? (
@@ -20,3 +20,5 @@ export function Task({ task, asHandle, isOverlay, ...props }: TaskCardProps) {
     </KanbanItem>
   );
 }
+
+export const Task = React.memo(TaskComponent);
