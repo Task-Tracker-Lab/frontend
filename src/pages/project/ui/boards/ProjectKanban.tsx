@@ -1,17 +1,27 @@
 'use client';
 
-import { useState } from 'react';
-import { Kanban, KanbanBoard, KanbanOverlay } from 'shared/ui';
+import { useEffect, useState } from 'react';
+import { Kanban, KanbanBoard, KanbanOverlay, Button } from 'shared/ui';
 import { TaskColumn } from './task-column/TaskColumn';
 import { BoardWithTasks } from 'entities/board';
 import { TTask } from 'entities/task';
+import { CreateBoardColumnDialog } from 'features/boards/column/create';
 
 interface ProjectKanbanProps {
   board: BoardWithTasks;
 }
 
 export function ProjectKanban({ board }: ProjectKanbanProps) {
+  console.log(board);
+
   const [columns, setColumns] = useState(board.tasksByColumn);
+
+  useEffect(() => {
+    setColumns(board.tasksByColumn);
+  }, [board]);
+
+  const nextColumnPosition = Object.keys(board.columns).length;
+
   return (
     <Kanban
       className="h-full"
@@ -26,6 +36,17 @@ export function ProjectKanban({ board }: ProjectKanbanProps) {
           // TODO: as TTask.Task - заглушка, пока нет тасок
           return <TaskColumn key={id} value={id} tasks={items as TTask.Task[]} column={column} />;
         })}
+        <div className="flex w-[250px] min-w-[250px] shrink-0 items-start">
+          <CreateBoardColumnDialog
+            boardId={board.board.id}
+            defaultPosition={nextColumnPosition}
+            asChild
+          >
+            <Button variant="outline" className="w-full">
+              Создать колонку
+            </Button>
+          </CreateBoardColumnDialog>
+        </div>
       </KanbanBoard>
       <KanbanOverlay className="bg-muted/10 rounded-md border-2 border-dashed" />
     </Kanban>

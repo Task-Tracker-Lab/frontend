@@ -6,8 +6,8 @@ export const useActiveBoards = (boards: BoardWithTasks[]) => {
   const activeBoardId = useBoardStore((s) => s.activeBoardId);
   const setActiveBoardId = useBoardStore((s) => s.setBoardId);
 
-  const activeBoard: BoardWithTasks | undefined =
-    boards?.find((v) => v.board.id === activeBoardId) ?? boards[0];
+  const activeBoard: BoardWithTasks | null =
+    boards?.find((v) => v.board.id === activeBoardId) ?? (boards.length > 0 ? boards[0] : null);
 
   useEffect(() => {
     if (!activeBoardId && boards.length > 0) {
