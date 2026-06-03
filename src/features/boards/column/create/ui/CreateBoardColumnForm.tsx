@@ -1,9 +1,10 @@
 import { Controller, FormProvider } from 'react-hook-form';
 import { cn } from 'shared/lib/utils';
-import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel, Input } from 'shared/ui';
+import { ColorPicker, Field, FieldError, FieldGroup, FieldLabel, Input } from 'shared/ui';
 import { useCreateBoardColumnForm } from '../model/useCreateBoardColumnForm';
 import { UseCreateBoardColumnOptions } from '../model/useCreateBoardColumn';
 import { ComponentProps } from 'react';
+import { COLORS } from '../model/consts';
 
 interface CreateBoardColumnFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
   boardId: string;
@@ -52,15 +53,19 @@ export function CreateBoardColumnForm({
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel htmlFor="create-board-column-color">Цвет</FieldLabel>
-                <FieldDescription>HEX, например #6366f1</FieldDescription>
-                <Input
-                  {...field}
+                <ColorPicker
+                  colors={COLORS}
                   id="create-board-column-color"
                   aria-label="Цвет колонки"
-                  placeholder="#6366f1"
                   aria-invalid={fieldState.invalid}
                   disabled={isPending}
+                  activeColor={field.value}
+                  setActiveColor={(c) => {
+                    form.setValue('color', c);
+                  }}
+                  {...field}
                 />
+
                 {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
               </Field>
             )}
