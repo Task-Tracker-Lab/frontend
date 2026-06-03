@@ -20,15 +20,18 @@ import { useBoardsPage } from 'pages/project/model/useBoardsPage';
 import { cn } from 'shared/lib/utils';
 import { VariantProps } from 'class-variance-authority';
 import { RemoveBoardDialog } from 'features/boards/remove';
+import { ProjectBoardsSkeleton } from './ProjectBoards.skeleton';
+import { ProjectBoardsError } from './ProjectBoardsError';
 
 export function ProjectBoards({ projectId }: PropsWithChildren<{ projectId: string }>) {
   useInitProjectId(projectId);
 
-  const { data, isLoading, isError } = useBoardsPage(projectId);
+  const { data, isLoading, isError, error, refetch } = useBoardsPage(projectId);
   const { activeBoard, activeBoardId } = useActiveBoards(data);
-  // TODO: добавить скелетоны
-  if (isLoading) return 'Загружаем доски';
-  if (isError) return 'Ошибка загрузки';
+  if (isLoading) return <ProjectBoardsSkeleton />;
+  if (isError) {
+    return <ProjectBoardsError message={error?.message} onRetry={() => refetch()} />;
+  }
   return (
     <div className="flex h-full flex-col gap-4">
       <div className="flex flex-wrap gap-2 px-5 pt-5">
