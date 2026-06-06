@@ -25,13 +25,13 @@ import { routes } from 'shared/config';
 import { extractValidationIssues } from 'shared/api';
 import { TAuth } from 'entities/auth';
 import { ComponentProps } from 'react';
-import { useSignin } from '../model/useSignin';
+import { useSignin, UseSigninOptions } from '../model/useSignin';
 
 interface SigninFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
-  onSuccess?: (body: TAuth.SigninBody, res: TAuth.SigninResponse) => void;
+  mutateOptions?: UseSigninOptions;
 }
 
-export function SigninForm({ className, onSuccess, ...props }: SigninFormProps) {
+export function SigninForm({ className, mutateOptions = {}, ...props }: SigninFormProps) {
   const form = useForm<SigninFormValues>({
     resolver: zodResolver(SigninFormSchema),
     defaultValues: {
@@ -41,8 +41,9 @@ export function SigninForm({ className, onSuccess, ...props }: SigninFormProps) 
   });
 
   const sendUserData = useSignin({
-    onSuccess,
-    onError: (err) => {
+    ...mutateOptions,
+    onError: (err, ...args) => {
+      mutateOptions.onError?.(err, ...args);
       setFormErrors(extractValidationIssues(err), form);
     },
   });

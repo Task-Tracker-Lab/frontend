@@ -18,14 +18,16 @@ function SigninPage() {
           <Logo size="sm" />
         </Link>
         <SigninForm
-          onSuccess={(_, res) => {
-            if (res.success) {
-              AccessToken.token = res.token;
-              router.replace(routes.profile.root());
-              if (res.message) {
-                toast.success(res.message);
+          mutateOptions={{
+            onSuccess: (res) => {
+              if (res.success) {
+                AccessToken.token = res.token;
+                router.replace(routes.profile.root());
+                if (res.message) {
+                  toast.success(res.message);
+                }
               }
-            }
+            },
           }}
         />
       </div>
