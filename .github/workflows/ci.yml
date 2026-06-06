@@ -82,5 +82,6 @@ jobs:
           NEXT_PUBLIC_APP_ENV: ${{ vars.NEXT_PUBLIC_APP_ENV }}
           NEXT_PUBLIC_FARO_APP_NAME: ${{ vars.NEXT_PUBLIC_FARO_APP_NAME }}
           NEXT_PUBLIC_FARO_APP_NAMESPACE: ${{ vars.NEXT_PUBLIC_FARO_APP_NAMESPACE }}
+          NEXT_PUBLIC_METRICS_ENABLED: ${{vars.NEXT_PUBLIC_METRICS_ENABLED}}
     #      - name: Build Storybook
     #        run: pnpm build-storybook
