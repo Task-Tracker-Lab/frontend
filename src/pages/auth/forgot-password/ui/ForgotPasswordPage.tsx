@@ -68,10 +68,12 @@ function ForgotPasswordPage() {
         {step === 'password' && (
           <PasswordForm
             email={email}
-            onSuccess={(_, res) => {
-              clearDraft();
-              router.replace(routes.auth.signin());
-              toast.success(res.message);
+            mutateOptions={{
+              onSuccess: (res) => {
+                clearDraft();
+                router.replace(routes.auth.signin());
+                toast.success(res.message);
+              },
             }}
           />
         )}
