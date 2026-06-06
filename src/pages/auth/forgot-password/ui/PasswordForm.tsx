@@ -24,11 +24,11 @@ import type { PasswordFormValues } from '../model/types';
 import { useSendPassword, UseSendPasswordOptions } from '../model/useSendPassword';
 
 interface PasswordFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
-  mutateOptions: UseSendPasswordOptions;
+  mutateOptions?: UseSendPasswordOptions;
   email: string;
 }
 
-function PasswordForm({ mutateOptions, email, ...props }: PasswordFormProps) {
+function PasswordForm({ mutateOptions = {}, email, ...props }: PasswordFormProps) {
   const [showPassword, setShowPassword] = useState(false);
 
   const sendPassword = useSendPassword({

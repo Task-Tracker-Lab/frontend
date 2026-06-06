@@ -6,12 +6,12 @@ export type UseSignupOptions = Omit<
   'mutationFn'
 >;
 
-export function useSignup(rest: UseSignupOptions = {}) {
+export function useSignup(options: UseSignupOptions = {}) {
   return useMutation<Awaited<TAuth.SignupResponse>, DefaultError, TAuth.SignupBody>({
     mutationFn: AuthHttp.signup,
     meta: {
       skipGlobalValidationToast: true,
     },
-    ...rest,
+    ...options,
   });
 }

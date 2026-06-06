@@ -6,13 +6,13 @@ export type UseResetePasswordOptions = Omit<
   'mutationFn'
 >;
 
-export function useResetPassword(props: UseResetePasswordOptions = {}) {
+export function useResetPassword(options: UseResetePasswordOptions = {}) {
   return useMutation<Awaited<TAuth.ResetPasswordResponse>, DefaultError, TAuth.ResetPasswordBody>({
     mutationKey: [],
     mutationFn: AuthHttp.resetPassword,
     meta: {
       skipGlobalValidationToast: true,
     },
-    ...props,
+    ...options,
   });
 }

@@ -10,7 +10,7 @@ export type UseSendPasswordOptions = Omit<
   'mutationFn'
 >;
 
-export function useSendPassword(props: UseSendPasswordOptions = {}) {
+export function useSendPassword(options: UseSendPasswordOptions = {}) {
   return useMutation<
     Awaited<TAuth.ResetPasswordConfirmResponse>,
     DefaultError,
@@ -21,6 +21,6 @@ export function useSendPassword(props: UseSendPasswordOptions = {}) {
     meta: {
       skipGlobalValidationToast: true,
     },
-    ...props,
+    ...options,
   });
 }

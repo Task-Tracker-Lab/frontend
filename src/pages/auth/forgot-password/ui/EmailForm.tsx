@@ -24,7 +24,7 @@ import { extractValidationIssues } from 'shared/api';
 import { ComponentProps } from 'react';
 
 type EmailFormProps = Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> & {
-  mutateOptions: UseResetePasswordOptions;
+  mutateOptions?: UseResetePasswordOptions;
 };
 
 function EmailForm({ mutateOptions = {}, ...props }: EmailFormProps) {
