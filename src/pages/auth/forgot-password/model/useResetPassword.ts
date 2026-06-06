@@ -1,23 +1,18 @@
-import { type DefaultError, useMutation } from '@tanstack/react-query';
+import { type DefaultError, useMutation, UseMutationOptions } from '@tanstack/react-query';
 import { AuthHttp, TAuth } from 'entities/auth';
 
-interface ResetPasswordProps {
-  onSuccess?: (body: TAuth.ResetPasswordBody, res: TAuth.ResetPasswordResponse) => void;
-  onError?: (err: Error) => void;
-}
+export type UseResetePasswordOptions = Omit<
+  UseMutationOptions<TAuth.ResetPasswordResponse, DefaultError, TAuth.ResetPasswordBody>,
+  'mutationFn'
+>;
 
-export function useResetPassword({ onSuccess, onError }: ResetPasswordProps = {}) {
+export function useResetPassword(props: UseResetePasswordOptions = {}) {
   return useMutation<Awaited<TAuth.ResetPasswordResponse>, DefaultError, TAuth.ResetPasswordBody>({
     mutationKey: [],
     mutationFn: AuthHttp.resetPassword,
     meta: {
       skipGlobalValidationToast: true,
     },
-    onError: (err) => {
-      onError?.(err);
-    },
-    onSuccess: (res, body) => {
-      onSuccess?.(body, res);
-    },
+    ...props,
   });
 }

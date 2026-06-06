@@ -47,7 +47,11 @@ function ForgotPasswordPage() {
           <Logo size="sm" />
         </Link>
         {step === 'email' ? (
-          <EmailForm onSuccess={({ email }) => setDraft({ email, step: 'otp' }, DRAFT_TTL_MS)} />
+          <EmailForm
+            mutateOptions={{
+              onSuccess: (_res, { email }) => setDraft({ email, step: 'otp' }, DRAFT_TTL_MS),
+            }}
+          />
         ) : null}
         {step === 'otp' && (
           <OTPForm

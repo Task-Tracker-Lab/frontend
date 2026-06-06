@@ -18,16 +18,16 @@ import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { EmailFormValues } from '../model/types';
 import { EmailForm as EmailFormSchema } from '../model/schemas';
-import { ComponentProps } from 'react';
-import { useResetPassword } from '../model/useResetPassword';
+import { UseResetePasswordOptions, useResetPassword } from '../model/useResetPassword';
 import { setFormErrors } from 'shared/lib/utils';
 import { extractValidationIssues } from 'shared/api';
+import { ComponentProps } from 'react';
 
-interface EmailFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
-  onSuccess?: (body: TAuth.ResetPasswordBody, res: TAuth.ResetPasswordResponse) => void;
-}
+type EmailFormProps = Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> & {
+  mutateOptions: UseResetePasswordOptions;
+};
 
-function EmailForm({ onSuccess, ...props }: EmailFormProps) {
+function EmailForm({ mutateOptions = {}, ...props }: EmailFormProps) {
   const form = useForm<EmailFormValues>({
     resolver: zodResolver(EmailFormSchema),
     defaultValues: {
@@ -36,8 +36,11 @@ function EmailForm({ onSuccess, ...props }: EmailFormProps) {
   });
 
   const resetPassword = useResetPassword({
-    onSuccess,
-    onError: (err) => setFormErrors(extractValidationIssues(err), form),
+    ...mutateOptions,
+    onError: (err, ...args) => {
+      mutateOptions.onError?.(err, ...args);
+      setFormErrors(extractValidationIssues(err), form);
+    },
   });
 
   const onSubmit = (data: EmailFormValues) => {
