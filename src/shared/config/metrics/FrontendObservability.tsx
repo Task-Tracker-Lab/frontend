@@ -3,11 +3,13 @@
 import { useEffect } from 'react';
 import { faro, getWebInstrumentations, initializeFaro } from '@grafana/faro-web-sdk';
 import { TracingInstrumentation } from '@grafana/faro-web-tracing';
+import { env } from '../env.client';
 
 let isFaroInitialized = false;
 
 export default function FrontendObservability() {
   useEffect(() => {
+    if (!env.NEXT_PUBLIC_METRICS_ENABLED) return;
     const initializeWhenIdle = () => {
       if (isFaroInitialized || faro.api) {
         return;

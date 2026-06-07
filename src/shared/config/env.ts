@@ -3,6 +3,10 @@ import { z } from 'zod/v4';
 const isServer = typeof window === 'undefined';
 const isBuild = process.env.SKIP_ENV_VALIDATION === 'true';
 
+const metricEnabledSchema = z.enum(['true', 'false'], {
+  error: 'NEXT_PUBLIC_METRICS_ENABLED - обязателен',
+});
+
 const envSchemaServer = z.object({
   NODE_ENV: z
     .enum(['development', 'production', 'test'], {
@@ -35,11 +39,7 @@ const envSchemaServer = z.object({
 });
 
 const envSchemaClient = z.object({
-  NEXT_PUBLIC_API_BASE_URL: z
-    .string({
-      error: 'API Base URL обязателен',
-    })
-    .url('NEXT_PUBLIC_API_BASE_URL должен быть валидным URL'),
+  NEXT_PUBLIC_API_BASE_URL: z.url('NEXT_PUBLIC_API_BASE_URL должен быть валидным URL'),
   NEXT_PUBLIC_FARO_URL: z
     .string({
       error: 'URL для Faro (Alloy) обязателен',
@@ -61,6 +61,10 @@ const envSchemaClient = z.object({
       error: 'Окружение (APP_ENV) обязательно',
     })
     .min(1, 'Окружение не может быть пустым'),
+  NEXT_PUBLIC_METRICS_ENABLED:
+    process.env.NODE_ENV === 'development'
+      ? metricEnabledSchema.default('false').transform((v) => v === 'true')
+      : metricEnabledSchema.transform((v) => v === 'true'),
 });
 
 const envSchema = envSchemaClient.extend(envSchemaServer.shape);
