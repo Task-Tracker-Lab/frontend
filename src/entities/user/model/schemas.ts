@@ -119,7 +119,6 @@ export const TeamPermissions = z.object({
 export const UserTeamResponse = z.object({
   id: z.string(),
   name: z.string(),
-  slug: z.string(),
   description: z.string(),
   avatar: UserAvatarSchema,
   role: z.string(),

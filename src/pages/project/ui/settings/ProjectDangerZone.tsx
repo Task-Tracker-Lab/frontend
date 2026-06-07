@@ -14,11 +14,11 @@ import {
 
 interface ProjectDangerZoneProps {
   projectName: string;
-  teamSlug: string;
+  teamId: string;
   projectId: string;
 }
 
-export function ProjectDangerZone({ projectName, teamSlug, projectId }: ProjectDangerZoneProps) {
+export function ProjectDangerZone({ projectName, teamId, projectId }: ProjectDangerZoneProps) {
   return (
     <Item variant="destructive">
       <ItemMedia>
@@ -33,7 +33,7 @@ export function ProjectDangerZone({ projectName, teamSlug, projectId }: ProjectD
       <ItemActions>
         <RemoveProjectDialog
           projectName={projectName}
-          teamSlug={teamSlug}
+          teamId={teamId}
           projectId={projectId}
           asChild
         >

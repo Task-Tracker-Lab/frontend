@@ -1,4 +1,4 @@
-import { TeamSlugSync } from 'features/teams/active-team';
+import { TeamIdSync } from 'features/teams/active-team';
 import { ComponentProps } from 'react';
 import { Separator, SidebarInset, SidebarProvider, SidebarTrigger } from 'shared/ui';
 import { AppSidebar } from 'widgets/app-sidebar';
@@ -9,7 +9,7 @@ import { QuickCreate } from 'widgets/quick-create';
 export function SidebarLayout({ children, ...props }: ComponentProps<typeof SidebarProvider>) {
   return (
     <SidebarProvider {...props}>
-      <TeamSlugSync />
+      <TeamIdSync />
       <AppSidebar />
       <SidebarInset className="min-h-screen">
         <header className="bg-background sticky top-0 z-50 flex h-14 shrink-0 items-center justify-between gap-2 border-b px-4">

@@ -50,7 +50,7 @@ export function ProjectCard({
   statusLabel: statusLabelProp,
   ...props
 }: ProjectCardProps) {
-  const teamSlug = useTeamStore.use.slug();
+  const teamId = useTeamStore.use.teamId();
   const name = nameProp ?? project?.name ?? 'Atlas Platform';
   const description =
     descriptionProp ?? (project ? `Ключ проекта: ${project.key}` : 'Core team workspace.');
@@ -64,7 +64,7 @@ export function ProjectCard({
   const mockMembersCount = project ? (project.id.charCodeAt(1) % 3) + 2 : 3;
   const mockMembers = Array.from({ length: mockMembersCount }).map((_, i) => i + 1);
 
-  const projectHref = project && teamSlug ? routes.team.project.root(project.id) : null;
+  const projectHref = project && teamId ? routes.team.project.root(project.id) : null;
 
   const card = (
     <Card
@@ -151,20 +151,20 @@ export function ProjectCard({
             <DropdownMenuContent align="end">
               <ShareProjectDialog
                 projectName={project?.name ?? ''}
-                teamSlug={teamSlug!}
+                teamId={teamId!}
                 projectId={project?.id ?? ''}
                 asChild
-                disabled={!(project && teamSlug)}
+                disabled={!(project && teamId)}
               >
                 <DropdownMenuItem onSelect={(e) => e.preventDefault()}>Поделиться</DropdownMenuItem>
               </ShareProjectDialog>
               {project?.status === 'archived' ? (
                 <RestoreProjectDialog
                   projectName={project.name}
-                  teamSlug={teamSlug!}
+                  teamId={teamId!}
                   projectId={project.id}
                   asChild
-                  disabled={!(project.canEdit && teamSlug)}
+                  disabled={!(project.canEdit && teamId)}
                 >
                   <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                     Восстановить
@@ -174,10 +174,10 @@ export function ProjectCard({
                 project?.status !== 'template' && (
                   <ArchiveProjectDialog
                     projectName={project?.name ?? ''}
-                    teamSlug={teamSlug!}
+                    teamId={teamId!}
                     projectId={project?.id ?? ''}
                     asChild
-                    disabled={!(project?.canEdit && teamSlug)}
+                    disabled={!(project?.canEdit && teamId)}
                   >
                     <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                       Архивировать
@@ -187,10 +187,10 @@ export function ProjectCard({
               )}
               <RemoveProjectDialog
                 projectName={project?.name ?? ''}
-                teamSlug={teamSlug!}
+                teamId={teamId!}
                 projectId={project?.id ?? ''}
                 asChild
-                disabled={!(project && teamSlug)}
+                disabled={!(project && teamId)}
               >
                 <DropdownMenuItem variant="destructive" onSelect={(e) => e.preventDefault()}>
                   Удалить

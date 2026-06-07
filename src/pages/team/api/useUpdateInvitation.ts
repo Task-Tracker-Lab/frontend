@@ -10,22 +10,22 @@ type UseUpdateInvitationOptions = Omit<
 >;
 
 export function useUpdateInvitation({ onSuccess, ...rest }: UseUpdateInvitationOptions = {}) {
-  const slug = useTeamStore.use.slug();
+  const teamId = useTeamStore.use.teamId();
 
   return useMutation<TTeam.ActionResponse, DefaultError, UpdateInvitationVariables>({
     ...rest,
     mutationFn: ({ code, ...data }) => {
-      if (!slug) {
+      if (!teamId) {
         throw new Error('Не выбрана команда');
       }
-      return TeamHttp.updateInvitation(slug, code, data);
+      return TeamHttp.updateInvitation(teamId, code, data);
     },
     onSuccess: async (res, _v, _r, context) => {
       onSuccess?.(res, _v, _r, context);
       toast.success('Роль в приглашении обновлена');
 
-      if (slug) {
-        await context.client.invalidateQueries({ queryKey: teamFabricKeys.invitations(slug) });
+      if (teamId) {
+        await context.client.invalidateQueries({ queryKey: teamFabricKeys.invitations(teamId) });
       }
     },
   });

@@ -19,26 +19,26 @@ interface UseSwitchTeamProps {
 
 export function useSwitchTeam({ teams = [], defaultOptions = {} }: UseSwitchTeamProps = {}) {
   const router = useRouter();
-  const setSlug = useTeamStore.use.setSlug();
+  const setTeamId = useTeamStore.use.setTeamId();
 
   const switchTeam = useCallback(
-    (slug: string, options: SwitchTeamOptions = {}) => {
+    (teamId: string, options: SwitchTeamOptions = {}) => {
       const { redirect = false, showToast = true } = { ...defaultOptions, ...options };
-      const team = teams.find((t) => t.slug === slug);
+      const team = teams.find((t) => t.id === teamId);
 
       if (!team) {
         if (showToast) toast.error('Команда не найдена!');
         return;
       }
 
-      setSlug(slug);
+      setTeamId(teamId);
       if (showToast) toast.success(`Вы сменили команду на "${team.name}"`);
 
       if (redirect) {
         router.push(routes.team.root());
       }
     },
-    [setSlug, teams, router, defaultOptions]
+    [setTeamId, teams, router, defaultOptions]
   );
 
   return { switchTeam };

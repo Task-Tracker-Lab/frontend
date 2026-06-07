@@ -6,8 +6,8 @@ import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { debounce } from 'shared/lib/utils';
 
 export function useMembersPage() {
-  const slug = useTeamStore.use.slug();
-  const { data, isPending } = useQuery(TeamQueries.getMembers(slug!));
+  const teamId = useTeamStore.use.teamId();
+  const { data, isPending } = useQuery(TeamQueries.getMembers(teamId!));
 
   const [search, setSearch] = useState('');
   const [filtered, setFiltered] = useState<TTeam.TeamMemberResponse[]>([]);

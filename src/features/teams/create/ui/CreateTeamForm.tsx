@@ -1,6 +1,5 @@
 'use client';
 
-import { SlugField } from 'entities/team';
 import { ComponentProps } from 'react';
 import { Controller, FormProvider } from 'react-hook-form';
 import { cn } from 'shared/lib/utils';
@@ -39,7 +38,6 @@ export function CreateTeamForm({ className, mutateOptions, ...props }: CreateTea
               </Field>
             )}
           />
-          <SlugField name="slug" disabled={isPending} />
           <Controller
             name="description"
             control={form.control}

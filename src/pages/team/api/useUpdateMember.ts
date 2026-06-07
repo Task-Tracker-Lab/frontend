@@ -10,22 +10,22 @@ type UseUpdateMemberOptions = Omit<
 >;
 
 export function useUpdateMember({ onSuccess, ...rest }: UseUpdateMemberOptions = {}) {
-  const slug = useTeamStore.use.slug();
+  const teamId = useTeamStore.use.teamId();
 
   return useMutation<TTeam.ActionResponse, DefaultError, UpdateMemberVariables>({
     ...rest,
     mutationFn: ({ userId, ...data }) => {
-      if (!slug) {
+      if (!teamId) {
         throw new Error('Не выбрана команда');
       }
-      return TeamHttp.updateMember(slug, userId, data);
+      return TeamHttp.updateMember(teamId, userId, data);
     },
     onSuccess: async (res, _v, _r, context) => {
       onSuccess?.(res, _v, _r, context);
       toast.success(res.message ?? 'Данные участника обновлены');
 
-      if (slug) {
-        await context.client.invalidateQueries({ queryKey: teamFabricKeys.members(slug) });
+      if (teamId) {
+        await context.client.invalidateQueries({ queryKey: teamFabricKeys.members(teamId) });
       }
     },
   });
