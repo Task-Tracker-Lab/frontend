@@ -10,29 +10,29 @@ type UseUpdateProjectProps = Omit<
 >;
 
 export function useUpdateProject({ onSuccess, ...rest }: UseUpdateProjectProps = {}) {
-  const teamSlug = useTeamStore.use.slug();
+  const teamId = useTeamStore.use.teamId();
   const params = useParams();
   const projectId = typeof params?.projectId === 'string' ? params.projectId : undefined;
 
   return useMutation<TProject.ActionResponse, DefaultError, TProject.UpdateProjectBody>({
     ...rest,
     mutationFn: (data) => {
-      if (!teamSlug || !projectId) {
+      if (!teamId || !projectId) {
         throw new Error('Не выбран проект');
       }
-      return ProjectHttp.updateProject(teamSlug, projectId, data);
+      return ProjectHttp.updateProject(teamId, projectId, data);
     },
     onSuccess: async (res, _v, _r, context) => {
       onSuccess?.(res, _v, _r, context);
       toast.success(res.message ?? 'Проект обновлён');
 
-      if (teamSlug && projectId) {
+      if (teamId && projectId) {
         await Promise.all([
           context.client.invalidateQueries({
-            queryKey: projectFabricKeys.detail(teamSlug, projectId),
+            queryKey: projectFabricKeys.detail(teamId, projectId),
           }),
           context.client.invalidateQueries({
-            queryKey: projectFabricKeys.list(teamSlug),
+            queryKey: projectFabricKeys.list(teamId),
           }),
         ]);
       }

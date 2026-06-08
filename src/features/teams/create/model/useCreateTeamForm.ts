@@ -1,23 +1,18 @@
-import { type TTeam, useCheckSlug, validateTeamSlugAsync } from 'entities/team';
+import { type TTeam } from 'entities/team';
 import { useForm } from 'react-hook-form';
 import { extractValidationIssues } from 'shared/api';
-import { useZodValidationWithAsyncCheck } from 'shared/lib/hooks';
 import { setFormErrors } from 'shared/lib/utils';
 import { CreateTeamFormSchema } from './schemas';
 import type { CreateTeamFormValues } from './types';
 import { useCreateTeam, type UseCreateTeamOptions } from './useCreateTeam';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 export function useCreateTeamForm(mutateOptions: UseCreateTeamOptions = {}) {
-  const checkSlug = useCheckSlug('');
-
   const form = useForm<CreateTeamFormValues>({
-    resolver: useZodValidationWithAsyncCheck(CreateTeamFormSchema, (...args) =>
-      validateTeamSlugAsync(checkSlug, ...args)
-    ),
+    resolver: zodResolver(CreateTeamFormSchema),
     defaultValues: {
       name: '',
       description: '',
-      slug: '',
     },
   });
 
@@ -36,7 +31,6 @@ export function useCreateTeamForm(mutateOptions: UseCreateTeamOptions = {}) {
     const body: TTeam.CreateTeamBody = {
       name: data.name.trim(),
       description: data.description.trim(),
-      ...(data.slug?.trim() ? { slug: data.slug.trim() } : {}),
     };
 
     createTeam.mutate(body);

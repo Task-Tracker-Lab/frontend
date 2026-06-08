@@ -16,14 +16,14 @@ import { useArchiveProject } from '../model/useArchiveProject';
 
 interface ArchiveProjectDialogProps extends ComponentProps<typeof AlertDialogTrigger> {
   projectName: string;
-  teamSlug: string;
+  teamId: string;
   projectId: string;
   onArchived?: () => void;
 }
 
 export function ArchiveProjectDialog({
   projectName,
-  teamSlug,
+  teamId,
   projectId,
   onArchived,
   ...props
@@ -33,7 +33,7 @@ export function ArchiveProjectDialog({
   });
 
   const onArchive = () => {
-    archiveProject.mutate({ teamSlug, id: projectId });
+    archiveProject.mutate({ teamId, id: projectId });
   };
 
   return (

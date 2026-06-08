@@ -37,14 +37,14 @@ import { useShareProject } from '../model/useShareProject';
 
 interface ShareProjectDialogProps extends ComponentProps<typeof DialogTrigger> {
   projectName: string;
-  teamSlug: string;
+  teamId: string;
   projectId: string;
   dialog?: ComponentProps<typeof Dialog>;
 }
 
 export function ShareProjectDialog({
   projectName,
-  teamSlug,
+  teamId,
   projectId,
   dialog = {},
   ...props
@@ -81,7 +81,7 @@ export function ShareProjectDialog({
 
   const onCreateLink = () => {
     shareProject.mutate({
-      teamSlug, //todo не будет
+      teamId,
       id: projectId,
       body: ttlOptionToBody(ttlOption),
     });

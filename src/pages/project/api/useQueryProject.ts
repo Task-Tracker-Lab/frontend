@@ -4,12 +4,12 @@ import { useTeamStore } from 'entities/team';
 import { useParams } from 'next/navigation';
 
 export function useQueryProject() {
-  const teamSlug = useTeamStore.use.slug();
+  const teamId = useTeamStore.use.teamId();
   const params = useParams();
   const projectId = typeof params?.projectId === 'string' ? params.projectId : undefined;
 
   return useQuery({
-    ...ProjectQueries.getProject(teamSlug!, projectId!),
-    enabled: Boolean(teamSlug && projectId),
+    ...ProjectQueries.getProject(teamId!, projectId!),
+    enabled: Boolean(teamId && projectId),
   });
 }

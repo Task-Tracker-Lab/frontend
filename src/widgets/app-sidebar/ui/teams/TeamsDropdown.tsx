@@ -44,7 +44,7 @@ export function TeamsDropdown() {
         >
           <DropdownMenuLabel className="text-muted-foreground text-xs">Команды</DropdownMenuLabel>
           {visibleTeams.map((team, index) => (
-            <DropdownMenuItem key={team.name} onClick={() => switchTeam(team.slug)} className="p-0">
+            <DropdownMenuItem key={team.name} onClick={() => switchTeam(team.id)} className="p-0">
               <TeamItem
                 avatar={team.avatar}
                 name={team.name}

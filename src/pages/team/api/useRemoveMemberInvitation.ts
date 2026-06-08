@@ -11,22 +11,22 @@ export function useRemoveMemberInvitation({
   onSuccess,
   ...rest
 }: UseRemoveMemberInvitationOptions = {}) {
-  const slug = useTeamStore.use.slug();
+  const teamId = useTeamStore.use.teamId();
 
   return useMutation<TTeam.ActionResponse, DefaultError, string>({
     ...rest,
     mutationFn: (code) => {
-      if (!slug) {
+      if (!teamId) {
         throw new Error('Не выбрана команда');
       }
-      return TeamHttp.removeInvitation(slug, code);
+      return TeamHttp.removeInvitation(teamId, code);
     },
     onSuccess: async (res, _v, _r, context) => {
       onSuccess?.(res, _v, _r, context);
       toast.success(res.message ?? 'Приглашение отозвано');
 
-      if (slug) {
-        await context.client.invalidateQueries({ queryKey: teamFabricKeys.invitations(slug) });
+      if (teamId) {
+        await context.client.invalidateQueries({ queryKey: teamFabricKeys.invitations(teamId) });
       }
     },
   });

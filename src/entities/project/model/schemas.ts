@@ -1,4 +1,4 @@
-import { DateTimeString, GlobalSuccess } from 'shared/api';
+import { DateTimeString, GlobalSuccess, PaginatedResponseSchema } from 'shared/api';
 import { z } from 'zod/v4';
 import { PROJECT_ICONS } from '../config/icons';
 
@@ -57,15 +57,12 @@ export const ProjectListItemResponse = z.object({
   canEdit: z.boolean(),
 });
 
-export const ProjectListResponse = z.object({
+export const ProjectListResponse = PaginatedResponseSchema(ProjectListItemResponse).extend({
   team: z.object({
     id: z.string(),
     name: z.string(),
-    slug: z.string(),
     role: z.string(),
   }),
-  items: ProjectListItemResponse.array(),
-  meta: z.object({ total: z.number() }),
 });
 
 export const ProjectDetailResponse = z.object({

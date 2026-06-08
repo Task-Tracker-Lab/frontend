@@ -10,7 +10,7 @@ import type { CreateProjectFormValues } from './types';
 import { useCreateProject, type UseCreateProjectOptions } from './useCreateProject';
 
 export function useCreateProjectForm(options: UseCreateProjectOptions = {}) {
-  const teamSlug = useTeamStore.use.slug();
+  const teamId = useTeamStore.use.teamId();
 
   const form = useForm<CreateProjectFormValues>({
     resolver: zodResolver(CreateProjectFormSchema),
@@ -29,7 +29,7 @@ export function useCreateProjectForm(options: UseCreateProjectOptions = {}) {
   });
 
   const onSubmit = (data: CreateProjectFormValues) => {
-    if (!teamSlug) return;
+    if (!teamId) return;
 
     const body: TProject.CreateProjectBody = {
       name: data.name.trim(),
@@ -40,12 +40,12 @@ export function useCreateProjectForm(options: UseCreateProjectOptions = {}) {
       ...(data.color ? { color: data.color } : {}),
     };
 
-    createProject.mutate({ teamSlug, body });
+    createProject.mutate({ teamId, body });
   };
 
   return {
     form,
-    teamSlug,
+    teamId,
     isPending: createProject.isPending,
     handleSubmit: form.handleSubmit(onSubmit),
   };

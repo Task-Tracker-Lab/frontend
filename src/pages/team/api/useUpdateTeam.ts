@@ -9,16 +9,15 @@ type UseUpdateTeamProps = Omit<
 >;
 
 export function useUpdateTeam({ onSuccess, ...rest }: UseUpdateTeamProps = {}) {
-  const slug = useTeamStore.use.slug();
-  const setSlug = useTeamStore.use.setSlug();
+  const teamId = useTeamStore.use.teamId();
 
   return useMutation<TTeam.ActionResponse, DefaultError, TTeam.UpdateTeamBody>({
     ...rest,
     mutationFn: (data) => {
-      if (!slug) {
+      if (!teamId) {
         throw new Error('Не выбрана команда');
       }
-      return TeamHttp.updateTeam(slug, data);
+      return TeamHttp.updateTeam(teamId, data);
     },
     onSuccess: async (res, v, _r, context) => {
       onSuccess?.(res, v, _r, context);
@@ -26,16 +25,12 @@ export function useUpdateTeam({ onSuccess, ...rest }: UseUpdateTeamProps = {}) {
 
       await Promise.all([
         context.client.invalidateQueries({
-          queryKey: teamFabricKeys.bySlug(v.slug ?? slug!),
+          queryKey: teamFabricKeys.byId(teamId!),
         }),
         context.client.invalidateQueries({
           queryKey: userFabricKeys.myTeams(),
         }),
       ]);
-
-      if (v.slug) {
-        setSlug(v.slug);
-      }
     },
   });
 }

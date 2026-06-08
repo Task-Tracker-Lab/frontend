@@ -15,17 +15,17 @@ import { useRemoveTeam } from '../model/useRemoveTeam';
 
 interface Props extends ComponentProps<typeof AlertDialogTrigger> {
   teamName: string;
-  slug: string;
+  teamId: string;
 }
 
-export function RemoveTeamDialog({ teamName, slug, ...props }: Props) {
+export function RemoveTeamDialog({ teamName, teamId, ...props }: Props) {
   const [inputValue, setInputValue] = useState('');
   const removeTeam = useRemoveTeam();
 
   const isMatch = inputValue.trim() === teamName.trim();
 
   const onRemove = () => {
-    removeTeam.mutate(slug);
+    removeTeam.mutate(teamId);
   };
 
   return (

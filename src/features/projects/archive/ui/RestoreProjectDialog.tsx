@@ -16,20 +16,20 @@ import { useRestoreProject } from '../model/useRestoreProject';
 
 interface RestoreProjectDialogProps extends ComponentProps<typeof AlertDialogTrigger> {
   projectName: string;
-  teamSlug: string;
+  teamId: string;
   projectId: string;
 }
 
 export function RestoreProjectDialog({
   projectName,
-  teamSlug,
+  teamId,
   projectId,
   ...props
 }: RestoreProjectDialogProps) {
   const restoreProject = useRestoreProject();
 
   const onRestore = () => {
-    restoreProject.mutate({ teamSlug, id: projectId });
+    restoreProject.mutate({ teamId, id: projectId });
   };
 
   return (
