@@ -29,13 +29,13 @@ import { fieldNameMapper } from '../model/utils/field-name-mapper';
 import { prepareFullName } from '../model/utils/prepare-fullname';
 import { extractValidationIssues } from 'shared/api';
 import { TAuth } from 'entities/auth';
-import { useSignup } from '../model/useSignup';
+import { useSignup, UseSignupOptions } from '../model/useSignup';
 
 interface SignupFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
-  onSuccess?: (body: TAuth.SignupBody, res: TAuth.SignupResponse) => void;
+  mutateOptions?: UseSignupOptions;
 }
 
-export function SignupForm({ className, onSuccess, ...props }: SignupFormProps) {
+export function SignupForm({ className, mutateOptions = {}, ...props }: SignupFormProps) {
   const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<SignupFormValues>({
@@ -49,8 +49,9 @@ export function SignupForm({ className, onSuccess, ...props }: SignupFormProps) 
   });
 
   const sendUserData = useSignup({
-    onSuccess,
-    onError: (err) => {
+    ...mutateOptions,
+    onError: (err, ...args) => {
+      mutateOptions.onError?.(err, ...args);
       setFormErrors<SignupFormValues, TAuth.SignupBody>(
         extractValidationIssues(err),
         form,

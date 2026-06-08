@@ -48,7 +48,11 @@ function SignupPage() {
         </Link>
 
         {step === 'signup' ? (
-          <SignupForm onSuccess={({ email }) => setDraft({ email, step: 'otp' }, DRAFT_TTL_MS)} />
+          <SignupForm
+            mutateOptions={{
+              onSuccess: (_res, { email }) => setDraft({ email, step: 'otp' }, DRAFT_TTL_MS),
+            }}
+          />
         ) : null}
         {step === 'otp' ? (
           <OTPForm

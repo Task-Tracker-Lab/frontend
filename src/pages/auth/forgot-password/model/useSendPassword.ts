@@ -1,15 +1,16 @@
-import { type DefaultError, useMutation } from '@tanstack/react-query';
+import { type DefaultError, useMutation, UseMutationOptions } from '@tanstack/react-query';
 import { AuthHttp, TAuth } from 'entities/auth';
 
-interface SendPasswordProps {
-  onSuccess?: (
-    body: TAuth.ResetPasswordConfirmBody,
-    res: TAuth.ResetPasswordConfirmResponse
-  ) => void;
-  onError?: (err: Error) => void;
-}
+export type UseSendPasswordOptions = Omit<
+  UseMutationOptions<
+    TAuth.ResetPasswordConfirmResponse,
+    DefaultError,
+    TAuth.ResetPasswordConfirmBody
+  >,
+  'mutationFn'
+>;
 
-export function useSendPassword({ onSuccess, onError }: SendPasswordProps = {}) {
+export function useSendPassword(options: UseSendPasswordOptions = {}) {
   return useMutation<
     Awaited<TAuth.ResetPasswordConfirmResponse>,
     DefaultError,
@@ -20,11 +21,6 @@ export function useSendPassword({ onSuccess, onError }: SendPasswordProps = {}) 
     meta: {
       skipGlobalValidationToast: true,
     },
-    onError: (err) => {
-      onError?.(err);
-    },
-    onSuccess: (res, body) => {
-      onSuccess?.(body, res);
-    },
+    ...options,
   });
 }
