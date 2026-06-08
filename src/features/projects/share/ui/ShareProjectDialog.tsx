@@ -81,7 +81,7 @@ export function ShareProjectDialog({
 
   const onCreateLink = () => {
     shareProject.mutate({
-      teamId, //todo не будет
+      teamId,
       id: projectId,
       body: ttlOptionToBody(ttlOption),
     });

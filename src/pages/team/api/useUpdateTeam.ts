@@ -10,7 +10,6 @@ type UseUpdateTeamProps = Omit<
 
 export function useUpdateTeam({ onSuccess, ...rest }: UseUpdateTeamProps = {}) {
   const teamId = useTeamStore.use.teamId();
-  // TODO
 
   return useMutation<TTeam.ActionResponse, DefaultError, TTeam.UpdateTeamBody>({
     ...rest,
