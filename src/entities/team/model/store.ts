@@ -2,21 +2,21 @@ import { createStore } from 'shared/lib/store';
 import { persist } from 'zustand/middleware';
 
 type TeamState = {
-  slug: string | null;
-  setSlug: (slug: string | null) => void;
-  clearSlug: () => void;
+  teamId: string | null;
+  setTeamId: (teamId: string | null) => void;
+  clearTeamId: () => void;
 };
 
 export const useTeamStore = createStore<TeamState>(
   (set) => ({
-    slug: null,
-    setSlug: (slug) =>
+    teamId: null,
+    setTeamId: (teamId) =>
       set((state) => {
-        state.slug = slug;
+        state.teamId = teamId;
       }),
-    clearSlug: () =>
+    clearTeamId: () =>
       set((state) => {
-        state.slug = null;
+        state.teamId = null;
       }),
   }),
   [

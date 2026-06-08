@@ -2,10 +2,10 @@ import { useQuery } from '@tanstack/react-query';
 import { TeamQueries, useTeamStore } from 'entities/team';
 
 export function useQueryInvitations() {
-  const slug = useTeamStore.use.slug();
+  const teamId = useTeamStore.use.teamId();
 
   return useQuery({
-    ...TeamQueries.getInvitations(slug!),
-    enabled: Boolean(slug),
+    ...TeamQueries.getInvitations(teamId!),
+    enabled: Boolean(teamId),
   });
 }

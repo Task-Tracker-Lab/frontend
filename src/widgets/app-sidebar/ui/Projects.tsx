@@ -26,11 +26,11 @@ import {
 } from 'shared/ui';
 
 export function Projects() {
-  const slug = useTeamStore.use.slug();
+  const teamId = useTeamStore.use.teamId();
   const { isMobile } = useSidebar();
   const pathname = usePathname();
   const [createProjectOpen, setCreateProjectOpen] = useState(false);
-  const projects = useQuery({ ...ProjectQueries.getProjects(slug!), enabled: !!slug });
+  const projects = useQuery({ ...ProjectQueries.getProjects(teamId!), enabled: !!teamId });
   const projectList = projects.data?.items.slice(0, 6) ?? [];
   const totalProjects = projects.data?.items.length ?? 0;
 
@@ -44,7 +44,7 @@ export function Projects() {
         <SidebarGroupLabel>Проекты</SidebarGroupLabel>
         <SidebarMenu>
           {projectList.map((project) => {
-            const canManage = Boolean(slug && project.canEdit);
+            const canManage = Boolean(teamId && project.canEdit);
 
             return (
               <SidebarMenuItem key={project.id}>
@@ -68,10 +68,10 @@ export function Projects() {
                   >
                     <ShareProjectDialog
                       projectName={project.name}
-                      teamSlug={slug!}
+                      teamId={teamId!}
                       projectId={project.id}
                       asChild
-                      disabled={!slug}
+                      disabled={!teamId}
                     >
                       <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                         <Link2 className="text-muted-foreground" />
@@ -81,7 +81,7 @@ export function Projects() {
                     {project.status === 'archived' ? (
                       <RestoreProjectDialog
                         projectName={project.name}
-                        teamSlug={slug!}
+                        teamId={teamId!}
                         projectId={project.id}
                         asChild
                         disabled={!canManage}
@@ -95,7 +95,7 @@ export function Projects() {
                       project.status !== 'template' && (
                         <ArchiveProjectDialog
                           projectName={project.name}
-                          teamSlug={slug!}
+                          teamId={teamId!}
                           projectId={project.id}
                           asChild
                           disabled={!canManage}

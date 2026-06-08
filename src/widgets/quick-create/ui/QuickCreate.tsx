@@ -19,7 +19,7 @@ import {
 } from 'shared/ui';
 
 export function QuickCreate() {
-  const slug = useTeamStore.use.slug();
+  const teamId = useTeamStore.use.teamId();
   const [open, setOpen] = useState(false);
   const [createTeamOpen, setCreateTeamOpen] = useState(false);
   const [createProjectOpen, setCreateProjectOpen] = useState(false);
@@ -61,7 +61,7 @@ export function QuickCreate() {
             </Item>
           </DropdownMenuItem>
           <DropdownMenuItem
-            disabled={!slug}
+            disabled={!teamId}
             onSelect={(e) => {
               e.preventDefault();
               setOpen(false);

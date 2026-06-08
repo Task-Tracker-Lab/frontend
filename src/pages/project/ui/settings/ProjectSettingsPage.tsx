@@ -23,7 +23,7 @@ import { ProjectDangerZone } from './ProjectDangerZone';
 import { ProjectSettingsSaveBar } from './ProjectSettingsSaveBar';
 
 export function ProjectSettingsPage() {
-  const teamSlug = useTeamStore.use.slug();
+  const teamId = useTeamStore.use.teamId();
   const projectQuery = useQueryProject();
   const project = projectQuery.data;
 
@@ -117,13 +117,9 @@ export function ProjectSettingsPage() {
           </div>
         </CardSection>
 
-        {project.access.canDelete && teamSlug && (
+        {project.access.canDelete && teamId && (
           <CardSection title="Опасная зона" description="Необратимые действия с проектом.">
-            <ProjectDangerZone
-              projectName={project.name}
-              teamSlug={teamSlug}
-              projectId={project.id}
-            />
+            <ProjectDangerZone projectName={project.name} teamId={teamId} projectId={project.id} />
           </CardSection>
         )}
       </form>

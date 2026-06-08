@@ -3,43 +3,34 @@ import { teamFabricKeys } from '../model/const';
 import { TeamHttp } from './http';
 
 export class TeamQueries {
-  static getTeam(slug: string) {
+  static getTeam(teamId: string) {
     return queryOptions({
-      queryKey: teamFabricKeys.bySlug(slug),
-      queryFn: async ({ signal }) => TeamHttp.getTeam(slug, signal),
+      queryKey: teamFabricKeys.byId(teamId),
+      queryFn: async ({ signal }) => TeamHttp.getTeam(teamId, signal),
       staleTime: 60_000,
     });
   }
 
-  static checkSlug(slug: string) {
+  static getInvitation(teamId: string, code: string) {
     return queryOptions({
-      queryKey: teamFabricKeys.checkSlug(slug),
-      queryFn: async ({ signal }) => TeamHttp.checkSlug(slug, signal),
-      gcTime: 5000,
-      staleTime: 5000,
-    });
-  }
-
-  static getInvitation(slug: string, code: string) {
-    return queryOptions({
-      queryKey: teamFabricKeys.invitation(slug, code),
-      queryFn: async ({ signal }) => TeamHttp.getInvitation(slug, code, signal),
+      queryKey: teamFabricKeys.invitation(teamId, code),
+      queryFn: async ({ signal }) => TeamHttp.getInvitation(teamId, code, signal),
       staleTime: 60_000,
     });
   }
 
-  static getInvitations(slug: string) {
+  static getInvitations(teamId: string) {
     return queryOptions({
-      queryKey: teamFabricKeys.invitations(slug),
-      queryFn: async ({ signal }) => TeamHttp.getInvitations(slug, signal),
+      queryKey: teamFabricKeys.invitations(teamId),
+      queryFn: async ({ signal }) => TeamHttp.getInvitations(teamId, signal),
       staleTime: 60_000,
     });
   }
 
-  static getMembers(slug: string) {
+  static getMembers(teamId: string) {
     return queryOptions({
-      queryKey: teamFabricKeys.members(slug),
-      queryFn: async ({ signal }) => TeamHttp.getMembers(slug, signal),
+      queryKey: teamFabricKeys.members(teamId),
+      queryFn: async ({ signal }) => TeamHttp.getMembers(teamId, signal),
       staleTime: 60_000,
     });
   }

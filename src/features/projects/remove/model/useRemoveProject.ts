@@ -3,7 +3,7 @@ import { projectFabricKeys, ProjectHttp, type TProject } from 'entities/project'
 import { toast } from 'sonner';
 
 type RemoveProjectVariables = {
-  teamSlug: string;
+  teamId: string;
   id: string;
 };
 
@@ -15,13 +15,13 @@ export type UseRemoveProjectOptions = Omit<
 export function useRemoveProject({ onSuccess, ...rest }: UseRemoveProjectOptions = {}) {
   return useMutation<TProject.ActionResponse, DefaultError, RemoveProjectVariables>({
     ...rest,
-    mutationFn: ({ teamSlug, id }) => ProjectHttp.removeProject(teamSlug, id),
+    mutationFn: ({ teamId, id }) => ProjectHttp.removeProject(teamId, id),
     onSuccess: async (res, variables, _r, context) => {
       onSuccess?.(res, variables, _r, context);
       toast.success(res.message ?? 'Проект удалён');
 
       await context.client.invalidateQueries({
-        queryKey: projectFabricKeys.list(variables.teamSlug),
+        queryKey: projectFabricKeys.list(variables.teamId),
       });
     },
   });

@@ -8,22 +8,22 @@ type UseRemoveMemberOptions = Omit<
 >;
 
 export function useRemoveMember({ onSuccess, ...rest }: UseRemoveMemberOptions = {}) {
-  const slug = useTeamStore.use.slug();
+  const teamId = useTeamStore.use.teamId();
 
   return useMutation<TTeam.ActionResponse, DefaultError, string>({
     ...rest,
     mutationFn: (userId) => {
-      if (!slug) {
+      if (!teamId) {
         throw new Error('Не выбрана команда');
       }
-      return TeamHttp.removeMember(slug, userId);
+      return TeamHttp.removeMember(teamId, userId);
     },
     onSuccess: async (res, _v, _r, context) => {
       onSuccess?.(res, _v, _r, context);
       toast.success(res.message ?? 'Участник удалён из команды');
 
-      if (slug) {
-        await context.client.invalidateQueries({ queryKey: teamFabricKeys.members(slug) });
+      if (teamId) {
+        await context.client.invalidateQueries({ queryKey: teamFabricKeys.members(teamId) });
       }
     },
   });

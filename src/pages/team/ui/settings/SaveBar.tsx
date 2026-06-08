@@ -17,7 +17,6 @@ export function SaveBar({ team }: { team: TTeam.TeamDetailsResponse }) {
   const onSubmit = (data: TeamSettingsFormValues) => {
     const body: TTeam.UpdateTeamBody = {
       ...(dirtyFields.name && { name: data.name?.trim() }),
-      ...(dirtyFields.slug && { slug: data.slug?.trim() }),
       ...(dirtyFields.description && { description: data.description?.trim() }),
     };
     updateTeam.mutateAsync(body);

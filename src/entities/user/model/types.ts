@@ -11,3 +11,5 @@ export type UserTeamsListResponse = z.infer<typeof SUser.UserTeamsListResponse>;
 export type UserInvitationListResponse = z.infer<typeof SUser.UserInvitationListResponse>;
 
 export type UserInvitationResponse = z.infer<typeof SUser.UserInvitationResponse>;
+
+export type UserActivityResponse = z.infer<typeof SUser.UserActivityResponse>;

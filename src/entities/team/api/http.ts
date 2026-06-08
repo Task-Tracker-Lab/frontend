@@ -15,20 +15,9 @@ export class TeamHttp {
     });
   }
 
-  static checkSlug(slug: string, signal?: AbortSignal) {
-    return api<TTeam.CheckSlugResponse>({
-      url: `/teams/check-slug/${slug}`,
-      method: 'GET',
-      contracts: {
-        response: STeam.CheckSlugResponse,
-      },
-      signal,
-    });
-  }
-
-  static getTeam(slug: string, signal?: AbortSignal) {
+  static getTeam(teamId: string, signal?: AbortSignal) {
     return api<TTeam.TeamDetailsResponse>({
-      url: `/teams/${slug}`,
+      url: `/teams/${teamId}`,
       method: 'GET',
       contracts: {
         response: STeam.TeamDetailsResponse,
@@ -37,9 +26,9 @@ export class TeamHttp {
     });
   }
 
-  static updateTeam(slug: string, data: TTeam.UpdateTeamBody) {
+  static updateTeam(teamId: string, data: TTeam.UpdateTeamBody) {
     return api<TTeam.ActionResponse>({
-      url: `/teams/${slug}`,
+      url: `/teams/${teamId}`,
       method: 'PATCH',
       data,
       contracts: {
@@ -49,9 +38,9 @@ export class TeamHttp {
     });
   }
 
-  static removeTeam(slug: string) {
+  static removeTeam(teamId: string) {
     return api<TTeam.ActionResponse>({
-      url: `/teams/${slug}`,
+      url: `/teams/${teamId}`,
       method: 'DELETE',
       contracts: {
         response: STeam.ActionResponse,
@@ -59,9 +48,9 @@ export class TeamHttp {
     });
   }
 
-  static getInvitations(slug: string, signal?: AbortSignal) {
+  static getInvitations(teamId: string, signal?: AbortSignal) {
     return api<TTeam.TeamInvitationListResponse>({
-      url: `/teams/${slug}/invitations`,
+      url: `/teams/${teamId}/invitations`,
       method: 'GET',
       contracts: {
         response: STeam.TeamInvitationListResponse,
@@ -70,9 +59,9 @@ export class TeamHttp {
     });
   }
 
-  static getInvitation(slug: string, code: string, signal?: AbortSignal) {
+  static getInvitation(teamId: string, code: string, signal?: AbortSignal) {
     return api<TTeam.TeamInvitationResponse>({
-      url: `/teams/${slug}/invitations/${code}`,
+      url: `/teams/${teamId}/invitations/${code}`,
       method: 'GET',
       contracts: {
         response: STeam.TeamInvitationResponse,
@@ -81,9 +70,9 @@ export class TeamHttp {
     });
   }
 
-  static inviteMember(slug: string, data: TTeam.InviteMemberBody) {
+  static inviteMember(teamId: string, data: TTeam.InviteMemberBody) {
     return api<TTeam.ActionResponse>({
-      url: `/teams/${slug}/invitations`,
+      url: `/teams/${teamId}/invitations`,
       method: 'POST',
       data,
       contracts: {
@@ -103,9 +92,9 @@ export class TeamHttp {
     });
   }
 
-  static updateInvitation(slug: string, code: string, data: TTeam.UpdateInvitationBody) {
+  static updateInvitation(teamId: string, code: string, data: TTeam.UpdateInvitationBody) {
     return api<TTeam.ActionResponse>({
-      url: `/teams/${slug}/invitations/${code}`,
+      url: `/teams/${teamId}/invitations/${code}`,
       method: 'PATCH',
       data,
       contracts: {
@@ -115,9 +104,9 @@ export class TeamHttp {
     });
   }
 
-  static removeInvitation(slug: string, code: string) {
+  static removeInvitation(teamId: string, code: string) {
     return api<TTeam.ActionResponse>({
-      url: `/teams/${slug}/invitations/${code}`,
+      url: `/teams/${teamId}/invitations/${code}`,
       method: 'DELETE',
       contracts: {
         response: STeam.ActionResponse,
@@ -125,9 +114,9 @@ export class TeamHttp {
     });
   }
 
-  static getMembers(slug: string, signal?: AbortSignal) {
+  static getMembers(teamId: string, signal?: AbortSignal) {
     return api<TTeam.TeamMemberListResponse>({
-      url: `/teams/${slug}/members`,
+      url: `/teams/${teamId}/members`,
       method: 'GET',
       contracts: {
         response: STeam.TeamMemberListResponse,
@@ -136,9 +125,9 @@ export class TeamHttp {
     });
   }
 
-  static updateMember(slug: string, userId: string, data: TTeam.UpdateMemberBody) {
+  static updateMember(teamId: string, userId: string, data: TTeam.UpdateMemberBody) {
     return api<TTeam.ActionResponse>({
-      url: `/teams/${slug}/members/${userId}`,
+      url: `/teams/${teamId}/members/${userId}`,
       method: 'PATCH',
       data,
       contracts: {
@@ -148,9 +137,9 @@ export class TeamHttp {
     });
   }
 
-  static removeMember(slug: string, userId: string) {
+  static removeMember(teamId: string, userId: string) {
     return api<TTeam.ActionResponse>({
-      url: `/teams/${slug}/members/${userId}`,
+      url: `/teams/${teamId}/members/${userId}`,
       method: 'DELETE',
       contracts: {
         response: STeam.ActionResponse,
