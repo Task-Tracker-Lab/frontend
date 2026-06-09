@@ -12,7 +12,6 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-  SidebarGroupLabel,
   SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -49,18 +48,16 @@ export function ProjectsContent() {
     <Collapsible asChild className="group/collapsible" defaultOpen>
       <SidebarMenuItem>
         <CollapsibleTrigger asChild>
-          <SidebarGroupLabel asChild>
-            <SidebarMenuButton
-              className="group-has-data-[sidebar=menu-action]/menu-item:pr-2"
-              onClick={handleClickTrigger}
-              isActive={isAllowedToHighlight && pathname?.startsWith(routes.team.projects())}
-              tooltip="Проекты"
-            >
-              <BriefcaseBusiness />
-              Проекты
-              <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-            </SidebarMenuButton>
-          </SidebarGroupLabel>
+          <SidebarMenuButton
+            className="group-has-data-[sidebar=menu-action]/menu-item:pr-2"
+            onClick={handleClickTrigger}
+            isActive={isAllowedToHighlight && pathname?.startsWith(routes.team.projects())}
+            tooltip="Проекты"
+          >
+            <BriefcaseBusiness />
+            Проекты
+            <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+          </SidebarMenuButton>
         </CollapsibleTrigger>
         <CollapsibleContent className="collapsible-content">
           <SidebarMenuSub>
@@ -83,18 +80,20 @@ export function ProjectsContent() {
             ))}
             <SidebarMenuSubItem>
               <SidebarMenuSubButton asChild>
-                <CreateProjectDialog>
+                <CreateProjectDialog className="w-full">
                   <Plus /> Новый проект
                 </CreateProjectDialog>
               </SidebarMenuSubButton>
             </SidebarMenuSubItem>
-            <SidebarMenuSubItem>
-              <SidebarMenuSubButton isActive={pathname === routes.team.projects()} asChild>
-                <Link href={routes.team.projects()} className="!text-muted-foreground">
-                  Все проекты {!!totalProjects && `(${totalProjects})`}
-                </Link>
-              </SidebarMenuSubButton>
-            </SidebarMenuSubItem>
+            {totalProjects > 0 ? (
+              <SidebarMenuSubItem>
+                <SidebarMenuSubButton isActive={pathname === routes.team.projects()} asChild>
+                  <Link href={routes.team.projects()} className="!text-muted-foreground">
+                    Все проекты ({totalProjects})
+                  </Link>
+                </SidebarMenuSubButton>
+              </SidebarMenuSubItem>
+            ) : null}
           </SidebarMenuSub>
         </CollapsibleContent>
       </SidebarMenuItem>

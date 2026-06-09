@@ -9,7 +9,6 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-  SidebarGroupLabel,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
@@ -36,17 +35,15 @@ export function TeamContent() {
     <Collapsible asChild className="group/collapsible" defaultOpen>
       <SidebarMenuItem>
         <CollapsibleTrigger asChild>
-          <SidebarGroupLabel asChild>
-            <SidebarMenuButton
-              onClick={handleClickTrigger}
-              isActive={isAllowedToHighlight && pathname?.startsWith(routes.team.root())}
-              tooltip="Управление командой"
-            >
-              <UsersRound />
-              Команда
-              <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-            </SidebarMenuButton>
-          </SidebarGroupLabel>
+          <SidebarMenuButton
+            onClick={handleClickTrigger}
+            isActive={isAllowedToHighlight && pathname?.startsWith(routes.team.root())}
+            tooltip="Управление командой"
+          >
+            <UsersRound />
+            Команда
+            <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+          </SidebarMenuButton>
         </CollapsibleTrigger>
         <CollapsibleContent className="collapsible-content">
           <SidebarMenuSub>
@@ -62,7 +59,7 @@ export function TeamContent() {
             ))}
             <SidebarMenuSubItem>
               <SidebarMenuSubButton asChild>
-                <InviteTeamMemberDialog>
+                <InviteTeamMemberDialog className="w-full">
                   <Plus /> Добавить участника
                 </InviteTeamMemberDialog>
               </SidebarMenuSubButton>
