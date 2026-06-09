@@ -48,7 +48,11 @@ export function RemoveProjectDialog({ projectName, teamId, projectId, ...props }
         />
         <AlertDialogFooter>
           <AlertDialogCancel onClick={() => setInputValue('')}>Отмена</AlertDialogCancel>
-          <AlertDialogAction variant="destructive" disabled={!isMatch} onClick={onRemove}>
+          <AlertDialogAction
+            variant="destructive"
+            disabled={!isMatch || removeProject.isPending}
+            onClick={onRemove}
+          >
             Удалить
           </AlertDialogAction>
         </AlertDialogFooter>
