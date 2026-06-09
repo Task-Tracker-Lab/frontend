@@ -1,6 +1,7 @@
 'use client';
 
 import { ComponentProps } from 'react';
+import { useControllableState } from 'shared/lib/hooks';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,6 +20,7 @@ interface ArchiveProjectDialogProps extends ComponentProps<typeof AlertDialogTri
   teamId: string;
   projectId: string;
   onArchived?: () => void;
+  dialog?: ComponentProps<typeof AlertDialog>;
 }
 
 export function ArchiveProjectDialog({
@@ -26,10 +28,20 @@ export function ArchiveProjectDialog({
   teamId,
   projectId,
   onArchived,
+  dialog = {},
   ...props
 }: ArchiveProjectDialogProps) {
+  const [open, setOpen] = useControllableState({
+    defaultValue: dialog.defaultOpen,
+    value: dialog.open,
+    onChange: dialog.onOpenChange,
+  });
+
   const archiveProject = useArchiveProject({
-    onSuccess: () => onArchived?.(),
+    onSuccess: () => {
+      setOpen(false);
+      onArchived?.();
+    },
   });
 
   const onArchive = () => {
@@ -37,8 +49,8 @@ export function ArchiveProjectDialog({
   };
 
   return (
-    <AlertDialog>
-      <AlertDialogTrigger {...props} />
+    <AlertDialog {...dialog} open={open} onOpenChange={setOpen}>
+      {props.children ? <AlertDialogTrigger {...props} /> : null}
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Архивировать проект?</AlertDialogTitle>

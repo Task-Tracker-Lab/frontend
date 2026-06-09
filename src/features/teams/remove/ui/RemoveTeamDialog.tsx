@@ -16,9 +16,10 @@ import { useRemoveTeam } from '../model/useRemoveTeam';
 interface Props extends ComponentProps<typeof AlertDialogTrigger> {
   teamName: string;
   teamId: string;
+  dialog?: ComponentProps<typeof AlertDialog>;
 }
 
-export function RemoveTeamDialog({ teamName, teamId, ...props }: Props) {
+export function RemoveTeamDialog({ teamName, teamId, dialog = {}, ...props }: Props) {
   const [inputValue, setInputValue] = useState('');
   const removeTeam = useRemoveTeam();
 
@@ -28,9 +29,17 @@ export function RemoveTeamDialog({ teamName, teamId, ...props }: Props) {
     removeTeam.mutate(teamId);
   };
 
+  const handleOpenChange = (open: boolean) => {
+    if (!open) {
+      setInputValue('');
+    }
+
+    dialog.onOpenChange?.(open);
+  };
+
   return (
-    <AlertDialog>
-      <AlertDialogTrigger {...props} />
+    <AlertDialog {...dialog} onOpenChange={handleOpenChange}>
+      {props.children ? <AlertDialogTrigger {...props} /> : null}
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Удалить рабочее пространство?</AlertDialogTitle>

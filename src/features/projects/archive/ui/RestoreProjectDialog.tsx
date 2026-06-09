@@ -1,6 +1,7 @@
 'use client';
 
 import { ComponentProps } from 'react';
+import { useControllableState } from 'shared/lib/hooks';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,23 +19,33 @@ interface RestoreProjectDialogProps extends ComponentProps<typeof AlertDialogTri
   projectName: string;
   teamId: string;
   projectId: string;
+  dialog?: ComponentProps<typeof AlertDialog>;
 }
 
 export function RestoreProjectDialog({
   projectName,
   teamId,
   projectId,
+  dialog = {},
   ...props
 }: RestoreProjectDialogProps) {
-  const restoreProject = useRestoreProject();
+  const [open, setOpen] = useControllableState({
+    defaultValue: dialog.defaultOpen,
+    value: dialog.open,
+    onChange: dialog.onOpenChange,
+  });
+
+  const restoreProject = useRestoreProject({
+    onSuccess: () => setOpen(false),
+  });
 
   const onRestore = () => {
     restoreProject.mutate({ teamId, id: projectId });
   };
 
   return (
-    <AlertDialog>
-      <AlertDialogTrigger {...props} />
+    <AlertDialog {...dialog} open={open} onOpenChange={setOpen}>
+      {props.children ? <AlertDialogTrigger {...props} /> : null}
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Восстановить проект?</AlertDialogTitle>

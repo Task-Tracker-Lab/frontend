@@ -21,14 +21,16 @@ import { useInviteTeamMemberForm } from '../model/useInviteTeamMemberForm';
 
 interface InviteTeamMemberFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
   mutateOptions?: UseInviteTeamMemberOptions;
+  teamId?: string;
 }
 
 export function InviteTeamMemberForm({
   className,
   mutateOptions,
+  teamId,
   ...props
 }: InviteTeamMemberFormProps) {
-  const { form, isPending, handleSubmit } = useInviteTeamMemberForm(mutateOptions);
+  const { form, isPending, handleSubmit } = useInviteTeamMemberForm(mutateOptions, teamId);
 
   return (
     <form className={cn('flex flex-col gap-6', className)} onSubmit={handleSubmit} {...props}>
