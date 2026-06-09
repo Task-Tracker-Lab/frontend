@@ -57,7 +57,7 @@ export function NavUserContent() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link href={routes.profile.me()}>
+          <Link href={routes.user.profile()}>
             <DropdownMenuItem>
               <UserRoundIcon />
               Мой профиль
