@@ -1,5 +1,4 @@
 import {
-  Separator,
   Sidebar,
   SidebarContent,
   SidebarGroup,
@@ -7,10 +6,10 @@ import {
   SidebarMenu,
   SidebarRail,
 } from 'shared/ui';
-import { TeamsDropdown } from './teams/TeamsDropdown';
-import { Projects } from './Projects';
 import { MyTeams } from './MyTeams';
-import { Team } from './Team';
+import { Projects } from './projects/Projects';
+import { Team } from './teams/Team';
+import { TeamsDropdown } from './teams/TeamsDropdown';
 
 export function AppSidebar({ ...props }: Omit<React.ComponentProps<typeof Sidebar>, 'children'>) {
   return (
@@ -18,15 +17,22 @@ export function AppSidebar({ ...props }: Omit<React.ComponentProps<typeof Sideba
       <SidebarHeader>
         <TeamsDropdown />
       </SidebarHeader>
-      <SidebarContent className="gap-2">
+      <SidebarContent>
         <SidebarGroup>
           <SidebarMenu>
             <MyTeams />
+          </SidebarMenu>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarMenu>
             <Team />
           </SidebarMenu>
         </SidebarGroup>
-        <Separator />
-        <Projects />
+        <SidebarGroup>
+          <SidebarMenu>
+            <Projects />
+          </SidebarMenu>
+        </SidebarGroup>
       </SidebarContent>
       <SidebarRail />
     </Sidebar>

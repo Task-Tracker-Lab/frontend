@@ -1,13 +1,15 @@
 'use client';
+
 import { InviteTeamMemberDialog } from 'features/teams/invite';
-import { UsersRound, ChevronRight, Plus } from 'lucide-react';
+import { ChevronRight, Plus, UsersRound } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { routes } from 'shared/config';
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
+  SidebarGroupLabel,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
@@ -15,10 +17,9 @@ import {
   SidebarMenuSubItem,
   useSidebar,
 } from 'shared/ui';
-import { team } from '../config/sidebar';
-import { useRouter } from 'next/navigation';
+import { team } from '../../config/sidebar';
 
-export function Team() {
+export function TeamContent() {
   const pathname = usePathname();
   const router = useRouter();
   const { open, isMobile } = useSidebar();
@@ -30,19 +31,22 @@ export function Team() {
       router.push(routes.team.members());
     }
   };
+
   return (
-    <Collapsible asChild className="group/collapsible">
+    <Collapsible asChild className="group/collapsible" defaultOpen>
       <SidebarMenuItem>
         <CollapsibleTrigger asChild>
-          <SidebarMenuButton
-            onClick={handleClickTrigger}
-            isActive={isAllowedToHighlight && pathname?.startsWith(routes.team.root())}
-            tooltip="Управление командой"
-          >
-            <UsersRound />
-            Команда
-            <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-          </SidebarMenuButton>
+          <SidebarGroupLabel asChild>
+            <SidebarMenuButton
+              onClick={handleClickTrigger}
+              isActive={isAllowedToHighlight && pathname?.startsWith(routes.team.root())}
+              tooltip="Управление командой"
+            >
+              <UsersRound />
+              Команда
+              <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+            </SidebarMenuButton>
+          </SidebarGroupLabel>
         </CollapsibleTrigger>
         <CollapsibleContent className="collapsible-content">
           <SidebarMenuSub>
@@ -56,11 +60,10 @@ export function Team() {
                 </SidebarMenuSubButton>
               </SidebarMenuSubItem>
             ))}
-
             <SidebarMenuSubItem>
               <SidebarMenuSubButton asChild>
                 <InviteTeamMemberDialog>
-                  <Plus /> Пригласить участника
+                  <Plus /> Добавить участника
                 </InviteTeamMemberDialog>
               </SidebarMenuSubButton>
             </SidebarMenuSubItem>
