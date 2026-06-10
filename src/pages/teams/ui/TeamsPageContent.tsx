@@ -12,8 +12,8 @@ import { TeamCard } from './TeamCard';
 
 export function TeamsPageContent() {
   const teamsQuery = useSuspenseQuery(UserQueries.getMyTeams());
-  const teams = teamsQuery.data.items;
-  const teamsCount = teamsQuery.data.meta.total ?? teams.length;
+  const teams = teamsQuery.data;
+  const teamsCount = teams.length;
 
   const { switchTeam } = useSwitchTeam({
     teams,

@@ -126,7 +126,7 @@ export const UserTeamResponse = z.object({
   permissions: TeamPermissions,
 });
 
-export const UserTeamsListResponse = PaginatedResponseSchema(UserTeamResponse);
+export const UserTeamsListResponse = UserTeamResponse.array();
 
 export const UserInvitationResponse = z.object({
   code: z.string(),

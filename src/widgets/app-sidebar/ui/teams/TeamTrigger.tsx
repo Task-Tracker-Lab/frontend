@@ -15,7 +15,7 @@ export function TeamTrigger({ query }: TeamTriggerProps) {
 
   const activeTeam = useMemo(() => {
     if (query.data) {
-      return query.data.items.find((d) => d.id === teamId);
+      return query.data.find((d) => d.id === teamId);
     }
   }, [teamId, query.data]);
 
