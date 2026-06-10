@@ -24,7 +24,7 @@ export function RemoveMemberDialog({ userId, name, ...props }: RemoveMemberDialo
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger {...props} />
+      {props.children ? <AlertDialogTrigger {...props} /> : null}
       <AlertDialogContent size="sm">
         <AlertDialogHeader>
           <AlertDialogMedia>

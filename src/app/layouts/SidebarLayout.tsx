@@ -5,6 +5,7 @@ import { AppSidebar } from 'widgets/app-sidebar';
 import { NavUser } from 'widgets/nav-user';
 import { Notifications } from 'widgets/notifications';
 import { QuickCreate } from 'widgets/quick-create';
+import { SidebarHeaderTitle } from 'widgets/sidebar-header-title';
 
 export function SidebarLayout({ children, ...props }: ComponentProps<typeof SidebarProvider>) {
   return (
@@ -19,6 +20,7 @@ export function SidebarLayout({ children, ...props }: ComponentProps<typeof Side
               orientation="vertical"
               className="self-center! data-[orientation=vertical]:h-6"
             />
+            <SidebarHeaderTitle className="px-3" />
           </div>
           <div className="flex items-center gap-4">
             <QuickCreate />
