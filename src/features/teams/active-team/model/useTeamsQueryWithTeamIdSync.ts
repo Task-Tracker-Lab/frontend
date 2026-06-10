@@ -11,7 +11,7 @@ export function useTeamsQueryWithTeamIdSync() {
   useEffect(() => {
     if (!query.data) return;
 
-    const items = query.data.items;
+    const items = query.data;
     const hasTeamId = !!teamId && items.some((d) => d.id === teamId);
 
     if (hasTeamId) return;
