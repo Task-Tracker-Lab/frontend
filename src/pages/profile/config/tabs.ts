@@ -1,8 +1,7 @@
 import { routes } from 'shared/config';
 
 export const profileTabs = [
-  { key: routes.profile.me(), label: 'Мой профиль' },
-  { key: routes.profile.teams(), label: 'Команды' },
-  { key: routes.profile.security(), label: 'Безопасность' },
-  { key: routes.profile.notifications(), label: 'Уведомления' },
+  { key: routes.user.profile(), label: 'Мой профиль' },
+  { key: routes.user.security(), label: 'Безопасность' },
+  { key: routes.user.notifications(), label: 'Уведомления' },
 ];

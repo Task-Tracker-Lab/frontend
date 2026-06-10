@@ -31,7 +31,7 @@ export function CreateProjectDialog({ dialog = {}, ...props }: CreateProjectDial
 
   return (
     <Dialog {...dialog} open={open} onOpenChange={setOpen}>
-      <DialogTrigger {...props} />
+      {props.children ? <DialogTrigger {...props} /> : null}
       <DialogContent className="!max-w-lg">
         <DialogHeader>
           <DialogTitle>Новый проект</DialogTitle>

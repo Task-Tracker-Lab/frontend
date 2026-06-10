@@ -1,8 +1,8 @@
-import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from 'shared/lib/utils';
 import Image from 'next/image';
-import { LogoImage } from 'shared/assests';
+import * as React from 'react';
+import LogoImage from 'logo.svg';
+import { cn } from 'shared/lib/utils';
 
 const logoVariants = cva('flex items-center [&>span]:font-bold', {
   variants: {

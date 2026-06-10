@@ -1,9 +1,10 @@
-export { cn } from './cn';
 export { capitalize } from './capitalize/capitalize';
+export { classNames } from './class-names/class-names';
+export { cn } from './cn';
+export { createEntityKeys } from './create-entity-keys';
+export { debounce } from './debounce/debounce';
 export { formatDate } from './format-date/format-date';
 export { formatTime } from './format-time/format-time';
+export { getPluralForm, type PluralForms } from './pluralize/pluralize';
 export { setFormErrors } from './set-form-errors';
-export { createEntityKeys } from './create-entity-keys';
-export { classNames } from './class-names/class-names';
 export { throttle } from './throttle/throttle';
-export { debounce } from './debounce/debounce';

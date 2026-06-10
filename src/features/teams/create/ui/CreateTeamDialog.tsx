@@ -31,7 +31,7 @@ export function CreateTeamDialog({ dialog = {}, ...props }: CreateTeamDialogProp
 
   return (
     <Dialog {...dialog} open={open} onOpenChange={setOpen}>
-      <DialogTrigger {...props} />
+      {props.children ? <DialogTrigger {...props} /> : null}
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle>Новая команда</DialogTitle>

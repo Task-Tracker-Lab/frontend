@@ -3,8 +3,8 @@
 import { buildProjectShareUrl } from 'entities/project';
 import { Copy } from 'lucide-react';
 import { ComponentProps, useState } from 'react';
-import { formatDate } from 'shared/lib/utils';
 import { useControllableState } from 'shared/lib/hooks';
+import { formatDate } from 'shared/lib/utils';
 import {
   Button,
   Dialog,
@@ -30,9 +30,9 @@ import {
   Spinner,
 } from 'shared/ui';
 import { SHARE_TTL_OPTIONS } from '../config/ttl-options';
-import type { ShareTtlOption } from '../model/types';
 import { copyShareUrl } from '../model/copy-share-url';
 import { ttlOptionToBody } from '../model/ttl-option-to-body';
+import type { ShareTtlOption } from '../model/types';
 import { useShareProject } from '../model/useShareProject';
 
 interface ShareProjectDialogProps extends ComponentProps<typeof DialogTrigger> {
@@ -89,7 +89,7 @@ export function ShareProjectDialog({
 
   return (
     <Dialog {...dialog} open={open} onOpenChange={handleOpenChange}>
-      <DialogTrigger {...props} />
+      {props.children ? <DialogTrigger {...props} /> : null}
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle>Поделиться проектом</DialogTitle>

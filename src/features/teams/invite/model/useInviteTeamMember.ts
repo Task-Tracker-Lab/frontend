@@ -1,5 +1,5 @@
 import { type DefaultError, useMutation, UseMutationOptions } from '@tanstack/react-query';
-import { teamFabricKeys, TeamHttp, type TTeam, useTeamStore } from 'entities/team';
+import { teamFabricKeys, TeamHttp, type TTeam } from 'entities/team';
 import { toast } from 'sonner';
 
 export type InviteTeamMemberVariables = { teamId: string; body: TTeam.InviteMemberBody };
@@ -10,8 +10,6 @@ export type UseInviteTeamMemberOptions = Omit<
 >;
 
 export function useInviteTeamMember({ onSuccess, ...rest }: UseInviteTeamMemberOptions = {}) {
-  const teamId = useTeamStore.use.teamId();
-
   return useMutation<TTeam.ActionResponse, DefaultError, InviteTeamMemberVariables>({
     ...rest,
     mutationFn: ({ teamId, body }) => TeamHttp.inviteMember(teamId, body),
@@ -19,8 +17,8 @@ export function useInviteTeamMember({ onSuccess, ...rest }: UseInviteTeamMemberO
       onSuccess?.(res, _v, _r, context);
       toast.success(res.message ?? 'Приглашение отправлено');
 
-      if (teamId) {
-        await context.client.invalidateQueries({ queryKey: teamFabricKeys.invitations(teamId) });
+      if (_v.teamId) {
+        await context.client.invalidateQueries({ queryKey: teamFabricKeys.invitations(_v.teamId) });
       }
     },
   });

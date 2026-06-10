@@ -31,7 +31,7 @@ export function RemoveProjectDialog({ projectName, teamId, projectId, ...props }
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger {...props} />
+      {props.children ? <AlertDialogTrigger {...props} /> : null}
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Удалить проект?</AlertDialogTitle>
