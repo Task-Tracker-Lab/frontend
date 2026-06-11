@@ -4,7 +4,7 @@ import { AuthHttp } from './http';
 export class AuthQueries {
   static getOAuthProviders() {
     return queryOptions({
-      queryKey: ['auth'],
+      queryKey: ['oauth-providers'],
       queryFn: async () => AuthHttp.oAuthProviders(),
       staleTime: 60_000,
     });
