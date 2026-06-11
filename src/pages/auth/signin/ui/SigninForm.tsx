@@ -9,6 +9,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
   Field,
@@ -26,6 +27,7 @@ import { extractValidationIssues } from 'shared/api';
 import { TAuth } from 'entities/auth';
 import { ComponentProps } from 'react';
 import { useSignin, UseSigninOptions } from '../model/useSignin';
+import { OAuthLoginButtons, OAuthSeparator } from 'features/auth/oauth-login';
 
 interface SigninFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
   mutateOptions?: UseSigninOptions;
@@ -119,6 +121,8 @@ export function SigninForm({ className, mutateOptions = {}, ...props }: SigninFo
             </Field>
           </FieldGroup>
         </form>
+        <OAuthSeparator />
+        <OAuthLoginButtons />
       </CardContent>
     </Card>
   );
