@@ -86,6 +86,43 @@ export class AuthHttp {
       },
     });
   }
+  static oAuthProviders(signal: AbortSignal) {
+    return api<TAuth.OAuthProvidersResponse>({
+      url: '/auth/oauth/providers',
+      method: 'GET',
+      contracts: {
+        response: SAuth.OAuthProvidersResponse,
+      },
+      signal,
+    });
+  }
+  static connectedOAuthProviders() {
+    return api<TAuth.ConnectedOAuthProvidersResponse>({
+      url: '/auth/oauth/providers/connected',
+      method: 'GET',
+      contracts: {
+        response: SAuth.ConnectedOAuthProvidersResponse,
+      },
+    });
+  }
+  static connecteOAuthProvder(provider: TAuth.OAuthProvider) {
+    return api<TAuth.ConnectOAuthProviderResponse>({
+      url: `/auth/oauth/${provider}/connect`,
+      method: 'POST',
+      contracts: {
+        response: SAuth.ConnectOAuthProviderResponse,
+      },
+    });
+  }
+  static removeOAuthProvder(provider: TAuth.OAuthProvider) {
+    return api<TAuth.RemoveOAuthProviderResponse>({
+      url: `/auth/oauth/${provider}/connect`,
+      method: 'DELETE',
+      contracts: {
+        response: SAuth.RemoveOAuthProviderResponse,
+      },
+    });
+  }
   static resendCode(data: TAuth.ResendCodeBody): Promise<TAuth.ResendCodeResponse> {
     return api<TAuth.ResendCodeResponse>({
       url: '/auth/resend',

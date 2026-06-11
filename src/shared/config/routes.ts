@@ -25,5 +25,6 @@ export const routes = {
     signin: (): Route => '/signin',
     signup: (): Route => '/signup',
     forgotPassword: (): Route => '/forgot-password',
+    oauth: () => '/oauth' as Route,
   },
 } as const;
