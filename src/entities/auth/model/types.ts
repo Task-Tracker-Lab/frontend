@@ -26,3 +26,5 @@ export type OAuthProvidersResponse = z.infer<typeof SAuth.OAuthProvidersResponse
 export type ConnectedOAuthProvidersResponse = z.infer<typeof SAuth.ConnectedOAuthProvidersResponse>;
 export type ConnectOAuthProviderResponse = z.infer<typeof SAuth.ConnectOAuthProviderResponse>;
 export type RemoveOAuthProviderResponse = z.infer<typeof SAuth.RemoveOAuthProviderResponse>;
+export type ResendCodeBody = z.infer<typeof SAuth.ResendCodeBody>;
+export type ResendCodeResponse = z.infer<typeof SAuth.ResendCodeResponse>;

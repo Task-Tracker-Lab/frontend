@@ -122,4 +122,15 @@ export class AuthHttp {
       },
     });
   }
+  static resendCode(data: TAuth.ResendCodeBody): Promise<TAuth.ResendCodeResponse> {
+    return api<TAuth.ResendCodeResponse>({
+      url: '/auth/resend',
+      method: 'POST',
+      data: data,
+      contracts: {
+        body: SAuth.ResendCodeBody,
+        response: SAuth.ResendCodeResponse,
+      },
+    });
+  }
 }

@@ -6,7 +6,13 @@ import { EmailForm } from './EmailForm';
 import { PasswordForm } from './PasswordForm';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import { DRAFT_TTL_MS, OTPForm, OTPFormLoader, ResendCodeControl } from 'features/otp-form';
+import {
+  DRAFT_TTL_MS,
+  OTPForm,
+  OTPFormLoader,
+  RESEND_CODE_DELAY_MS,
+  ResendCodeControl,
+} from 'features/otp-form';
 import { useSendCode } from '../model/useSendCode';
 import { useLocalStorageDraft } from 'shared/lib/hooks';
 
@@ -15,6 +21,7 @@ type ForgotPasswordStep = 'email' | 'password' | 'otp' | null;
 interface ForgotPasswordDraft extends Record<string, unknown> {
   email: string;
   step: ForgotPasswordStep;
+  nextResendAt: string | null;
 }
 
 const DRAFT_KEY = 'drafted-forgot-password';
@@ -23,12 +30,12 @@ function ForgotPasswordPage() {
   const router = useRouter();
   const sendCode = useSendCode();
   const { draft, setDraft, clearDraft } = useLocalStorageDraft<ForgotPasswordDraft>(DRAFT_KEY, {
-    defaultValues: { email: '', step: 'email' },
+    defaultValues: { email: '', step: 'email', nextResendAt: null },
   });
 
   const email = draft?.email ?? '';
   const step: ForgotPasswordStep = draft?.step ?? null;
-  const resendCodeStorageKey = `${DRAFT_KEY}:last-sent-code:${email}`;
+  const nextResendAt = draft?.nextResendAt ?? null;
 
   if (!step) {
     return (
@@ -49,7 +56,15 @@ function ForgotPasswordPage() {
         {step === 'email' ? (
           <EmailForm
             mutateOptions={{
-              onSuccess: (_res, { email }) => setDraft({ email, step: 'otp' }, DRAFT_TTL_MS),
+              onSuccess: (_res, { email }) =>
+                setDraft(
+                  {
+                    email,
+                    step: 'otp',
+                    nextResendAt: new Date(Date.now() + RESEND_CODE_DELAY_MS).toISOString(),
+                  },
+                  DRAFT_TTL_MS
+                ),
             }}
           />
         ) : null}
@@ -58,10 +73,25 @@ function ForgotPasswordPage() {
             email={email}
             mutation={sendCode}
             mutateOptions={{
-              onSuccess: () => setDraft({ email, step: 'password' }),
+              onSuccess: () =>
+                setDraft({
+                  email,
+                  step: 'password',
+                  nextResendAt,
+                }),
             }}
           >
-            <ResendCodeControl storageKey={resendCodeStorageKey} />
+            <ResendCodeControl
+              mutateOptions={{
+                onSuccess: (data) =>
+                  setDraft({ email, step, nextResendAt: data.nextResendAt }, DRAFT_TTL_MS),
+                onError: () => {
+                  setDraft({ step: 'email', email, nextResendAt: null });
+                },
+              }}
+              nextResendAt={nextResendAt}
+              data={{ email, context: 'reset-password' }}
+            />
             <OTPFormLoader status={sendCode.status} />
           </OTPForm>
         )}

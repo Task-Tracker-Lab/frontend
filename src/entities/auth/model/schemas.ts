@@ -1,5 +1,5 @@
 import { z } from 'zod/v4';
-import { GlobalSuccess } from 'shared/api';
+import { DateTimeString, GlobalSuccess } from 'shared/api';
 import {
   MAX_NAME_LENGTH,
   MAX_PASS_LENGTH,
@@ -101,3 +101,13 @@ export const ConnectOAuthProviderResponse = z.object({
 });
 
 export const RemoveOAuthProviderResponse = GlobalSuccess;
+export const ResendCodeBody = z.object({
+  context: z.enum(['sign-up', 'reset-password']),
+  email: Email,
+});
+
+export const ResendCodeResponse = GlobalSuccess.extend({
+  nextResendAt: DateTimeString,
+  retryAfterSeconds: z.number(),
+  retries: z.number(),
+});
