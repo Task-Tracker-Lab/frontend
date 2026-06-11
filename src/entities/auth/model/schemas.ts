@@ -76,3 +76,28 @@ export const ResetPasswordConfirmBody = z.object({
 });
 
 export const ResetPasswordConfirmResponse = GlobalSuccess;
+
+export const OAuthProvider = z.enum(['google', 'github', 'yandex', 'vkontakte']);
+
+export const OAuthProvidersResponse = z
+  .object({
+    label: z.string(),
+    value: OAuthProvider,
+  })
+  .array();
+
+export const ConnectedOAuthProvidersResponse = z
+  .object({
+    email: Email,
+    avatarUrl: z.string().nullable(),
+    provider: z.string(),
+    connectedAt: z.string(),
+  })
+  .array();
+
+export const ConnectOAuthProviderResponse = z.object({
+  success: z.boolean(),
+  url: z.string(),
+});
+
+export const RemoveOAuthProviderResponse = GlobalSuccess;
