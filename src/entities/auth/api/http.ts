@@ -86,13 +86,14 @@ export class AuthHttp {
       },
     });
   }
-  static oAuthProviders() {
+  static oAuthProviders(signal: AbortSignal) {
     return api<TAuth.OAuthProvidersResponse>({
       url: '/auth/oauth/providers',
       method: 'GET',
       contracts: {
         response: SAuth.OAuthProvidersResponse,
       },
+      signal,
     });
   }
   static connectedOAuthProviders() {

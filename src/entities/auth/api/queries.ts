@@ -5,8 +5,8 @@ export class AuthQueries {
   static getOAuthProviders() {
     return queryOptions({
       queryKey: ['oauth-providers'],
-      queryFn: async () => AuthHttp.oAuthProviders(),
-      staleTime: 60_000,
+      queryFn: async ({ signal }) => AuthHttp.oAuthProviders(signal),
+      staleTime: 60_000 * 360 * 24,
     });
   }
 }
