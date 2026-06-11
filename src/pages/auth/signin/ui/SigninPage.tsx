@@ -2,7 +2,6 @@
 
 import { SigninForm } from './SigninForm';
 import { Link, Logo } from 'shared/ui';
-import * as React from 'react';
 import { routes } from 'shared/config';
 import { AccessToken } from 'shared/api';
 import { toast } from 'sonner';

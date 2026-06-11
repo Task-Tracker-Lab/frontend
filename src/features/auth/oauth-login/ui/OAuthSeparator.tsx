@@ -1,11 +1,16 @@
-import { classNames } from 'shared/lib/utils';
+import { cn } from 'shared/lib/utils';
 
-export function OAuthSeparator({ className }: { className?: string }) {
+interface OAuthSeparatorProps {
+  className?: string;
+  label?: string;
+}
+
+export function OAuthSeparator({ className, label = 'или' }: OAuthSeparatorProps) {
   return (
-    <div className={classNames('text-muted-foreground my-3 flex items-center', {}, [className])}>
-      <hr className="w-full" />
-      <span className="block px-2">или</span>
-      <hr className="w-full" />
+    <div className={cn('text-muted-foreground my-3 flex items-center', className)}>
+      <span className="bg-border h-px w-full" />
+      <span className="block px-2">{label}</span>
+      <span className="bg-border h-px w-full" />
     </div>
   );
 }
