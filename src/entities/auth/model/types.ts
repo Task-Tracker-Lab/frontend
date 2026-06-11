@@ -20,3 +20,6 @@ export type ResetPasswordVerifyBody = z.infer<typeof SAuth.ResetPasswordVerifyBo
 export type ResetPasswordVerifyResponse = z.infer<typeof SAuth.ResetPasswordVerifyResponse>;
 export type ResetPasswordConfirmBody = z.infer<typeof SAuth.ResetPasswordConfirmBody>;
 export type ResetPasswordConfirmResponse = z.infer<typeof SAuth.ResetPasswordConfirmResponse>;
+
+export type ResendCodeBody = z.infer<typeof SAuth.ResendCodeBody>;
+export type ResendCodeResponse = z.infer<typeof SAuth.ResendCodeResponse>;
