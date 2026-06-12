@@ -2,6 +2,7 @@ import type { Route } from 'next';
 
 export const routes = {
   home: (): Route => '/',
+  profile: (): Route => '/profile',
   user: {
     root: (): Route => '/user',
     profile: (): Route => '/user/profile',

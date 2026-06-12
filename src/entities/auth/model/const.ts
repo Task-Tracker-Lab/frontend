@@ -16,7 +16,11 @@ export type OAuthProviderMeta = {
 };
 
 export const OAUTH_PROVIDERS: Record<TAuth.OAuthProvider, OAuthProviderMeta> = {
-  yandex: { label: 'Яндекс', icon: YandexIcon },
+  yandex: {
+    label: 'Яндекс',
+    icon: YandexIcon,
+    buttonClassName: 'text-[#fc3f1d] hover:text-[#fc3f1d]',
+  },
   vkontakte: {
     label: 'Вконтакте',
     icon: VkontakteIcon,
@@ -26,7 +30,13 @@ export const OAUTH_PROVIDERS: Record<TAuth.OAuthProvider, OAuthProviderMeta> = {
   github: {
     label: 'GitHub',
     icon: GithubIcon,
-    buttonClassName: 'bg-[#24292f] hover:bg-[#24292f] hover:opacity-80',
+    buttonClassName: 'bg-[#24292f] hover:bg-[#24292f] ',
   },
 };
 export const OAUTH_PROVIDERS_COUNT = Object.keys(OAUTH_PROVIDERS).length;
+
+export const authKeys = {
+  all: ['auth'] as const,
+  availableProviders: () => [...authKeys.all, 'providers', 'available'] as const,
+  connectedProviders: () => [...authKeys.all, 'providers', 'connected'] as const,
+};
