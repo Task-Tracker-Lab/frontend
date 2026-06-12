@@ -39,3 +39,4 @@ export * from './Select';
 export * from './Empty';
 export * from './ScrollArea';
 export * from './Kanban';
+export * from './icon';

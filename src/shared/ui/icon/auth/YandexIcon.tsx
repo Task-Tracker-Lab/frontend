@@ -1,0 +1,12 @@
+import { IconProps } from '../types';
+
+export function YandexIcon({ className }: IconProps) {
+  return (
+    <svg className={className} viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+      <path
+        fill="#fc3f1d"
+        d="M26.9 13.3v24.2h4.9v-28h-7.1c-7.1 0-10.9 3.7-10.9 9.1 0 4.3 2.1 6.8 5.7 9.5l-6.4 9.5h5.3L25.5 27 23 25.3c-3-2-4.4-3.6-4.4-7 0-3 2.1-5 6.1-5h2.2z"
+      />
+    </svg>
+  );
+}
