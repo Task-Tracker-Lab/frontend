@@ -12,6 +12,13 @@ import {
 import { IdentityItem } from './IdentityItem';
 import { ProfileForm } from './ProfileForm';
 import { useMePage } from '../../model/useMePage';
+import { AccountSection } from './AccountsSection';
+import dynamic from 'next/dynamic';
+
+const QueryParamsHandler = dynamic(
+  () => import('shared/ui').then((mod) => mod.QueryParamsHandler),
+  { ssr: false }
+);
 
 function MePage() {
   const { form, profile, email, isDirty, isPending, onSubmit, onDiscard } = useMePage();
@@ -28,7 +35,8 @@ function MePage() {
   }
 
   return (
-    <>
+    <div className="space-y-4">
+      <QueryParamsHandler />
       <CardSection
         className="space-y-4"
         title="Идентификация профиля"
@@ -38,6 +46,7 @@ function MePage() {
         <Separator />
         <ProfileForm form={form} onSubmit={onSubmit} />
       </CardSection>
+      <AccountSection />
       <FloatingSaveBar
         visible={isDirty}
         onSave={form.handleSubmit(onSubmit)}
@@ -45,7 +54,7 @@ function MePage() {
         pending={isPending && form.formState.isValidating}
         disabledSave={!form.formState.isValid}
       />
-    </>
+    </div>
   );
 }
 
