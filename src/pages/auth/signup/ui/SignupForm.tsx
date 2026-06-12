@@ -30,6 +30,7 @@ import { prepareFullName } from '../model/utils/prepare-fullname';
 import { extractValidationIssues } from 'shared/api';
 import { TAuth } from 'entities/auth';
 import { useSignup, type UseSignupOptions } from '../model/useSignup';
+import { OAuthLoginButtons, OAuthSeparator } from 'features/auth/oauth-login';
 
 interface SignupFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
   mutateOptions?: UseSignupOptions;
@@ -183,6 +184,8 @@ export function SignupForm({ className, mutateOptions = {}, ...props }: SignupFo
             </Field>
           </FieldGroup>
         </form>
+        <OAuthSeparator />
+        <OAuthLoginButtons />
       </CardContent>
     </Card>
   );

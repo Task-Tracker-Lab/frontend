@@ -12,7 +12,7 @@ import {
 import { IdentityItem } from './IdentityItem';
 import { ProfileForm } from './ProfileForm';
 import { useMePage } from '../../model/useMePage';
-import { AccountSection } from './AccountsSection';
+import { AccountSection } from './account-section/AccountsSection';
 import dynamic from 'next/dynamic';
 
 const QueryParamsHandler = dynamic(

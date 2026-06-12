@@ -4,4 +4,3 @@ export * as CAuth from './model/const';
 export { AuthHttp } from './api/http';
 export { AuthQueries } from './api/queries';
 export { type OAuthProviderMeta } from './model/const';
-export { OAuthButton } from './ui/OAuthButton';

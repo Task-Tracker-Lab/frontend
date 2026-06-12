@@ -1,12 +1,14 @@
 'use client';
 import { Skeleton } from 'shared/ui';
-import { CAuth, OAuthButton } from 'entities/auth';
+import { CAuth } from 'entities/auth';
 import { cn } from 'shared/lib/utils';
 import { useQuery } from '@tanstack/react-query';
 import { AuthQueries } from 'entities/auth';
 import { type TAuth } from 'entities/auth';
 import { routes } from 'shared/config';
 import { StartOauthParams } from '../model/types';
+import { OAuthButton } from './OAuthButton';
+import { type Route } from 'next';
 
 export const getRoute = (provider: TAuth.OAuthProvider) => {
   const params = new URLSearchParams({
@@ -28,7 +30,13 @@ export function OAuthLoginButtons({ className }: { className?: string }) {
         ))}
 
       {data?.map((item) => {
-        return <OAuthButton key={item.value} provider={item.value} />;
+        return (
+          <OAuthButton
+            key={item.value}
+            provider={item.value}
+            href={getRoute(item.value) as Route}
+          />
+        );
       })}
     </div>
   );
