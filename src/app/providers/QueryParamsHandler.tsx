@@ -1,12 +1,11 @@
 'use client';
 
 import { type Route } from 'next';
-import { useRouter } from 'next/navigation';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { toast } from 'sonner';
 
-function useQueryParams() {
+export function QueryParamsHandler() {
   const params = useSearchParams();
   const isShowToast = useRef(false);
   const router = useRouter();
@@ -24,9 +23,5 @@ function useQueryParams() {
     isShowToast.current = true;
     router.replace(location.pathname as Route);
   }, [params, router]);
-}
-
-export function QueryParamsHandler() {
-  useQueryParams();
   return null;
 }

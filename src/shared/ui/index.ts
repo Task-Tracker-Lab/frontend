@@ -40,4 +40,3 @@ export * from './Empty';
 export * from './ScrollArea';
 export * from './Kanban';
 export * from './icon';
-export { QueryParamsHandler } from './QueryParamsHandler';
