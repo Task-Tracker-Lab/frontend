@@ -10,7 +10,6 @@ import { MyTeams } from './MyTeams';
 import { Projects } from './projects/Projects';
 import { Team } from './teams/Team';
 import { TeamsDropdown } from './teams/TeamsDropdown';
-import Link from 'next/link';
 
 export function AppSidebar({ ...props }: Omit<React.ComponentProps<typeof Sidebar>, 'children'>) {
   return (
@@ -33,7 +32,6 @@ export function AppSidebar({ ...props }: Omit<React.ComponentProps<typeof Sideba
           <SidebarMenu>
             <Projects />
           </SidebarMenu>
-          <Link href={`http://localhost:3001/oauth?success=true&message=Вход+успешен`}>тест</Link>
         </SidebarGroup>
       </SidebarContent>
       <SidebarRail />

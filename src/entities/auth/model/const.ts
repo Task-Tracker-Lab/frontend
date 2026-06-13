@@ -1,6 +1,8 @@
 import { type TAuth } from 'entities/auth';
-import { ComponentType, SVGProps } from 'react';
-import { GithubIcon, GoogleIcon, VkontakteIcon, YandexIcon } from 'shared/ui';
+import YandexIcon from 'public/yandex-logo.svg';
+import VkontakteIcon from 'public/vkontakte-logo.svg';
+import GoogleIcon from 'public/google-logo.svg';
+import GithubIcon from 'public/github-logo.svg';
 
 export const MIN_PASS_LENGTH = 8;
 export const MAX_PASS_LENGTH = 32;
@@ -11,28 +13,28 @@ export const MAX_NAME_LENGTH = 50;
 
 export type OAuthProviderMeta = {
   label: string;
-  icon: ComponentType<SVGProps<SVGSVGElement>>;
+  iconSrc: string;
   buttonClassName?: string;
 };
 
 export const OAUTH_PROVIDERS: Record<TAuth.OAuthProvider, OAuthProviderMeta> = {
   yandex: {
     label: 'Яндекс',
-    icon: YandexIcon,
+    iconSrc: YandexIcon,
     buttonClassName: 'text-[#fc3f1d] hover:text-[#fc3f1d]',
   },
   vkontakte: {
     label: 'Вконтакте',
-    icon: VkontakteIcon,
+    iconSrc: VkontakteIcon,
     buttonClassName: 'bg-[#07f] hover:bg-[#07f]',
   },
-  google: { label: 'Google', icon: GoogleIcon },
+  google: { label: 'Google', iconSrc: GoogleIcon },
   github: {
     label: 'GitHub',
-    icon: GithubIcon,
-    buttonClassName: 'bg-[#24292f] hover:bg-[#24292f] ',
+    iconSrc: GithubIcon,
+    buttonClassName: 'bg-[#24292f] hover:bg-[#24292f] text-white hover:text-white ',
   },
-};
+} as const;
 export const OAUTH_PROVIDERS_COUNT = Object.keys(OAUTH_PROVIDERS).length;
 
 export const authKeys = {

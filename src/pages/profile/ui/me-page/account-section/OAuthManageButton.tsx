@@ -4,10 +4,11 @@ import { TAuth } from 'entities/auth';
 import { CAuth } from 'entities/auth';
 import { useCallback, type ComponentProps } from 'react';
 import { Button } from 'shared/ui';
-import { useConnectOAuthProvider } from '../../../model/useConnectOauthProvider';
-import { useDisconnectOAuthProvider } from '../../../model/useDisconnectOauthProvider';
+import { useConnectOAuthProvider } from '../../../api/useConnectOauthProvider';
+import { useDisconnectOAuthProvider } from '../../../api/useDisconnectOauthProvider';
 import { env } from 'shared/config';
 import { toast } from 'sonner';
+import Image from 'next/image';
 
 type OAuthManageButtonProps = ComponentProps<typeof Button> & {
   provider: TAuth.OAuthProvider;
@@ -41,8 +42,7 @@ export function OAuthManageButton({ provider, label, isLinked, ...props }: OAuth
     }
   }, [connect, disconnect, isLinked, provider]);
 
-  const providerConfig = CAuth.OAUTH_PROVIDERS[provider];
-  const Icon = providerConfig.icon;
+  const meta = CAuth.OAUTH_PROVIDERS[provider];
 
   return (
     <Button
@@ -53,8 +53,8 @@ export function OAuthManageButton({ provider, label, isLinked, ...props }: OAuth
       disabled={isLoading}
       {...props}
     >
-      <div className={`${providerConfig.buttonClassName} w-max rounded-full text-2xl`}>
-        <Icon className="size-6" />
+      <div className={`${meta.buttonClassName} w-max rounded-full text-2xl`}>
+        <Image src={meta.iconSrc} alt={meta.label} width={24} height={24} className={'size-6'} />
       </div>
       <span className="w-full text-center">
         {isLinked ? 'Отвязать' : 'Привязать'} {label} аккаунт

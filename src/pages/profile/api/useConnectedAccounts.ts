@@ -4,7 +4,6 @@ import { AuthQueries } from 'entities/auth';
 import { useMemo } from 'react';
 
 export function useConnectedAccounts() {
-  //   провайдеры
   const available = useQuery(AuthQueries.getOAuthProviders());
   const connected = useQuery(AuthQueries.getConnectedOAuthProviders());
 
