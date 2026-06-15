@@ -131,4 +131,7 @@
   .input-max-w {
     @apply md:max-w-[380px];
   }
+  input:-webkit-autofill {
+    @apply transition-[background-color] duration-[5000s];
+  }
 }
