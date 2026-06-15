@@ -28,7 +28,9 @@ export function TabsNav({ className, tabs, ...props }: TabsNavProps) {
       {...props}
     >
       {tabs.map((tab) => {
-        const active = pathname === tab.key;
+        const active = tab.matchPrefix
+          ? (pathname ?? '').startsWith(tab.key)
+          : pathname === tab.key;
 
         return (
           <Link

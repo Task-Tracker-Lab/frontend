@@ -9,8 +9,12 @@ import { InviteTeamMemberFormSchema } from './schemas';
 import type { InviteTeamMemberFormValues } from './types';
 import { useInviteTeamMember, type UseInviteTeamMemberOptions } from './useInviteTeamMember';
 
-export function useInviteTeamMemberForm(mutateOptions: UseInviteTeamMemberOptions = {}) {
-  const slug = useTeamStore.use.slug();
+export function useInviteTeamMemberForm(
+  mutateOptions: UseInviteTeamMemberOptions = {},
+  teamIdProp?: string
+) {
+  const activeTeamId = useTeamStore.use.teamId();
+  const teamId = teamIdProp ?? activeTeamId;
 
   const form = useForm<InviteTeamMemberFormValues>({
     resolver: zodResolver(InviteTeamMemberFormSchema),
@@ -32,8 +36,8 @@ export function useInviteTeamMemberForm(mutateOptions: UseInviteTeamMemberOption
   });
 
   const onSubmit = (data: InviteTeamMemberFormValues) => {
-    if (!slug) return;
-    inviteTeamMember.mutate({ slug, body: data });
+    if (!teamId) return;
+    inviteTeamMember.mutate({ teamId, body: data });
   };
 
   return {

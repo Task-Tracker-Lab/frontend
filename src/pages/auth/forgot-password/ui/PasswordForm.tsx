@@ -21,22 +21,22 @@ import { setFormErrors } from 'shared/lib/utils';
 import { extractValidationIssues } from 'shared/api';
 import { PasswordForm as PasswordFormSchema } from '../model/schemas';
 import type { PasswordFormValues } from '../model/types';
-import { useSendPassword } from '../model/useSendPassword';
+import { useSendPassword, UseSendPasswordOptions } from '../model/useSendPassword';
 
 interface PasswordFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
-  onSuccess?: (
-    body: TAuth.ResetPasswordConfirmBody,
-    res: TAuth.ResetPasswordConfirmResponse
-  ) => void;
+  mutateOptions?: UseSendPasswordOptions;
   email: string;
 }
 
-function PasswordForm({ onSuccess, email, ...props }: PasswordFormProps) {
+function PasswordForm({ mutateOptions = {}, email, ...props }: PasswordFormProps) {
   const [showPassword, setShowPassword] = useState(false);
 
   const sendPassword = useSendPassword({
-    onSuccess,
-    onError: (err) => setFormErrors(extractValidationIssues(err), form),
+    ...mutateOptions,
+    onError: (err, ...args) => {
+      mutateOptions.onError?.(err, ...args);
+      setFormErrors(extractValidationIssues(err), form);
+    },
   });
 
   const form = useForm<PasswordFormValues>({

@@ -1,5 +1,5 @@
 import { z } from 'zod/v4';
-import { GlobalSuccess } from 'shared/api';
+import { DateTimeString, GlobalSuccess } from 'shared/api';
 import {
   MAX_NAME_LENGTH,
   MAX_PASS_LENGTH,
@@ -76,3 +76,38 @@ export const ResetPasswordConfirmBody = z.object({
 });
 
 export const ResetPasswordConfirmResponse = GlobalSuccess;
+
+export const OAuthProvider = z.enum(['google', 'github', 'yandex', 'vkontakte']);
+
+export const OAuthProvidersResponse = z
+  .object({
+    label: z.string(),
+    value: OAuthProvider,
+  })
+  .array();
+
+export const ConnectedOAuthProvidersResponse = z
+  .object({
+    email: Email,
+    avatarUrl: z.string().nullable(),
+    provider: z.string(),
+    connectedAt: z.string(),
+  })
+  .array();
+
+export const ConnectOAuthProviderResponse = z.object({
+  success: z.boolean(),
+  url: z.string(),
+});
+
+export const RemoveOAuthProviderResponse = GlobalSuccess;
+export const ResendCodeBody = z.object({
+  context: z.enum(['sign-up', 'reset-password']),
+  email: Email,
+});
+
+export const ResendCodeResponse = GlobalSuccess.extend({
+  nextResendAt: DateTimeString,
+  retryAfterSeconds: z.number(),
+  retries: z.number(),
+});

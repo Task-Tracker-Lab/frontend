@@ -1,15 +1,16 @@
-import { TeamSlugSync } from 'features/teams/active-team';
+import { TeamIdSync } from 'features/teams/active-team';
 import { ComponentProps } from 'react';
 import { Separator, SidebarInset, SidebarProvider, SidebarTrigger } from 'shared/ui';
 import { AppSidebar } from 'widgets/app-sidebar';
 import { NavUser } from 'widgets/nav-user';
 import { Notifications } from 'widgets/notifications';
 import { QuickCreate } from 'widgets/quick-create';
+import { SidebarHeaderTitle } from 'widgets/sidebar-header-title';
 
 export function SidebarLayout({ children, ...props }: ComponentProps<typeof SidebarProvider>) {
   return (
     <SidebarProvider {...props}>
-      <TeamSlugSync />
+      <TeamIdSync />
       <AppSidebar />
       <SidebarInset className="min-h-screen">
         <header className="bg-background sticky top-0 z-50 flex h-14 shrink-0 items-center justify-between gap-2 border-b px-4">
@@ -19,6 +20,7 @@ export function SidebarLayout({ children, ...props }: ComponentProps<typeof Side
               orientation="vertical"
               className="self-center! data-[orientation=vertical]:h-6"
             />
+            <SidebarHeaderTitle className="px-3" />
           </div>
           <div className="flex items-center gap-4">
             <QuickCreate />

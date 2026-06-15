@@ -1,6 +1,7 @@
 'use client';
 
 import { ComponentProps, useId, useState } from 'react';
+import { useControllableState } from 'shared/lib/hooks';
 import {
   Button,
   Dialog,
@@ -13,14 +14,18 @@ import {
   DialogTrigger,
   Spinner,
 } from 'shared/ui';
-import { useControllableState } from 'shared/lib/hooks';
 import { InviteTeamMemberForm } from './InviteTeamMemberForm';
 
 interface InviteTeamMemberDialogProps extends ComponentProps<typeof DialogTrigger> {
   dialog?: ComponentProps<typeof Dialog>;
+  teamId?: string;
 }
 
-export function InviteTeamMemberDialog({ dialog = {}, ...props }: InviteTeamMemberDialogProps) {
+export function InviteTeamMemberDialog({
+  dialog = {},
+  teamId,
+  ...props
+}: InviteTeamMemberDialogProps) {
   const [open, setOpen] = useControllableState({
     defaultValue: dialog.defaultOpen,
     value: dialog.open,
@@ -31,7 +36,7 @@ export function InviteTeamMemberDialog({ dialog = {}, ...props }: InviteTeamMemb
 
   return (
     <Dialog {...dialog} open={open} onOpenChange={setOpen}>
-      <DialogTrigger {...props} />
+      {props.children ? <DialogTrigger {...props} /> : null}
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle>Пригласить участника</DialogTitle>
@@ -41,6 +46,7 @@ export function InviteTeamMemberDialog({ dialog = {}, ...props }: InviteTeamMemb
         </DialogHeader>
 
         <InviteTeamMemberForm
+          teamId={teamId}
           id={formId}
           mutateOptions={{
             onMutate: () => {

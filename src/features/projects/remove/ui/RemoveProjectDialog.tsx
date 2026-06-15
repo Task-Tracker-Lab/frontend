@@ -15,23 +15,23 @@ import { useRemoveProject } from '../model/useRemoveProject';
 
 interface Props extends ComponentProps<typeof AlertDialogTrigger> {
   projectName: string;
-  teamSlug: string;
+  teamId: string;
   projectId: string;
 }
 
-export function RemoveProjectDialog({ projectName, teamSlug, projectId, ...props }: Props) {
+export function RemoveProjectDialog({ projectName, teamId, projectId, ...props }: Props) {
   const [inputValue, setInputValue] = useState('');
   const removeProject = useRemoveProject();
 
   const isMatch = inputValue.trim() === projectName.trim();
 
   const onRemove = () => {
-    removeProject.mutate({ teamSlug, id: projectId });
+    removeProject.mutate({ teamId, id: projectId });
   };
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger {...props} />
+      {props.children ? <AlertDialogTrigger {...props} /> : null}
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Удалить проект?</AlertDialogTitle>
@@ -48,7 +48,11 @@ export function RemoveProjectDialog({ projectName, teamSlug, projectId, ...props
         />
         <AlertDialogFooter>
           <AlertDialogCancel onClick={() => setInputValue('')}>Отмена</AlertDialogCancel>
-          <AlertDialogAction variant="destructive" disabled={!isMatch} onClick={onRemove}>
+          <AlertDialogAction
+            variant="destructive"
+            disabled={!isMatch || removeProject.isPending}
+            onClick={onRemove}
+          >
             Удалить
           </AlertDialogAction>
         </AlertDialogFooter>

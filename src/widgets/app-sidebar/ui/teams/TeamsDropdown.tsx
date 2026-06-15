@@ -1,7 +1,10 @@
 'use client';
 import { CreateTeamDialog } from 'features/teams/create';
+import { Plus } from 'lucide-react';
 import Link from 'next/link';
+import { useState } from 'react';
 import { routes } from 'shared/config';
+import { useIsMobile } from 'shared/lib/hooks';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,9 +18,6 @@ import {
 import { useTeamsDropdown } from '../../model/useTeamsDropdown';
 import { TeamItem } from './TeamItem';
 import { TeamTrigger } from './TeamTrigger';
-import { useIsMobile } from 'shared/lib/hooks';
-import { Plus } from 'lucide-react';
-import { useState } from 'react';
 
 export function TeamsDropdown() {
   const { open, setOpen, query, visibleTeams, teams, hasMoreTeams, switchTeam } =
@@ -44,7 +44,7 @@ export function TeamsDropdown() {
         >
           <DropdownMenuLabel className="text-muted-foreground text-xs">Команды</DropdownMenuLabel>
           {visibleTeams.map((team, index) => (
-            <DropdownMenuItem key={team.name} onClick={() => switchTeam(team.slug)} className="p-0">
+            <DropdownMenuItem key={team.name} onClick={() => switchTeam(team.id)} className="p-0">
               <TeamItem
                 avatar={team.avatar}
                 name={team.name}
@@ -54,7 +54,7 @@ export function TeamsDropdown() {
           ))}
           {hasMoreTeams && (
             <DropdownMenuItem asChild className="text-muted-foreground text-xs">
-              <Link href={routes.profile.teams()} onClick={() => setOpen(false)}>
+              <Link href={routes.user.teams()} onClick={() => setOpen(false)}>
                 Все команды ({teams.length})
               </Link>
             </DropdownMenuItem>

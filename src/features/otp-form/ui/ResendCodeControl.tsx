@@ -1,61 +1,47 @@
 'use client';
 
-import { ComponentProps, useEffect, useMemo } from 'react';
-import { toast } from 'sonner';
-import { LocalStorageDraft } from 'shared/lib/classes';
+import { ComponentProps } from 'react';
 import { useTimer } from 'shared/lib/hooks';
 import { classNames, formatTime } from 'shared/lib/utils';
 import { Button } from 'shared/ui';
-import { DRAFT_TTL_MS, RESEND_CODE_DELAY_MS } from '../model/const';
+import { RESEND_CODE_DELAY_MS } from '../model/const';
+import { useResendCode, UseResendOptions } from '../model/useResend';
+import { TAuth } from 'entities/auth';
+import { toast } from 'sonner';
 
 interface ResendCodeControlProps extends Omit<ComponentProps<'div'>, 'children'> {
   resendDelayMs?: number;
-  storageKey?: string;
   storageTtlMs?: number;
+  data: TAuth.ResendCodeBody;
+  nextResendAt: string | null;
+  mutateOptions?: UseResendOptions;
 }
-
-interface LastSentCodeDraft extends Record<string, unknown> {
-  lastSentAt: number;
-}
-
-const getTimestampMs = (value?: string | number | Date): number =>
-  value === undefined ? Date.now() : new Date(value).getTime();
 
 export function ResendCodeControl(props: ResendCodeControlProps) {
-  const {
-    className,
-    resendDelayMs = RESEND_CODE_DELAY_MS,
-    storageKey = 'last-sent-code',
-    storageTtlMs = DRAFT_TTL_MS,
-    ...divProps
-  } = props;
+  const { className, data, nextResendAt, mutateOptions = {}, ...divProps } = props;
 
-  const lastSentCodeDraft = useMemo(
-    () => new LocalStorageDraft<LastSentCodeDraft>(storageKey),
-    [storageKey]
-  );
+  const initialRemainingMs = nextResendAt
+    ? Math.max(0, new Date(nextResendAt).getTime() - new Date().getTime())
+    : RESEND_CODE_DELAY_MS;
 
   const { isFinished, remainingMs, restart } = useTimer({
-    durationMs: resendDelayMs,
-    autoStart: false,
+    durationMs: initialRemainingMs,
+    autoStart: initialRemainingMs > 0,
   });
 
-  useEffect(() => {
-    const draft = lastSentCodeDraft.read();
-    const now = getTimestampMs();
-    const lastSentAt = draft?.lastSentAt ?? now;
-
-    if (!draft) {
-      lastSentCodeDraft.set({ lastSentAt }, storageTtlMs);
-    }
-
-    restart(resendDelayMs - (now - lastSentAt));
-  }, [lastSentCodeDraft, resendDelayMs, restart, storageTtlMs]);
+  const resend = useResendCode({
+    ...mutateOptions,
+    onSuccess: (data, ...args) => {
+      mutateOptions.onSuccess?.(data, ...args);
+      restart(data.retryAfterSeconds * 1000);
+      toast.success(
+        data.message || 'Повторный код для восстановления пароля отправлен на вашу почту'
+      );
+    },
+  });
 
   const handleResendCode = () => {
-    lastSentCodeDraft.set({ lastSentAt: getTimestampMs() }, storageTtlMs);
-    restart();
-    toast.warning('Функционал в разработке!');
+    resend.mutate(data);
   };
 
   return (

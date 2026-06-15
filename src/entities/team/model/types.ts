@@ -8,7 +8,6 @@ export type MemberStatus = z.infer<typeof STeam.MemberStatus>;
 
 export type CreateTeamBody = z.infer<typeof STeam.CreateTeamBody>;
 export type UpdateTeamBody = z.infer<typeof STeam.UpdateTeamBody>;
-export type CheckSlugResponse = z.infer<typeof STeam.CheckSlugResponse>;
 export type TeamDetailsResponse = z.infer<typeof STeam.TeamDetailsResponse>;
 
 export type TeamInvitationResponse = z.infer<typeof STeam.TeamInvitationResponse>;

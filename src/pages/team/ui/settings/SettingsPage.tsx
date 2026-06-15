@@ -1,9 +1,7 @@
 'use client';
 
-import { useCheckSlug, validateTeamSlugAsync } from 'entities/team';
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useZodValidationWithAsyncCheck } from 'shared/lib/hooks';
 import { useQueryTeam } from '../../api/useQueryTeam';
 import { TeamSettingsFormSchema, type TeamSettingsFormValues } from '../../model/settings';
 import { DangerZone } from './DangerZone';
@@ -15,20 +13,17 @@ import { DangerZoneSkeleton } from './skeletons/DangerZone.skeleton';
 import { DefaultSettingsSkeleton } from './skeletons/DefaultSettings.skeleton';
 import { InvitationSecuritySkeleton } from './skeletons/InvitationSecurity.skeleton';
 import { TeamIdentitySkeleton } from './skeletons/TeamIdentity.skeleton';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 export function Settings() {
   const teamQuery = useQueryTeam();
   const team = teamQuery.data;
-  const checkSlug = useCheckSlug(team?.slug ?? '');
 
   const form = useForm<TeamSettingsFormValues>({
-    resolver: useZodValidationWithAsyncCheck(TeamSettingsFormSchema, (...args) =>
-      validateTeamSlugAsync(checkSlug, ...args)
-    ),
+    resolver: zodResolver(TeamSettingsFormSchema),
     mode: 'onChange',
     defaultValues: {
       name: '',
-      slug: '',
       description: '',
     },
   });
@@ -39,7 +34,6 @@ export function Settings() {
     if (team) {
       reset({
         name: team.name,
-        slug: team.slug,
         description: team.description || '',
       });
     }
@@ -60,7 +54,7 @@ export function Settings() {
           {team ? <TeamIdentity team={team} /> : <TeamIdentitySkeleton />}
           {team ? <DefaultSettings /> : <DefaultSettingsSkeleton />}
           {team ? <InvitationSecurity /> : <InvitationSecuritySkeleton />}
-          {team ? <DangerZone teamName={team?.name} slug={team?.slug} /> : <DangerZoneSkeleton />}
+          {team ? <DangerZone teamName={team?.name} teamId={team?.id} /> : <DangerZoneSkeleton />}
         </form>
         {team ? <SaveBar team={team} /> : null}
       </FormProvider>

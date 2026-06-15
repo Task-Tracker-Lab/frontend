@@ -1,9 +1,11 @@
 import { type DefaultError, useMutation, UseMutationOptions } from '@tanstack/react-query';
 import { projectFabricKeys, ProjectHttp, type TProject } from 'entities/project';
+import { useRouter, usePathname } from 'next/navigation';
+import { routes } from 'shared/config';
 import { toast } from 'sonner';
 
 type RemoveProjectVariables = {
-  teamSlug: string;
+  teamId: string;
   id: string;
 };
 
@@ -13,15 +15,23 @@ export type UseRemoveProjectOptions = Omit<
 >;
 
 export function useRemoveProject({ onSuccess, ...rest }: UseRemoveProjectOptions = {}) {
+  const router = useRouter();
+  const pathname = usePathname();
+
   return useMutation<TProject.ActionResponse, DefaultError, RemoveProjectVariables>({
     ...rest,
-    mutationFn: ({ teamSlug, id }) => ProjectHttp.removeProject(teamSlug, id),
+    mutationFn: ({ teamId, id }) => ProjectHttp.removeProject(teamId, id),
     onSuccess: async (res, variables, _r, context) => {
       onSuccess?.(res, variables, _r, context);
+
+      if (pathname !== routes.team.projects()) {
+        router.replace(routes.team.projects());
+      }
+
       toast.success(res.message ?? 'Проект удалён');
 
       await context.client.invalidateQueries({
-        queryKey: projectFabricKeys.list(variables.teamSlug),
+        queryKey: projectFabricKeys.list(variables.teamId),
       });
     },
   });

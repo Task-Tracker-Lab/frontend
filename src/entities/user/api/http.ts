@@ -19,7 +19,9 @@ export class UserHttp {
     return api<unknown>({
       url: '/users/me/activity',
       method: 'GET',
-      contracts: {},
+      contracts: {
+        response: SUser.UserActivityResponse,
+      },
       signal,
     });
   }

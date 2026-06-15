@@ -3,18 +3,18 @@ import { projectFabricKeys } from '../model/const';
 import { ProjectHttp } from './http';
 
 export class ProjectQueries {
-  static getProjects(teamSlug: string) {
+  static getProjects(teamId: string) {
     return queryOptions({
-      queryKey: projectFabricKeys.list(teamSlug),
-      queryFn: async ({ signal }) => ProjectHttp.getProjects(teamSlug, signal),
+      queryKey: projectFabricKeys.list(teamId),
+      queryFn: async ({ signal }) => ProjectHttp.getProjects(teamId, signal),
       staleTime: 60_000,
     });
   }
 
-  static getProject(teamSlug: string, id: string, token?: string) {
+  static getProject(teamId: string, id: string, token?: string) {
     return queryOptions({
-      queryKey: [...projectFabricKeys.detail(teamSlug, id), token ?? null],
-      queryFn: async ({ signal }) => ProjectHttp.getProject(teamSlug, id, token, signal),
+      queryKey: [...projectFabricKeys.detail(teamId, id), token ?? null],
+      queryFn: async ({ signal }) => ProjectHttp.getProject(teamId, id, token, signal),
       staleTime: 60_000,
     });
   }

@@ -3,9 +3,9 @@ import * as SProject from '../model/schemas';
 import * as TProject from '../model/types';
 
 export class ProjectHttp {
-  static getProjects(teamSlug: string, signal?: AbortSignal) {
+  static getProjects(teamId: string, signal?: AbortSignal) {
     return api<TProject.ProjectListResponse>({
-      url: `/teams/${teamSlug}/projects`,
+      url: `/teams/${teamId}/projects`,
       method: 'GET',
       contracts: {
         response: SProject.ProjectListResponse,
@@ -14,9 +14,9 @@ export class ProjectHttp {
     });
   }
 
-  static getProject(teamSlug: string, id: string, token?: string, signal?: AbortSignal) {
+  static getProject(teamId: string, id: string, token?: string, signal?: AbortSignal) {
     return api<TProject.ProjectDetailResponse>({
-      url: `/teams/${teamSlug}/projects/${id}`,
+      url: `/teams/${teamId}/projects/${id}`,
       method: 'GET',
       params: token ? { token } : undefined,
       contracts: {
@@ -26,9 +26,9 @@ export class ProjectHttp {
     });
   }
 
-  static createProject(teamSlug: string, data: TProject.CreateProjectBody) {
+  static createProject(teamId: string, data: TProject.CreateProjectBody) {
     return api<TProject.CreateProjectResponse>({
-      url: `/teams/${teamSlug}/projects`,
+      url: `/teams/${teamId}/projects`,
       method: 'POST',
       data,
       contracts: {
@@ -38,9 +38,9 @@ export class ProjectHttp {
     });
   }
 
-  static updateProject(teamSlug: string, id: string, data: TProject.UpdateProjectBody) {
+  static updateProject(teamId: string, id: string, data: TProject.UpdateProjectBody) {
     return api<TProject.ActionResponse>({
-      url: `/teams/${teamSlug}/projects/${id}`,
+      url: `/teams/${teamId}/projects/${id}`,
       method: 'PATCH',
       data,
       contracts: {
@@ -50,9 +50,9 @@ export class ProjectHttp {
     });
   }
 
-  static removeProject(teamSlug: string, id: string) {
+  static removeProject(teamId: string, id: string) {
     return api<TProject.ActionResponse>({
-      url: `/teams/${teamSlug}/projects/${id}`,
+      url: `/teams/${teamId}/projects/${id}`,
       method: 'DELETE',
       contracts: {
         response: SProject.ActionResponse,
@@ -60,9 +60,9 @@ export class ProjectHttp {
     });
   }
 
-  static archiveProject(teamSlug: string, id: string) {
+  static archiveProject(teamId: string, id: string) {
     return api<TProject.ActionResponse>({
-      url: `/teams/${teamSlug}/projects/${id}/archive`,
+      url: `/teams/${teamId}/projects/${id}/archive`,
       method: 'POST',
       contracts: {
         response: SProject.ActionResponse,
@@ -70,9 +70,9 @@ export class ProjectHttp {
     });
   }
 
-  static createShareToken(teamSlug: string, id: string, data: TProject.CreateShareTokenBody = {}) {
+  static createShareToken(teamId: string, id: string, data: TProject.CreateShareTokenBody = {}) {
     return api<TProject.CreateShareTokenResponse>({
-      url: `/teams/${teamSlug}/projects/${id}/share`,
+      url: `/teams/${teamId}/projects/${id}/share`,
       method: 'POST',
       data,
       contracts: {

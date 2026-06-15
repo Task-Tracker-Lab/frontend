@@ -71,10 +71,10 @@
   overflow: hidden;
 }
 .collapsible-content[data-state='open'] {
-  animation: slideDown 300ms ease-out;
+  animation: slideDown 200ms ease-out;
 }
 .collapsible-content[data-state='closed'] {
-  animation: slideUp 300ms ease-out;
+  animation: slideUp 200ms ease-out;
 }
 
 @keyframes slideDown {

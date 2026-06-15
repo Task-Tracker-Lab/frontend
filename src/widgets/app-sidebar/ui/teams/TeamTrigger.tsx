@@ -11,13 +11,13 @@ interface TeamTriggerProps {
 }
 
 export function TeamTrigger({ query }: TeamTriggerProps) {
-  const slug = useTeamStore.use.slug();
+  const teamId = useTeamStore.use.teamId();
 
   const activeTeam = useMemo(() => {
     if (query.data) {
-      return query.data.items.find((d) => d.slug === slug);
+      return query.data.find((d) => d.id === teamId);
     }
-  }, [slug, query.data]);
+  }, [teamId, query.data]);
 
   if (query.isPending) {
     return <TeamItemSkeleton />;

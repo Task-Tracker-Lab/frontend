@@ -11,10 +11,10 @@ import { ProjectCardSkeleton } from './ProjectCard.skeleton';
 import { ProjectsEmpty } from './ProjectsEmpty';
 
 export function ProjectsPage() {
-  const slug = useTeamStore.use.slug();
+  const teamId = useTeamStore.use.teamId();
   const { data, isPending } = useQuery({
-    ...ProjectQueries.getProjects(slug!),
-    enabled: !!slug,
+    ...ProjectQueries.getProjects(teamId!),
+    enabled: !!teamId,
   });
 
   if (!isPending && !data?.items.length) {
@@ -25,7 +25,7 @@ export function ProjectsPage() {
     <>
       <div className="mb-6 flex items-center justify-end">
         <CreateProjectDialog asChild>
-          <Button disabled={!slug}>
+          <Button disabled={!teamId}>
             <Plus size={15} /> Создать проект
           </Button>
         </CreateProjectDialog>

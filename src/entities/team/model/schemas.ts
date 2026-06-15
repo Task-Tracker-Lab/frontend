@@ -1,6 +1,5 @@
 import { DateTimeString, GlobalSuccess, PaginatedResponseSchema } from 'shared/api';
 import { z } from 'zod/v4';
-import { MAX_SLUG_LENGTH, MIN_SLUG_LENGTH } from './const';
 
 export const TeamAvatarSchema = z
   .object({
@@ -37,23 +36,6 @@ export const CreateTeamBody = z.object({
     .min(1, 'Добавьте описание команды')
     .min(10, 'Описание должно содержать не менее 10 символов')
     .max(500, 'Описание не может быть длиннее 500 символов'),
-  slug: z
-    .string()
-    .optional()
-    .transform((val) => (val === '' || val === undefined ? undefined : val))
-    .pipe(
-      z
-        .string()
-        .min(
-          MIN_SLUG_LENGTH,
-          `Короткий адрес должен содержать не менее ${MIN_SLUG_LENGTH} символов`
-        )
-        .max(
-          MAX_SLUG_LENGTH,
-          `Короткий адрес в ссылке не может быть длиннее ${MAX_SLUG_LENGTH} символов`
-        )
-        .optional()
-    ),
 });
 
 export const UpdateTeamBody = CreateTeamBody.partial().refine(
@@ -64,15 +46,9 @@ export const UpdateTeamBody = CreateTeamBody.partial().refine(
   }
 );
 
-export const CheckSlugResponse = z.object({
-  available: z.boolean(),
-  message: z.string().optional(),
-});
-
 export const TeamDetailsResponse = z.object({
   id: z.string(),
   name: z.string(),
-  slug: z.string(),
   description: z.string().nullable(),
   avatarUrl: z.string().nullable(),
   coverUrl: z.string().nullable(),

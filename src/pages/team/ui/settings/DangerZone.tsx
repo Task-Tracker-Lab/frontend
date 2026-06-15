@@ -12,10 +12,10 @@ import { RemoveTeamDialog } from 'features/teams/remove';
 
 interface Props {
   teamName: string;
-  slug: string;
+  teamId: string;
 }
 
-export function DangerZone({ teamName, slug }: Props) {
+export function DangerZone({ teamName, teamId }: Props) {
   return (
     <Item variant="destructive">
       <ItemMedia>
@@ -29,7 +29,7 @@ export function DangerZone({ teamName, slug }: Props) {
         </ItemDescription>
       </ItemContent>
       <ItemActions>
-        <RemoveTeamDialog teamName={teamName} slug={slug} asChild>
+        <RemoveTeamDialog teamName={teamName} teamId={teamId} asChild>
           <Button variant="destructive" size="sm">
             Удалить рабочее пространство
           </Button>

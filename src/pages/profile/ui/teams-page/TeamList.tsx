@@ -13,28 +13,16 @@ import {
   ItemMedia,
   ItemTitle,
 } from 'shared/ui';
-import { TeamsEmpty } from './TeamsEmpty';
-import { TeamItemSkeleton } from './skeletons/TeamItem.skeleton';
 import { useSwitchTeam } from 'features/teams/active-team';
 
 export function TeamsList() {
   const teamsQuery = useQuery(UserQueries.getMyTeams());
-  const slug = useTeamStore.use.slug();
+  const teamId = useTeamStore.use.teamId();
 
   const { switchTeam } = useSwitchTeam({
-    teams: teamsQuery.data?.items,
+    teams: teamsQuery.data,
     defaultOptions: { redirect: true },
   });
-
-  if (teamsQuery.isPending) {
-    return (
-      <div className="flex flex-col gap-2">
-        {Array.from({ length: 3 }).map((_, i) => (
-          <TeamItemSkeleton variant="outline" key={i} />
-        ))}
-      </div>
-    );
-  }
 
   if (teamsQuery.isError) {
     return (
@@ -44,10 +32,7 @@ export function TeamsList() {
     );
   }
 
-  const teams = teamsQuery.data?.items ?? [];
-  if (teams.length === 0) {
-    return <TeamsEmpty />;
-  }
+  const teams = teamsQuery.data ?? [];
 
   return (
     <ul className="flex flex-col gap-2">
@@ -71,7 +56,7 @@ export function TeamsList() {
             </ItemContent>
             <ItemActions>
               <div className="flex items-center gap-1">
-                <RemoveTeamDialog teamName={team.name} slug={team.slug} asChild>
+                <RemoveTeamDialog teamName={team.name} teamId={team.id} asChild>
                   <Button type="button" size="sm" variant="ghost">
                     <Trash2Icon className="text-destructive size-4" />
                   </Button>
@@ -80,10 +65,10 @@ export function TeamsList() {
                   type="button"
                   size="sm"
                   variant="link"
-                  onClick={() => switchTeam(team.slug)}
-                  disabled={slug === team.slug}
+                  onClick={() => switchTeam(team.id)}
+                  disabled={teamId === team.id}
                 >
-                  {slug === team.slug ? 'Текущая' : 'Перейти'}
+                  {teamId === team.id ? 'Текущая' : 'Перейти'}
                 </Button>
               </div>
             </ItemActions>

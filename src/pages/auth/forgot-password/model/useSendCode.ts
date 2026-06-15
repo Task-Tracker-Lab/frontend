@@ -1,7 +1,16 @@
-import { type DefaultError, useMutation } from '@tanstack/react-query';
+import { type DefaultError, useMutation, UseMutationOptions } from '@tanstack/react-query';
 import { AuthHttp, TAuth } from 'entities/auth';
 
-export function useSendCode() {
+export type UseSendCodeOptions = Omit<
+  UseMutationOptions<
+    TAuth.ResetPasswordVerifyResponse,
+    DefaultError,
+    TAuth.ResetPasswordVerifyBody
+  >,
+  'mutationFn'
+>;
+
+export function useSendCode(options: UseSendCodeOptions = {}) {
   return useMutation<
     Awaited<TAuth.ResetPasswordVerifyResponse>,
     DefaultError,
@@ -12,5 +21,6 @@ export function useSendCode() {
     meta: {
       skipGlobalValidationToast: true,
     },
+    ...options,
   });
 }
