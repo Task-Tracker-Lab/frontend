@@ -24,9 +24,10 @@ import { cn, setFormErrors } from 'shared/lib/utils';
 import { routes } from 'shared/config';
 import { extractValidationIssues } from 'shared/api';
 import { TAuth } from 'entities/auth';
-import { ComponentProps } from 'react';
+import { ComponentProps, Suspense } from 'react';
 import { useSignin, UseSigninOptions } from '../model/useSignin';
 import { OAuthLoginButtons, OAuthSeparator } from 'features/auth/oauth-login';
+import { QueryParamsHandler } from 'features/handle-query-params';
 
 interface SigninFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
   mutateOptions?: UseSigninOptions;
@@ -59,70 +60,75 @@ export function SigninForm({ className, mutateOptions = {}, ...props }: SigninFo
   };
 
   return (
-    <Card>
-      <CardHeader className="text-center">
-        <CardTitle className="text-xl">Вход в систему</CardTitle>
-        <CardDescription>Пожалуйста, введите ваши данные для входа.</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form
-          className={cn('flex flex-col gap-6', className)}
-          onSubmit={form.handleSubmit(onSubmit)}
-          {...props}
-        >
-          <FieldGroup>
-            <Controller
-              name="email"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="email">Email</FieldLabel>
-                  <InputEmail
-                    {...field}
-                    id="email"
-                    aria-required="true"
-                    aria-invalid={fieldState.invalid}
-                  />
-                  {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-                </Field>
-              )}
-            />
-            <Controller
-              name="password"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <div className="flex items-center">
-                    <FieldLabel htmlFor="password">Пароль</FieldLabel>
-                    <Link href={routes.auth.forgotPassword()} className="ml-auto text-sm">
-                      Забыли пароль?
-                    </Link>
-                  </div>
-                  <InputPassword
-                    {...field}
-                    id="password"
-                    aria-invalid={fieldState.invalid}
-                    autoComplete="current-password"
-                  />
-                  {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-                </Field>
-              )}
-            />
-            <Field>
-              <Button type="submit" disabled={sendUserData.isPending}>
-                Войти
-              </Button>
-            </Field>
-            <Field>
-              <FieldDescription className="text-center">
-                Нет аккаунта? <Link href={routes.auth.signup()}>Зарегистрироваться</Link>
-              </FieldDescription>
-            </Field>
-          </FieldGroup>
-        </form>
-        <OAuthSeparator />
-        <OAuthLoginButtons />
-      </CardContent>
-    </Card>
+    <>
+      <Suspense>
+        <QueryParamsHandler />
+      </Suspense>
+      <Card>
+        <CardHeader className="text-center">
+          <CardTitle className="text-xl">Вход в систему</CardTitle>
+          <CardDescription>Пожалуйста, введите ваши данные для входа.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form
+            className={cn('flex flex-col gap-6', className)}
+            onSubmit={form.handleSubmit(onSubmit)}
+            {...props}
+          >
+            <FieldGroup>
+              <Controller
+                name="email"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor="email">Email</FieldLabel>
+                    <InputEmail
+                      {...field}
+                      id="email"
+                      aria-required="true"
+                      aria-invalid={fieldState.invalid}
+                    />
+                    {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                  </Field>
+                )}
+              />
+              <Controller
+                name="password"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <div className="flex items-center">
+                      <FieldLabel htmlFor="password">Пароль</FieldLabel>
+                      <Link href={routes.auth.forgotPassword()} className="ml-auto text-sm">
+                        Забыли пароль?
+                      </Link>
+                    </div>
+                    <InputPassword
+                      {...field}
+                      id="password"
+                      aria-invalid={fieldState.invalid}
+                      autoComplete="current-password"
+                    />
+                    {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                  </Field>
+                )}
+              />
+              <Field>
+                <Button type="submit" disabled={sendUserData.isPending}>
+                  Войти
+                </Button>
+              </Field>
+              <Field>
+                <FieldDescription className="text-center">
+                  Нет аккаунта? <Link href={routes.auth.signup()}>Зарегистрироваться</Link>
+                </FieldDescription>
+              </Field>
+            </FieldGroup>
+          </form>
+          <OAuthSeparator />
+          <OAuthLoginButtons />
+        </CardContent>
+      </Card>
+    </>
   );
 }

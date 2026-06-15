@@ -1,26 +1,25 @@
-import type { ButtonHTMLAttributes } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from 'shared/ui';
 import { cn } from 'shared/lib/utils';
-import { CAuth } from 'entities/auth';
+import { OAUTH_PROVIDERS } from 'entities/auth';
+import type { ButtonHTMLAttributes } from 'react';
+import type { Route } from 'next';
 import type { TAuth } from 'entities/auth';
-import Link from 'next/link';
-import { type Route } from 'next';
-import Image from 'next/image';
 
 type OAuthButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'> & {
-  provider: TAuth.OAuthProvider;
   iconClassName?: string;
   href: Route;
+  data: {
+    label: string;
+    value: TAuth.OAuthProvider;
+  };
 };
 
-export function OAuthButton({
-  provider,
-  className,
-  iconClassName,
-  href,
-  ...props
-}: OAuthButtonProps) {
-  const meta = CAuth.OAUTH_PROVIDERS[provider];
+export function OAuthButton({ className, iconClassName, href, data, ...props }: OAuthButtonProps) {
+  const { label, value } = data;
+  const meta = OAUTH_PROVIDERS[value];
+
   if (!meta) return null;
 
   return (
@@ -35,13 +34,13 @@ export function OAuthButton({
         {meta.iconSrc ? (
           <Image
             src={meta.iconSrc}
-            alt={meta.label}
+            alt={label}
             width={24}
             height={24}
             className={cn('size-6', iconClassName)}
           />
         ) : (
-          meta.label
+          label
         )}
       </Link>
     </Button>

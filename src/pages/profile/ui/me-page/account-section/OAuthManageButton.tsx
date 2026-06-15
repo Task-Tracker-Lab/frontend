@@ -1,7 +1,6 @@
 'use client';
 
-import { TAuth } from 'entities/auth';
-import { CAuth } from 'entities/auth';
+import { OAUTH_PROVIDERS, TAuth, authFabricKeys } from 'entities/auth';
 import { useCallback, type ComponentProps } from 'react';
 import { Button } from 'shared/ui';
 import { useConnectOAuthProvider } from '../../../api/useConnectOauthProvider';
@@ -26,7 +25,7 @@ export function OAuthManageButton({ provider, label, isLinked, ...props }: OAuth
     if (isLinked) {
       disconnect.mutate(provider, {
         onSuccess: (data, _v, _m, context) => {
-          context.client.invalidateQueries({ queryKey: CAuth.authKeys.connectedProviders() });
+          context.client.invalidateQueries({ queryKey: authFabricKeys.connectedProviders() });
           toast.success(data.message);
         },
       });
@@ -42,7 +41,7 @@ export function OAuthManageButton({ provider, label, isLinked, ...props }: OAuth
     }
   }, [connect, disconnect, isLinked, provider]);
 
-  const meta = CAuth.OAUTH_PROVIDERS[provider];
+  const meta = OAUTH_PROVIDERS[provider];
 
   return (
     <Button
@@ -54,7 +53,7 @@ export function OAuthManageButton({ provider, label, isLinked, ...props }: OAuth
       {...props}
     >
       <div className={`${meta.buttonClassName} w-max rounded-full text-2xl`}>
-        <Image src={meta.iconSrc} alt={meta.label} width={24} height={24} className={'size-6'} />
+        <Image src={meta.iconSrc} alt={label} width={24} height={24} />
       </div>
       <span className="w-full text-center">
         {isLinked ? 'Отвязать' : 'Привязать'} {label} аккаунт
