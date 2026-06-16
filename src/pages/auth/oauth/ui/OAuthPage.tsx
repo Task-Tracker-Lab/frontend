@@ -21,6 +21,8 @@ interface Props {
 export async function OAuthPage({ searchParams }: Props) {
   const { success, message, provider, startOAuth } = await searchParams;
 
+  // TODO: страница знает API
+
   if (provider && startOAuth === 'true') {
     redirect(`${env.NEXT_PUBLIC_API_BASE_URL}/auth/oauth/${provider}` as Route);
   }
@@ -30,11 +32,13 @@ export async function OAuthPage({ searchParams }: Props) {
   }
 
   if (success === 'true') {
-    redirect(routes.user.profile());
+    redirect(
+      `${routes.user.profile()}?success=true&message=${encodeURIComponent(message || 'Вход успешен')}`
+    );
   }
 
   const errorUrl = message
-    ? `${routes.auth.signin()}?oauth_error=1&message=${encodeURIComponent(message)}`
+    ? `${routes.auth.signin()}?success=true&message=${encodeURIComponent(message)}`
     : routes.auth.signin();
 
   redirect(errorUrl as Route);

@@ -1,38 +1,32 @@
 'use client';
-import { Button, Skeleton } from 'shared/ui';
-import { OAUTH_PROVIDERS, OAUTH_PROVIDERS_COUNT } from '../model/consts';
+import { Skeleton } from 'shared/ui';
 import { cn } from 'shared/lib/utils';
-import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { AuthQueries } from 'entities/auth';
+import { routes } from 'shared/config';
+import { OAuthButton } from './OAuthButton';
+import { type TAuth } from 'entities/auth';
+import { type StartOauthParams } from '../model/types';
 import { type Route } from 'next';
+
+export const getRoute = (provider: TAuth.OAuthProvider) => {
+  const params = new URLSearchParams({
+    provider,
+    startOAuth: 'true',
+  } satisfies Record<keyof StartOauthParams, string>);
+
+  return `${routes.auth.oauth()}?${params.toString()}`;
+};
 
 export function OAuthLoginButtons({ className }: { className?: string }) {
   const { data, isLoading } = useQuery(AuthQueries.getOAuthProviders());
 
   return (
     <div className={cn('flex items-center justify-center gap-2', className)}>
-      {isLoading &&
-        Array.from({ length: OAUTH_PROVIDERS_COUNT }, (_v, i) => (
-          <Skeleton className="size-8" key={i} />
-        ))}
+      {isLoading && Array.from({ length: 3 }, (_v, i) => <Skeleton className="size-8" key={i} />)}
 
       {data?.map((item) => {
-        const providerConfig = OAUTH_PROVIDERS[item.value];
-
-        return (
-          <Button
-            asChild
-            style={{ backgroundColor: providerConfig.color }}
-            key={item.value}
-            size={'icon'}
-            variant={'outline'}
-          >
-            <Link href={providerConfig.href as Route}>
-              <providerConfig.icon className="size-6" />
-            </Link>
-          </Button>
-        );
+        return <OAuthButton key={item.value} data={item} href={getRoute(item.value) as Route} />;
       })}
     </div>
   );

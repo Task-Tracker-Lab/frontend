@@ -96,16 +96,17 @@ export class AuthHttp {
       signal,
     });
   }
-  static connectedOAuthProviders() {
+  static connectedOAuthProviders(signal: AbortSignal) {
     return api<TAuth.ConnectedOAuthProvidersResponse>({
       url: '/auth/oauth/providers/connected',
       method: 'GET',
       contracts: {
         response: SAuth.ConnectedOAuthProvidersResponse,
       },
+      signal,
     });
   }
-  static connecteOAuthProvder(provider: TAuth.OAuthProvider) {
+  static connectOAuthProvder(provider: TAuth.OAuthProvider) {
     return api<TAuth.ConnectOAuthProviderResponse>({
       url: `/auth/oauth/${provider}/connect`,
       method: 'POST',
