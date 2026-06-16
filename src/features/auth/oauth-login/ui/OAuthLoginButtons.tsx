@@ -3,7 +3,6 @@ import { Skeleton } from 'shared/ui';
 import { cn } from 'shared/lib/utils';
 import { useQuery } from '@tanstack/react-query';
 import { AuthQueries } from 'entities/auth';
-import { routes } from 'shared/config';
 import { OAuthButton } from './OAuthButton';
 import { type TAuth } from 'entities/auth';
 import { type StartOauthParams } from '../model/types';
@@ -15,7 +14,7 @@ export const getRoute = (provider: TAuth.OAuthProvider) => {
     startOAuth: 'true',
   } satisfies Record<keyof StartOauthParams, string>);
 
-  return `${routes.auth.oauth()}?${params.toString()}`;
+  return `/oauth?${params.toString()}`;
 };
 
 export function OAuthLoginButtons({ className }: { className?: string }) {

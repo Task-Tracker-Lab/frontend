@@ -135,4 +135,11 @@ export class AuthHttp {
       },
     });
   }
+  static exchangeToken(data: TAuth.ExchangeTokenBody): Promise<TAuth.ExchangeTokenResponse> {
+    return api<TAuth.ExchangeTokenResponse>({
+      url: '/oauth/exchange',
+      method: 'POST',
+      data: data,
+    });
+  }
 }

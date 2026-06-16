@@ -30,7 +30,7 @@ export function OAuthButton({ className, iconClassName, href, data, ...props }: 
       className={cn(meta.buttonClassName, className)}
       {...props}
     >
-      <Link href={href} className="text-base">
+      <a href={href} className="text-base">
         {meta.iconSrc ? (
           <Image
             src={meta.iconSrc}
@@ -42,7 +42,7 @@ export function OAuthButton({ className, iconClassName, href, data, ...props }: 
         ) : (
           label
         )}
-      </Link>
+      </a>
     </Button>
   );
 }
