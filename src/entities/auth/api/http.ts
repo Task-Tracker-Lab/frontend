@@ -88,7 +88,7 @@ export class AuthHttp {
   }
   static oAuthProviders(signal: AbortSignal) {
     return api<TAuth.OAuthProvidersResponse>({
-      url: '/auth/oauth/providers',
+      url: '/oauth/providers',
       method: 'GET',
       contracts: {
         response: SAuth.OAuthProvidersResponse,
@@ -98,7 +98,7 @@ export class AuthHttp {
   }
   static connectedOAuthProviders(signal: AbortSignal) {
     return api<TAuth.ConnectedOAuthProvidersResponse>({
-      url: '/auth/oauth/providers/connected',
+      url: '/oauth/providers/connected',
       method: 'GET',
       contracts: {
         response: SAuth.ConnectedOAuthProvidersResponse,
@@ -108,7 +108,7 @@ export class AuthHttp {
   }
   static connectOAuthProvder(provider: TAuth.OAuthProvider) {
     return api<TAuth.ConnectOAuthProviderResponse>({
-      url: `/auth/oauth/${provider}/connect`,
+      url: `/oauth/${provider}/connect`,
       method: 'POST',
       contracts: {
         response: SAuth.ConnectOAuthProviderResponse,
@@ -117,7 +117,7 @@ export class AuthHttp {
   }
   static removeOAuthProvder(provider: TAuth.OAuthProvider) {
     return api<TAuth.RemoveOAuthProviderResponse>({
-      url: `/auth/oauth/${provider}/connect`,
+      url: `/oauth/${provider}/connect`,
       method: 'DELETE',
       contracts: {
         response: SAuth.RemoveOAuthProviderResponse,
@@ -126,7 +126,7 @@ export class AuthHttp {
   }
   static resendCode(data: TAuth.ResendCodeBody): Promise<TAuth.ResendCodeResponse> {
     return api<TAuth.ResendCodeResponse>({
-      url: '/auth/resend',
+      url: '/oauth/resend',
       method: 'POST',
       data: data,
       contracts: {
