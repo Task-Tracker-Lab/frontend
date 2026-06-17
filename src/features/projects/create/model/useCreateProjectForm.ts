@@ -32,8 +32,10 @@ export function useCreateProjectForm(options: UseCreateProjectOptions = {}) {
     if (!teamId) return;
 
     const body: TProject.CreateProjectBody = {
+      teamId,
       name: data.name.trim(),
-      key: data.key.trim().toUpperCase(),
+      slug: data.slug?.trim(),
+      status: data.status,
       visibility: data.visibility ?? 'private',
       ...(data.description?.trim() ? { description: data.description.trim() } : {}),
       ...(data.icon ? { icon: data.icon } : {}),

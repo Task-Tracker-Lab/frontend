@@ -14,11 +14,21 @@ import {
 import type { ProjectIdentityFormValues } from '../model/types';
 import { ProjectColorPicker } from './ProjectColorPicker';
 import { ProjectIconPicker } from './ProjectIconPicker';
+import { slugify } from '../lib/slugify';
 
 interface ProjectIdentityFieldsProps {
   disabled?: boolean;
   idPrefix?: string;
   showPlaceholders?: boolean;
+}
+
+function slugifyOnChange(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/[\s_]+/g, '-')
+    .replace(/[^a-z0-9-]/g, '')
+    .replace(/-+/g, '-')
+    .replace(/^-+/, '');
 }
 
 export function ProjectIdentityFields({
@@ -36,11 +46,17 @@ export function ProjectIdentityFields({
       <Controller
         name="name"
         control={form.control}
-        render={({ field, fieldState }) => (
+        render={({ field, fieldState, formState }) => (
           <Field data-invalid={fieldState.invalid}>
             <FieldLabel htmlFor={`${idPrefix}-name`}>Название</FieldLabel>
             <Input
               {...field}
+              onChange={(e) => {
+                field.onChange(e);
+                if (!formState.dirtyFields.slug) {
+                  form.setValue('slug', slugify(e.target.value));
+                }
+              }}
               id={`${idPrefix}-name`}
               aria-label="Название проекта"
               placeholder={showPlaceholders ? 'Мой проект' : undefined}
@@ -54,7 +70,7 @@ export function ProjectIdentityFields({
         )}
       />
       <Controller
-        name="key"
+        name="slug"
         control={form.control}
         render={({ field, fieldState }) => (
           <Field data-invalid={fieldState.invalid}>
@@ -64,16 +80,11 @@ export function ProjectIdentityFields({
                 {...field}
                 value={field.value ?? ''}
                 onChange={(e) => {
-                  field.onChange(
-                    e.target.value
-                      .trim()
-                      .toUpperCase()
-                      .replace(/[^A-Z0-9]/g, '')
-                  );
+                  field.onChange(slugifyOnChange(e.target.value));
                 }}
                 id={`${idPrefix}-key`}
                 aria-label="Ключ проекта"
-                placeholder={showPlaceholders ? 'PROJ' : undefined}
+                placeholder={showPlaceholders ? 'my-project' : undefined}
                 aria-required={showPlaceholders ? true : undefined}
                 aria-invalid={fieldState.invalid}
                 autoComplete="off"
