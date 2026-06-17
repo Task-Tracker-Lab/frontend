@@ -14,9 +14,9 @@ export class ProjectHttp {
     });
   }
 
-  static getProject(teamId: string, id: string, token?: string, signal?: AbortSignal) {
+  static getProject(teamId: string, slug: string, token?: string, signal?: AbortSignal) {
     return api<TProject.ProjectDetailResponse>({
-      url: `/teams/${teamId}/projects/${id}`,
+      url: `/teams/${teamId}/projects/${slug}`,
       method: 'GET',
       params: token ? { token } : undefined,
       contracts: {
@@ -38,9 +38,9 @@ export class ProjectHttp {
     });
   }
 
-  static updateProject(teamId: string, id: string, data: TProject.UpdateProjectBody) {
+  static updateProject(teamId: string, slug: string, data: TProject.UpdateProjectBody) {
     return api<TProject.ActionResponse>({
-      url: `/teams/${teamId}/projects/${id}`,
+      url: `/teams/${teamId}/projects/${slug}`,
       method: 'PATCH',
       data,
       contracts: {
@@ -50,9 +50,9 @@ export class ProjectHttp {
     });
   }
 
-  static removeProject(teamId: string, id: string) {
+  static removeProject(teamId: string, slug: string) {
     return api<TProject.ActionResponse>({
-      url: `/teams/${teamId}/projects/${id}`,
+      url: `/teams/${teamId}/projects/${slug}`,
       method: 'DELETE',
       contracts: {
         response: SProject.ActionResponse,
@@ -60,9 +60,9 @@ export class ProjectHttp {
     });
   }
 
-  static archiveProject(teamId: string, id: string) {
+  static archiveProject(teamId: string, slug: string) {
     return api<TProject.ActionResponse>({
-      url: `/teams/${teamId}/projects/${id}/archive`,
+      url: `/teams/${teamId}/projects/${slug}/archive`,
       method: 'POST',
       contracts: {
         response: SProject.ActionResponse,
@@ -70,9 +70,9 @@ export class ProjectHttp {
     });
   }
 
-  static createShareToken(teamId: string, id: string, data: TProject.CreateShareTokenBody = {}) {
+  static createShareToken(teamId: string, slug: string, data: TProject.CreateShareTokenBody = {}) {
     return api<TProject.CreateShareTokenResponse>({
-      url: `/teams/${teamId}/projects/${id}/share`,
+      url: `/teams/${teamId}/projects/${slug}/share`,
       method: 'POST',
       data,
       contracts: {

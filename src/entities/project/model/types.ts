@@ -1,6 +1,10 @@
 import { z } from 'zod/v4';
 import * as SProject from './schemas';
 
+export type ProjectStatus = z.infer<typeof SProject.ProjectStatusSchema>;
+export type ProjectVisibility = z.infer<typeof SProject.ProjectVisibilitySchema>;
+export type ProjectMemberRole = z.infer<typeof SProject.ProjectMemberRoleSchema>;
+
 export type CreateProjectBody = z.infer<typeof SProject.CreateProjectBody>;
 export type UpdateProjectBody = z.infer<typeof SProject.UpdateProjectBody>;
 export type CreateProjectResponse = z.infer<typeof SProject.CreateProjectResponse>;
