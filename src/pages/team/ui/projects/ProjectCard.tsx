@@ -40,6 +40,7 @@ const statusLabels: Record<TProject.ProjectListItemResponse['status'], string> =
   active: 'Активен',
   archived: 'В архиве',
   template: 'Шаблон',
+  deleted: 'Удалён',
 };
 
 export function ProjectCard({
@@ -53,7 +54,7 @@ export function ProjectCard({
   const teamId = useTeamStore.use.teamId();
   const name = nameProp ?? project?.name ?? 'Atlas Platform';
   const description =
-    descriptionProp ?? (project ? `Ключ проекта: ${project.key}` : 'Core team workspace.');
+    descriptionProp ?? (project ? `Ключ проекта: ${project.slug}` : 'Core team workspace.');
   const statusLabel = statusLabelProp ?? (project ? statusLabels[project.status] : 'On Track');
   const iconEmoji = project ? projectIconCodeToEmoji(project.icon) : null;
   const iconColor = project?.color;
@@ -64,8 +65,8 @@ export function ProjectCard({
   const mockMembersCount = project ? (project.id.charCodeAt(1) % 3) + 2 : 3;
   const mockMembers = Array.from({ length: mockMembersCount }).map((_, i) => i + 1);
 
-  const projectHref = project && teamId ? routes.team.project.root(project.id) : null;
-
+  const projectHref = project && teamId ? routes.team.project.root(project.slug) : null;
+  const canEdit = project?.role === 'admin' || project?.role === 'owner';
   const card = (
     <Card
       className={cn(
@@ -119,10 +120,10 @@ export function ProjectCard({
                 )}
                 {statusLabel}
               </Badge>
-              {project?.key && (
+              {project?.slug && (
                 <span className="text-muted-foreground flex min-w-0 items-center gap-1 truncate text-xs font-medium">
                   <KeyRound className="size-3 shrink-0" />
-                  {project.key}
+                  {project.slug}
                 </span>
               )}
             </div>
@@ -164,7 +165,7 @@ export function ProjectCard({
                   teamId={teamId!}
                   projectId={project.id}
                   asChild
-                  disabled={!(project.canEdit && teamId)}
+                  disabled={!(canEdit && teamId)}
                 >
                   <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                     Восстановить
@@ -177,7 +178,7 @@ export function ProjectCard({
                     teamId={teamId!}
                     projectId={project?.id ?? ''}
                     asChild
-                    disabled={!(project?.canEdit && teamId)}
+                    disabled={!(canEdit && teamId)}
                   >
                     <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                       Архивировать
@@ -233,7 +234,7 @@ export function ProjectCard({
         </div>
 
         <div className="text-muted-foreground flex items-center gap-3 text-xs">
-          {project?.canEdit ? (
+          {canEdit ? (
             <span className="flex items-center gap-1" title="Можно редактировать">
               <ShieldCheck className="size-3.5 text-emerald-500" />
             </span>

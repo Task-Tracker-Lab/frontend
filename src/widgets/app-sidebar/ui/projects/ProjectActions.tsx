@@ -24,7 +24,7 @@ export function ProjectActions({ project, teamId, ...props }: ProjectActionsProp
   const [shareOpen, setShareOpen] = useState(false);
   const [archiveOpen, setArchiveOpen] = useState(false);
   const [restoreOpen, setRestoreOpen] = useState(false);
-  const canManage = Boolean(teamId && project.canEdit);
+  const canManage = Boolean(teamId && (project.role === 'owner' || project.role === 'admin'));
 
   const openDialog = (setDialogOpen: (open: boolean) => void) => (event: Event) => {
     event.preventDefault();
