@@ -135,7 +135,7 @@ export function ProjectSettingsPage() {
 
         {canEdit && teamId && (
           <CardSection title="Опасная зона" description="Необратимые действия с проектом.">
-            <ProjectDangerZone projectName={project.name} teamId={teamId} projectId={project.id} />
+            <ProjectDangerZone projectName={project.name} teamId={teamId} slug={project.slug} />
           </CardSection>
         )}
       </form>

@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 
 type ShareProjectVariables = {
   teamId: string;
-  id: string;
+  slug: string;
   body?: TProject.CreateShareTokenBody;
 };
 
@@ -16,13 +16,13 @@ export type UseShareProjectOptions = Omit<
 export function useShareProject({ onSuccess, ...rest }: UseShareProjectOptions = {}) {
   return useMutation<TProject.CreateShareTokenResponse, DefaultError, ShareProjectVariables>({
     ...rest,
-    mutationFn: ({ teamId, id, body = {} }) => ProjectHttp.createShareToken(teamId, id, body),
+    mutationFn: ({ teamId, slug, body = {} }) => ProjectHttp.createShareToken(teamId, slug, body),
     onSuccess: async (res, variables, _r, context) => {
       onSuccess?.(res, variables, _r, context);
       toast.success(res.message ?? 'Ссылка для доступа создана');
 
       await context.client.invalidateQueries({
-        queryKey: projectFabricKeys.detail(variables.teamId, variables.id),
+        queryKey: projectFabricKeys.detail(variables.teamId, variables.slug),
       });
     },
   });

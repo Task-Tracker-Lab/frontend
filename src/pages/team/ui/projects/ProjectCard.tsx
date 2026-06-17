@@ -153,7 +153,7 @@ export function ProjectCard({
               <ShareProjectDialog
                 projectName={project?.name ?? ''}
                 teamId={teamId!}
-                projectId={project?.id ?? ''}
+                slug={project?.slug ?? ''}
                 asChild
                 disabled={!(project && teamId)}
               >
@@ -163,7 +163,7 @@ export function ProjectCard({
                 <RestoreProjectDialog
                   projectName={project.name}
                   teamId={teamId!}
-                  projectId={project.id}
+                  slug={project.slug}
                   asChild
                   disabled={!(canEdit && teamId)}
                 >
@@ -176,7 +176,7 @@ export function ProjectCard({
                   <ArchiveProjectDialog
                     projectName={project?.name ?? ''}
                     teamId={teamId!}
-                    projectId={project?.id ?? ''}
+                    slug={project?.slug ?? ''}
                     asChild
                     disabled={!(canEdit && teamId)}
                   >
@@ -189,7 +189,7 @@ export function ProjectCard({
               <RemoveProjectDialog
                 projectName={project?.name ?? ''}
                 teamId={teamId!}
-                projectId={project?.id ?? ''}
+                slug={project?.slug ?? ''}
                 asChild
                 disabled={!(project && teamId)}
               >

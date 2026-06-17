@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 
 type ArchiveProjectVariables = {
   teamId: string;
-  id: string;
+  slug: string;
 };
 
 export type UseArchiveProjectOptions = Omit<
@@ -15,7 +15,7 @@ export type UseArchiveProjectOptions = Omit<
 export function useArchiveProject({ onSuccess, ...rest }: UseArchiveProjectOptions = {}) {
   return useMutation<TProject.ActionResponse, DefaultError, ArchiveProjectVariables>({
     ...rest,
-    mutationFn: ({ teamId, id }) => ProjectHttp.archiveProject(teamId, id),
+    mutationFn: ({ teamId, slug }) => ProjectHttp.archiveProject(teamId, slug),
     onSuccess: async (res, variables, _r, context) => {
       onSuccess?.(res, variables, _r, context);
       toast.success(res.message ?? 'Проект архивирован');
@@ -25,7 +25,7 @@ export function useArchiveProject({ onSuccess, ...rest }: UseArchiveProjectOptio
           queryKey: projectFabricKeys.list(variables.teamId),
         }),
         context.client.invalidateQueries({
-          queryKey: projectFabricKeys.detail(variables.teamId, variables.id),
+          queryKey: projectFabricKeys.detail(variables.teamId, variables.slug),
         }),
       ]);
     },

@@ -18,7 +18,7 @@ import { useArchiveProject } from '../model/useArchiveProject';
 interface ArchiveProjectDialogProps extends ComponentProps<typeof AlertDialogTrigger> {
   projectName: string;
   teamId: string;
-  projectId: string;
+  slug: string;
   onArchived?: () => void;
   dialog?: ComponentProps<typeof AlertDialog>;
 }
@@ -26,7 +26,7 @@ interface ArchiveProjectDialogProps extends ComponentProps<typeof AlertDialogTri
 export function ArchiveProjectDialog({
   projectName,
   teamId,
-  projectId,
+  slug,
   onArchived,
   dialog = {},
   ...props
@@ -45,7 +45,7 @@ export function ArchiveProjectDialog({
   });
 
   const onArchive = () => {
-    archiveProject.mutate({ teamId, id: projectId });
+    archiveProject.mutate({ teamId, slug });
   };
 
   return (
