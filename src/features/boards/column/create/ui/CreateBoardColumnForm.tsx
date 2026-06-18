@@ -8,19 +8,19 @@ import { COLORS, DEFAULT_COLUMN_COLOR } from '../model/consts';
 import { fi } from 'zod/v4/locales';
 
 interface CreateBoardColumnFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
-  boardId: string;
+  boardSlug: string;
   defaultPosition?: number;
   mutateOptions?: UseCreateBoardColumnOptions;
 }
 
 export function CreateBoardColumnForm({
-  boardId,
+  boardSlug,
   defaultPosition,
   className,
   mutateOptions,
   ...props
 }: CreateBoardColumnFormProps) {
-  const { form, isPending, handleSubmit } = useCreateBoardColumnForm(boardId, {
+  const { form, isPending, handleSubmit } = useCreateBoardColumnForm(boardSlug, {
     defaultPosition,
     ...mutateOptions,
   });

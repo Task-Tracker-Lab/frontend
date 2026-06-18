@@ -15,13 +15,13 @@ import {
 import { CreateBoardColumnForm } from './CreateBoardColumnForm';
 
 interface CreateBoardColumnDialogProps extends ComponentProps<typeof DialogTrigger> {
-  boardId: string;
+  boardSlug: string;
   defaultPosition?: number;
   dialog?: ComponentProps<typeof Dialog>;
 }
 
 export function CreateBoardColumnDialog({
-  boardId,
+  boardSlug,
   defaultPosition,
   dialog = {},
   ...props
@@ -45,7 +45,7 @@ export function CreateBoardColumnDialog({
 
         <CreateBoardColumnForm
           id={formId}
-          boardId={boardId}
+          boardSlug={boardSlug}
           defaultPosition={defaultPosition}
           mutateOptions={{
             onMutate: () => {

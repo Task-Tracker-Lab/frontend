@@ -6,7 +6,7 @@ import { CreateBoardColumnFormSchema } from './schemas';
 import { CreateBoardColumnFormValues } from './type';
 import { setFormErrors } from 'shared/lib/utils';
 import { extractValidationIssues } from 'shared/api';
-import { TBoard } from 'entities/board';
+import { type TBoard } from 'entities/board';
 import { useProjectStore } from 'entities/project';
 
 type UseCreateBoardColumnFormOptions = UseCreateBoardColumnOptions & {
@@ -14,11 +14,11 @@ type UseCreateBoardColumnFormOptions = UseCreateBoardColumnOptions & {
 };
 
 export function useCreateBoardColumnForm(
-  boardId: string,
+  boardSlug: string,
   options: UseCreateBoardColumnFormOptions = {}
 ) {
   const { defaultPosition = 0, ...mutationOptions } = options;
-  const projectId = useProjectStore((s) => s.projectId!);
+  const projectSlug = useProjectStore((s) => s.projectSlug!);
   const form = useForm<CreateBoardColumnFormValues>({
     resolver: zodResolver(CreateBoardColumnFormSchema),
     defaultValues: getDefaultCreateBoardColumnValues(defaultPosition),
@@ -42,13 +42,13 @@ export function useCreateBoardColumnForm(
       ...(data.color ? { color: data.color } : {}),
     };
 
-    createBoardColumn.mutate({ boardId, projectId, body });
+    createBoardColumn.mutate({ boardSlug, body });
   };
 
   return {
     form,
-    boardId,
-    projectId,
+    boardSlug,
+    projectSlug,
     isPending: createBoardColumn.isPending,
     handleSubmit: form.handleSubmit(onSubmit),
   };

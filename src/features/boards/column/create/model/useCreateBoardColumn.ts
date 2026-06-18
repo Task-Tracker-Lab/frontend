@@ -1,10 +1,9 @@
 import { type DefaultError, useMutation, UseMutationOptions } from '@tanstack/react-query';
-import { boardFabricKeys, BoardHttp, TBoard } from 'entities/board';
+import { boardFabricKeys, BoardHttp, type TBoard } from 'entities/board';
 import { toast } from 'sonner';
 
 type CreateBoardColumnVariables = {
-  boardId: string;
-  projectId: string;
+  boardSlug: string;
   body: TBoard.CreateBoardColumnBody;
 };
 
@@ -16,16 +15,12 @@ export type UseCreateBoardColumnOptions = Omit<
 export function useCreateBoardColumn({ onSuccess, ...rest }: UseCreateBoardColumnOptions = {}) {
   return useMutation<TBoard.CreateBoardColumnResponse, DefaultError, CreateBoardColumnVariables>({
     ...rest,
-    mutationFn: ({ boardId, body }) => BoardHttp.createBoardColumn(boardId, body),
+    mutationFn: ({ boardSlug, body }) => BoardHttp.createBoardColumn(boardSlug, body),
     onSuccess: async (res, variables, _r, context) => {
       onSuccess?.(res, variables, _r, context);
       toast.success(res.message ?? 'Колонка создана');
-
       await context.client.invalidateQueries({
-        queryKey: boardFabricKeys.list(variables.projectId),
-      });
-      await context.client.invalidateQueries({
-        queryKey: boardFabricKeys.columns(variables.boardId),
+        queryKey: boardFabricKeys.columns(variables.boardSlug),
       });
     },
   });

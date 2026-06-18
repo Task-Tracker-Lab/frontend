@@ -36,7 +36,7 @@ export function ProjectKanban({ board }: ProjectKanbanProps) {
         })}
         <div className="flex w-[250px] min-w-[250px] shrink-0 items-start">
           <CreateBoardColumnDialog
-            boardId={board.board.id}
+            boardSlug={board.board.slug}
             defaultPosition={nextColumnPosition}
             asChild
           >

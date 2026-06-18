@@ -9,7 +9,7 @@ import {
   buttonVariants,
 } from 'shared/ui';
 import { CreateBoardDialog } from 'features/boards/create';
-import { useInitProjectId } from 'entities/project';
+import { useInitProjectSlug } from 'entities/project';
 import { ComponentProps, PropsWithChildren } from 'react';
 import { BoardMapper, BoardQueries, TBoard } from 'entities/board';
 import { useBoardStore } from 'pages/project/model/store';
@@ -24,10 +24,10 @@ import { ProjectBoardsSkeleton } from './ProjectBoards.skeleton';
 import { ProjectBoardsError } from './ProjectBoardsError';
 import { useQuery } from '@tanstack/react-query';
 
-export function ProjectBoards({ projectId }: PropsWithChildren<{ projectId: string }>) {
-  useInitProjectId(projectId);
+export function ProjectBoards({ slug }: PropsWithChildren<{ slug: string }>) {
+  useInitProjectSlug(slug);
 
-  const { data, isLoading, isError, error, refetch } = useBoardsPage(projectId);
+  const { data, isLoading, isError, error, refetch } = useBoardsPage(slug);
   const { activeBoard, activeBoardId } = useActiveBoards(data ?? []);
 
   const columns = useQuery({
@@ -87,7 +87,7 @@ function BoardButton({
     >
       <button
         type="button"
-        onClick={() => setActiveBoardId(board.id)}
+        onClick={() => setActiveBoardId(board.id, board.slug)}
         className="h-full px-3 text-left"
       >
         <span>{board.title}</span>
@@ -98,7 +98,7 @@ function BoardButton({
           <EllipsisVertical />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <RemoveBoardDialog projectId={board.projectId} boardId={board.id} asChild>
+          <RemoveBoardDialog projectSlug={board.projectId} boardSlug={board.slug} asChild>
             <DropdownMenuItem variant="destructive" onSelect={(e) => e.preventDefault()}>
               Удалить
             </DropdownMenuItem>

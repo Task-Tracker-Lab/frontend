@@ -1,17 +1,17 @@
 import { create } from 'zustand';
 
 interface ProjectStore {
-  projectId: string | null;
-  setProjectId: (id: string) => void;
-  clearProjectId: () => void;
+  projectSlug: string | null;
+  setProjectSlug: (id: string) => void;
+  clearProjectSlug: () => void;
 }
 
 export const useProjectStore = create<ProjectStore>((set) => ({
-  projectId: null,
-  setProjectId(id) {
-    set({ projectId: id });
+  projectSlug: null,
+  setProjectSlug(id) {
+    set({ projectSlug: id });
   },
-  clearProjectId() {
-    set({ projectId: null });
+  clearProjectSlug() {
+    set({ projectSlug: null });
   },
 }));

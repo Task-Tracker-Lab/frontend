@@ -3,34 +3,34 @@ import { boardFabricKeys } from '../model/conts';
 import { BoardHttp } from './http';
 
 export class BoardQueries {
-  static getBoardList(projectId: string) {
+  static getBoardList(slug: string) {
     return queryOptions({
-      queryKey: boardFabricKeys.list(projectId),
-      queryFn: async ({ signal }) => BoardHttp.getBoardList(projectId, signal),
+      queryKey: boardFabricKeys.list(slug),
+      queryFn: async ({ signal }) => BoardHttp.getBoardList(slug, signal),
       staleTime: 60_000,
     });
   }
 
-  static getBoard(projectId: string, id: string) {
+  static getBoard(slug: string, id: string) {
     return queryOptions({
-      queryKey: boardFabricKeys.detail(projectId, id),
-      queryFn: async ({ signal }) => BoardHttp.getBoard(projectId, id, signal),
+      queryKey: boardFabricKeys.detail(slug, id),
+      queryFn: async ({ signal }) => BoardHttp.getBoard(slug, id, signal),
       staleTime: 60_000,
     });
   }
 
-  static getBoardColumnList(boardId: string) {
+  static getBoardColumnList(slug: string) {
     return queryOptions({
-      queryKey: boardFabricKeys.columns(boardId),
-      queryFn: async ({ signal }) => BoardHttp.getBoardColumnList(boardId, signal),
+      queryKey: boardFabricKeys.columns(slug),
+      queryFn: async ({ signal }) => BoardHttp.getBoardColumnList(slug, signal),
       staleTime: 60_000,
     });
   }
 
-  static getBoardColumn(boardId: string, id: string) {
+  static getBoardColumn(slug: string, id: string) {
     return queryOptions({
-      queryKey: boardFabricKeys.column(boardId, id),
-      queryFn: async ({ signal }) => BoardHttp.getBoardColumn(boardId, id, signal),
+      queryKey: boardFabricKeys.column(slug, id),
+      queryFn: async ({ signal }) => BoardHttp.getBoardColumn(slug, id, signal),
       staleTime: 60_000,
     });
   }

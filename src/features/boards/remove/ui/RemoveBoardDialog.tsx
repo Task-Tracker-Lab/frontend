@@ -13,11 +13,11 @@ import { RemoveBoardVariables, useRemoveBoard } from '../model/useRemoveBoard';
 
 type Props = ComponentProps<typeof AlertDialogTrigger> & RemoveBoardVariables;
 
-export function RemoveBoardDialog({ projectId, boardId, ...props }: Props) {
+export function RemoveBoardDialog({ projectSlug, boardSlug, ...props }: Props) {
   const removeBoard = useRemoveBoard();
 
   const onRemove = () => {
-    removeBoard.mutate({ projectId, boardId });
+    removeBoard.mutate({ projectSlug, boardSlug });
   };
 
   return (

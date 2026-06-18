@@ -6,11 +6,11 @@ import { CreateBoardFormSchema } from './schemas';
 import { CreateBoardFormValues } from './type';
 import { setFormErrors } from 'shared/lib/utils';
 import { extractValidationIssues } from 'shared/api';
-import { TBoard } from 'entities/board';
+import { type TBoard } from 'entities/board';
 import { useProjectStore } from 'entities/project';
 
 export function useCreateBoardForm(options: UseCreateBoardOptions = {}) {
-  const projectId = useProjectStore((s) => s.projectId!);
+  const slug = useProjectStore((s) => s.projectSlug!);
   const form = useForm<CreateBoardFormValues>({
     resolver: zodResolver(CreateBoardFormSchema),
     defaultValues: getDefaultCreateBoardValues(),
@@ -33,12 +33,12 @@ export function useCreateBoardForm(options: UseCreateBoardOptions = {}) {
       position: Number(data.position),
     };
 
-    createBoard.mutate({ projectId, body });
+    createBoard.mutate({ projectSlug: slug, body });
   };
 
   return {
     form,
-    projectId,
+    projectSlug: slug,
     isPending: createBoard.isPending,
     handleSubmit: form.handleSubmit(onSubmit),
   };

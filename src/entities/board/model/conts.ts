@@ -1,9 +1,9 @@
 import { createEntityKeys } from 'shared/lib/utils';
 
 export const boardFabricKeys = createEntityKeys('board', {
-  detail: (projectId: string, id: string) => ['projects', projectId, 'boards', id],
-  columns: (boardId: string) => ['boards', boardId, 'columns'],
-  column: (boardId: string, id: string) => ['boards', boardId, 'columns', id],
-  views: (boardId: string) => ['boards', boardId, 'views'],
-  view: (boardId: string, id: string) => ['boards', boardId, 'views', id],
+  detail: (slug: string, id: string) => ['projects', slug, 'boards', id],
+  columns: (slug: string) => ['boards', slug, 'columns'],
+  column: (slug: string, id: string) => ['boards', slug, 'columns', id],
+  views: (slug: string) => ['boards', slug, 'views'],
+  view: (slug: string, id: string) => ['boards', slug, 'views', id],
 });

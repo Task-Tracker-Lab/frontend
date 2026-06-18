@@ -11,7 +11,7 @@ export const useActiveBoards = (boards: TBoard.BoardResponse[]) => {
 
   useEffect(() => {
     if (!activeBoardId && boards.length > 0) {
-      setActiveBoardId(boards[0].id);
+      setActiveBoardId(boards[0].id, boards[0].slug);
     }
   }, [activeBoardId, boards, setActiveBoardId]);
 

@@ -23,10 +23,12 @@ export function TaskColumn({
   ...props
 }: TaskColumnProps) {
   const columnId = value;
+  const boardSlug = useBoardStore((s) => s.activeBoardSlug!);
   const boardId = useBoardStore((s) => s.activeBoardId!);
 
   const headerColumnData: TaskColumnHeaderProps = {
     ...column,
+    boardSlug,
     tasksLength: tasks.length,
   };
 
@@ -39,7 +41,7 @@ export function TaskColumn({
       <TaskColumnHeader data={headerColumnData} />
 
       <KanbanColumnContent value={columnId} className="flex flex-col gap-2.5">
-        <CreateTaskField columnId={columnId} boardId={boardId!} />
+        <CreateTaskField columnId={columnId} boardId={boardId} />
         {tasks.map((task) => (
           <Task key={task.id} task={task} asHandle={!isOverlay} isOverlay={isOverlay} />
         ))}

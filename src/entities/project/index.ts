@@ -8,7 +8,7 @@ export { PROJECT_COLORS } from './config/colors';
 export { projectIconCodeToEmoji } from './lib/emoji';
 export { buildProjectShareUrl } from './lib/share-url';
 export { useProjectStore } from './model/store';
-export { useInitProjectId } from './lib/useInitProjectId';
+export { useInitProjectSlug } from './lib/useInitProjectSlug';
 export { validateProjectSlugAsync } from './lib/validate-project-slug';
 export { SlugField } from './ui/SlugField';
 export { useCheckSlug } from './lib/useCheckSlug';

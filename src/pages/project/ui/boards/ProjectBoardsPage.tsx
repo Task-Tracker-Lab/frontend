@@ -1,7 +1,7 @@
 import { ProjectBoards } from './ProjectBoards';
 
-export async function ProjectBoardsPage({ params }: { params: Promise<{ projectId: string }> }) {
-  const { projectId } = await params;
+export async function ProjectBoardsPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
 
-  return <ProjectBoards projectId={projectId} />;
+  return <ProjectBoards slug={slug} />;
 }

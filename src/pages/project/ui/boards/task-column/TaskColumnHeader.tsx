@@ -18,10 +18,11 @@ import {
 
 export interface TaskColumnHeaderProps extends TBoard.BoardColumnResponse {
   tasksLength: number;
+  boardSlug: string;
 }
 
 export function TaskColumnHeader({ data }: { data: TaskColumnHeaderProps }) {
-  const { tasksLength, title, id, color } = data;
+  const { tasksLength, title, id, color, boardSlug } = data;
   const [activeColor, setActiveColor] = useState<string>(color ?? BOARD_COLUMN_COLORS[0]);
 
   const existColor = BOARD_COLUMN_COLORS.findIndex((v) => v.toLowerCase() === data.color);
@@ -50,7 +51,7 @@ export function TaskColumnHeader({ data }: { data: TaskColumnHeaderProps }) {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="min-w-[200px]">
                 <DropdownMenuGroup>
-                  <RemoveColumnDialog columnId={id} boardId={id} asChild>
+                  <RemoveColumnDialog columnId={id} boardSlug={boardSlug} asChild>
                     <DropdownMenuItem onSelect={(e) => e.preventDefault()} variant="destructive">
                       Удалить
                     </DropdownMenuItem>
