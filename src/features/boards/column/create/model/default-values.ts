@@ -3,8 +3,8 @@ import { CreateBoardColumnFormValues } from './type';
 
 export function getDefaultCreateBoardColumnValues(position = 0): CreateBoardColumnFormValues {
   return {
-    name: '',
-    position,
+    title: '',
     color: DEFAULT_COLUMN_COLOR,
+    orderIndex: position,
   };
 }

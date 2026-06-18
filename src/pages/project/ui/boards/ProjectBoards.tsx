@@ -11,7 +11,7 @@ import {
 import { CreateBoardDialog } from 'features/boards/create';
 import { useInitProjectId } from 'entities/project';
 import { ComponentProps, PropsWithChildren } from 'react';
-import { TBoard } from 'entities/board';
+import { BoardMapper, BoardQueries, TBoard } from 'entities/board';
 import { useBoardStore } from 'pages/project/model/store';
 import { EllipsisVertical } from 'lucide-react';
 import { ProjectKanban } from './ProjectKanban';
@@ -22,12 +22,22 @@ import { VariantProps } from 'class-variance-authority';
 import { RemoveBoardDialog } from 'features/boards/remove';
 import { ProjectBoardsSkeleton } from './ProjectBoards.skeleton';
 import { ProjectBoardsError } from './ProjectBoardsError';
+import { useQuery } from '@tanstack/react-query';
 
 export function ProjectBoards({ projectId }: PropsWithChildren<{ projectId: string }>) {
   useInitProjectId(projectId);
 
   const { data, isLoading, isError, error, refetch } = useBoardsPage(projectId);
-  const { activeBoard, activeBoardId } = useActiveBoards(data);
+  const { activeBoard, activeBoardId } = useActiveBoards(data ?? []);
+
+  const columns = useQuery({
+    ...BoardQueries.getBoardColumnList(activeBoardId!),
+    enabled: !!activeBoardId,
+  });
+
+  const board =
+    activeBoard && columns.data ? BoardMapper.toBoardWithTasks(activeBoard, columns.data) : null;
+
   if (isLoading) return <ProjectBoardsSkeleton />;
   if (isError) {
     return <ProjectBoardsError message={error?.message} onRetry={() => refetch()} />;
@@ -36,14 +46,14 @@ export function ProjectBoards({ projectId }: PropsWithChildren<{ projectId: stri
     <div className="flex h-full flex-col gap-4">
       <div className="flex flex-wrap gap-2 px-5 pt-5">
         {data?.map((item) => (
-          <BoardButton key={item.board.id} board={item.board} />
+          <BoardButton key={item.id} board={item} />
         ))}
         <CreateBoardDialog asChild>
           <Button>Создать доску</Button>
         </CreateBoardDialog>
       </div>
       <div className="grow overflow-x-auto overscroll-x-contain p-2 pl-5">
-        {activeBoard ? <ProjectKanban key={activeBoardId} board={activeBoard} /> : null}
+        {board ? <ProjectKanban key={activeBoardId} board={board} /> : null}
       </div>
     </div>
   );
@@ -80,7 +90,7 @@ function BoardButton({
         onClick={() => setActiveBoardId(board.id)}
         className="h-full px-3 text-left"
       >
-        <span>{board.name}</span>
+        <span>{board.title}</span>
       </button>
 
       <DropdownMenu>

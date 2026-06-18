@@ -4,7 +4,8 @@ import { ColorPicker, Field, FieldError, FieldGroup, FieldLabel, Input } from 's
 import { useCreateBoardColumnForm } from '../model/useCreateBoardColumnForm';
 import { UseCreateBoardColumnOptions } from '../model/useCreateBoardColumn';
 import { ComponentProps } from 'react';
-import { COLORS } from '../model/consts';
+import { COLORS, DEFAULT_COLUMN_COLOR } from '../model/consts';
+import { fi } from 'zod/v4/locales';
 
 interface CreateBoardColumnFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
   boardId: string;
@@ -29,7 +30,7 @@ export function CreateBoardColumnForm({
       <form className={cn('flex flex-col gap-6', className)} onSubmit={handleSubmit} {...props}>
         <FieldGroup>
           <Controller
-            name="name"
+            name="title"
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
@@ -50,28 +51,31 @@ export function CreateBoardColumnForm({
           <Controller
             name="color"
             control={form.control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="create-board-column-color">Цвет</FieldLabel>
-                <ColorPicker
-                  colors={COLORS}
-                  id="create-board-column-color"
-                  aria-label="Цвет колонки"
-                  aria-invalid={fieldState.invalid}
-                  disabled={isPending}
-                  activeColor={field.value}
-                  setActiveColor={(c) => {
-                    form.setValue('color', c);
-                  }}
-                  {...field}
-                />
+            render={({ field, fieldState }) => {
+              const { value, ...rest } = field;
+              return (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="create-board-column-color">Цвет</FieldLabel>
+                  <ColorPicker
+                    colors={COLORS}
+                    id="create-board-column-color"
+                    aria-label="Цвет колонки"
+                    aria-invalid={fieldState.invalid}
+                    disabled={isPending}
+                    activeColor={value ?? DEFAULT_COLUMN_COLOR}
+                    setActiveColor={(c) => {
+                      form.setValue('color', c);
+                    }}
+                    {...rest}
+                  />
 
-                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-              </Field>
-            )}
+                  {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                </Field>
+              );
+            }}
           />
           <Controller
-            name="position"
+            name="orderIndex"
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>

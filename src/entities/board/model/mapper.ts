@@ -9,8 +9,8 @@ export type BoardWithTasks = {
 };
 
 export class BoardMapper {
-  static toBoardWithTasks(board: BoardResponse): BoardWithTasks {
-    const sortedColumns = [...board.boardColumns].sort((a, b) => a.position - b.position);
+  static toBoardWithTasks(board: BoardResponse, columnList: BoardColumnResponse[]): BoardWithTasks {
+    const sortedColumns = [...columnList].sort((a, b) => a.orderIndex - b.orderIndex);
     const tasksByColumn: Record<string, unknown[]> = {};
     const columns: Record<string, BoardColumnResponse> = {};
 

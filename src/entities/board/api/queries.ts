@@ -34,20 +34,4 @@ export class BoardQueries {
       staleTime: 60_000,
     });
   }
-
-  static getBoardViewList(boardId: string) {
-    return queryOptions({
-      queryKey: boardFabricKeys.views(boardId),
-      queryFn: async ({ signal }) => BoardHttp.getBoardViewList(boardId, signal),
-      staleTime: 60_000,
-    });
-  }
-
-  static getBoardView(boardId: string, id: string) {
-    return queryOptions({
-      queryKey: boardFabricKeys.view(boardId, id),
-      queryFn: async ({ signal }) => BoardHttp.getBoardView(boardId, id, signal),
-      staleTime: 60_000,
-    });
-  }
 }

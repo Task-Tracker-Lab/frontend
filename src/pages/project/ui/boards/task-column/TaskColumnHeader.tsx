@@ -21,7 +21,7 @@ export interface TaskColumnHeaderProps extends TBoard.BoardColumnResponse {
 }
 
 export function TaskColumnHeader({ data }: { data: TaskColumnHeaderProps }) {
-  const { tasksLength, name, id, boardId, color } = data;
+  const { tasksLength, title, id, color } = data;
   const [activeColor, setActiveColor] = useState<string>(color ?? BOARD_COLUMN_COLORS[0]);
 
   const existColor = BOARD_COLUMN_COLORS.findIndex((v) => v.toLowerCase() === data.color);
@@ -38,7 +38,7 @@ export function TaskColumnHeader({ data }: { data: TaskColumnHeaderProps }) {
         <div style={{ backgroundColor: activeColor }} className="h-1.5" />
         <div className="flex h-8 items-center justify-between gap-2 rounded-xl px-2.5 py-1.5">
           <div className="flex items-center gap-2.5">
-            <h2 className="text-muted-foreground line-clamp-1 text-sm font-medium">{`${name} (${tasksLength})`}</h2>
+            <h2 className="text-muted-foreground line-clamp-1 text-sm font-medium">{`${title} (${tasksLength})`}</h2>
           </div>
           <div className="flex items-center">
             <CreateTaskButton id={id} />
@@ -50,7 +50,7 @@ export function TaskColumnHeader({ data }: { data: TaskColumnHeaderProps }) {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="min-w-[200px]">
                 <DropdownMenuGroup>
-                  <RemoveColumnDialog columnId={id} boardId={boardId} asChild>
+                  <RemoveColumnDialog columnId={id} boardId={id} asChild>
                     <DropdownMenuItem onSelect={(e) => e.preventDefault()} variant="destructive">
                       Удалить
                     </DropdownMenuItem>

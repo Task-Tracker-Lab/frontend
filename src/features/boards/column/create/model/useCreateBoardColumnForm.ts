@@ -37,8 +37,8 @@ export function useCreateBoardColumnForm(
 
   const onSubmit = (data: CreateBoardColumnFormValues) => {
     const body: TBoard.CreateBoardColumnBody = {
-      name: data.name,
-      position: Number(data.position),
+      title: data.title,
+      orderIndex: data.orderIndex,
       ...(data.color ? { color: data.color } : {}),
     };
 
