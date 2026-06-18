@@ -8,10 +8,12 @@ function pickRandom<T>(items: readonly T[]): T {
 export function getDefaultCreateProjectValues(): CreateProjectFormValues {
   return {
     name: '',
-    key: '',
+    slug: '',
+    teamId: null,
     description: '',
     icon: pickRandom(PROJECT_ICONS),
     color: pickRandom(PROJECT_COLORS),
     visibility: 'private',
+    status: 'active',
   };
 }

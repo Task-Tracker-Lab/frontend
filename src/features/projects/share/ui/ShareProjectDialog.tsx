@@ -38,14 +38,14 @@ import { useShareProject } from '../model/useShareProject';
 interface ShareProjectDialogProps extends ComponentProps<typeof DialogTrigger> {
   projectName: string;
   teamId: string;
-  projectId: string;
+  slug: string;
   dialog?: ComponentProps<typeof Dialog>;
 }
 
 export function ShareProjectDialog({
   projectName,
   teamId,
-  projectId,
+  slug,
   dialog = {},
   ...props
 }: ShareProjectDialogProps) {
@@ -60,7 +60,7 @@ export function ShareProjectDialog({
   const [expiresAt, setExpiresAt] = useState<string | null>(null);
   const shareProject = useShareProject({
     onSuccess: (res) => {
-      setShareUrl(buildProjectShareUrl(projectId, res.payload.token));
+      setShareUrl(buildProjectShareUrl(slug, res.payload.token));
       setExpiresAt(res.payload.expiresAt);
     },
   });
@@ -82,7 +82,7 @@ export function ShareProjectDialog({
   const onCreateLink = () => {
     shareProject.mutate({
       teamId,
-      id: projectId,
+      slug,
       body: ttlOptionToBody(ttlOption),
     });
   };

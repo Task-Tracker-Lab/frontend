@@ -7,14 +7,14 @@ import { AccessToken } from 'shared/api';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { Suspense } from 'react';
-import { AuthRedirectHandler } from './AuthRedirectHandler';
+import { QueryParamsHandler } from 'features/handle-query-params';
 
 function SigninPage() {
   const router = useRouter();
   return (
     <>
       <Suspense>
-        <AuthRedirectHandler />
+        <QueryParamsHandler />
       </Suspense>
       <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
         <div className="flex w-full max-w-sm flex-col gap-6">

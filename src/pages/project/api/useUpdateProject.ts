@@ -11,25 +11,25 @@ type UseUpdateProjectProps = Omit<
 
 export function useUpdateProject({ onSuccess, ...rest }: UseUpdateProjectProps = {}) {
   const teamId = useTeamStore.use.teamId();
-  const params = useParams();
-  const projectId = typeof params?.projectId === 'string' ? params.projectId : undefined;
+  const params: Record<'slug', string | string[]> | null = useParams();
+  const slug = typeof params?.slug === 'string' ? params.slug : undefined;
 
   return useMutation<TProject.ActionResponse, DefaultError, TProject.UpdateProjectBody>({
     ...rest,
     mutationFn: (data) => {
-      if (!teamId || !projectId) {
+      if (!teamId || !slug) {
         throw new Error('Не выбран проект');
       }
-      return ProjectHttp.updateProject(teamId, projectId, data);
+      return ProjectHttp.updateProject(teamId, slug, data);
     },
     onSuccess: async (res, _v, _r, context) => {
       onSuccess?.(res, _v, _r, context);
       toast.success(res.message ?? 'Проект обновлён');
 
-      if (teamId && projectId) {
+      if (teamId && slug) {
         await Promise.all([
           context.client.invalidateQueries({
-            queryKey: projectFabricKeys.detail(teamId, projectId),
+            queryKey: projectFabricKeys.detail(teamId, slug),
           }),
           context.client.invalidateQueries({
             queryKey: projectFabricKeys.list(teamId),
