@@ -66,7 +66,6 @@ export function ProjectCard({
   const mockMembers = Array.from({ length: mockMembersCount }).map((_, i) => i + 1);
 
   const projectHref = project && teamId ? routes.team.project.root(project.slug) : null;
-  const canEdit = project?.role === 'admin' || project?.role === 'owner';
   const card = (
     <Card
       className={cn(
@@ -165,7 +164,7 @@ export function ProjectCard({
                   teamId={teamId!}
                   slug={project.slug}
                   asChild
-                  disabled={!(canEdit && teamId)}
+                  disabled={!(project.canEdit && teamId)}
                 >
                   <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                     Восстановить
@@ -178,7 +177,7 @@ export function ProjectCard({
                     teamId={teamId!}
                     slug={project?.slug ?? ''}
                     asChild
-                    disabled={!(canEdit && teamId)}
+                    disabled={!(project?.canEdit && teamId)}
                   >
                     <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                       Архивировать
@@ -234,7 +233,7 @@ export function ProjectCard({
         </div>
 
         <div className="text-muted-foreground flex items-center gap-3 text-xs">
-          {canEdit ? (
+          {project?.canEdit ? (
             <span className="flex items-center gap-1" title="Можно редактировать">
               <ShieldCheck className="size-3.5 text-emerald-500" />
             </span>

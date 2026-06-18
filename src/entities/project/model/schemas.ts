@@ -139,44 +139,53 @@ export const CreateShareTokenResponse = GlobalSuccess.extend({
   }),
 });
 
-export const ProjectListItemResponse = z.object({
-  id: z.string(),
-  slug: z.string(),
-  name: z.string(),
-  status: ProjectStatusSchema,
-  color: z.string(),
-  icon: z.string().nullable(),
-  createdAt: DateTimeString,
-  role: ProjectMemberRoleSchema,
-});
+export const ProjectListItemResponse = z
+  .object({
+    id: z.string(),
+    slug: z.string(),
+    name: z.string(),
+    status: ProjectStatusSchema,
+    color: z.string(),
+    icon: z.string().nullable(),
+    createdAt: DateTimeString,
+    role: ProjectMemberRoleSchema,
+  })
+  .transform((data) => ({ ...data, canEdit: data.role === 'admin' || data.role === 'owner' }));
+// TODO: временно добавил canEdit через transform
 
 export const ProjectListResponse = PaginatedResponseSchema(ProjectListItemResponse);
 
-export const ProjectDetailResponse = z.object({
-  id: z.string(),
-  slug: z.string(),
-  name: z.string(),
-  status: z.enum(['active', 'archived', 'template', 'deleted']),
-  description: z.string().nullable(),
-  descriptionHtml: z.string().nullish(),
-  visuals: z.object({ color: z.string().nullish(), icon: z.string().nullish().optional() }),
-  meta: z.object({
-    sequence: z.number().int().nonnegative(),
-    createdAt: DateTimeString,
-    updatedAt: DateTimeString,
-  }),
-  access: z.object({
-    visibility: z.enum(['public', 'private']),
-    currentUserRole: z.enum(['owner', 'admin', 'member', 'viewer']),
-    shareUrl: z.string().nullable(),
-  }),
-  settings: ProjectSettingsSchema.omit({
-    id: true,
-    projectId: true,
-    createdAt: true,
-    updatedAt: true,
-  }),
-});
+export const ProjectDetailResponse = z
+  .object({
+    id: z.string(),
+    slug: z.string(),
+    name: z.string(),
+    status: z.enum(['active', 'archived', 'template', 'deleted']),
+    description: z.string().nullable(),
+    descriptionHtml: z.string().nullish(),
+    visuals: z.object({ color: z.string().nullish(), icon: z.string().nullish().optional() }),
+    meta: z.object({
+      sequence: z.number().int().nonnegative(),
+      createdAt: DateTimeString,
+      updatedAt: DateTimeString,
+    }),
+    access: z.object({
+      visibility: z.enum(['public', 'private']),
+      currentUserRole: z.enum(['owner', 'admin', 'member', 'viewer']),
+      shareUrl: z.string().nullable(),
+    }),
+    settings: ProjectSettingsSchema.omit({
+      id: true,
+      projectId: true,
+      createdAt: true,
+      updatedAt: true,
+    }),
+  })
+  .transform((data) => ({
+    ...data,
+    canEdit: data.access.currentUserRole === 'admin' || data.access.currentUserRole === 'owner',
+  }));
+// TODO: временно добавил canEdit через transform
 
 export const CheckSlugResponse = z.object({
   available: z.boolean(),

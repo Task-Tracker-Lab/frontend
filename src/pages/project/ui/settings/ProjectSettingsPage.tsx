@@ -92,18 +92,17 @@ export function ProjectSettingsPage() {
   }
 
   const isTemplate = project.status === 'template';
-  const canEdit =
-    project.access.currentUserRole === 'admin' || project.access.currentUserRole === 'owner';
+
   return (
     <FormProvider {...form}>
       <form className="space-y-5">
         <CardSection title="Основные настройки" description="Название, ключ и оформление проекта.">
-          <ProjectIdentityFields disabled={!canEdit} idPrefix="project-settings" />
+          <ProjectIdentityFields disabled={!project.canEdit} idPrefix="project-settings" />
         </CardSection>
 
         <CardSection title="Доступ" description="Видимость и статус проекта.">
           <div className="space-y-5">
-            <VisibilityPicker disabled={!canEdit} />
+            <VisibilityPicker disabled={!project.canEdit} />
 
             {isTemplate ? (
               <p className="text-muted-foreground text-sm">
@@ -116,7 +115,11 @@ export function ProjectSettingsPage() {
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
                     <FieldLabel htmlFor="project-settings-status">Статус</FieldLabel>
-                    <Select value={field.value} onValueChange={field.onChange} disabled={!canEdit}>
+                    <Select
+                      value={field.value}
+                      onValueChange={field.onChange}
+                      disabled={!project.canEdit}
+                    >
                       <SelectTrigger id="project-settings-status" className="w-full sm:w-64">
                         <SelectValue placeholder="Выберите статус" />
                       </SelectTrigger>
@@ -133,13 +136,13 @@ export function ProjectSettingsPage() {
           </div>
         </CardSection>
 
-        {canEdit && teamId && (
+        {project.canEdit && teamId && (
           <CardSection title="Опасная зона" description="Необратимые действия с проектом.">
             <ProjectDangerZone projectName={project.name} teamId={teamId} slug={project.slug} />
           </CardSection>
         )}
       </form>
-      {canEdit ? <ProjectSettingsSaveBar project={project} /> : null}
+      {project.canEdit ? <ProjectSettingsSaveBar project={project} /> : null}
     </FormProvider>
   );
 }
