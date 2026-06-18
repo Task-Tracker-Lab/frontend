@@ -17,8 +17,8 @@ export const routes = {
     settings: (): Route => '/team/settings',
     projects: (): Route => '/team/projects',
     project: {
-      root: (projectId: string): Route => `/team/projects/${projectId}` as Route,
-      settings: (projectId: string): Route => `/team/projects/${projectId}/settings` as Route,
+      root: (slug: string): Route => `/team/projects/${slug}` as Route,
+      settings: (slug: string): Route => `/team/projects/${slug}/settings` as Route,
     },
   },
   auth: {

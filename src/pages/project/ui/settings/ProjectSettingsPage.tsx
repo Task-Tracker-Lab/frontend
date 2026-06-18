@@ -32,10 +32,26 @@ export function ProjectSettingsPage() {
     mode: 'onChange',
     defaultValues: {
       name: '',
-      key: '',
+      slug: '',
       description: '',
+      descriptionHtml: '',
+      icon: undefined,
+      color: null,
       visibility: 'private',
       status: 'active',
+      sequence: 0,
+      settings: {
+        allowGuests: false,
+        timeTracking: false,
+        autoCloseDays: null,
+        maxTasksPerArea: null,
+        maxMembers: null,
+        maxAreas: null,
+        defaultView: 'kanban',
+        taskPrefix: null,
+        timeTrackingMode: 'optional',
+        defaultAssigneeId: null,
+      },
     },
   });
 
@@ -45,12 +61,15 @@ export function ProjectSettingsPage() {
     if (project) {
       reset({
         name: project.name,
-        key: project.key,
+        slug: project.slug,
         description: project.description ?? '',
+        descriptionHtml: project.descriptionHtml ?? '',
         icon: (project.visuals.icon ?? undefined) as ProjectSettingsFormValues['icon'],
         color: project.visuals.color,
         visibility: project.access.visibility,
         status: project.status === 'archived' ? 'archived' : 'active',
+        sequence: project.meta.sequence,
+        settings: project.settings,
       });
     }
   }, [reset, project]);
@@ -78,12 +97,12 @@ export function ProjectSettingsPage() {
     <FormProvider {...form}>
       <form className="space-y-5">
         <CardSection title="Основные настройки" description="Название, ключ и оформление проекта.">
-          <ProjectIdentityFields disabled={!project.access.canEdit} idPrefix="project-settings" />
+          <ProjectIdentityFields disabled={!project.canEdit} idPrefix="project-settings" />
         </CardSection>
 
         <CardSection title="Доступ" description="Видимость и статус проекта.">
           <div className="space-y-5">
-            <VisibilityPicker disabled={!project.access.canEdit} />
+            <VisibilityPicker disabled={!project.canEdit} />
 
             {isTemplate ? (
               <p className="text-muted-foreground text-sm">
@@ -99,7 +118,7 @@ export function ProjectSettingsPage() {
                     <Select
                       value={field.value}
                       onValueChange={field.onChange}
-                      disabled={!project.access.canEdit}
+                      disabled={!project.canEdit}
                     >
                       <SelectTrigger id="project-settings-status" className="w-full sm:w-64">
                         <SelectValue placeholder="Выберите статус" />
@@ -117,13 +136,13 @@ export function ProjectSettingsPage() {
           </div>
         </CardSection>
 
-        {project.access.canDelete && teamId && (
+        {project.canEdit && teamId && (
           <CardSection title="Опасная зона" description="Необратимые действия с проектом.">
-            <ProjectDangerZone projectName={project.name} teamId={teamId} projectId={project.id} />
+            <ProjectDangerZone projectName={project.name} teamId={teamId} slug={project.slug} />
           </CardSection>
         )}
       </form>
-      {project.access.canEdit ? <ProjectSettingsSaveBar project={project} /> : null}
+      {project.canEdit ? <ProjectSettingsSaveBar project={project} /> : null}
     </FormProvider>
   );
 }

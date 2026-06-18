@@ -67,7 +67,7 @@ export function ProjectsContent() {
                   isActive={pathname?.startsWith(routes.team.project.root(project.id))}
                   asChild
                 >
-                  <Link href={routes.team.project.root(project.id)}>
+                  <Link href={routes.team.project.root(project.slug)}>
                     <span>{projectIconCodeToEmoji(project.icon)}</span> {project.name}
                   </Link>
                 </SidebarMenuSubButton>

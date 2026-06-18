@@ -16,17 +16,17 @@ import { useRemoveProject } from '../model/useRemoveProject';
 interface Props extends ComponentProps<typeof AlertDialogTrigger> {
   projectName: string;
   teamId: string;
-  projectId: string;
+  slug: string;
 }
 
-export function RemoveProjectDialog({ projectName, teamId, projectId, ...props }: Props) {
+export function RemoveProjectDialog({ projectName, teamId, slug, ...props }: Props) {
   const [inputValue, setInputValue] = useState('');
   const removeProject = useRemoveProject();
 
   const isMatch = inputValue.trim() === projectName.trim();
 
   const onRemove = () => {
-    removeProject.mutate({ teamId, id: projectId });
+    removeProject.mutate({ teamId, slug });
   };
 
   return (

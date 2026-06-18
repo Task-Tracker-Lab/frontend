@@ -7,3 +7,6 @@ export { PROJECT_ICONS } from './config/icons';
 export { PROJECT_COLORS } from './config/colors';
 export { projectIconCodeToEmoji } from './lib/emoji';
 export { buildProjectShareUrl } from './lib/share-url';
+export { validateProjectSlugAsync } from './lib/validate-project-slug';
+export { SlugField } from './ui/SlugField';
+export { useCheckSlug } from './lib/useCheckSlug';
