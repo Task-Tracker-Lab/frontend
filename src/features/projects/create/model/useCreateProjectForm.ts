@@ -1,5 +1,4 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { type TProject } from 'entities/project';
+import { useCheckSlug, validateProjectSlugAsync, type TProject } from 'entities/project';
 import { useTeamStore } from 'entities/team';
 import { useForm } from 'react-hook-form';
 import { extractValidationIssues } from 'shared/api';
@@ -8,12 +7,16 @@ import { getDefaultCreateProjectValues } from './default-values';
 import { CreateProjectFormSchema } from './schemas';
 import type { CreateProjectFormValues } from './types';
 import { useCreateProject, type UseCreateProjectOptions } from './useCreateProject';
+import { useZodValidationWithAsyncCheck } from 'shared/lib/hooks';
 
 export function useCreateProjectForm(options: UseCreateProjectOptions = {}) {
   const teamId = useTeamStore.use.teamId();
+  const checkSlug = useCheckSlug('', teamId!);
 
   const form = useForm<CreateProjectFormValues>({
-    resolver: zodResolver(CreateProjectFormSchema),
+    resolver: useZodValidationWithAsyncCheck(CreateProjectFormSchema, (...args) =>
+      validateProjectSlugAsync(checkSlug, ...args)
+    ),
     defaultValues: getDefaultCreateProjectValues(),
   });
 
@@ -34,9 +37,9 @@ export function useCreateProjectForm(options: UseCreateProjectOptions = {}) {
     const body: TProject.CreateProjectBody = {
       teamId,
       name: data.name.trim(),
-      slug: data.slug?.trim(),
       status: data.status,
       visibility: data.visibility ?? 'private',
+      ...(data.slug?.trim() ? { slug: data.slug?.trim() } : {}),
       ...(data.description?.trim() ? { description: data.description.trim() } : {}),
       ...(data.icon ? { icon: data.icon } : {}),
       ...(data.color ? { color: data.color } : {}),

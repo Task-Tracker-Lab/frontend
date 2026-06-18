@@ -81,4 +81,15 @@ export class ProjectHttp {
       },
     });
   }
+
+  static checkSlug(teamId: string, slug: string, signal?: AbortSignal) {
+    return api<TProject.CheckSlugResponse>({
+      url: `/teams/${teamId}/projects/check-slug?q=${slug}`,
+      method: 'GET',
+      contracts: {
+        response: SProject.CheckSlugResponse,
+      },
+      signal,
+    });
+  }
 }

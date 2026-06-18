@@ -18,4 +18,13 @@ export class ProjectQueries {
       staleTime: 60_000,
     });
   }
+
+  static checkSlug(teamId: string, slug: string) {
+    return queryOptions({
+      queryKey: projectFabricKeys.checkSlug(teamId, slug),
+      queryFn: async ({ signal }) => ProjectHttp.checkSlug(teamId, slug, signal),
+      gcTime: 5000,
+      staleTime: 5000,
+    });
+  }
 }

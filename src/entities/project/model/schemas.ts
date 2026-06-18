@@ -104,6 +104,15 @@ export const CreateProjectBody = ProjectSchema.omit({
   })
   .extend({
     settings: CreateProjectSettingsSchema.optional(),
+    slug: z
+      .string()
+      .max(100, 'Уникальный идентификатор не должен превышать 100 символов')
+      .refine(
+        (value) => value === '' || /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value),
+        'Идентификатор должен быть в формате kebab-case (например: "my-project")'
+      )
+
+      .optional(),
   });
 
 export const UpdateProjectBody = CreateProjectBody.extend({
@@ -167,4 +176,9 @@ export const ProjectDetailResponse = z.object({
     createdAt: true,
     updatedAt: true,
   }),
+});
+
+export const CheckSlugResponse = z.object({
+  available: z.boolean(),
+  reason: z.string().nullable(),
 });

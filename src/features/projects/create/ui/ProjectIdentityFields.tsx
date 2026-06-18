@@ -1,34 +1,18 @@
 'use client';
 
 import { Controller, useFormContext } from 'react-hook-form';
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-  Input,
-  InputGroup,
-  InputGroupInput,
-  Textarea,
-} from 'shared/ui';
+import { Field, FieldError, FieldGroup, FieldLabel, Input, Textarea } from 'shared/ui';
 import type { ProjectIdentityFormValues } from '../model/types';
 import { ProjectColorPicker } from './ProjectColorPicker';
 import { ProjectIconPicker } from './ProjectIconPicker';
 import { slugify } from '../lib/slugify';
+import { SlugField } from 'entities/project';
+import { useTeamStore } from 'entities/team';
 
 interface ProjectIdentityFieldsProps {
   disabled?: boolean;
   idPrefix?: string;
   showPlaceholders?: boolean;
-}
-
-function slugifyOnChange(value: string) {
-  return value
-    .toLowerCase()
-    .replace(/[\s_]+/g, '-')
-    .replace(/[^a-z0-9-]/g, '')
-    .replace(/-+/g, '-')
-    .replace(/^-+/, '');
 }
 
 export function ProjectIdentityFields({
@@ -40,6 +24,7 @@ export function ProjectIdentityFields({
   const iconError = form.formState.errors.icon;
   const colorError = form.formState.errors.color;
   const hasVisualError = Boolean(iconError || colorError);
+  const teamId = useTeamStore((s) => s.teamId);
 
   return (
     <FieldGroup>
@@ -54,7 +39,10 @@ export function ProjectIdentityFields({
               onChange={(e) => {
                 field.onChange(e);
                 if (!formState.dirtyFields.slug) {
-                  form.setValue('slug', slugify(e.target.value));
+                  form.setValue('slug', slugify(e.target.value), {
+                    shouldValidate: true,
+                    shouldDirty: true,
+                  });
                 }
               }}
               id={`${idPrefix}-name`}
@@ -69,32 +57,7 @@ export function ProjectIdentityFields({
           </Field>
         )}
       />
-      <Controller
-        name="slug"
-        control={form.control}
-        render={({ field, fieldState }) => (
-          <Field data-invalid={fieldState.invalid}>
-            <FieldLabel htmlFor={`${idPrefix}-key`}>Ключ проекта</FieldLabel>
-            <InputGroup>
-              <InputGroupInput
-                {...field}
-                value={field.value ?? ''}
-                onChange={(e) => {
-                  field.onChange(slugifyOnChange(e.target.value));
-                }}
-                id={`${idPrefix}-key`}
-                aria-label="Ключ проекта"
-                placeholder={showPlaceholders ? 'my-project' : undefined}
-                aria-required={showPlaceholders ? true : undefined}
-                aria-invalid={fieldState.invalid}
-                autoComplete="off"
-                disabled={disabled}
-              />
-            </InputGroup>
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-          </Field>
-        )}
-      />
+      <SlugField teamId={teamId!} name="slug" disabled={disabled} />
       <Controller
         name="description"
         control={form.control}
