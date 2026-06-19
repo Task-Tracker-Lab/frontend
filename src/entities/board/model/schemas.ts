@@ -73,7 +73,7 @@ export const BoardColumn = z.object({
     .min(1, 'Название состояния обязательно')
     .max(255, 'Название не должно превышать 255 символов'),
   description: z.string().nullable().optional(),
-  stateType: BoardColumnCategoryEnum,
+  stateType: ColumnStatusEnum,
   category: BoardColumnCategoryEnum,
   color: z
     .string()

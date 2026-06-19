@@ -30,6 +30,7 @@ export function RemoveColumnDialog({ columnId, boardSlug, options = {}, ...props
     <AlertDialog>
       <AlertDialogTrigger {...props} />
       <AlertDialogContent>
+        <AlertDialogDescription>Удаление доски</AlertDialogDescription>
         <AlertDialogHeader>
           <AlertDialogTitle>Удалить колонку?</AlertDialogTitle>
           <AlertDialogDescription>

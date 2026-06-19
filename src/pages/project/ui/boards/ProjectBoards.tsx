@@ -28,11 +28,11 @@ export function ProjectBoards({ slug }: PropsWithChildren<{ slug: string }>) {
   useInitProjectSlug(slug);
 
   const { data, isLoading, isError, error, refetch } = useBoardsPage(slug);
-  const { activeBoard, activeBoardId } = useActiveBoards(data ?? []);
+  const { activeBoard, activeBoardSlug } = useActiveBoards(data ?? []);
 
   const columns = useQuery({
-    ...BoardQueries.getBoardColumnList(activeBoardId!),
-    enabled: !!activeBoardId,
+    ...BoardQueries.getBoardColumnList(activeBoardSlug!),
+    enabled: !!activeBoardSlug,
   });
 
   const board =
@@ -46,14 +46,14 @@ export function ProjectBoards({ slug }: PropsWithChildren<{ slug: string }>) {
     <div className="flex h-full flex-col gap-4">
       <div className="flex flex-wrap gap-2 px-5 pt-5">
         {data?.map((item) => (
-          <BoardButton key={item.id} board={item} />
+          <BoardButton projectSlug={slug} key={item.id} board={item} />
         ))}
         <CreateBoardDialog asChild>
           <Button>Создать доску</Button>
         </CreateBoardDialog>
       </div>
       <div className="grow overflow-x-auto overscroll-x-contain p-2 pl-5">
-        {board ? <ProjectKanban key={activeBoardId} board={board} /> : null}
+        {board ? <ProjectKanban key={activeBoardSlug} board={board} /> : null}
       </div>
     </div>
   );
@@ -62,9 +62,11 @@ export function ProjectBoards({ slug }: PropsWithChildren<{ slug: string }>) {
 type BoardButtonProps = ComponentProps<'div'> &
   VariantProps<typeof buttonVariants> & {
     board: TBoard.BoardResponse;
+    projectSlug: string;
   };
 
 function BoardButton({
+  projectSlug,
   board,
   className,
   variant = 'outline',
@@ -98,7 +100,7 @@ function BoardButton({
           <EllipsisVertical />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <RemoveBoardDialog projectSlug={board.projectId} boardSlug={board.slug} asChild>
+          <RemoveBoardDialog projectSlug={projectSlug} boardSlug={board.slug} asChild>
             <DropdownMenuItem variant="destructive" onSelect={(e) => e.preventDefault()}>
               Удалить
             </DropdownMenuItem>

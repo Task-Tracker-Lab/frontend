@@ -35,26 +35,6 @@ export function CreateBoardForm({ className, mutateOptions, ...props }: CreateBo
               </Field>
             )}
           />
-          <Controller
-            name="position"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="create-board-position">Позиция доски</FieldLabel>
-                <Input
-                  {...field}
-                  type="number"
-                  id="create-board-position"
-                  aria-label="Позиция доски"
-                  placeholder="Идеи"
-                  aria-required="true"
-                  aria-invalid={fieldState.invalid}
-                  disabled={isPending}
-                />
-                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-              </Field>
-            )}
-          />
         </FieldGroup>
       </form>
     </FormProvider>

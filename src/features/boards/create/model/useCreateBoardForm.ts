@@ -29,8 +29,7 @@ export function useCreateBoardForm(options: UseCreateBoardOptions = {}) {
 
   const onSubmit = (data: CreateBoardFormValues) => {
     const body: TBoard.CreateBoardBody = {
-      ...data,
-      position: Number(data.position),
+      title: data.title,
     };
 
     createBoard.mutate({ projectSlug: slug, body });
