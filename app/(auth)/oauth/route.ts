@@ -1,94 +1,84 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { type TAuth } from 'entities/auth';
 import { StartOauthParams } from 'features/auth/oauth-login';
-import { routes } from 'shared/config';
-import { env } from 'shared/config';
-import { redirect } from 'next/navigation';
-import { cookies as nextCookies } from 'next/headers';
+import { NextRequest, NextResponse } from 'next/server';
+import { env, routes } from 'shared/config';
 
-type BooleanRaw = 'false' | 'true';
-type ExchangeParams = { token?: string };
-type OAuthParams = {
-  success?: BooleanRaw;
-  message?: string;
-  provider?: TAuth.OAuthProvider;
-  isNewUser?: BooleanRaw;
-} & StartOauthParams &
-  ExchangeParams;
+type OAuthParams =
+  | {
+      success: 'false' | 'true';
+      token?: string;
+      provider: TAuth.OAuthProvider;
+    }
+  | StartOauthParams;
 
-const PROVIDER_KEY = 'provider';
-
-function addResponseSetCookies(response: Response | NextResponse, cookies: string[]) {
-  cookies.forEach((cookie) => {
-    response.headers.append('Set-Cookie', cookie);
-  });
-}
+const ERROR_MESSAGE = 'Не удалось выполнить авторизацию';
 
 export async function GET(request: NextRequest) {
   const params: Partial<OAuthParams> = Object.fromEntries(request.nextUrl.searchParams);
-  const { provider, startOAuth, token } = params;
-  const cookieStore = await nextCookies();
 
-  if (provider && startOAuth === 'true') {
-    cookieStore.set(PROVIDER_KEY, provider);
+  //start oauth
+  if (
+    'provider' in params &&
+    'startOAuth' in params &&
+    params.startOAuth === 'true' &&
+    params.provider
+  ) {
+    const { provider } = params;
     const redirectUrl = `${env.NEXT_PUBLIC_API_BASE_URL}/oauth/${provider}`;
+
     return NextResponse.redirect(redirectUrl);
   }
 
-  let message = params.message;
-  let success = params.success;
-  let cookies: string[] = [];
-  const APP_URL = request.nextUrl.origin;
-
-  // Exchange token
-  const providerFromCookie = cookieStore.get(PROVIDER_KEY)?.value;
-
-  if (token) {
+  //exchange token
+  if ('token' in params && params.token) {
     try {
+      const { token, success, provider } = params;
+
+      if (success === 'false') {
+        throw new Error(ERROR_MESSAGE);
+      }
+
+      if (!provider) {
+        throw new Error('OAuth provider не найден в query параметрах');
+      }
+
       const response = await fetch(`${env.NEXT_PUBLIC_API_BASE_URL}/oauth/exchange`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ token, provider: providerFromCookie }),
+        body: JSON.stringify({ token, provider } satisfies TAuth.ExchangeTokenBody),
       });
 
-      const setCookieHeaders = response.headers.getSetCookie();
-      if (setCookieHeaders && setCookieHeaders.length > 0) {
-        cookies = setCookieHeaders;
+      const data = (await response.json()) as TAuth.ExchangeTokenResponse;
+
+      if (!response.ok || !data.success) {
+        throw new Error(
+          data.message || `OAuth exchange завершился с ошибкой (status ${response.status})`
+        );
       }
 
-      const data: TAuth.ExchangeTokenResponse = await response.json();
-      message = data.message || message;
-      success = data.success ? 'true' : 'false';
-    } catch {
-      success = 'false';
+      const successUrl = new URL(routes.user.profile(), request.url);
+
+      successUrl.searchParams.set('success', 'true');
+      successUrl.searchParams.set('message', 'Операция выполнена успешно');
+
+      const res = NextResponse.redirect(successUrl);
+
+      (response.headers.getSetCookie() ?? []).forEach((cookie) => {
+        res.headers.append('Set-Cookie', cookie);
+      });
+
+      return res;
+    } catch (error) {
+      console.error(error instanceof Error ? error.message : ERROR_MESSAGE);
     }
   }
-  cookieStore.delete(PROVIDER_KEY);
-  // Ошибка
-  if (success === 'false') {
-    const errorUrl = message
-      ? `${APP_URL}${routes.auth.signin()}?error=${encodeURIComponent(message)}`
-      : `${APP_URL}${routes.auth.signin()}`;
 
-    const response = NextResponse.redirect(errorUrl);
+  const errorUrl = new URL(routes.auth.signin(), request.url);
 
-    addResponseSetCookies(response, cookies);
+  errorUrl.searchParams.set('success', 'false');
+  errorUrl.searchParams.set('message', ERROR_MESSAGE);
 
-    return response;
-  }
-
-  // Успех
-  if (success === 'true') {
-    const successUrl = `${APP_URL}${routes.user.profile()}?success=true&message=${encodeURIComponent(message || 'Операция выполнена успешно')}`;
-
-    const response = NextResponse.redirect(successUrl);
-    addResponseSetCookies(response, cookies);
-
-    return response;
-  }
-
-  // Fallback
-  redirect(routes.auth.signin());
+  return NextResponse.redirect(errorUrl);
 }

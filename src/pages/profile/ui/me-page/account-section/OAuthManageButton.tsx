@@ -1,7 +1,7 @@
 'use client';
 
-import { OAUTH_PROVIDERS, TAuth, authFabricKeys } from 'entities/auth';
-import { useCallback, type ComponentProps } from 'react';
+import { authFabricKeys, OAUTH_PROVIDERS, TAuth } from 'entities/auth';
+import { type ComponentProps, useCallback } from 'react';
 import { Button } from 'shared/ui';
 import { useConnectOAuthProvider } from '../../../api/useConnectOauthProvider';
 import { useDisconnectOAuthProvider } from '../../../api/useDisconnectOauthProvider';
@@ -52,7 +52,7 @@ export function OAuthManageButton({ provider, label, isLinked, ...props }: OAuth
       disabled={isLoading}
       {...props}
     >
-      <div className={`${meta.buttonClassName} w-max rounded-full text-2xl`}>
+      <div className={`${meta.className} w-max rounded-full text-2xl`}>
         <Image src={meta.iconSrc} alt={label} width={24} height={24} />
       </div>
       <span className="w-full text-center">

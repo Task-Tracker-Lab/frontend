@@ -1,26 +1,26 @@
-import { type TAuth } from 'entities/auth';
-import YandexIcon from 'public/yandex-logo.svg';
-import VkontakteIcon from 'public/vkontakte-logo.svg';
-import GoogleIcon from 'public/google-logo.svg';
-import GithubIcon from 'public/github-logo.svg';
+import GithubIcon from 'github-logo.svg';
+import GoogleIcon from 'google-logo.svg';
+import VkontakteIcon from 'vkontakte-logo.svg';
+import YandexIcon from 'yandex-logo.svg';
+import { OAuthProvider } from '../model/types';
 
 export type OAuthProviderMeta = {
   iconSrc: string;
-  buttonClassName?: string;
+  className?: string;
 };
 
-export const OAUTH_PROVIDERS: Record<TAuth.OAuthProvider, OAuthProviderMeta> = {
+export const OAUTH_PROVIDERS: Record<OAuthProvider, OAuthProviderMeta> = {
   yandex: {
     iconSrc: YandexIcon,
-    buttonClassName: 'text-[#fc3f1d] hover:text-[#fc3f1d]',
+    className: 'text-[#fc3f1d] hover:text-[#fc3f1d]',
   },
   vkontakte: {
     iconSrc: VkontakteIcon,
-    buttonClassName: 'bg-[#07f] hover:bg-[#07f]',
+    className: 'bg-[#07f] hover:bg-[#07f]',
   },
   google: { iconSrc: GoogleIcon },
   github: {
     iconSrc: GithubIcon,
-    buttonClassName: 'bg-[#24292f] hover:bg-[#24292f] text-white hover:text-white ',
+    className: 'bg-[#24292f] hover:bg-[#24292f] text-white hover:text-white ',
   },
 } as const;
