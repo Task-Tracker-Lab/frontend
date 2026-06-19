@@ -6,10 +6,10 @@ import { useParams } from 'next/navigation';
 export function useQueryProject() {
   const teamId = useTeamStore.use.teamId();
   const params = useParams();
-  const projectId = typeof params?.projectId === 'string' ? params.projectId : undefined;
+  const slug = typeof params?.slug === 'string' ? params.slug : undefined;
 
   return useQuery({
-    ...ProjectQueries.getProject(teamId!, projectId!),
-    enabled: Boolean(teamId && projectId),
+    ...ProjectQueries.getProject(teamId!, slug!),
+    enabled: Boolean(teamId && slug),
   });
 }

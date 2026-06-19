@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 
 type RestoreProjectVariables = {
   teamId: string;
-  id: string;
+  slug: string;
 };
 
 export type UseRestoreProjectOptions = Omit<
@@ -15,7 +15,7 @@ export type UseRestoreProjectOptions = Omit<
 export function useRestoreProject({ onSuccess, ...rest }: UseRestoreProjectOptions = {}) {
   return useMutation<TProject.ActionResponse, DefaultError, RestoreProjectVariables>({
     ...rest,
-    mutationFn: ({ teamId, id }) => ProjectHttp.updateProject(teamId, id, { status: 'active' }),
+    mutationFn: ({ teamId, slug }) => ProjectHttp.updateProject(teamId, slug, { status: 'active' }),
     onSuccess: async (res, variables, _r, context) => {
       onSuccess?.(res, variables, _r, context);
       toast.success(res.message ?? 'Проект восстановлен');
@@ -25,7 +25,7 @@ export function useRestoreProject({ onSuccess, ...rest }: UseRestoreProjectOptio
           queryKey: projectFabricKeys.list(variables.teamId),
         }),
         context.client.invalidateQueries({
-          queryKey: projectFabricKeys.detail(variables.teamId, variables.id),
+          queryKey: projectFabricKeys.detail(variables.teamId, variables.slug),
         }),
       ]);
     },

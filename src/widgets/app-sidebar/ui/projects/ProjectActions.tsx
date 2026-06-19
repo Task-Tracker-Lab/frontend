@@ -64,14 +64,14 @@ export function ProjectActions({ project, teamId, ...props }: ProjectActionsProp
       <ShareProjectDialog
         projectName={project.name}
         teamId={teamId!}
-        projectId={project.id}
+        slug={project.slug}
         dialog={{ open: shareOpen, onOpenChange: setShareOpen }}
       />
       {project.status === 'archived' ? (
         <RestoreProjectDialog
           projectName={project.name}
           teamId={teamId!}
-          projectId={project.id}
+          slug={project.slug}
           dialog={{ open: restoreOpen, onOpenChange: setRestoreOpen }}
         />
       ) : (
@@ -79,7 +79,7 @@ export function ProjectActions({ project, teamId, ...props }: ProjectActionsProp
           <ArchiveProjectDialog
             projectName={project.name}
             teamId={teamId!}
-            projectId={project.id}
+            slug={project.slug}
             dialog={{ open: archiveOpen, onOpenChange: setArchiveOpen }}
           />
         )

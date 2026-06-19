@@ -15,10 +15,10 @@ import {
 interface ProjectDangerZoneProps {
   projectName: string;
   teamId: string;
-  projectId: string;
+  slug: string;
 }
 
-export function ProjectDangerZone({ projectName, teamId, projectId }: ProjectDangerZoneProps) {
+export function ProjectDangerZone({ projectName, teamId, slug }: ProjectDangerZoneProps) {
   return (
     <Item variant="destructive">
       <ItemMedia>
@@ -31,12 +31,7 @@ export function ProjectDangerZone({ projectName, teamId, projectId }: ProjectDan
         </ItemDescription>
       </ItemContent>
       <ItemActions>
-        <RemoveProjectDialog
-          projectName={projectName}
-          teamId={teamId}
-          projectId={projectId}
-          asChild
-        >
+        <RemoveProjectDialog projectName={projectName} teamId={teamId} slug={slug} asChild>
           <Button variant="destructive" size="sm">
             Удалить проект
           </Button>
