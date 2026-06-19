@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { TAuth } from 'entities/auth';
+import { type TAuth } from 'entities/auth';
 import { OAuthLoginButtons, OAuthSeparator } from 'features/auth/oauth-login';
 import { ComponentProps } from 'react';
 import { Controller, useForm } from 'react-hook-form';

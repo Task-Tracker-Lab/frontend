@@ -1,4 +1,4 @@
-import { TTeam } from 'entities/team';
+import { type TTeam } from 'entities/team';
 import { ComponentProps } from 'react';
 import { Badge } from 'shared/ui';
 

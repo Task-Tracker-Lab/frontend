@@ -1,7 +1,7 @@
 'use client';
 
 import { TeamAvatar, useTeamStore } from 'entities/team';
-import { TUser } from 'entities/user';
+import { type TUser } from 'entities/user';
 import { Crown } from 'lucide-react';
 import { classNames } from 'shared/lib/utils';
 import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from 'shared/ui';

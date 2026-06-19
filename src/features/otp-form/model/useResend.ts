@@ -1,5 +1,5 @@
 import { type DefaultError, useMutation, UseMutationOptions } from '@tanstack/react-query';
-import { AuthHttp, TAuth } from 'entities/auth';
+import { AuthHttp, type TAuth } from 'entities/auth';
 
 export type UseResendOptions = Omit<
   UseMutationOptions<TAuth.ResendCodeResponse, DefaultError, TAuth.ResendCodeBody>,

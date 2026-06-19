@@ -1,6 +1,6 @@
 'use client';
 
-import { authFabricKeys, OAUTH_PROVIDERS, TAuth } from 'entities/auth';
+import { authFabricKeys, OAUTH_PROVIDERS, type TAuth } from 'entities/auth';
 import { type ComponentProps, useCallback } from 'react';
 import { Button } from 'shared/ui';
 import { useConnectOAuthProvider } from '../../../api/useConnectOauthProvider';

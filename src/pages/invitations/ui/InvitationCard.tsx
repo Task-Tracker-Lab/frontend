@@ -1,6 +1,6 @@
 'use client';
 
-import { TUser } from 'entities/user';
+import { type TUser } from 'entities/user';
 import { MailIcon } from 'lucide-react';
 import { useAcceptTeamInvitation } from '../api/useAcceptTeamInvitation';
 import { formatDate } from 'shared/lib/utils';

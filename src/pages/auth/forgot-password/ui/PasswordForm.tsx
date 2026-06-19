@@ -14,7 +14,7 @@ import {
   InputPassword,
 } from 'shared/ui';
 import { ComponentProps, useState } from 'react';
-import { TAuth } from 'entities/auth';
+import { type TAuth } from 'entities/auth';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { setFormErrors } from 'shared/lib/utils';

@@ -26,12 +26,15 @@ export function ProjectsContent() {
   const teamId = useTeamStore.use.teamId();
   const router = useRouter();
   const pathname = usePathname();
+  const { open, isMobile } = useSidebar();
   const projects = useQuery({ ...ProjectQueries.getProjects(teamId!), enabled: !!teamId });
+
+  if (!projects.data) {
+    return null;
+  }
+
   const projectList = projects.data?.items.slice(0, 6) ?? [];
   const totalProjects = projects.data?.items.length ?? 0;
-
-  const { open, isMobile } = useSidebar();
-
   const isAllowedToHighlight = !open && !isMobile;
 
   const handleClickTrigger = () => {
@@ -39,10 +42,6 @@ export function ProjectsContent() {
       router.push(routes.team.projects());
     }
   };
-
-  if (!projects.data) {
-    return null;
-  }
 
   return (
     <Collapsible asChild className="group/collapsible" defaultOpen>

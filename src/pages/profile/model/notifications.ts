@@ -1,4 +1,4 @@
-import { TUser } from 'entities/user';
+import { type TUser } from 'entities/user';
 
 export type Notifications = TUser.UserResponse['notifications'];
 export type NotificationChannel = keyof Notifications;

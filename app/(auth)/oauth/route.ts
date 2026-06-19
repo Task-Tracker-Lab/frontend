@@ -64,8 +64,9 @@ export async function GET(request: NextRequest) {
       successUrl.searchParams.set('message', 'Операция выполнена успешно');
 
       const res = NextResponse.redirect(successUrl);
+      const cookies = response.headers.getSetCookie() ?? [];
 
-      (response.headers.getSetCookie() ?? []).forEach((cookie) => {
+      cookies.forEach((cookie) => {
         res.headers.append('Set-Cookie', cookie);
       });
 

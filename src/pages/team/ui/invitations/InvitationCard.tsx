@@ -1,4 +1,4 @@
-import { TTeam } from 'entities/team';
+import { type TTeam } from 'entities/team';
 import { Clock, Copy, MailIcon, RotateCw, X } from 'lucide-react';
 import { ComponentProps } from 'react';
 import { classNames, formatDate } from 'shared/lib/utils';
