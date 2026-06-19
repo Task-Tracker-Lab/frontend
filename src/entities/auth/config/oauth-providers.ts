@@ -1,4 +1,4 @@
-import { type TAuth } from 'entities/auth';
+import type * as TAuth from '../model/types';
 import YandexIcon from 'public/yandex-logo.svg';
 import VkontakteIcon from 'public/vkontakte-logo.svg';
 import GoogleIcon from 'public/google-logo.svg';

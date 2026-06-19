@@ -1,6 +1,6 @@
 import { api } from 'shared/api';
 import * as SAuth from '../model/schemas';
-import * as TAuth from '../model/types';
+import type * as TAuth from '../model/types';
 
 export class AuthHttp {
   static signin(data: TAuth.SigninBody) {

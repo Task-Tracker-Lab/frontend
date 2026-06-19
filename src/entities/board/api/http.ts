@@ -1,6 +1,6 @@
 import { api } from 'shared/api';
 import * as SBoard from '../model/schemas';
-import * as TBoard from '../model/types';
+import type * as TBoard from '../model/types';
 
 export class BoardHttp {
   static getBoardList(projectSlug: string, signal?: AbortSignal) {

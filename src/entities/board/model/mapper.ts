@@ -1,4 +1,4 @@
-import { BoardColumnResponse, BoardResponse } from './types';
+import type { BoardColumnResponse, BoardResponse } from './types';
 
 // TODO: добавить таски в типы, когда они появятся в API
 
