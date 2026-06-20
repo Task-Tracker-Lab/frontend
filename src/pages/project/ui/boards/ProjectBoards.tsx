@@ -9,7 +9,6 @@ import {
   buttonVariants,
 } from 'shared/ui';
 import { CreateBoardDialog } from 'features/boards/create';
-import { useInitProjectSlug } from 'entities/project';
 import { ComponentProps, PropsWithChildren } from 'react';
 import { BoardMapper, BoardQueries, TBoard } from 'entities/board';
 import { useBoardStore } from 'pages/project/model/store';
@@ -25,8 +24,6 @@ import { ProjectBoardsError } from './ProjectBoardsError';
 import { useQuery } from '@tanstack/react-query';
 
 export function ProjectBoards({ slug }: PropsWithChildren<{ slug: string }>) {
-  useInitProjectSlug(slug);
-
   const { data, isLoading, isError, error, refetch } = useBoardsPage(slug);
   const { activeBoard, activeBoardSlug } = useActiveBoards(data ?? []);
 
