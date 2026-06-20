@@ -1,15 +1,15 @@
-import type * as TAuth from '../model/types';
 import YandexIcon from 'public/yandex-logo.svg';
 import VkontakteIcon from 'public/vkontakte-logo.svg';
 import GoogleIcon from 'public/google-logo.svg';
 import GithubIcon from 'public/github-logo.svg';
+import { type OAuthProvider } from '../model/types';
 
 export type OAuthProviderMeta = {
   iconSrc: string;
   buttonClassName?: string;
 };
 
-export const OAUTH_PROVIDERS: Record<TAuth.OAuthProvider, OAuthProviderMeta> = {
+export const OAUTH_PROVIDERS: Record<OAuthProvider, OAuthProviderMeta> = {
   yandex: {
     iconSrc: YandexIcon,
     buttonClassName: 'text-[#fc3f1d] hover:text-[#fc3f1d]',

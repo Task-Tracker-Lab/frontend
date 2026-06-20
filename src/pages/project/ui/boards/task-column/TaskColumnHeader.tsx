@@ -25,13 +25,12 @@ export function TaskColumnHeader({ data }: { data: TaskColumnHeaderProps }) {
   const { tasksLength, title, id, color, boardSlug } = data;
   const [activeColor, setActiveColor] = useState<string>(color ?? BOARD_COLUMN_COLORS[0]);
 
-  const existColor = BOARD_COLUMN_COLORS.findIndex((v) => v.toLowerCase() === data.color);
+  const existColor = BOARD_COLUMN_COLORS.findIndex(
+    (v) => v.toLowerCase() === data.color?.toLowerCase()
+  );
   const isExistColor = existColor !== -1;
-  const newColors = isExistColor
-    ? [...BOARD_COLUMN_COLORS]
-    : color
-      ? [color, ...BOARD_COLUMN_COLORS]
-      : [...BOARD_COLUMN_COLORS];
+  const newColors =
+    color && !isExistColor ? [color, ...BOARD_COLUMN_COLORS] : [...BOARD_COLUMN_COLORS];
 
   return (
     <KanbanColumnHandle variant="visible" cursor={false} asChild>
@@ -61,7 +60,7 @@ export function TaskColumnHeader({ data }: { data: TaskColumnHeaderProps }) {
                 <DropdownMenuGroup>
                   <DropdownMenuLabel>Цвет колонки</DropdownMenuLabel>
                   <ColorPicker
-                    colors={[...newColors]}
+                    colors={newColors}
                     size="sm"
                     className="p-2"
                     activeColor={activeColor}

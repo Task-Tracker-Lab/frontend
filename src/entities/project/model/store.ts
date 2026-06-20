@@ -1,17 +1,19 @@
-import { create } from 'zustand';
+import { createStore } from 'shared/lib/store';
 
-interface ProjectStore {
+type ProjectState = {
   projectSlug: string | null;
-  setProjectSlug: (id: string) => void;
+  setProjectSlug: (projectSlug: string | null) => void;
   clearProjectSlug: () => void;
-}
+};
 
-export const useProjectStore = create<ProjectStore>((set) => ({
+export const useProjectStore = createStore<ProjectState>((set) => ({
   projectSlug: null,
-  setProjectSlug(id) {
-    set({ projectSlug: id });
-  },
-  clearProjectSlug() {
-    set({ projectSlug: null });
-  },
+  setProjectSlug: (projectSlug) =>
+    set((state) => {
+      state.projectSlug = projectSlug;
+    }),
+  clearProjectSlug: () =>
+    set((state) => {
+      state.projectSlug = null;
+    }),
 }));

@@ -1,6 +1,5 @@
 'use client';
 import { ComponentProps, CSSProperties, MouseEvent } from 'react';
-import { COLORS } from './const';
 import { cn } from 'shared/lib/utils';
 import { Check } from 'lucide-react';
 
@@ -8,7 +7,7 @@ type ColorPickerProps = ComponentProps<'button'> & {
   activeColor: string;
   setActiveColor: (color: string) => void;
   size?: keyof typeof variant.size;
-  colors?: string[];
+  colors: string[];
 };
 
 const variant = {
@@ -35,7 +34,7 @@ export function ColorPicker({
   };
   return (
     <div className={cn('flex flex-wrap gap-2', className)}>
-      {(colors ?? COLORS)?.map((item) => {
+      {colors.map((item) => {
         const isSelected = activeColor === item;
         const isVeryLight = item?.toLowerCase() === '#ffffff';
 
