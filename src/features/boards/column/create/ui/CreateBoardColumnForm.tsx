@@ -5,7 +5,6 @@ import { useCreateBoardColumnForm } from '../model/useCreateBoardColumnForm';
 import { UseCreateBoardColumnOptions } from '../model/useCreateBoardColumn';
 import { ComponentProps } from 'react';
 import { COLORS, DEFAULT_COLUMN_COLOR } from '../model/consts';
-import { fi } from 'zod/v4/locales';
 
 interface CreateBoardColumnFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
   boardSlug: string;
@@ -73,25 +72,6 @@ export function CreateBoardColumnForm({
                 </Field>
               );
             }}
-          />
-          <Controller
-            name="orderIndex"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="create-board-column-position">Позиция колонки</FieldLabel>
-                <Input
-                  {...field}
-                  type="number"
-                  id="create-board-column-position"
-                  aria-label="Позиция колонки"
-                  aria-required="true"
-                  aria-invalid={fieldState.invalid}
-                  disabled={isPending}
-                />
-                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-              </Field>
-            )}
           />
         </FieldGroup>
       </form>
