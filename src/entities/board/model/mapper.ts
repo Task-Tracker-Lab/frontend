@@ -2,14 +2,23 @@ import type { BoardColumnResponse, BoardResponse } from './types';
 
 // TODO: добавить таски в типы, когда они появятся в API
 
-export type BoardWithTasks = {
+type KanbanTaskStub = {
+  id: string;
+  columnId: string;
+};
+
+export type KanbanBoardData = {
   board: BoardResponse;
   columns: Record<string, BoardColumnResponse>;
   tasksByColumn: Record<string, unknown[]>;
 };
 
 export class BoardMapper {
-  static toBoardWithTasks(board: BoardResponse, columnList: BoardColumnResponse[]): BoardWithTasks {
+  static toKanban(
+    board: BoardResponse,
+    columnList: BoardColumnResponse[],
+    taskList: unknown[]
+  ): KanbanBoardData {
     const sortedColumns = [...columnList].sort((a, b) => a.orderIndex - b.orderIndex);
     const tasksByColumn: Record<string, unknown[]> = {};
     const columns: Record<string, BoardColumnResponse> = {};
@@ -19,13 +28,15 @@ export class BoardMapper {
       columns[column.id] = column;
     });
 
-    // tasks?.forEach((task) => {
-    //   if (tasksByColumn[task.columnId]) {
-    //     tasksByColumn[task.columnId].push(task);
-    //   } else {
-    //     console.warn(`Task ${task.id} references unknown column ${task.columnId}`);
-    //   }
-    // });
+    taskList?.forEach((task) => {
+      const kanbanTask = task as KanbanTaskStub;
+
+      if (tasksByColumn[kanbanTask.columnId]) {
+        tasksByColumn[kanbanTask.columnId].push(task);
+      } else {
+        console.warn(`Task ${kanbanTask.id} references unknown column ${kanbanTask.columnId}`);
+      }
+    });
 
     // Object.keys(tasksByColumn).forEach((columnId) => {
     //   tasksByColumn[columnId].sort((a, b) => a.position - b.position);

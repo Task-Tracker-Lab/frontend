@@ -7,7 +7,6 @@ import { CreateBoardColumnFormValues } from './type';
 import { setFormErrors } from 'shared/lib/utils';
 import { extractValidationIssues } from 'shared/api';
 import { type TBoard } from 'entities/board';
-import { useProjectStore } from 'entities/project';
 
 type UseCreateBoardColumnFormOptions = UseCreateBoardColumnOptions & {
   defaultPosition?: number;
@@ -18,7 +17,7 @@ export function useCreateBoardColumnForm(
   options: UseCreateBoardColumnFormOptions = {}
 ) {
   const { defaultPosition = 0, ...mutationOptions } = options;
-  const projectSlug = useProjectStore((s) => s.projectSlug!);
+
   const form = useForm<CreateBoardColumnFormValues>({
     resolver: zodResolver(CreateBoardColumnFormSchema),
     defaultValues: getDefaultCreateBoardColumnValues(defaultPosition),
@@ -47,8 +46,6 @@ export function useCreateBoardColumnForm(
 
   return {
     form,
-    boardSlug,
-    projectSlug,
     isPending: createBoardColumn.isPending,
     handleSubmit: form.handleSubmit(onSubmit),
   };
