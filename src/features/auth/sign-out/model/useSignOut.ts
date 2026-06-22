@@ -16,8 +16,8 @@ export function useSignOut({ onSuccess, ...rest }: UseSignOutOptions = {}) {
   return useMutation<Awaited<TAuth.SignoutResponse>, DefaultError, void>({
     ...rest,
     mutationFn: AuthHttp.signout,
-    onSuccess: async (res, _v, _r, context) => {
-      onSuccess?.(res, _v, _r, context);
+    onSuccess: async (res, v, r, context) => {
+      onSuccess?.(res, v, r, context);
       await context.client.cancelQueries();
       AccessToken.clear();
       context.client.clear();

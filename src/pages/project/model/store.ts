@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-interface BordStore {
+interface BoardStore {
   activeBoardId: string | null;
   activeBoardSlug: string | null;
   activeColumnId: string | null;
@@ -8,7 +8,7 @@ interface BordStore {
   setColumnId: (id: string | null) => void;
 }
 
-export const useBoardStore = create<BordStore>((set) => ({
+export const useBoardStore = create<BoardStore>((set) => ({
   activeBoardId: null,
   activeColumnId: null,
   activeBoardSlug: null,

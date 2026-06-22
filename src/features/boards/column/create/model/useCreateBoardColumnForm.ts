@@ -1,11 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { getDefaultCreateBoardColumnValues } from './default-values';
+import { getDefaultCreateBoardColumnValues } from '../config/default-values';
 import { useCreateBoardColumn, UseCreateBoardColumnOptions } from './useCreateBoardColumn';
 import { CreateBoardColumnFormSchema } from './schemas';
-import { CreateBoardColumnFormValues } from './type';
 import { setFormErrors } from 'shared/lib/utils';
 import { extractValidationIssues } from 'shared/api';
+import { type CreateBoardColumnFormValues } from './types';
 import { type TBoard } from 'entities/board';
 
 type UseCreateBoardColumnFormOptions = UseCreateBoardColumnOptions & {

@@ -20,8 +20,8 @@ export function useUpdateInvitation({ onSuccess, ...rest }: UseUpdateInvitationO
       }
       return TeamHttp.updateInvitation(teamId, code, data);
     },
-    onSuccess: async (res, _v, _r, context) => {
-      onSuccess?.(res, _v, _r, context);
+    onSuccess: async (res, v, r, context) => {
+      onSuccess?.(res, v, r, context);
       toast.success('Роль в приглашении обновлена');
 
       if (teamId) {

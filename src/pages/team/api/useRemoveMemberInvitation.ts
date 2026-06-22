@@ -21,8 +21,8 @@ export function useRemoveMemberInvitation({
       }
       return TeamHttp.removeInvitation(teamId, code);
     },
-    onSuccess: async (res, _v, _r, context) => {
-      onSuccess?.(res, _v, _r, context);
+    onSuccess: async (res, v, r, context) => {
+      onSuccess?.(res, v, r, context);
       toast.success(res.message ?? 'Приглашение отозвано');
 
       if (teamId) {

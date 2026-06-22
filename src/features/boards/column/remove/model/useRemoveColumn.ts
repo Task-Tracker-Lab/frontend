@@ -20,9 +20,9 @@ export function useRemoveColumn({ onSuccess, onSettled, ...rest }: UseDeleteColu
       onSuccess?.(res, ...args);
       toast.success(res.message ?? 'Колонка удалена');
     },
-    onSettled: async (_d, _e, _v, _m, context) => {
-      onSettled?.(_d, _e, _v, _m, context);
-      context.client.invalidateQueries({ queryKey: boardFabricKeys.columns(_v.boardSlug) });
+    onSettled: async (d, e, v, m, context) => {
+      onSettled?.(d, e, v, m, context);
+      context.client.invalidateQueries({ queryKey: boardFabricKeys.columns(v.boardSlug) });
     },
   });
 }

@@ -16,8 +16,8 @@ export function useRemoveTeam({ onSuccess, onSettled, ...rest }: UseDeleteTeamOp
       onSuccess?.(res, ...args);
       toast.success(res.message ?? 'Команда удалена');
     },
-    onSettled: async (_d, _e, _v, _m, context) => {
-      onSettled?.(_d, _e, _v, _m, context);
+    onSettled: async (d, e, v, m, context) => {
+      onSettled?.(d, e, v, m, context);
       context.client.invalidateQueries({ queryKey: userFabricKeys.myTeams() });
     },
   });

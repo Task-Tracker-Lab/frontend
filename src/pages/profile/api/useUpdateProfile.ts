@@ -15,8 +15,8 @@ export function useUpdateProfile({ onSuccess, onSettled, ...rest }: UseUpdatePro
       onSuccess?.(res, ...args);
       toast.success(res.message ?? 'Профиль успешно обновлен');
     },
-    onSettled: async (_d, _e, _v, _m, context) => {
-      onSettled?.(_d, _e, _v, _m, context);
+    onSettled: async (d, e, v, m, context) => {
+      onSettled?.(d, e, v, m, context);
       context.client.invalidateQueries({ queryKey: userFabricKeys.me() });
     },
   });

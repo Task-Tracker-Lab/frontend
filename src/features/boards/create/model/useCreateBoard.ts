@@ -16,8 +16,8 @@ export function useCreateBoard({ onSuccess, ...rest }: UseCreateBoardOptions = {
   return useMutation<TBoard.CreateBoardResponse, DefaultError, CreateBoardVariables>({
     ...rest,
     mutationFn: ({ projectSlug, body }) => BoardHttp.createBoard(projectSlug, body),
-    onSuccess: async (res, variables, _r, context) => {
-      onSuccess?.(res, variables, _r, context);
+    onSuccess: async (res, variables, r, context) => {
+      onSuccess?.(res, variables, r, context);
       toast.success(res.message ?? 'Доска создана');
 
       await context.client.invalidateQueries({

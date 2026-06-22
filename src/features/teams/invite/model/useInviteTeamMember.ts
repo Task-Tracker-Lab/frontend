@@ -13,12 +13,14 @@ export function useInviteTeamMember({ onSuccess, ...rest }: UseInviteTeamMemberO
   return useMutation<TTeam.ActionResponse, DefaultError, InviteTeamMemberVariables>({
     ...rest,
     mutationFn: ({ teamId, body }) => TeamHttp.inviteMember(teamId, body),
-    onSuccess: async (res, _v, _r, context) => {
-      onSuccess?.(res, _v, _r, context);
+    onSuccess: async (res, variables, r, context) => {
+      onSuccess?.(res, variables, r, context);
       toast.success(res.message ?? 'Приглашение отправлено');
 
-      if (_v.teamId) {
-        await context.client.invalidateQueries({ queryKey: teamFabricKeys.invitations(_v.teamId) });
+      if (variables.teamId) {
+        await context.client.invalidateQueries({
+          queryKey: teamFabricKeys.invitations(variables.teamId),
+        });
       }
     },
   });

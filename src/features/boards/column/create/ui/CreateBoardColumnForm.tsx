@@ -4,7 +4,7 @@ import { ColorPicker, Field, FieldError, FieldGroup, FieldLabel, Input } from 's
 import { useCreateBoardColumnForm } from '../model/useCreateBoardColumnForm';
 import { UseCreateBoardColumnOptions } from '../model/useCreateBoardColumn';
 import { ComponentProps } from 'react';
-import { COLORS, DEFAULT_COLUMN_COLOR } from '../model/consts';
+import { COLORS, DEFAULT_COLUMN_COLOR } from '../config/consts';
 
 interface CreateBoardColumnFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
   boardSlug: string;

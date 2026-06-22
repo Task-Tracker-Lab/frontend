@@ -1,5 +1,5 @@
 import { PROJECT_COLORS, PROJECT_ICONS } from 'entities/project';
-import type { CreateProjectFormValues } from './types';
+import type { CreateProjectFormValues } from '../model/types';
 
 function pickRandom<T>(items: readonly T[]): T {
   return items[Math.floor(Math.random() * items.length)]!;

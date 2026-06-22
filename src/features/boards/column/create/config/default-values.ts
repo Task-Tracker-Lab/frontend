@@ -1,5 +1,5 @@
-import { DEFAULT_COLUMN_COLOR } from './consts';
-import { CreateBoardColumnFormValues } from './type';
+import { DEFAULT_COLUMN_COLOR } from '../config/consts';
+import { CreateBoardColumnFormValues } from '../model/types';
 
 export function getDefaultCreateBoardColumnValues(position = 0): CreateBoardColumnFormValues {
   return {

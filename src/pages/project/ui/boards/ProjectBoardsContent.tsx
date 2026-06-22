@@ -1,8 +1,8 @@
-import { type TBoard } from 'entities/board';
-import React from 'react';
-import { type ProjectBoardViewData } from '../../model/types';
 import dynamic from 'next/dynamic';
+import React from 'react';
 import { ProjectKanbanSkeleton } from './ProjectKanban.skeleton';
+import { type TBoard } from 'entities/board';
+import { type ProjectBoardViewData } from '../../model/types';
 
 type ProjectBoardsContentProps = {
   view: TBoard.BoardViewType;

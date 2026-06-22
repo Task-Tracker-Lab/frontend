@@ -22,8 +22,8 @@ export function useUpdateProject({ onSuccess, ...rest }: UseUpdateProjectProps =
       }
       return ProjectHttp.updateProject(teamId, slug, data);
     },
-    onSuccess: async (res, _v, _r, context) => {
-      onSuccess?.(res, _v, _r, context);
+    onSuccess: async (res, v, r, context) => {
+      onSuccess?.(res, v, r, context);
       toast.success(res.message ?? 'Проект обновлён');
 
       if (teamId && slug) {

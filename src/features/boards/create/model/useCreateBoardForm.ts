@@ -1,13 +1,13 @@
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { getDefaultCreateBoardValues } from './default-values';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { getDefaultCreateBoardValues } from '../config/default-values';
 import { useCreateBoard, UseCreateBoardOptions } from './useCreateBoard';
 import { CreateBoardFormSchema } from './schemas';
-import { CreateBoardFormValues } from './type';
 import { setFormErrors } from 'shared/lib/utils';
 import { extractValidationIssues } from 'shared/api';
 import { type TBoard } from 'entities/board';
-import { useParams } from 'next/navigation';
+import { type CreateBoardFormValues } from './types';
 
 export function useCreateBoardForm(options: UseCreateBoardOptions = {}) {
   const params = useParams<{ slug: string }>();
