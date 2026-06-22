@@ -1,6 +1,6 @@
 import { UseQueryResult } from '@tanstack/react-query';
 import { useTeamStore } from 'entities/team';
-import { TUser } from 'entities/user';
+import { type TUser } from 'entities/user';
 import { ChevronsUpDown } from 'lucide-react';
 import { useMemo } from 'react';
 import { TeamItem } from './TeamItem';

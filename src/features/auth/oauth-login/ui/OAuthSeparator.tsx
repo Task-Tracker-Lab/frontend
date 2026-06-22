@@ -1,16 +1,16 @@
-import { cn } from 'shared/lib/utils';
+import dynamic from 'next/dynamic';
+import { Skeleton } from 'shared/ui';
 
-interface OAuthSeparatorProps {
-  className?: string;
-  label?: string;
-}
-
-export function OAuthSeparator({ className, label = 'или' }: OAuthSeparatorProps) {
-  return (
-    <div className={cn('text-muted-foreground my-3 flex items-center', className)}>
-      <span className="bg-border h-px w-full" />
-      <span className="block px-2">{label}</span>
-      <span className="bg-border h-px w-full" />
-    </div>
-  );
-}
+export const OAuthSeparator = dynamic(
+  () => import('./OAuthSeparatorContent').then((module) => module.OAuthSeparatorContent),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="my-3 flex items-center px-1">
+        <Skeleton className="h-px w-full" />
+        <Skeleton className="mx-2 h-4 w-16" />
+        <Skeleton className="h-px w-full" />
+      </div>
+    ),
+  }
+);

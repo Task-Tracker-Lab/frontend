@@ -1,6 +1,6 @@
 'use client';
 
-import { projectIconCodeToEmoji, TProject } from 'entities/project';
+import { projectIconCodeToEmoji, type TProject } from 'entities/project';
 import { useTeamStore } from 'entities/team';
 import { ArchiveProjectDialog, RestoreProjectDialog } from 'features/projects/archive';
 import { RemoveProjectDialog } from 'features/projects/remove';

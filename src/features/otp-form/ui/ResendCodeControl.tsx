@@ -6,7 +6,7 @@ import { classNames, formatTime } from 'shared/lib/utils';
 import { Button } from 'shared/ui';
 import { RESEND_CODE_DELAY_MS } from '../model/const';
 import { useResendCode, UseResendOptions } from '../model/useResend';
-import { TAuth } from 'entities/auth';
+import { type TAuth } from 'entities/auth';
 import { toast } from 'sonner';
 
 interface ResendCodeControlProps extends Omit<ComponentProps<'div'>, 'children'> {

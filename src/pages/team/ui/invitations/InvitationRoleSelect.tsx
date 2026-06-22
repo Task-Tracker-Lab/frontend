@@ -1,4 +1,4 @@
-import { INVITATION_ROLES, ROLE_LABELS, TTeam } from 'entities/team';
+import { INVITATION_ROLES, ROLE_LABELS, type TTeam } from 'entities/team';
 import { ComponentProps } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'shared/ui';
 import { useUpdateInvitation } from '../../api/useUpdateInvitation';

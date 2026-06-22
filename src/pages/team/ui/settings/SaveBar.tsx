@@ -1,4 +1,4 @@
-import { TTeam } from 'entities/team';
+import { type TTeam } from 'entities/team';
 import { useFormContext, useFormState } from 'react-hook-form';
 import { FloatingSaveBar } from 'shared/ui';
 import { useUpdateTeam } from '../../api/useUpdateTeam';

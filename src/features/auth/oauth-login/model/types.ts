@@ -1,4 +1,4 @@
-import { TAuth } from 'entities/auth';
+import { type TAuth } from 'entities/auth';
 
 export type StartOauthParams = {
   provider: TAuth.OAuthProvider;
