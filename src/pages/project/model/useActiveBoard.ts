@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-import { useBoardStore } from './store';
-import { TBoard } from 'entities/board';
+import { type TBoard, useBoardStore } from 'entities/board';
 
 export const useActiveBoards = (boards: TBoard.BoardResponse[]) => {
   const activeBoardId = useBoardStore((s) => s.activeBoardId);

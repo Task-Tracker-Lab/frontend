@@ -1,8 +1,7 @@
 import { VariantProps } from 'class-variance-authority';
-import { TBoard } from 'entities/board';
+import { type TBoard, useBoardStore } from 'entities/board';
 import { RemoveBoardDialog } from 'features/boards/remove';
 import { EllipsisVertical } from 'lucide-react';
-import { useBoardStore } from 'pages/project/model/store';
 import { ComponentProps } from 'react';
 import { cn } from 'shared/lib/utils';
 import {

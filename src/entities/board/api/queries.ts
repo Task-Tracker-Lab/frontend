@@ -1,5 +1,5 @@
 import { queryOptions } from '@tanstack/react-query';
-import { boardFabricKeys } from '../model/conts';
+import { boardFabricKeys } from '../model/consts';
 import { BoardHttp } from './http';
 
 export class BoardQueries {

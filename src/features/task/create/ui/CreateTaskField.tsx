@@ -2,7 +2,7 @@
 import React, { ComponentProps, InputEvent, KeyboardEvent, useRef } from 'react';
 import { Card, CardContent, Checkbox } from 'shared/ui';
 import { useActiveFieldStore } from '../model/useActiveFieldStore';
-import { useClickOutside } from '../lib/useClickOutside';
+import { useClickOutside } from '../model/useClickOutside';
 import { useCreateTask } from '../model/useCreateTask';
 import { TTask } from 'entities/task';
 
