@@ -111,3 +111,13 @@ export const ResendCodeResponse = GlobalSuccess.extend({
   retryAfterSeconds: z.number(),
   retries: z.number(),
 });
+
+export const ExchangeTokenResponse = GlobalSuccess.extend({
+  access: z.string(),
+  isNewUser: z.boolean(),
+  provider: OAuthProvider,
+});
+export const ExchangeTokenBody = z.object({
+  token: z.string(),
+  provider: OAuthProvider,
+});

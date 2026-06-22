@@ -1,5 +1,5 @@
 import { type DefaultError, useMutation, UseMutationOptions } from '@tanstack/react-query';
-import { TUser, userFabricKeys, UserHttp } from 'entities/user';
+import { type TUser, userFabricKeys, UserHttp } from 'entities/user';
 import { toast } from 'sonner';
 
 type UseUpdateNotificationsProps = Omit<

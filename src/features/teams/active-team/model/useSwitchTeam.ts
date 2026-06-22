@@ -1,7 +1,7 @@
 'use client';
 
 import { useTeamStore } from 'entities/team';
-import { TUser } from 'entities/user';
+import { type TUser } from 'entities/user';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import { routes } from 'shared/config';

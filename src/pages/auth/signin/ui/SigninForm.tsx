@@ -1,9 +1,13 @@
 'use client';
 
-import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { SigninForm as SigninFormSchema } from '../model/schemas';
-import type { SigninFormValues } from '../model/types';
+import { type TAuth } from 'entities/auth';
+import { OAuthLoginButtons, OAuthSeparator } from 'features/auth/oauth-login';
+import { ComponentProps } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { extractValidationIssues } from 'shared/api';
+import { routes } from 'shared/config';
+import { cn, setFormErrors } from 'shared/lib/utils';
 import {
   Button,
   Card,
@@ -20,14 +24,9 @@ import {
   InputPassword,
   Link,
 } from 'shared/ui';
-import { cn, setFormErrors } from 'shared/lib/utils';
-import { routes } from 'shared/config';
-import { extractValidationIssues } from 'shared/api';
-import { TAuth } from 'entities/auth';
-import { ComponentProps, Suspense } from 'react';
+import { SigninForm as SigninFormSchema } from '../model/schemas';
+import type { SigninFormValues } from '../model/types';
 import { useSignin, UseSigninOptions } from '../model/useSignin';
-import { OAuthLoginButtons, OAuthSeparator } from 'features/auth/oauth-login';
-import { QueryParamsHandler } from 'features/handle-query-params';
 
 interface SigninFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
   mutateOptions?: UseSigninOptions;
@@ -61,9 +60,6 @@ export function SigninForm({ className, mutateOptions = {}, ...props }: SigninFo
 
   return (
     <>
-      <Suspense>
-        <QueryParamsHandler />
-      </Suspense>
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Вход в систему</CardTitle>

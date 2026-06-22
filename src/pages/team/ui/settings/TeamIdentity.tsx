@@ -1,7 +1,7 @@
 'use client';
 
 import { UploadAvatar } from 'features/upload-avatar';
-import { TeamAvatar, TTeam } from 'entities/team';
+import { TeamAvatar, type TTeam } from 'entities/team';
 import { CardSection, Separator } from 'shared/ui';
 import { TeamCover } from './TeamCover';
 import { TeamIdentityForm } from './TeamIdentityForm';

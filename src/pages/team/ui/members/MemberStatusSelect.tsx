@@ -1,4 +1,4 @@
-import { MEMBER_STATUSES, STATUS_LABELS, TTeam } from 'entities/team';
+import { MEMBER_STATUSES, STATUS_LABELS, type TTeam } from 'entities/team';
 import { ComponentProps } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'shared/ui';
 import { useUpdateMember } from '../../api/useUpdateMember';

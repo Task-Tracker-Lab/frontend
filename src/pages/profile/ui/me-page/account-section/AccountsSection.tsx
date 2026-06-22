@@ -1,5 +1,5 @@
 import { OAuthManageButton } from './OAuthManageButton';
-import { useConnectedAccounts } from 'pages/profile/api/useConnectedAccounts';
+import { useConnectedAccounts } from '../../../api/useConnectedAccounts';
 import { CardSection } from 'shared/ui';
 
 export function AccountSection() {

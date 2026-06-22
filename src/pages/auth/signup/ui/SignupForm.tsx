@@ -28,7 +28,7 @@ import { ComponentProps, useState } from 'react';
 import { fieldNameMapper } from '../model/utils/field-name-mapper';
 import { prepareFullName } from '../model/utils/prepare-fullname';
 import { extractValidationIssues } from 'shared/api';
-import { TAuth } from 'entities/auth';
+import { type TAuth } from 'entities/auth';
 import { useSignup, type UseSignupOptions } from '../model/useSignup';
 import { OAuthLoginButtons, OAuthSeparator } from 'features/auth/oauth-login';
 

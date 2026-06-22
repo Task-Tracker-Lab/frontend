@@ -1,4 +1,4 @@
-import { TTeam } from 'entities/team';
+import { type TTeam } from 'entities/team';
 import { X } from 'lucide-react';
 import { ComponentProps } from 'react';
 import { classNames } from 'shared/lib/utils';

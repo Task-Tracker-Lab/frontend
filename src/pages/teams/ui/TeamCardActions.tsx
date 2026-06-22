@@ -1,6 +1,6 @@
 'use client';
 
-import { TUser } from 'entities/user';
+import { type TUser } from 'entities/user';
 import { InviteTeamMemberDialog } from 'features/teams/invite';
 import { RemoveTeamDialog } from 'features/teams/remove';
 import { MoreHorizontal, Trash2, UserPlus } from 'lucide-react';

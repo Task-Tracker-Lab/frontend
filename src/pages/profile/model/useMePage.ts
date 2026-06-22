@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@tanstack/react-query';
-import { TUser, UserQueries } from 'entities/user';
+import { type TUser, UserQueries } from 'entities/user';
 import { useEffect } from 'react';
 import { useForm, useFormState } from 'react-hook-form';
 import { useUpdateProfile } from '../api/useUpdateProfile';

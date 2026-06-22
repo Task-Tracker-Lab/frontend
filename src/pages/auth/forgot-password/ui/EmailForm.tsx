@@ -13,7 +13,7 @@ import {
   FieldLabel,
   InputEmail,
 } from 'shared/ui';
-import { TAuth } from 'entities/auth';
+import { type TAuth } from 'entities/auth';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { EmailFormValues } from '../model/types';

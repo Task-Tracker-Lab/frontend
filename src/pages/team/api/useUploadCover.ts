@@ -1,5 +1,5 @@
 import { type DefaultError, useMutation, UseMutationOptions } from '@tanstack/react-query';
-import { AssetHttp, TAsset } from 'entities/asset';
+import { AssetHttp, type TAsset } from 'entities/asset';
 import { toast } from 'sonner';
 
 export type UseUploadFileOptions = Omit<

@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { TeamQueries, TTeam, useTeamStore } from 'entities/team';
+import { TeamQueries, type TTeam, useTeamStore } from 'entities/team';
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { debounce } from 'shared/lib/utils';
 

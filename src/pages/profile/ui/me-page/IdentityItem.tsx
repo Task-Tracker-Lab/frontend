@@ -3,7 +3,7 @@
 import { Item, ItemActions, ItemContent, ItemMedia } from 'shared/ui';
 import { UploadAvatar } from 'features/upload-avatar';
 import { SignOut } from 'features/auth/sign-out';
-import { TUser, UserAvatar } from 'entities/user';
+import { type TUser, UserAvatar } from 'entities/user';
 
 type AccountIdentityItemProps = {
   profile: TUser.UserResponse['profile'];
