@@ -19,8 +19,8 @@ export function useUpdateTeam({ onSuccess, ...rest }: UseUpdateTeamProps = {}) {
       }
       return TeamHttp.updateTeam(teamId, data);
     },
-    onSuccess: async (res, v, _r, context) => {
-      onSuccess?.(res, v, _r, context);
+    onSuccess: async (res, v, r, context) => {
+      onSuccess?.(res, v, r, context);
       toast.success(res.message ?? 'Данные команды обновлены');
 
       await Promise.all([

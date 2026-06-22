@@ -1,0 +1,28 @@
+import { type DefaultError, useMutation, UseMutationOptions } from '@tanstack/react-query';
+import { boardFabricKeys, BoardHttp, type TBoard } from 'entities/board';
+import { toast } from 'sonner';
+
+type CreateBoardVariables = {
+  projectSlug: string;
+  body: TBoard.CreateBoardBody;
+};
+
+export type UseCreateBoardOptions = Omit<
+  UseMutationOptions<TBoard.CreateBoardResponse, DefaultError, CreateBoardVariables>,
+  'mutationFn'
+>;
+
+export function useCreateBoard({ onSuccess, ...rest }: UseCreateBoardOptions = {}) {
+  return useMutation<TBoard.CreateBoardResponse, DefaultError, CreateBoardVariables>({
+    ...rest,
+    mutationFn: ({ projectSlug, body }) => BoardHttp.createBoard(projectSlug, body),
+    onSuccess: async (res, variables, r, context) => {
+      onSuccess?.(res, variables, r, context);
+      toast.success(res.message ?? 'Доска создана');
+
+      await context.client.invalidateQueries({
+        queryKey: boardFabricKeys.list(variables.projectSlug),
+      });
+    },
+  });
+}

@@ -17,8 +17,8 @@ export function useShareProject({ onSuccess, ...rest }: UseShareProjectOptions =
   return useMutation<TProject.CreateShareTokenResponse, DefaultError, ShareProjectVariables>({
     ...rest,
     mutationFn: ({ teamId, slug, body = {} }) => ProjectHttp.createShareToken(teamId, slug, body),
-    onSuccess: async (res, variables, _r, context) => {
-      onSuccess?.(res, variables, _r, context);
+    onSuccess: async (res, variables, r, context) => {
+      onSuccess?.(res, variables, r, context);
       toast.success(res.message ?? 'Ссылка для доступа создана');
 
       await context.client.invalidateQueries({

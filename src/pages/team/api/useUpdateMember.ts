@@ -20,8 +20,8 @@ export function useUpdateMember({ onSuccess, ...rest }: UseUpdateMemberOptions =
       }
       return TeamHttp.updateMember(teamId, userId, data);
     },
-    onSuccess: async (res, _v, _r, context) => {
-      onSuccess?.(res, _v, _r, context);
+    onSuccess: async (res, v, r, context) => {
+      onSuccess?.(res, v, r, context);
       toast.success(res.message ?? 'Данные участника обновлены');
 
       if (teamId) {

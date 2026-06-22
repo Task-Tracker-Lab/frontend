@@ -4,7 +4,7 @@ import { ComponentProps } from 'react';
 import { useTimer } from 'shared/lib/hooks';
 import { classNames, formatTime } from 'shared/lib/utils';
 import { Button } from 'shared/ui';
-import { RESEND_CODE_DELAY_MS } from '../model/const';
+import { RESEND_CODE_DELAY_MS } from '../model/consts';
 import { useResendCode, UseResendOptions } from '../model/useResend';
 import { type TAuth } from 'entities/auth';
 import { toast } from 'sonner';

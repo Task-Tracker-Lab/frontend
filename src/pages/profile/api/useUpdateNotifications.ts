@@ -27,8 +27,8 @@ export function useUpdateNotifications({
       onSuccess?.(...args);
       toast.success('Настройки уведомлений обновлены');
     },
-    onSettled: async (_d, _e, _v, _m, context) => {
-      onSettled?.(_d, _e, _v, _m, context);
+    onSettled: async (d, e, v, m, context) => {
+      onSettled?.(d, e, v, m, context);
       context.client.invalidateQueries({ queryKey: userFabricKeys.me() });
     },
   });

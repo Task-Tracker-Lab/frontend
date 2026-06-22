@@ -16,8 +16,8 @@ export function useRestoreProject({ onSuccess, ...rest }: UseRestoreProjectOptio
   return useMutation<TProject.ActionResponse, DefaultError, RestoreProjectVariables>({
     ...rest,
     mutationFn: ({ teamId, slug }) => ProjectHttp.updateProject(teamId, slug, { status: 'active' }),
-    onSuccess: async (res, variables, _r, context) => {
-      onSuccess?.(res, variables, _r, context);
+    onSuccess: async (res, variables, r, context) => {
+      onSuccess?.(res, variables, r, context);
       toast.success(res.message ?? 'Проект восстановлен');
 
       await Promise.all([
