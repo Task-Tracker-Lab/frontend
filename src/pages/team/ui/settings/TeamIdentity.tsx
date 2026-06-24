@@ -23,7 +23,7 @@ export function TeamIdentity({ team, ...props }: TeamIdentityProps) {
       description="Публичная информация о команде."
     >
       <div className="space-y-5">
-        <TeamCover coverUrl={team.coverUrl ?? ''} />
+        <TeamCover coverUrl={team.cover?.medium ?? ''} />
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-[120px_1fr]">
           <UploadAvatar
@@ -31,7 +31,7 @@ export function TeamIdentity({ team, ...props }: TeamIdentityProps) {
             avatar={
               <TeamAvatar
                 wrap={{ className: 'ring-background size-28 shadow-md ring-4' }}
-                src={team.avatarUrl ?? undefined}
+                src={team.avatar?.medium ?? undefined}
                 alt={team.name}
               />
             }

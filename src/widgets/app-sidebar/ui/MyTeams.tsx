@@ -10,8 +10,7 @@ import { SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem } from 'shared/ui'
 export function MyTeams() {
   const pathname = usePathname();
   const invitationsQuery = useQuery(UserQueries.getMyInvitations());
-  const invitationsCount =
-    invitationsQuery.data?.meta.total ?? invitationsQuery.data?.items.length ?? 0;
+  const invitationsCount = invitationsQuery.data?.items.length ?? 0;
 
   return (
     <SidebarMenuItem>

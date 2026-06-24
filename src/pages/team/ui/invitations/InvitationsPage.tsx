@@ -8,7 +8,7 @@ import { InvitationsEmpty } from './InvitationsEmpty';
 export function InvitationsPage() {
   const { data, isPending } = useQueryInvitations();
 
-  if (!isPending && !data?.items?.length) {
+  if (!isPending && !data?.length) {
     return <InvitationsEmpty />;
   }
 
@@ -16,7 +16,7 @@ export function InvitationsPage() {
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
       {isPending
         ? Array.from({ length: 6 }).map((_, i) => <InvitationCardSkeleton key={i} />)
-        : data?.items.map((inv) => <InvitationCard key={inv.code} inv={inv} />)}
+        : data?.map((inv) => <InvitationCard key={inv.code} inv={inv} />)}
     </div>
   );
 }

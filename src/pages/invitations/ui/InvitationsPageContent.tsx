@@ -11,7 +11,7 @@ import { InvitationCard } from './InvitationCard';
 export function InvitationsPageContent() {
   const invitationsQuery = useSuspenseQuery(UserQueries.getMyInvitations());
   const invitations = invitationsQuery.data.items;
-  const invitationsCount = invitationsQuery.data.meta.total ?? invitations.length;
+  const invitationsCount = invitationsQuery.data.items.length ?? 0;
 
   return (
     <PageWrapper

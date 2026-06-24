@@ -12,14 +12,14 @@ interface IMemberCardConfig {
 
 export const memberCardConfig: IMemberCardConfig = {
   ringColor: {
-    blocked: 'ring-destructive',
+    banned: 'ring-destructive',
     active: 'ring-primary',
-    pending: 'ring-muted',
+    inactive: 'ring-muted',
   },
   bgColor: {
-    blocked: 'bg-destructive/10',
+    banned: 'bg-destructive/10',
     active: 'bg-card',
-    pending: 'bg-muted/90',
+    inactive: 'bg-muted/90',
   },
   workloadColor: (w) => {
     if (w === 0) return 'bg-muted/90';
@@ -28,9 +28,9 @@ export const memberCardConfig: IMemberCardConfig = {
     return 'bg-orange-500';
   },
   statusBadgeVariant: (s) => {
-    if (s === 'blocked') return 'destructive';
+    if (s === 'banned') return 'destructive';
     if (s === 'active') return 'default';
-    if (s === 'pending') return 'outline';
+    if (s === 'inactive') return 'outline';
   },
   workloadLabel: (w) => {
     if (w === 0) return { text: 'Не загружен', color: 'text-muted-foreground' };

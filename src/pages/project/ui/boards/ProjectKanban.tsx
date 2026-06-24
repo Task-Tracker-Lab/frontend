@@ -54,7 +54,7 @@ export const ProjectKanban = ({ data }: ProjectKanbanProps) => {
 
     prevColumns?.forEach((column) => {
       const orderIndex = idsMap.get(column.id);
-      if (orderIndex !== undefined && column.orderIndex !== orderIndex) {
+      if (orderIndex !== undefined && column.position !== orderIndex) {
         columnIdsToUpdate.push({ columnId: column.id, orderIndex });
       }
     });

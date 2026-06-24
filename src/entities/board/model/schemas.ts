@@ -1,4 +1,4 @@
-import { createSortingSchema, DateTimeString, GlobalSuccess } from 'shared/api';
+import { createSortingSchema, CursorQuerySchema, DateTimeString, GlobalSuccess } from 'shared/api';
 import { z } from 'zod/v4';
 
 export const ActionResponse = GlobalSuccess;
@@ -84,7 +84,7 @@ export const BoardColumn = z.object({
     .nullable()
     .optional(),
   icon: z.string().max(20, 'Иконка должна быть не длиннее 20 символов').nullable().optional(),
-  orderIndex: z
+  position: z
     .number()
     .int('Порядковый номер должен быть целым числом')
     .min(0, 'Порядковый номер не может быть отрицательным'),
@@ -154,7 +154,7 @@ export const CreateBoardColumnBody = BoardColumn.omit({
   autoTransitionTo: true,
   stateType: true,
   category: true,
-  orderIndex: true,
+  position: true,
   isVisible: true,
   notifyOnEnter: true,
   notifyOnExit: true,
@@ -176,20 +176,9 @@ export const BoardColumnQueryParams = z
     my: z.boolean().optional(),
     category: z.string().optional(),
     overdue: z.boolean().optional(),
-    page: z.coerce.number().int().positive().optional(),
-    offset: z.coerce.number().int().min(0).optional(),
-    limit: z.coerce.number().int().min(0).max(100).optional(),
   })
-  .extend(createSortingSchema(['order', 'title', 'tasksCount', 'createdAt']).shape)
-  .transform((data) => {
-    if (data.page && data.page > 1 && data.offset === 0) {
-      return {
-        ...data,
-        offset: (data.page - 1) * (data.limit || 20),
-      };
-    }
-    return data;
-  });
+  .extend(CursorQuerySchema.shape)
+  .extend(createSortingSchema(['order', 'title', 'tasksCount', 'createdAt']).shape);
 
 export const UpdateBoardColumnResponse = GlobalSuccess;
 export const CreateBoardColumnResponse = GlobalSuccess.extend({

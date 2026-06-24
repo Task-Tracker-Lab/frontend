@@ -37,7 +37,7 @@ export function MemberCard({ className, member, ...props }: MemberCardProps) {
       className={classNames(
         'border-border bg-card rounded-xl border transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-14px_rgba(15,23,42,0.18)]',
         {
-          'opacity-50 grayscale': member.status === 'pending',
+          'opacity-50 grayscale': member.status === 'inactive',
         },
         [cfg.bgColor[member.status], className]
       )}
