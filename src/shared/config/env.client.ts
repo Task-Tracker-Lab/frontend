@@ -1,7 +1,14 @@
 import { z } from 'zod/v4';
 
+const metricEnabledSchema = z.enum(['true', 'false'], {
+  error: 'NEXT_PUBLIC_METRICS_ENABLED - обязателен',
+});
+
+const isDevelopment = process.env.NODE_ENV === 'development';
+
 export const envSchemaClient = z.object({
   NEXT_PUBLIC_API_BASE_URL: z.url('NEXT_PUBLIC_API_BASE_URL должен быть валидным URL'),
+  NEXT_PUBLIC_APP_URL: z.url('NEXT_PUBLIC_API_BASE_URL должен быть валидным URL'),
   NEXT_PUBLIC_FARO_URL: z.url(
     'NEXT_PUBLIC_FARO_URL должен быть валидным URL (например, http://alloy:12347/collect)'
   ),
@@ -21,15 +28,14 @@ export const envSchemaClient = z.object({
       error: 'Окружение (APP_ENV) обязательно',
     })
     .min(1, 'Окружение не может быть пустым'),
-  NEXT_PUBLIC_METRICS_ENABLED: z
-    .enum(['true', 'false'], {
-      error: 'NEXT_PUBLIC_METRICS_ENABLED - обязателен',
-    })
-    .transform((v) => v === 'true'),
+  NEXT_PUBLIC_METRICS_ENABLED: isDevelopment
+    ? metricEnabledSchema.default('false').transform((v) => v === 'true')
+    : metricEnabledSchema.transform((v) => v === 'true'),
 });
 
 const _env = envSchemaClient.safeParse({
   NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
   NEXT_PUBLIC_FARO_URL: process.env.NEXT_PUBLIC_FARO_URL,
   NEXT_PUBLIC_FARO_APP_NAME: process.env.NEXT_PUBLIC_FARO_APP_NAME,
   NEXT_PUBLIC_FARO_APP_NAMESPACE: process.env.NEXT_PUBLIC_FARO_APP_NAMESPACE,

@@ -58,7 +58,7 @@ export async function GET(request: NextRequest) {
         );
       }
 
-      const successUrl = new URL(routes.user.profile(), request.url);
+      const successUrl = new URL(routes.user.profile(), env.NEXT_PUBLIC_APP_URL);
 
       successUrl.searchParams.set('success', 'true');
       successUrl.searchParams.set('message', 'Операция выполнена успешно');
@@ -76,7 +76,7 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  const errorUrl = new URL(routes.auth.signin(), request.url);
+  const errorUrl = new URL(routes.auth.signin(), env.NEXT_PUBLIC_APP_URL);
 
   errorUrl.searchParams.set('success', 'false');
   errorUrl.searchParams.set('message', ERROR_MESSAGE);
