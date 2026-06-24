@@ -86,6 +86,17 @@ export class AuthHttp {
       },
     });
   }
+  static resendCode(data: TAuth.ResendCodeBody): Promise<TAuth.ResendCodeResponse> {
+    return api<TAuth.ResendCodeResponse>({
+      url: '/auth/resend',
+      method: 'POST',
+      data: data,
+      contracts: {
+        body: SAuth.ResendCodeBody,
+        response: SAuth.ResendCodeResponse,
+      },
+    });
+  }
   static oAuthProviders(signal: AbortSignal) {
     return api<TAuth.OAuthProvidersResponse>({
       url: '/oauth/providers',
@@ -121,17 +132,6 @@ export class AuthHttp {
       method: 'DELETE',
       contracts: {
         response: SAuth.RemoveOAuthProviderResponse,
-      },
-    });
-  }
-  static resendCode(data: TAuth.ResendCodeBody): Promise<TAuth.ResendCodeResponse> {
-    return api<TAuth.ResendCodeResponse>({
-      url: '/oauth/resend',
-      method: 'POST',
-      data: data,
-      contracts: {
-        body: SAuth.ResendCodeBody,
-        response: SAuth.ResendCodeResponse,
       },
     });
   }
