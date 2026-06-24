@@ -21,6 +21,8 @@ export const MemberStatus = z.enum([
   'active', // Полноценный участник
   'banned', // Заблокирован не может вернуться по инвайту
   'inactive',
+  'blocked',
+  'pending',
 ]);
 
 export const CreateTeamBody = z.object({

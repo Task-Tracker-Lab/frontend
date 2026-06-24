@@ -5,6 +5,6 @@ export function getDefaultCreateBoardColumnValues(position = 0): CreateBoardColu
   return {
     title: '',
     color: DEFAULT_COLUMN_COLOR,
-    position: position,
+    position,
   };
 }

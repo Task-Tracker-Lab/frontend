@@ -3,24 +3,32 @@ import { ComponentProps } from 'react';
 import { Badge } from 'shared/ui';
 
 interface IMemberCardConfig {
-  ringColor: Record<TTeam.TeamMemberResponse['status'], string>;
-  bgColor: Record<TTeam.TeamMemberResponse['status'], string>;
+  ringColor: Record<TTeam.MemberStatus, string>;
+  bgColor: Record<TTeam.MemberStatus, string>;
   workloadColor: (w: number) => string;
   statusBadgeVariant: (s: TTeam.MemberStatus) => ComponentProps<typeof Badge>['variant'];
   workloadLabel: (w: number) => { text: string; color: string };
 }
 
+type EnsureAllStatuses<T> = {
+  [K in TTeam.MemberStatus]: T;
+};
+
 export const memberCardConfig: IMemberCardConfig = {
   ringColor: {
-    banned: 'ring-destructive',
     active: 'ring-primary',
+    banned: 'ring-destructive',
+    blocked: 'ring-destructive',
     inactive: 'ring-muted',
-  },
+    pending: 'ring-muted',
+  } satisfies EnsureAllStatuses<string>,
   bgColor: {
-    banned: 'bg-destructive/10',
     active: 'bg-card',
+    banned: 'bg-destructive/10',
+    blocked: 'bg-destructive/10',
     inactive: 'bg-muted/90',
-  },
+    pending: 'bg-muted/90',
+  } satisfies EnsureAllStatuses<string>,
   workloadColor: (w) => {
     if (w === 0) return 'bg-muted/90';
     if (w <= 60) return 'bg-primary/40';
