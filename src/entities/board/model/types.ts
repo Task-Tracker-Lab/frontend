@@ -3,6 +3,7 @@ import * as SBoard from './schemas';
 
 export type BoardColumnStatus = z.infer<typeof SBoard.ColumnStatusEnum>;
 export type BoardViewType = z.infer<typeof SBoard.ViewTypeEnum>;
+export type BoardColumnQueryParams = z.infer<typeof SBoard.BoardColumnQueryParams>;
 
 export type BoardColumnResponse = z.infer<typeof SBoard.BoardColumn>;
 export type BoardColumnListResponse = z.infer<typeof SBoard.BoardColumnListResponse>;

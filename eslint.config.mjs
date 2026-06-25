@@ -48,6 +48,7 @@ const eslintConfig = defineConfig([
           'src/**/': 'KEBAB_CASE',
         },
       ],
+      'object-shorthand': ['warn', 'always'],
     },
   },
   globalIgnores(['.next/**', 'out/**', 'build/**', 'next-env.d.ts']),

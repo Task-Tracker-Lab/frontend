@@ -1,11 +1,8 @@
 import { z } from 'zod/v4';
+import { envSchemaClient } from './env.client';
 
 const isServer = typeof window === 'undefined';
 const isBuild = process.env.SKIP_ENV_VALIDATION === 'true';
-
-const metricEnabledSchema = z.enum(['true', 'false'], {
-  error: 'NEXT_PUBLIC_METRICS_ENABLED - обязателен',
-});
 
 const envSchemaServer = z.object({
   NODE_ENV: z
@@ -36,35 +33,6 @@ const envSchemaServer = z.object({
       error: 'Атрибуты ресурсов (Resource Attributes) обязательны',
     })
     .includes('service.namespace=', { message: 'Атрибуты должны содержать service.namespace' }),
-});
-
-const envSchemaClient = z.object({
-  NEXT_PUBLIC_API_BASE_URL: z.url('NEXT_PUBLIC_API_BASE_URL должен быть валидным URL'),
-  NEXT_PUBLIC_FARO_URL: z
-    .string({
-      error: 'URL для Faro (Alloy) обязателен',
-    })
-    .url('NEXT_PUBLIC_FARO_URL должен быть валидным URL (например, http://alloy:12347/collect)'),
-  NEXT_PUBLIC_FARO_APP_NAME: z
-    .string({
-      error: 'Имя приложения для Faro обязательно',
-    })
-    .min(1, 'Имя приложения не может быть пустым'),
-  NEXT_PUBLIC_FARO_APP_NAMESPACE: z
-    .string({
-      error: 'Namespace приложения обязателен',
-    })
-    .min(1, 'Namespace не может быть пустым'),
-  NEXT_PUBLIC_FARO_APP_VERSION: z.string().default('1.0.0'),
-  NEXT_PUBLIC_APP_ENV: z
-    .string({
-      error: 'Окружение (APP_ENV) обязательно',
-    })
-    .min(1, 'Окружение не может быть пустым'),
-  NEXT_PUBLIC_METRICS_ENABLED:
-    process.env.NODE_ENV === 'development'
-      ? metricEnabledSchema.default('false').transform((v) => v === 'true')
-      : metricEnabledSchema.transform((v) => v === 'true'),
 });
 
 const envSchema = envSchemaClient.extend(envSchemaServer.shape);

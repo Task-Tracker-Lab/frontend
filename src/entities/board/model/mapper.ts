@@ -19,7 +19,7 @@ export class BoardMapper {
     columnList: BoardColumnResponse[],
     taskList: unknown[]
   ): KanbanBoardData {
-    const sortedColumns = [...columnList].sort((a, b) => a.orderIndex - b.orderIndex);
+    const sortedColumns = [...columnList].sort((a, b) => a.position - b.position);
     const tasksByColumn: Record<string, unknown[]> = {};
     const columns: Record<string, BoardColumnResponse> = {};
 

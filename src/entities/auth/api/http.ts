@@ -7,7 +7,7 @@ export class AuthHttp {
     return api<TAuth.SigninResponse>({
       url: '/auth/sign-in',
       method: 'POST',
-      data: data,
+      data,
       skipAuthRefresh: true,
       contracts: {
         body: SAuth.SigninBody,
@@ -30,7 +30,7 @@ export class AuthHttp {
     return api<TAuth.SignupResponse>({
       url: '/auth/sign-up',
       method: 'POST',
-      data: data,
+      data,
       contracts: {
         body: SAuth.SignupBody,
         response: SAuth.SignupResponse,
@@ -42,7 +42,7 @@ export class AuthHttp {
     return api<TAuth.SignupConfirmResponse>({
       url: '/auth/sign-up/confirm',
       method: 'POST',
-      data: data,
+      data,
       skipAuthRefresh: true,
       contracts: {
         body: SAuth.SignupConfirmBody,
@@ -55,7 +55,7 @@ export class AuthHttp {
     return api<TAuth.ResetPasswordResponse>({
       url: '/auth/password/reset',
       method: 'POST',
-      data: data,
+      data,
       contracts: {
         body: SAuth.ResetPasswordBody,
         response: SAuth.ResetPasswordResponse,
@@ -67,7 +67,7 @@ export class AuthHttp {
     return api<TAuth.ResetPasswordVerifyResponse>({
       url: '/auth/password/reset/verify',
       method: 'POST',
-      data: data,
+      data,
       contracts: {
         body: SAuth.ResetPasswordVerifyBody,
         response: SAuth.ResetPasswordVerifyResponse,
@@ -79,10 +79,21 @@ export class AuthHttp {
     return api<TAuth.ResetPasswordConfirmResponse>({
       url: '/auth/password/reset/confirm',
       method: 'POST',
-      data: data,
+      data,
       contracts: {
         body: SAuth.ResetPasswordConfirmBody,
         response: SAuth.ResetPasswordConfirmResponse,
+      },
+    });
+  }
+  static resendCode(data: TAuth.ResendCodeBody): Promise<TAuth.ResendCodeResponse> {
+    return api<TAuth.ResendCodeResponse>({
+      url: '/auth/resend',
+      method: 'POST',
+      data,
+      contracts: {
+        body: SAuth.ResendCodeBody,
+        response: SAuth.ResendCodeResponse,
       },
     });
   }
@@ -124,22 +135,11 @@ export class AuthHttp {
       },
     });
   }
-  static resendCode(data: TAuth.ResendCodeBody): Promise<TAuth.ResendCodeResponse> {
-    return api<TAuth.ResendCodeResponse>({
-      url: '/oauth/resend',
-      method: 'POST',
-      data: data,
-      contracts: {
-        body: SAuth.ResendCodeBody,
-        response: SAuth.ResendCodeResponse,
-      },
-    });
-  }
   static exchangeToken(data: TAuth.ExchangeTokenBody): Promise<TAuth.ExchangeTokenResponse> {
     return api<TAuth.ExchangeTokenResponse>({
       url: '/oauth/exchange',
       method: 'POST',
-      data: data,
+      data,
     });
   }
 }

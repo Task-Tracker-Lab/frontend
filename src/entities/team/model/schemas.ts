@@ -13,15 +13,15 @@ export const TeamAvatarSchema = z
 export const TeamRole = z.enum([
   'owner',
   'admin', // управление юзерами, настройками
-  'lead', // управление проектами
-  'moderator', // чистка контента/сообщений
   'member', // обычный работяга
   'viewer', // просто смотрит
 ]);
 
 export const MemberStatus = z.enum([
   'active', // Полноценный участник
-  'blocked', // Заблокирован не может вернуться по инвайту
+  'banned', // Заблокирован не может вернуться по инвайту
+  'inactive',
+  'blocked',
   'pending',
 ]);
 
@@ -50,8 +50,8 @@ export const TeamDetailsResponse = z.object({
   id: z.string(),
   name: z.string(),
   description: z.string().nullable(),
-  avatarUrl: z.string().nullable(),
-  coverUrl: z.string().nullable(),
+  avatar: TeamAvatarSchema,
+  cover: TeamAvatarSchema,
   ownerId: z.string().nullable(),
   createdAt: DateTimeString,
   updatedAt: DateTimeString,
@@ -71,7 +71,7 @@ export const TeamInvitationResponse = z.object({
   expiresAt: DateTimeString,
 });
 
-export const TeamInvitationListResponse = PaginatedResponseSchema(TeamInvitationResponse);
+export const TeamInvitationListResponse = TeamInvitationResponse.array();
 
 export const InviteMemberBody = z.object({
   email: z.email(),

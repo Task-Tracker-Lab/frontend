@@ -34,7 +34,7 @@ export const ProjectKanban = ({ data }: ProjectKanbanProps) => {
 
     const ids = Object.keys(value);
     const idsMap = new Map(ids.map((id, i) => [id, i]));
-    const columnIdsToUpdate: { columnId: string; orderIndex: number }[] = [];
+    const columnIdsToUpdate: { columnId: string; position: number }[] = [];
 
     const prevColumns = queryClient.getQueryData<TBoard.BoardColumnListResponse>(
       boardFabricKeys.columns(data.board.slug)
@@ -46,16 +46,16 @@ export const ProjectKanban = ({ data }: ProjectKanbanProps) => {
         if (!oldColumns) return oldColumns;
 
         return oldColumns.map((column) => {
-          const orderIndex = idsMap.get(column.id);
-          return orderIndex !== undefined ? { ...column, orderIndex } : column;
+          const position = idsMap.get(column.id);
+          return position !== undefined ? { ...column, position } : column;
         });
       }
     );
 
     prevColumns?.forEach((column) => {
-      const orderIndex = idsMap.get(column.id);
-      if (orderIndex !== undefined && column.orderIndex !== orderIndex) {
-        columnIdsToUpdate.push({ columnId: column.id, orderIndex });
+      const position = idsMap.get(column.id);
+      if (position !== undefined && column.position !== position) {
+        columnIdsToUpdate.push({ columnId: column.id, position });
       }
     });
 

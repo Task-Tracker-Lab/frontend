@@ -71,6 +71,7 @@ jobs:
           file: ./Dockerfile.prod
           build-args: |
             NEXT_PUBLIC_API_BASE_URL=${{ vars.NEXT_PUBLIC_API_BASE_URL }}
+            NEXT_PUBLIC_APP_URL=${{ vars.NEXT_PUBLIC_APP_URL }}
             NEXT_PUBLIC_FARO_URL=${{ vars.NEXT_PUBLIC_FARO_URL }}
             NEXT_PUBLIC_FARO_APP_VERSION=${{ vars.NEXT_PUBLIC_FARO_APP_VERSION }}
             NEXT_PUBLIC_APP_ENV=${{ vars.NEXT_PUBLIC_APP_ENV }}

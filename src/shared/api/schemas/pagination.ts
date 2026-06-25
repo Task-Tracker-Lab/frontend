@@ -1,12 +1,9 @@
 import { z } from 'zod/v4';
 
 export const MetaSchema = z.object({
-  hasNextPage: z.boolean(),
-  hasPrevPage: z.boolean(),
-  total: z.number(),
-  totalPages: z.number(),
-  page: z.number(),
-  limit: z.number(),
+  next: z.boolean().nullable(),
+  hasNext: z.boolean(),
+  limit: z.number().int().positive(),
 });
 
 export const PaginatedResponseSchema = <T extends z.ZodType>(schema: T) =>
@@ -14,3 +11,15 @@ export const PaginatedResponseSchema = <T extends z.ZodType>(schema: T) =>
     items: z.array(schema),
     meta: MetaSchema,
   });
+
+const LimitSchema = z.coerce
+  .number()
+  .int()
+  .min(1, 'Лимит должен быть не менее 1')
+  .max(100, 'Лимит не может превышать 100')
+  .optional();
+
+export const CursorQuerySchema = z.object({
+  cursor: z.string().optional(),
+  limit: LimitSchema,
+});
