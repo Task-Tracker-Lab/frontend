@@ -34,6 +34,14 @@ export type ProjectCardProps = ComponentProps<typeof Card> & {
   name?: string;
   description?: string;
   statusLabel?: string;
+  permissions: Permissions;
+};
+
+type Permissions = {
+  canArchive: boolean;
+  canDelete: boolean;
+  canShare: boolean;
+  canRead: boolean;
 };
 
 const statusLabels: Record<TProject.ProjectListItemResponse['status'], string> = {
@@ -49,8 +57,12 @@ export function ProjectCard({
   name: nameProp,
   description: descriptionProp,
   statusLabel: statusLabelProp,
+  permissions,
   ...props
 }: ProjectCardProps) {
+  const { canArchive, canDelete, canRead, canShare } = permissions;
+  const canManage = Object.values(permissions).every(Boolean);
+
   const teamId = useTeamStore.use.teamId();
   const name = nameProp ?? project?.name ?? 'Atlas Platform';
   const description =
@@ -74,7 +86,7 @@ export function ProjectCard({
       )}
       {...props}
     >
-      {projectHref && (
+      {canRead && projectHref && (
         <Link
           href={projectHref}
           className="absolute inset-0 z-0 rounded-xl"
@@ -128,77 +140,90 @@ export function ProjectCard({
             </div>
           </div>
         </div>
-        <div
-          className="pointer-events-auto absolute top-4 right-4 z-20"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                type="button"
-                variant="outline"
-                size="icon-sm"
-                className="bg-background/80 hover:bg-background size-8 shrink-0 shadow-sm backdrop-blur-sm"
-                aria-label="Действия с проектом"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                }}
-              >
-                <MoreHorizontal className="size-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <ShareProjectDialog
-                projectName={project?.name ?? ''}
-                teamId={teamId!}
-                slug={project?.slug ?? ''}
-                asChild
-                disabled={!(project && teamId)}
-              >
-                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>Поделиться</DropdownMenuItem>
-              </ShareProjectDialog>
-              {project?.status === 'archived' ? (
-                <RestoreProjectDialog
-                  projectName={project.name}
-                  teamId={teamId!}
-                  slug={project.slug}
-                  asChild
-                  disabled={!(project.canEdit && teamId)}
+        {canManage && (
+          <div
+            className="pointer-events-auto absolute top-4 right-4 z-20"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon-sm"
+                  className="bg-background/80 hover:bg-background size-8 shrink-0 shadow-sm backdrop-blur-sm"
+                  aria-label="Действия с проектом"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
                 >
-                  <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                    Восстановить
-                  </DropdownMenuItem>
-                </RestoreProjectDialog>
-              ) : (
-                project?.status !== 'template' && (
-                  <ArchiveProjectDialog
+                  <MoreHorizontal className="size-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {canShare && (
+                  <ShareProjectDialog
                     projectName={project?.name ?? ''}
                     teamId={teamId!}
                     slug={project?.slug ?? ''}
                     asChild
-                    disabled={!(project?.canEdit && teamId)}
+                    disabled={!(project && teamId)}
                   >
                     <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                      Архивировать
+                      Поделиться
                     </DropdownMenuItem>
-                  </ArchiveProjectDialog>
-                )
-              )}
-              <RemoveProjectDialog
-                projectName={project?.name ?? ''}
-                teamId={teamId!}
-                slug={project?.slug ?? ''}
-                asChild
-                disabled={!(project && teamId)}
-              >
-                <DropdownMenuItem variant="destructive" onSelect={(e) => e.preventDefault()}>
-                  Удалить
-                </DropdownMenuItem>
-              </RemoveProjectDialog>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+                  </ShareProjectDialog>
+                )}
+
+                {canArchive && (
+                  <>
+                    {project?.status === 'archived' ? (
+                      <RestoreProjectDialog
+                        projectName={project.name}
+                        teamId={teamId!}
+                        slug={project.slug}
+                        asChild
+                        disabled={!(project.canEdit && teamId)}
+                      >
+                        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                          Восстановить
+                        </DropdownMenuItem>
+                      </RestoreProjectDialog>
+                    ) : (
+                      project?.status !== 'template' && (
+                        <ArchiveProjectDialog
+                          projectName={project?.name ?? ''}
+                          teamId={teamId!}
+                          slug={project?.slug ?? ''}
+                          asChild
+                          disabled={!(project?.canEdit && teamId)}
+                        >
+                          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                            Архивировать
+                          </DropdownMenuItem>
+                        </ArchiveProjectDialog>
+                      )
+                    )}
+                  </>
+                )}
+                {canDelete && (
+                  <RemoveProjectDialog
+                    projectName={project?.name ?? ''}
+                    teamId={teamId!}
+                    slug={project?.slug ?? ''}
+                    asChild
+                    disabled={!(project && teamId)}
+                  >
+                    <DropdownMenuItem variant="destructive" onSelect={(e) => e.preventDefault()}>
+                      Удалить
+                    </DropdownMenuItem>
+                  </RemoveProjectDialog>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        )}
       </CardHeader>
 
       <CardContent className="pointer-events-none relative z-[1] flex-1 pt-2 pb-4">

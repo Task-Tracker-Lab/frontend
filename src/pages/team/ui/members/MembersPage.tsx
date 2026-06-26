@@ -6,21 +6,12 @@ import { Button, Search } from 'shared/ui';
 import { MemberCard } from './MemberCard';
 import { MemberCardSkeleton } from './MemberCard.skeleton';
 import { useMembersPage } from '../../model/useMembersPage';
-import { UserQueries } from 'entities/user';
-import { useQuery } from '@tanstack/react-query';
-import { useMemo } from 'react';
-import { teamSubject, defineTeamMemberAbility } from 'entities/team';
+import { useAbility, teamSubject } from 'features/ability';
 
 export function MembersPage() {
   const { search, onChange, filtered, total, isPending } = useMembersPage();
-  const user = useQuery(UserQueries.getMe());
-  const teamRole = filtered.find((v) => v.id === user.data?.id)?.role;
 
-  const ability = useMemo(
-    () => defineTeamMemberAbility(user.data ? { id: user.data.id } : null, teamRole ?? null),
-    [user.data, teamRole]
-  );
-
+  const ability = useAbility('Team');
   const canInvite = ability.can('invite', 'TeamMember');
 
   return (
@@ -53,17 +44,20 @@ export function MembersPage() {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {isPending
           ? Array.from({ length: 8 }).map((_, i) => <MemberCardSkeleton key={i} />)
-          : filtered.map((m) => (
-              <MemberCard
-                key={m.id}
-                member={m}
-                permissions={{
-                  canChangeRole: ability.can('changeRole', teamSubject(m)),
-                  canChangeStatus: ability.can('changeStatus', teamSubject(m)),
-                  canDelete: ability.can('delete', teamSubject(m)),
-                }}
-              />
-            ))}
+          : filtered.map((m) => {
+              const canUpdate = ability.can('update', teamSubject(m));
+              return (
+                <MemberCard
+                  key={m.id}
+                  member={m}
+                  permissions={{
+                    canChangeRole: canUpdate,
+                    canChangeStatus: canUpdate,
+                    canDelete: ability.can('delete', teamSubject(m)),
+                  }}
+                />
+              );
+            })}
       </div>
     </>
   );

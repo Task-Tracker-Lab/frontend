@@ -68,7 +68,7 @@ export function MemberCard({ className, member, permissions, ...props }: MemberC
           </div>
           {canDelete && (
             <ItemActions>
-              <RemoveMemberDialog userId={member.id} name={member.fullName}>
+              <RemoveMemberDialog asChild userId={member.id} name={member.fullName}>
                 <Button variant="ghost">
                   <X size={14} className="text-muted-foreground/50" />
                 </Button>

@@ -7,9 +7,10 @@ import { useUploadCover, type UseUploadFileOptions } from '../../api/useUploadCo
 interface TeamCoverProps {
   mutationOptions?: UseUploadFileOptions;
   coverUrl: string;
+  canUpdate: boolean;
 }
 
-export function TeamCover({ mutationOptions, coverUrl }: TeamCoverProps) {
+export function TeamCover({ mutationOptions, coverUrl, canUpdate }: TeamCoverProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const uploadCoverMutation = useUploadCover(mutationOptions);
@@ -48,18 +49,20 @@ export function TeamCover({ mutationOptions, coverUrl }: TeamCoverProps) {
         )}
       </div>
       <div className="absolute inset-0 flex items-end justify-end p-2">
-        <Button
-          type="button"
-          variant="secondary"
-          size="sm"
-          className="shadow-sm backdrop-blur-sm"
-          onClick={handleCoverPick}
-          disabled={uploadCoverMutation.isPending}
-          aria-label="Загрузить обложку команды"
-        >
-          <ImagePlus />
-          Сменить обложку
-        </Button>
+        {canUpdate && (
+          <Button
+            type="button"
+            variant="secondary"
+            size="sm"
+            className="shadow-sm backdrop-blur-sm"
+            onClick={handleCoverPick}
+            disabled={uploadCoverMutation.isPending}
+            aria-label="Загрузить обложку команды"
+          >
+            <ImagePlus />
+            Сменить обложку
+          </Button>
+        )}
       </div>
       <input
         ref={fileInputRef}

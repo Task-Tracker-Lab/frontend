@@ -7,6 +7,7 @@ import { TeamCover } from './TeamCover';
 import { TeamIdentityForm } from './TeamIdentityForm';
 import { formatDate } from 'shared/lib/utils';
 import { ComponentProps } from 'react';
+import { useAbility } from 'features/ability';
 
 interface TeamIdentityProps extends Omit<
   ComponentProps<typeof CardSection>,
@@ -16,6 +17,10 @@ interface TeamIdentityProps extends Omit<
 }
 
 export function TeamIdentity({ team, ...props }: TeamIdentityProps) {
+  const ability = useAbility('Team');
+
+  const canUpdate = ability.can('update', 'TeamSettings');
+
   return (
     <CardSection
       {...props}
@@ -23,7 +28,7 @@ export function TeamIdentity({ team, ...props }: TeamIdentityProps) {
       description="Публичная информация о команде."
     >
       <div className="space-y-5">
-        <TeamCover coverUrl={team.cover?.medium ?? ''} />
+        <TeamCover canUpdate={canUpdate} coverUrl={team.cover?.medium ?? ''} />
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-[120px_1fr]">
           <UploadAvatar
@@ -36,7 +41,7 @@ export function TeamIdentity({ team, ...props }: TeamIdentityProps) {
               />
             }
           />
-          <TeamIdentityForm />
+          <TeamIdentityForm canUpdate={canUpdate} />
         </div>
 
         <Separator />

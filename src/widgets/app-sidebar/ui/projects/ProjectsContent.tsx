@@ -21,13 +21,22 @@ import {
   useSidebar,
 } from 'shared/ui';
 import { ProjectActions } from './ProjectActions';
+import { useAbility } from 'features/ability';
 
 export function ProjectsContent() {
   const teamId = useTeamStore.use.teamId();
   const router = useRouter();
   const pathname = usePathname();
   const { open, isMobile } = useSidebar();
-  const projects = useQuery({ ...ProjectQueries.getProjects(teamId!), enabled: !!teamId });
+
+  const ability = useAbility('Project');
+  const canReadProjects = ability.can('read', 'Project');
+  const canCreate = ability.can('create', 'Project');
+
+  const projects = useQuery({
+    ...ProjectQueries.getProjects(teamId!),
+    enabled: !!teamId,
+  });
 
   if (!projects.data) {
     return null;
@@ -64,12 +73,19 @@ export function ProjectsContent() {
               <SidebarMenuSubItem key={project.id}>
                 <SidebarMenuSubButton
                   isActive={pathname?.startsWith(routes.team.project.root(project.id))}
-                  asChild
+                  asChild={canReadProjects}
                 >
-                  <Link href={routes.team.project.root(project.slug)}>
-                    <span>{projectIconCodeToEmoji(project.icon)}</span> {project.name}
-                  </Link>
+                  {canReadProjects ? (
+                    <Link href={routes.team.project.root(project.slug)}>
+                      <span>{projectIconCodeToEmoji(project.icon)}</span> {project.name}
+                    </Link>
+                  ) : (
+                    <>
+                      <span>{projectIconCodeToEmoji(project.icon)}</span> {project.name}
+                    </>
+                  )}
                 </SidebarMenuSubButton>
+
                 <ProjectActions project={project} teamId={teamId} asChild>
                   <SidebarMenuAction showOnHover>
                     <MoreHorizontal />
@@ -77,13 +93,16 @@ export function ProjectsContent() {
                 </ProjectActions>
               </SidebarMenuSubItem>
             ))}
-            <SidebarMenuSubItem>
-              <SidebarMenuSubButton asChild>
-                <CreateProjectDialog className="w-full">
-                  <Plus /> Новый проект
-                </CreateProjectDialog>
-              </SidebarMenuSubButton>
-            </SidebarMenuSubItem>
+            {canCreate && (
+              <SidebarMenuSubItem>
+                <SidebarMenuSubButton asChild>
+                  <CreateProjectDialog className="w-full">
+                    <Plus /> Новый проект
+                  </CreateProjectDialog>
+                </SidebarMenuSubButton>
+              </SidebarMenuSubItem>
+            )}
+
             {totalProjects > 0 ? (
               <SidebarMenuSubItem>
                 <SidebarMenuSubButton isActive={pathname === routes.team.projects()} asChild>

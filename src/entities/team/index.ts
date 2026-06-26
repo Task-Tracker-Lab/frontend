@@ -7,11 +7,3 @@ export { ROLE_LABELS, INVITATION_ROLES } from './config/roles';
 export { STATUS_LABELS, MEMBER_STATUSES } from './config/statuses';
 export { useTeamStore } from './model/store';
 export { TeamAvatar } from './ui/TeamAvatar';
-export {
-  defineTeamMemberAbility,
-  teamSubject,
-  type TeamMemberAbility,
-  type TeamMemberActions,
-  type TeamMemberSubjects,
-  type WithSubjectType,
-} from './model/ability';
