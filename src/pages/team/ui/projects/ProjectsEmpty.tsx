@@ -1,3 +1,4 @@
+import { Can } from 'features/ability';
 import { CreateProjectDialog } from 'features/projects/create';
 import { FolderKanban } from 'lucide-react';
 import {
@@ -23,9 +24,11 @@ export function ProjectsEmpty() {
         </EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
-        <CreateProjectDialog asChild>
-          <Button>Создать проект</Button>
-        </CreateProjectDialog>
+        <Can I={'create'} an="Project">
+          <CreateProjectDialog asChild>
+            <Button>Создать проект</Button>
+          </CreateProjectDialog>
+        </Can>
       </EmptyContent>
     </Empty>
   );

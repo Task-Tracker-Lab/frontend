@@ -27,10 +27,19 @@ const backOn = '2026-05-10'; //todo: mock
 
 interface MemberCardProps extends Omit<ComponentProps<typeof ItemGroup>, 'children'> {
   member: TTeam.TeamMemberResponse;
+  permissions: Permissions;
 }
 
-export function MemberCard({ className, member, ...props }: MemberCardProps) {
+type Permissions = {
+  canChangeRole: boolean;
+  canChangeStatus: boolean;
+  canDelete: boolean;
+};
+
+export function MemberCard({ className, member, permissions, ...props }: MemberCardProps) {
   const wl = cfg.workloadLabel(workload);
+
+  const { canChangeRole, canChangeStatus, canDelete } = permissions;
 
   return (
     <ItemGroup
@@ -57,9 +66,9 @@ export function MemberCard({ className, member, ...props }: MemberCardProps) {
           <div className="flex-1">
             <p className="text-sm font-semibold">{member.fullName}</p>
           </div>
-          {member.role !== 'owner' && (
+          {canDelete && (
             <ItemActions>
-              <RemoveMemberDialog userId={member.id} name={member.fullName}>
+              <RemoveMemberDialog asChild userId={member.id} name={member.fullName}>
                 <Button variant="ghost">
                   <X size={14} className="text-muted-foreground/50" />
                 </Button>
@@ -69,10 +78,8 @@ export function MemberCard({ className, member, ...props }: MemberCardProps) {
         </ItemHeader>
         <ItemContent>
           <div className="flex items-center gap-1.5">
-            {member.role !== 'owner' ? (
-              <MemberRoleSelect userId={member.id} role={member.role} />
-            ) : null}
-            {member.role !== 'owner' ? (
+            {canChangeRole ? <MemberRoleSelect userId={member.id} role={member.role} /> : null}
+            {canChangeStatus ? (
               <MemberStatusSelect userId={member.id} status={member.status} />
             ) : null}
           </div>

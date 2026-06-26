@@ -1,6 +1,7 @@
 'use client';
 
 import { type TProject } from 'entities/project';
+import { useAbility } from 'features/ability';
 import { ArchiveProjectDialog, RestoreProjectDialog } from 'features/projects/archive';
 import { ShareProjectDialog } from 'features/projects/share';
 import { Archive, Link2 } from 'lucide-react';
@@ -24,7 +25,12 @@ export function ProjectActions({ project, teamId, ...props }: ProjectActionsProp
   const [shareOpen, setShareOpen] = useState(false);
   const [archiveOpen, setArchiveOpen] = useState(false);
   const [restoreOpen, setRestoreOpen] = useState(false);
-  const canManage = Boolean(teamId && project.canEdit);
+
+  const ability = useAbility('Project');
+  const canArchive = ability.can('archive', 'Project');
+  const canPublish = ability.can('publish', 'Project');
+
+  const canManage = Boolean(teamId) && canArchive && canPublish;
 
   const openDialog = (setDialogOpen: (open: boolean) => void) => (event: Event) => {
     event.preventDefault();
@@ -41,7 +47,7 @@ export function ProjectActions({ project, teamId, ...props }: ProjectActionsProp
           side={isMobile ? 'bottom' : 'right'}
           align={isMobile ? 'end' : 'start'}
         >
-          <DropdownMenuItem disabled={!teamId} onSelect={openDialog(setShareOpen)}>
+          <DropdownMenuItem disabled={!canManage} onSelect={openDialog(setShareOpen)}>
             <Link2 className="text-muted-foreground" />
             <span>Опубликовать</span>
           </DropdownMenuItem>
