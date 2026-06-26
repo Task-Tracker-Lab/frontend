@@ -2,23 +2,27 @@ import { type TProject } from 'entities/project/';
 import { type TTeam } from 'entities/team/';
 import { createStore } from 'shared/lib/store';
 
-export type UseAbilityStates = {
-  user: {
-    userId: string | null;
-    projectRole: TProject.ProjectMemberRole | null;
-    teamRole: TTeam.TeamRole | null;
-  } | null;
+export type AbilityState = {
+  userId: string | null;
+  projectRole: TProject.ProjectMemberRole | null;
+  teamRole: TTeam.TeamRole | null;
 };
 
-export type UserAbilityActions = {
-  setUser: (user: UseAbilityStates['user']) => void;
-  clearUser: () => void;
+export type AbilityActions = {
+  setAbility: (data: AbilityState) => void;
+  clearAbility: () => void;
 };
 
-export type UseAbilityStore = UseAbilityStates & UserAbilityActions;
+export type UseAbilityStore = AbilityState & AbilityActions;
+
+const initialState: AbilityState = {
+  userId: null,
+  projectRole: null,
+  teamRole: null,
+};
 
 export const useAbilityStore = createStore<UseAbilityStore>((set) => ({
-  user: null,
-  setUser: (user) => set({ user }),
-  clearUser: () => set({ user: null }),
+  ...initialState,
+  setAbility: (data) => set(data),
+  clearAbility: () => set(initialState),
 }));

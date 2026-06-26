@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 
 export function SyncAbilityStore() {
   const teamId = useTeamStore((s) => s.teamId);
-  const setAbilityData = useAbilityStore((s) => s.setUser);
+  const setAbilityData = useAbilityStore((s) => s.setAbility);
   const { data: user } = useQuery({ ...UserQueries.getMe(), select: (data) => ({ id: data.id }) });
   const { data: teamRole } = useQuery({
     ...TeamQueries.getMembers(teamId!),

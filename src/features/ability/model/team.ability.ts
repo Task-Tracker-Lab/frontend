@@ -1,9 +1,10 @@
-import { AbilityBuilder, type MongoAbility, subject } from '@casl/ability';
-import { type UseAbilityStates as AbilityContext } from './store';
-import type { InferSubjects } from '@casl/ability';
-import { TTeam } from 'entities/team';
-import { Action } from './types';
-import { WithSubjectType } from '../lib/with-subject-type';
+import type { AbilityBuilder } from '@casl/ability';
+import { type MongoAbility, subject } from '@casl/ability';
+import { type AbilityState } from './store';
+import { type InferSubjects } from '@casl/ability';
+import { type TTeam } from 'entities/team';
+import { type Action } from './types';
+import { type WithSubjectType } from '../lib/with-subject-type';
 
 export const SUBJECTS = {
   'team.settings': 'TeamSettings',
@@ -28,22 +29,25 @@ export const teamSubject = (member: NonNullable<TeamMember>) => subject('TeamMem
 export const teamSettingsSubject = (settings: NonNullable<TeamSettings>) =>
   subject('TeamSettings', settings);
 
-export function defineTeamRules(
-  user: AbilityContext['user'],
-  { can }: AbilityBuilder<TeamAbility>
-) {
-  if (user?.teamRole === 'admin') {
+export function defineTeamRules({ teamRole }: AbilityState, { can }: AbilityBuilder<TeamAbility>) {
+  const isAdmin = teamRole === 'admin';
+  const isOwner = teamRole === 'owner';
+
+  if (isAdmin) {
+    // Если пользователь администратор, он может (can) управлять (manage) участниками с ролями member и viewer (role: { $in: ['member', 'viewer'] })
     can('manage', 'TeamMember', {
       role: { $in: ['member', 'viewer'] },
     });
   }
-  if (user?.teamRole === 'owner') {
+  if (isOwner) {
+    // Если пользователь владелец, он может  управлять участниками с ролями member, viewer и admin
     can('manage', 'TeamMember', {
       role: { $in: ['admin', 'member', 'viewer'] },
     });
   }
 
-  if (user?.teamRole === 'admin' || user?.teamRole === 'owner') {
+  if (isAdmin || isOwner) {
+    // Пользователь с ролью администратор и владелец могут изменять настройки любой команды
     can('update', 'TeamSettings');
   }
 }

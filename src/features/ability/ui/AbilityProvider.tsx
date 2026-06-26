@@ -1,38 +1,43 @@
 'use client';
 
 import { AbilityProvider as CaslAbilityProvider } from '@casl/react';
-import { AbilityBuilder, MongoAbility } from '@casl/ability';
-import { PropsWithChildren, useEffect, useRef } from 'react';
-import { defineTeamRules, TeamAbility, TeamAction, TeamSubject } from '../model/team.ability';
-import { useAbilityStore } from '../model/store';
+import { type PropsWithChildren, useEffect, useState } from 'react';
 import {
-  defineProjectRules,
-  ProjectAbility,
-  ProjectAction,
-  ProjectSubject,
-} from '../model/project.ability';
+  defineTeamRules,
+  type TeamAbility,
+  type TeamAction,
+  type TeamSubject,
+} from '../model/team.ability';
+import type { AbilityState } from '../model/store';
+import { useAbilityStore } from '../model/store';
+import type { ProjectAbility, ProjectAction, ProjectSubject } from '../model/project.ability';
+import { defineProjectRules } from '../model/project.ability';
 import { createBuilder } from '../lib/create-builder';
+import type { AbilityBuilder } from '@casl/ability';
+import { type MongoAbility } from '@casl/ability';
+import { useShallow } from 'zustand/shallow';
 
 export type AppAbility = MongoAbility<[TeamAction, TeamSubject] | [ProjectAction, ProjectSubject]>;
 
-const builder = createBuilder();
-
 export function AbilityProvider({ children }: PropsWithChildren) {
-  const mounted = useRef(false);
-  const user = useAbilityStore((s) => s.user);
+  const user = useAbilityStore(
+    useShallow(
+      ({ userId, teamRole, projectRole }): AbilityState => ({ userId, teamRole, projectRole })
+    )
+  );
 
-  defineProjectRules(user, builder as AbilityBuilder<ProjectAbility>);
-  defineTeamRules(user, builder as AbilityBuilder<TeamAbility>);
-
-  const ability = builder.build();
+  const [ability] = useState(() => {
+    const builder = createBuilder();
+    defineProjectRules(user, builder as AbilityBuilder<ProjectAbility>);
+    defineTeamRules(user, builder as AbilityBuilder<TeamAbility>);
+    return builder.build();
+  });
 
   useEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true;
-      return;
-    }
+    const builder = createBuilder();
+    defineProjectRules(user, builder as AbilityBuilder<ProjectAbility>);
+    defineTeamRules(user, builder as AbilityBuilder<TeamAbility>);
     ability.update(builder.rules);
-    console.log('updated');
   }, [ability, user]);
 
   return <CaslAbilityProvider value={ability}>{children}</CaslAbilityProvider>;
