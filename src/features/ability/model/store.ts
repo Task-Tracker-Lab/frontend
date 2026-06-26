@@ -17,7 +17,7 @@ export type UserAbilityActions = {
 
 export type UseAbilityStore = UseAbilityStates & UserAbilityActions;
 
-export const useAbilityStore = createStore<UseAbilityStore>((set, g) => ({
+export const useAbilityStore = createStore<UseAbilityStore>((set) => ({
   user: null,
   setUser: (user) => set({ user }),
   clearUser: () => set({ user: null }),

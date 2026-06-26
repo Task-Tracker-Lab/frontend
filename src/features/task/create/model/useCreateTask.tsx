@@ -17,7 +17,6 @@ export function useCreateTask({ onSuccess, ...rest }: UseCreateProjectOptions = 
   return useMutation<TTask.CreateTaskResponse, DefaultError, CreateTaskVariables>({
     ...rest,
     mutationFn: ({ body }) => TaskHttp.createTask(body),
-    onMutate: (data, ctx) => {},
     onSuccess: async (res, variables, _r, context) => {
       onSuccess?.(res, variables, _r, context);
     },

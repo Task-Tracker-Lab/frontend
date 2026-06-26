@@ -1,7 +1,7 @@
 'use client';
 
 import { type TProject } from 'entities/project';
-import { Can, useAbility } from 'features/ability';
+import { useAbility } from 'features/ability';
 import { ArchiveProjectDialog, RestoreProjectDialog } from 'features/projects/archive';
 import { ShareProjectDialog } from 'features/projects/share';
 import { Archive, Link2 } from 'lucide-react';
