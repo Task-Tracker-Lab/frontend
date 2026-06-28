@@ -18,6 +18,7 @@ function ProfileForm({ form, onSubmit }: ProfileFormProps) {
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Имя</FieldLabel>
               <Input
+                className="h-9"
                 aria-label="firstName"
                 placeholder="Имя"
                 type="text"
@@ -36,6 +37,7 @@ function ProfileForm({ form, onSubmit }: ProfileFormProps) {
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Фамилия</FieldLabel>
               <Input
+                className="h-9"
                 aria-label="lastName"
                 placeholder="Фамилия"
                 type="text"

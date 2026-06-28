@@ -56,7 +56,7 @@ export function OAuthManageButton({ provider, label, isLinked, ...props }: OAuth
         <Image src={meta.iconSrc} alt={label} width={24} height={24} />
       </div>
       <span className="w-full text-center">
-        {isLinked ? 'Отвязать' : 'Привязать'} {label} аккаунт
+        {isLinked ? 'Отвязать' : 'Привязать'} {label}
       </span>
     </Button>
   );

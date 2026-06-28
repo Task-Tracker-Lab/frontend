@@ -1,37 +1,39 @@
+'use client';
+
 import { type TAsset } from 'entities/asset';
-import { Pencil } from 'lucide-react';
-import { type ComponentProps, type ReactElement } from 'react';
-import { classNames } from 'shared/lib/utils';
-import { type Avatar, Button } from 'shared/ui';
+import { Button } from 'shared/ui';
 import { type UseUploadFileOptions } from '../model/useUploadAvatar';
+import { type ComponentProps } from 'react';
 import { useAvatarFileInput } from '../model/useAvatarFileInput';
 
-interface UploadAvatarProps {
+interface UploadAvatarButtonProps extends ComponentProps<typeof Button> {
   className?: string;
-  avatar: ReactElement<ComponentProps<typeof Avatar>, typeof Avatar>;
   context: TAsset.UploadAssetData['context'];
   mutationOptions?: UseUploadFileOptions;
 }
-
-function UploadAvatar({ className, avatar, context, mutationOptions }: UploadAvatarProps) {
+function UploadAvatarButton({
+  context,
+  mutationOptions,
+  children,
+  asChild = false,
+  variant = 'default',
+  size = 'lg',
+}: UploadAvatarButtonProps) {
   const { handleAvatarChange, handleAvatarPick, isPending, fileInputRef } = useAvatarFileInput(
     context,
     mutationOptions
   );
-
   return (
-    <div className={classNames('relative h-min w-min', {}, [className])}>
-      {avatar}
+    <>
       <Button
-        type="button"
-        size="icon-sm"
-        variant="outline"
-        className="absolute right-0 bottom-0 rounded-full"
         onClick={handleAvatarPick}
+        asChild={asChild}
+        variant={variant}
+        size={size}
         disabled={isPending}
         aria-label="Загрузить новый аватар"
       >
-        <Pencil />
+        {children}
       </Button>
       <input
         ref={fileInputRef}
@@ -40,8 +42,8 @@ function UploadAvatar({ className, avatar, context, mutationOptions }: UploadAva
         className="sr-only"
         onChange={handleAvatarChange}
       />
-    </div>
+    </>
   );
 }
 
-export { UploadAvatar };
+export { UploadAvatarButton };

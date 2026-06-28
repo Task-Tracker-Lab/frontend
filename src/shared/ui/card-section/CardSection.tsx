@@ -12,7 +12,7 @@ function CardSection({ title, description, ...props }: ICardSectionProps) {
     <Card>
       <CardHeader>
         <CardTitle className="text-base">{title}</CardTitle>
-        <CardDescription className="text-xs">{description}</CardDescription>
+        <CardDescription className="text-sm">{description}</CardDescription>
       </CardHeader>
       <CardContent {...props} />
     </Card>

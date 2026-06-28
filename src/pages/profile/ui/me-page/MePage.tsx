@@ -7,7 +7,6 @@ import {
   CardSection,
   CardTitle,
   FloatingSaveBar,
-  Separator,
 } from 'shared/ui';
 import { IdentityItem } from './IdentityItem';
 import { ProfileForm } from './ProfileForm';
@@ -35,16 +34,16 @@ function MePage() {
       <Suspense>
         <QueryParamsHandler />
       </Suspense>
-      <div className="space-y-4">
+      <div className="max-w-5xl space-y-4">
         <CardSection
           className="space-y-4"
-          title="Идентификация профиля"
+          title="Профиль"
           description="Публичная информация о вас."
         >
-          <IdentityItem profile={profile} email={email} />
-          <Separator />
+          <IdentityItem profile={profile} />
           <ProfileForm form={form} onSubmit={onSubmit} />
         </CardSection>
+
         <AccountSection />
         <FloatingSaveBar
           visible={isDirty}

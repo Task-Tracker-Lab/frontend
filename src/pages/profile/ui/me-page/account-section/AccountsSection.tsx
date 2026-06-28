@@ -7,7 +7,7 @@ export function AccountSection() {
 
   return (
     <CardSection
-      className="grid auto-rows-auto grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-3"
+      className="grid auto-rows-auto grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-3 lg:grid-cols-2"
       title="Связанные аккаунты"
       description="Управление привязкой к социальным сетям и сервисам"
     >
