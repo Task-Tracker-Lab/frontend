@@ -16,13 +16,11 @@ import { CreateBoardColumnForm } from './CreateBoardColumnForm';
 
 interface CreateBoardColumnDialogProps extends ComponentProps<typeof DialogTrigger> {
   boardSlug: string;
-  defaultPosition?: number;
   dialog?: ComponentProps<typeof Dialog>;
 }
 
 export function CreateBoardColumnDialog({
   boardSlug,
-  defaultPosition,
   dialog = {},
   ...props
 }: CreateBoardColumnDialogProps) {
@@ -36,17 +34,16 @@ export function CreateBoardColumnDialog({
 
   return (
     <Dialog {...dialog} open={open} onOpenChange={setOpen}>
-      <DialogTrigger {...props} />
+      {props.children ? <DialogTrigger {...props} /> : null}
       <DialogContent className="!max-w-lg">
         <DialogHeader>
-          <DialogTitle>Новая колонка</DialogTitle>
+          <DialogTitle>Новый этап</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
 
         <CreateBoardColumnForm
           id={formId}
           boardSlug={boardSlug}
-          defaultPosition={defaultPosition}
           mutateOptions={{
             onMutate: () => {
               setPending(true);
@@ -68,7 +65,7 @@ export function CreateBoardColumnDialog({
           </DialogClose>
           <Button type="submit" form={formId} disabled={pending}>
             {pending ? <Spinner /> : null}
-            Создать колонку
+            Создать этап
           </Button>
         </DialogFooter>
       </DialogContent>

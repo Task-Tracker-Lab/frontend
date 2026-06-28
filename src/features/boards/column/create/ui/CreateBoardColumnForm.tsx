@@ -1,26 +1,23 @@
+import { PROJECT_COLORS } from 'entities/project';
+import { ComponentProps } from 'react';
 import { Controller, FormProvider } from 'react-hook-form';
 import { cn } from 'shared/lib/utils';
 import { ColorPicker, Field, FieldError, FieldGroup, FieldLabel, Input } from 'shared/ui';
-import { useCreateBoardColumnForm } from '../model/useCreateBoardColumnForm';
 import { UseCreateBoardColumnOptions } from '../model/useCreateBoardColumn';
-import { ComponentProps } from 'react';
-import { COLORS, DEFAULT_COLUMN_COLOR } from '../config/consts';
+import { useCreateBoardColumnForm } from '../model/useCreateBoardColumnForm';
 
 interface CreateBoardColumnFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
   boardSlug: string;
-  defaultPosition?: number;
   mutateOptions?: UseCreateBoardColumnOptions;
 }
 
 export function CreateBoardColumnForm({
   boardSlug,
-  defaultPosition,
   className,
   mutateOptions,
   ...props
 }: CreateBoardColumnFormProps) {
   const { form, isPending, handleSubmit } = useCreateBoardColumnForm(boardSlug, {
-    defaultPosition,
     ...mutateOptions,
   });
 
@@ -37,7 +34,7 @@ export function CreateBoardColumnForm({
                 <Input
                   {...field}
                   id="create-board-column-name"
-                  aria-label="Название колонки"
+                  aria-label="Название этапа"
                   placeholder="В работе"
                   aria-required="true"
                   aria-invalid={fieldState.invalid}
@@ -56,12 +53,12 @@ export function CreateBoardColumnForm({
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor="create-board-column-color">Цвет</FieldLabel>
                   <ColorPicker
-                    colors={COLORS}
+                    colors={PROJECT_COLORS}
                     id="create-board-column-color"
-                    aria-label="Цвет колонки"
+                    aria-label="Цвет этапа"
                     aria-invalid={fieldState.invalid}
                     disabled={isPending}
-                    activeColor={value ?? DEFAULT_COLUMN_COLOR}
+                    activeColor={value ?? PROJECT_COLORS[0]}
                     setActiveColor={(c) => {
                       form.setValue('color', c);
                     }}

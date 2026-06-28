@@ -36,7 +36,7 @@ export const PERMISSION_GROUPS: {
 export const ROLES: { key: RoleKey; description: string; members: number; locked?: boolean }[] = [
   {
     key: 'Admin',
-    description: 'Полный контроль рабочего пространства и биллинг.',
+    description: 'Полный контроль команды и биллинг.',
     members: 2,
     locked: true,
   },

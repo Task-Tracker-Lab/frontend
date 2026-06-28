@@ -1,4 +1,5 @@
 import { DateTimeString, GlobalSuccess, PaginatedResponseSchema } from 'shared/api';
+import { HEX_COLOR_REGEX } from 'shared/lib/utils';
 import { z } from 'zod/v4';
 import { PROJECT_ICONS } from '../config/icons';
 import { MEMBER_ROLE, PROJECT_STATUSES, PROJECT_VISIBILITIES } from './const';
@@ -69,10 +70,7 @@ export const ProjectSchema = z.object({
   icon: z.enum(PROJECT_ICONS).nullish(),
   color: z
     .string()
-    .regex(
-      /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/,
-      'Цвет должен быть в HEX формате (#RRGGBB или #RGB)'
-    )
+    .regex(HEX_COLOR_REGEX, 'Цвет должен быть в HEX формате (#RRGGBB или #RGB)')
     .nullish(),
   status: ProjectStatusSchema,
   visibility: ProjectVisibilitySchema,
@@ -143,6 +141,7 @@ export const ProjectListItemResponse = z
   .object({
     id: z.string(),
     slug: z.string(),
+    description: z.string(),
     name: z.string(),
     status: ProjectStatusSchema,
     color: z.string(),

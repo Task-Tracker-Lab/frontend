@@ -1,5 +1,5 @@
-import { Button, Link, Logo, Separator } from 'shared/ui';
 import { routes } from 'shared/config';
+import { Button, Link, Logo, Separator } from 'shared/ui';
 
 interface MainPageProps {
   className?: string;
@@ -35,7 +35,7 @@ function MainPage({ className }: MainPageProps) {
 
           <div className="space-y-4">
             <h1 className="max-w-4xl text-4xl font-semibold tracking-tight text-balance md:text-6xl">
-              Планируйте спринты и держите фокус команды в одном рабочем пространстве
+              Планируйте спринты и держите фокус команды в одной команде
             </h1>
             <p className="text-muted-foreground max-w-3xl text-lg md:text-xl">
               Один трекер для продукта, разработки и QA. Все статусы и приоритеты прозрачны в

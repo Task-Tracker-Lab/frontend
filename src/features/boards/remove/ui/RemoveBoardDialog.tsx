@@ -12,9 +12,10 @@ import {
 } from 'shared/ui';
 import { RemoveBoardVariables, useRemoveBoard } from '../model/useRemoveBoard';
 
-type Props = ComponentProps<typeof AlertDialogTrigger> & RemoveBoardVariables;
+type Props = ComponentProps<typeof AlertDialogTrigger> &
+  RemoveBoardVariables & { boardName: string };
 
-export function RemoveBoardDialog({ projectSlug, boardSlug, ...props }: Props) {
+export function RemoveBoardDialog({ projectSlug, boardSlug, boardName, ...props }: Props) {
   const removeBoard = useRemoveBoard();
 
   const onRemove = () => {
@@ -23,12 +24,12 @@ export function RemoveBoardDialog({ projectSlug, boardSlug, ...props }: Props) {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger {...props} />
+      {props.children ? <AlertDialogTrigger {...props} /> : null}
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Удалить доску?</AlertDialogTitle>
-          <AlertDialogDescription hidden>
-            Вы действительно хоите удалить доску?
+          <AlertDialogDescription>
+            Вы действительно хотите удалить доску <span className="font-medium">{boardName}</span>?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

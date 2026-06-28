@@ -18,7 +18,7 @@ export function useRemoveColumn({ onSuccess, onSettled, ...rest }: UseDeleteColu
     mutationFn: (args) => BoardHttp.removeBoardColumn(args.boardSlug, args.columnId),
     onSuccess: async (res, ...args) => {
       onSuccess?.(res, ...args);
-      toast.success(res.message ?? 'Колонка удалена');
+      toast.success(res.message ?? 'Этап удален');
     },
     onSettled: async (d, e, v, m, context) => {
       onSettled?.(d, e, v, m, context);
