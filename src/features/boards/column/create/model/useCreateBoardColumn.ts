@@ -18,7 +18,7 @@ export function useCreateBoardColumn({ onSuccess, ...rest }: UseCreateBoardColum
     mutationFn: ({ boardSlug, body }) => BoardHttp.createBoardColumn(boardSlug, body),
     onSuccess: async (res, variables, r, context) => {
       onSuccess?.(res, variables, r, context);
-      toast.success(res.message ?? 'Колонка создана');
+      toast.success(res.message ?? 'Этап создан');
       await context.client.invalidateQueries({
         queryKey: boardFabricKeys.columns(variables.boardSlug),
       });

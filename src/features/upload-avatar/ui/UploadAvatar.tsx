@@ -1,10 +1,9 @@
 import { type TAsset } from 'entities/asset';
 import { Pencil } from 'lucide-react';
-import { type ComponentProps, type ReactElement } from 'react';
+import { type ChangeEvent, type ComponentProps, type ReactElement, useRef } from 'react';
 import { classNames } from 'shared/lib/utils';
 import { type Avatar, Button } from 'shared/ui';
-import { type UseUploadFileOptions } from '../model/useUploadAvatar';
-import { useAvatarFileInput } from '../model/useAvatarFileInput';
+import { useUploadAvatar, UseUploadFileOptions } from '../model/useUploadAvatar';
 
 interface UploadAvatarProps {
   className?: string;
@@ -14,10 +13,23 @@ interface UploadAvatarProps {
 }
 
 function UploadAvatar({ className, avatar, context, mutationOptions }: UploadAvatarProps) {
-  const { handleAvatarChange, handleAvatarPick, isPending, fileInputRef } = useAvatarFileInput(
-    context,
-    mutationOptions
-  );
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const uploadAvatarMutation = useUploadAvatar(mutationOptions);
+
+  const handleAvatarPick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleAvatarChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) {
+      return;
+    }
+
+    uploadAvatarMutation.mutate({ file, context });
+    event.target.value = '';
+  };
 
   return (
     <div className={classNames('relative h-min w-min', {}, [className])}>
@@ -28,7 +40,7 @@ function UploadAvatar({ className, avatar, context, mutationOptions }: UploadAva
         variant="outline"
         className="absolute right-0 bottom-0 rounded-full"
         onClick={handleAvatarPick}
-        disabled={isPending}
+        disabled={uploadAvatarMutation.isPending}
         aria-label="Загрузить новый аватар"
       >
         <Pencil />

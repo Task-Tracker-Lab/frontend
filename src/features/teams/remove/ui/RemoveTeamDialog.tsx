@@ -42,9 +42,9 @@ export function RemoveTeamDialog({ teamName, teamId, dialog = {}, ...props }: Pr
       {props.children ? <AlertDialogTrigger {...props} /> : null}
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Удалить рабочее пространство?</AlertDialogTitle>
+          <AlertDialogTitle>Удалить команду?</AlertDialogTitle>
           <AlertDialogDescription>
-            Это действие необратимо. Для подтверждения введите название рабочего пространства:
+            Это действие необратимо. Для подтверждения введите название команды:
             <span className="text-foreground mt-1 block font-medium">{teamName}</span>
           </AlertDialogDescription>
         </AlertDialogHeader>

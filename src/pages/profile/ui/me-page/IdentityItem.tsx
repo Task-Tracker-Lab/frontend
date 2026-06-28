@@ -1,7 +1,7 @@
 'use client';
 
 import { Item, ItemActions, ItemMedia } from 'shared/ui';
-import { UploadAvatarButton } from 'features/upload-avatar';
+import { UploadAvatar } from 'features/upload-avatar';
 import { SignOut } from 'features/auth/sign-out';
 import { type TUser, UserAvatar } from 'entities/user';
 
@@ -15,17 +15,17 @@ function IdentityItem({ profile }: AccountIdentityItemProps) {
   return (
     <Item className="items-center justify-between gap-4">
       <ItemMedia className="gap-6">
-        <UserAvatar
-          wrap={{ className: 'size-20 ' }}
-          src={profile.avatar?.medium}
-          alt={fullName}
-          fallback={{
-            firstName: profile.firstName,
-            lastName: profile.lastName,
-            className: 'text-base',
-          }}
+        <UploadAvatar
+          context="user.avatar"
+          avatar={
+            <UserAvatar
+              wrap={{ className: 'size-20 ' }}
+              src={profile.avatar?.medium}
+              alt={fullName}
+              fallback={{ firstName: profile.firstName, lastName: profile.lastName }}
+            />
+          }
         />
-        <UploadAvatarButton context="user.avatar">Загрузить изображение</UploadAvatarButton>
       </ItemMedia>
       <ItemActions>
         <SignOut size={'lg'} variant={'destructive'} />

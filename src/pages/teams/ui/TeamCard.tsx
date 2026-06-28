@@ -2,9 +2,16 @@
 
 import { TeamAvatar, useTeamStore } from 'entities/team';
 import { type TUser } from 'entities/user';
-import { Crown } from 'lucide-react';
 import { classNames } from 'shared/lib/utils';
-import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from 'shared/ui';
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemMedia,
+  ItemTitle,
+  OwnerWrap,
+} from 'shared/ui';
 import { TeamCardActions } from './TeamCardActions';
 
 interface TeamCardProps {
@@ -31,17 +38,9 @@ export function TeamCard({ team, onSelect }: TeamCardProps) {
       }}
     >
       <ItemMedia>
-        <div className="relative w-fit">
+        <OwnerWrap isOwner={team.permissions.isOwner}>
           <TeamAvatar src={team.avatar?.small} wrap={{ className: 'size-10' }} />
-          {team.permissions.isOwner ? (
-            <span
-              className="bg-background ring-background absolute -top-0.5 -right-0.5 z-10 flex size-4 items-center justify-center rounded-full ring-2"
-              aria-label="Владелец"
-            >
-              <Crown className="size-3 text-amber-500" />
-            </span>
-          ) : null}
-        </div>
+        </OwnerWrap>
       </ItemMedia>
       <ItemContent>
         <ItemTitle className="line-clamp-1">{team.name}</ItemTitle>

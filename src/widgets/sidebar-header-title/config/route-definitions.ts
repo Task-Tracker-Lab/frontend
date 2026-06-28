@@ -2,11 +2,15 @@ import { routes } from 'shared/config';
 import type { RouteDefinition } from '../model/types';
 
 export const routeDefinitions = [
-  ['team.project.settings', (pathname) => pathname.endsWith('/settings'), 'Настройки проекта'],
   [
-    'team.project.root',
+    'team.projects.boardSettings',
+    (pathname) => pathname.endsWith('/settings'),
+    'Настройки проекта',
+  ],
+  [
+    'team.projects.project',
     (pathname) =>
-      pathname.startsWith(routes.team.project.root('')) && !pathname.endsWith('/settings'),
+      pathname.startsWith(routes.team.projects.project('')) && !pathname.endsWith('/settings'),
     'Проект',
   ],
   ['user.teams', (pathname) => pathname === routes.user.teams(), 'Мои команды'],
@@ -20,7 +24,7 @@ export const routeDefinitions = [
   ['team.invitations', (pathname) => pathname === routes.team.invitations(), 'Приглашения'],
   ['team.roles', (pathname) => pathname === routes.team.roles(), 'Роли и права'],
   ['team.settings', (pathname) => pathname === routes.team.settings(), 'Настройки'],
-  ['team.projects', (pathname) => pathname === routes.team.projects(), 'Проекты'],
+  ['team.projects.all', (pathname) => pathname === routes.team.projects.all(), 'Проекты'],
   ['auth.signin', (pathname) => pathname === routes.auth.signin(), 'Вход'],
   ['auth.signup', (pathname) => pathname === routes.auth.signup(), 'Регистрация'],
   [

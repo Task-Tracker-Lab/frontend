@@ -29,7 +29,7 @@ export function CreateBoardDialog({ dialog = {}, ...props }: CreateProjectDialog
 
   return (
     <Dialog {...dialog} open={open} onOpenChange={setOpen}>
-      <DialogTrigger {...props} />
+      {props.children ? <DialogTrigger {...props} /> : null}
       <DialogContent className="!max-w-lg">
         <DialogHeader>
           <DialogTitle>Новая доска</DialogTitle>

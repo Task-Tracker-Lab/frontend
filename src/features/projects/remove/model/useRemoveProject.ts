@@ -24,8 +24,8 @@ export function useRemoveProject({ onSuccess, ...rest }: UseRemoveProjectOptions
     onSuccess: async (res, variables, r, context) => {
       onSuccess?.(res, variables, r, context);
 
-      if (pathname !== routes.team.projects()) {
-        router.replace(routes.team.projects());
+      if (pathname !== routes.team.projects.all()) {
+        router.replace(routes.team.projects.all());
       }
 
       toast.success(res.message ?? 'Проект удалён');

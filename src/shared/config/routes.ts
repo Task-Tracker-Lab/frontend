@@ -15,10 +15,15 @@ export const routes = {
     invitations: (): Route => '/team/invitations',
     roles: (): Route => '/team/roles',
     settings: (): Route => '/team/settings',
-    projects: (): Route => '/team/projects',
-    project: {
-      root: (slug: string): Route => `/team/projects/${slug}` as Route,
-      settings: (slug: string): Route => `/team/projects/${slug}/settings` as Route,
+    projects: {
+      all: (): Route => '/team/projects',
+      project: (projectSlug: string): Route => `/team/projects/${projectSlug}` as Route,
+      projectSettings: (projectSlug: string): Route =>
+        `/team/projects/${projectSlug}/settings` as Route,
+      board: (projectSlug: string, boardSlug: string): Route =>
+        `/team/projects/${projectSlug}/${boardSlug}` as Route,
+      boardSettings: (projectSlug: string, boardSlug: string): Route =>
+        `/team/projects/${projectSlug}/${boardSlug}/settings` as Route,
     },
   },
   auth: {
