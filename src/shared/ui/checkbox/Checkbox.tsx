@@ -1,13 +1,18 @@
 import { ComponentProps } from 'react';
 import { cn } from 'shared/lib/utils';
 
-function Checkbox({ className, ...props }: Omit<ComponentProps<'input'>, 'type'>) {
+function Checkbox({
+  className,
+  classNameInput,
+  ...props
+}: Omit<ComponentProps<'input'>, 'type'> & { classNameInput?: string }) {
   return (
     <div className={cn('relative flex w-max items-center justify-center', className)}>
       <input
         type="checkbox"
         className={cn(
-          'relative size-4 appearance-none rounded border-2 border-gray-300 bg-transparent transition-colors checked:border-violet-600 checked:bg-violet-600 disabled:opacity-50 [&+svg]:opacity-0 checked:[&+svg]:opacity-100'
+          'relative size-4 appearance-none rounded border-2 border-gray-300 bg-transparent transition-colors checked:border-violet-600 checked:bg-violet-600 disabled:opacity-50 [&+svg]:opacity-0 checked:[&+svg]:opacity-100',
+          classNameInput
         )}
         {...props}
       />

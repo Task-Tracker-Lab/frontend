@@ -1,12 +1,18 @@
-class AccessToken {
-  static #token: string | null = null;
+const STORAGE_KEY = 'access-token';
 
+class AccessToken {
   static set token(token: string) {
-    this.#token = token;
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(STORAGE_KEY, token);
+    }
   }
 
   static get token(): string | null {
-    return this.#token;
+    if (typeof window === 'undefined') {
+      return null;
+    }
+
+    return window.localStorage.getItem(STORAGE_KEY);
   }
 
   static get header() {
@@ -14,7 +20,9 @@ class AccessToken {
   }
 
   static clear() {
-    this.#token = null;
+    if (typeof window !== 'undefined') {
+      window.localStorage.removeItem(STORAGE_KEY);
+    }
   }
 
   static getHeader(token: string | null = this.token) {

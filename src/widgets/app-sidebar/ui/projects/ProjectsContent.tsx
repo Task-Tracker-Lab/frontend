@@ -39,7 +39,7 @@ export function ProjectsContent() {
 
   const handleClickTrigger = () => {
     if (isAllowedToHighlight) {
-      router.push(routes.team.projects());
+      router.push(routes.team.projects.all());
     }
   };
 
@@ -50,7 +50,7 @@ export function ProjectsContent() {
           <SidebarMenuButton
             className="group-has-data-[sidebar=menu-action]/menu-item:pr-2"
             onClick={handleClickTrigger}
-            isActive={isAllowedToHighlight && pathname?.startsWith(routes.team.projects())}
+            isActive={isAllowedToHighlight && pathname?.startsWith(routes.team.projects.all())}
             tooltip="Проекты"
           >
             <BriefcaseBusiness />
@@ -63,10 +63,10 @@ export function ProjectsContent() {
             {projectList.map((project) => (
               <SidebarMenuSubItem key={project.id}>
                 <SidebarMenuSubButton
-                  isActive={pathname?.startsWith(routes.team.project.root(project.id))}
+                  isActive={pathname?.startsWith(routes.team.projects.project(project.slug))}
                   asChild
                 >
-                  <Link href={routes.team.project.root(project.slug)}>
+                  <Link href={routes.team.projects.project(project.slug)}>
                     <span>{projectIconCodeToEmoji(project.icon)}</span> {project.name}
                   </Link>
                 </SidebarMenuSubButton>
@@ -86,8 +86,8 @@ export function ProjectsContent() {
             </SidebarMenuSubItem>
             {totalProjects > 0 ? (
               <SidebarMenuSubItem>
-                <SidebarMenuSubButton isActive={pathname === routes.team.projects()} asChild>
-                  <Link href={routes.team.projects()} className="!text-muted-foreground">
+                <SidebarMenuSubButton isActive={pathname === routes.team.projects.all()} asChild>
+                  <Link href={routes.team.projects.all()} className="!text-muted-foreground">
                     Все проекты ({totalProjects})
                   </Link>
                 </SidebarMenuSubButton>

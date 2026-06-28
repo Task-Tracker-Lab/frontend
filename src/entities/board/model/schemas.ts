@@ -1,5 +1,6 @@
 import { createSortingSchema, CursorQuerySchema, DateTimeString, GlobalSuccess } from 'shared/api';
 import { z } from 'zod/v4';
+import { HEX_COLOR_REGEX } from 'shared/lib/utils';
 
 export const ActionResponse = GlobalSuccess;
 
@@ -37,10 +38,7 @@ export const Board = z.object({
   descriptionHtml: z.string().nullable().optional(),
   color: z
     .string()
-    .regex(
-      /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/,
-      'Цвет должен быть в HEX формате (#RRGGBB или #RGB)'
-    )
+    .regex(HEX_COLOR_REGEX, 'Цвет должен быть в HEX формате (#RRGGBB или #RGB)')
     .nullable()
     .optional(),
   icon: z.string().max(20, 'Иконка должна быть не длиннее 20 символов').nullable().optional(),
@@ -77,17 +75,14 @@ export const BoardColumn = z.object({
   category: BoardColumnCategoryEnum,
   color: z
     .string()
-    .regex(
-      /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/,
-      'Цвет должен быть в HEX формате (#RRGGBB или #RGB)'
-    )
+    .regex(HEX_COLOR_REGEX, 'Цвет должен быть в HEX формате (#RRGGBB или #RGB)')
     .nullable()
     .optional(),
   icon: z.string().max(20, 'Иконка должна быть не длиннее 20 символов').nullable().optional(),
   position: z
     .number()
-    .int('Порядковый номер должен быть целым числом')
-    .min(0, 'Порядковый номер не может быть отрицательным'),
+    .int('Позиция должна быть целым числом')
+    .min(0, 'Позиция не может быть отрицательной'),
   isVisible: z.boolean(),
   maxTasksLimit: z
     .number()

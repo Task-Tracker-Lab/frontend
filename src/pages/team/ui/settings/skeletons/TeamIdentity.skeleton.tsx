@@ -2,10 +2,7 @@ import { CardSection, Skeleton } from 'shared/ui';
 
 export function TeamIdentitySkeleton() {
   return (
-    <CardSection
-      title="Идентификация рабочего пространства"
-      description="Публичная информация о команде."
-    >
+    <CardSection title="Идентификация команды" description="Публичная информация о команде.">
       <div className="space-y-5">
         <Skeleton className="h-28 w-full rounded-lg" />
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-[120px_1fr]">

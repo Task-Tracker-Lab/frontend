@@ -1,5 +1,5 @@
-import { defineConfig } from 'steiger';
 import fsd from '@feature-sliced/steiger-plugin';
+import { defineConfig } from 'steiger';
 
 export default defineConfig([
   ...fsd.configs.recommended,
@@ -11,11 +11,16 @@ export default defineConfig([
     },
   },
   {
+    //todo удалить позже
     files: [
       './src/features/boards/**',
       './src/entities/board/**',
       './src/entities/task/**',
       './src/features/task/**',
+      './src/features/projects/archive/**',
+      './src/features/projects/remove/**',
+      './src/features/projects/share/**',
+      './src/widgets/task/**',
     ],
     rules: {
       'fsd/insignificant-slice': 'off',

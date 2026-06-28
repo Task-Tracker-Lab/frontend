@@ -1,3 +1,4 @@
+import { RemoveTeamDialog } from 'features/teams/remove';
 import { AlertTriangle } from 'lucide-react';
 import {
   Button,
@@ -8,7 +9,6 @@ import {
   ItemMedia,
   ItemTitle,
 } from 'shared/ui';
-import { RemoveTeamDialog } from 'features/teams/remove';
 
 interface Props {
   teamName: string;
@@ -24,14 +24,13 @@ export function DangerZone({ teamName, teamId }: Props) {
       <ItemContent>
         <ItemTitle>Опасная зона</ItemTitle>
         <ItemDescription className="text-xs">
-          Навсегда удалить это рабочее пространство со всеми проектами, задачами и данными. Действие
-          необратимо.
+          Навсегда удалить эту команду со всеми проектами, задачами и данными. Действие необратимо.
         </ItemDescription>
       </ItemContent>
       <ItemActions>
         <RemoveTeamDialog teamName={teamName} teamId={teamId} asChild>
           <Button variant="destructive" size="sm">
-            Удалить рабочее пространство
+            Удалить команду
           </Button>
         </RemoveTeamDialog>
       </ItemActions>

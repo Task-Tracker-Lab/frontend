@@ -1,12 +1,12 @@
 'use client';
 
-import { UploadAvatar } from 'features/upload-avatar';
 import { TeamAvatar, type TTeam } from 'entities/team';
+import { UploadAvatar } from 'features/upload-avatar';
+import { ComponentProps } from 'react';
+import { formatDate } from 'shared/lib/utils';
 import { CardSection, Separator } from 'shared/ui';
 import { TeamCover } from './TeamCover';
 import { TeamIdentityForm } from './TeamIdentityForm';
-import { formatDate } from 'shared/lib/utils';
-import { ComponentProps } from 'react';
 
 interface TeamIdentityProps extends Omit<
   ComponentProps<typeof CardSection>,
@@ -19,7 +19,7 @@ export function TeamIdentity({ team, ...props }: TeamIdentityProps) {
   return (
     <CardSection
       {...props}
-      title="Идентификация рабочего пространства"
+      title="Идентификация команды"
       description="Публичная информация о команде."
     >
       <div className="space-y-5">

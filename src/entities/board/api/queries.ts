@@ -1,5 +1,6 @@
 import { queryOptions } from '@tanstack/react-query';
 import { boardFabricKeys } from '../model/consts';
+import { BoardColumnResponse } from '../model/types';
 import { BoardHttp } from './http';
 
 export class BoardQueries {
@@ -24,6 +25,11 @@ export class BoardQueries {
       queryKey: boardFabricKeys.columns(slug),
       queryFn: async ({ signal }) => BoardHttp.getBoardColumnList(slug, signal),
       staleTime: 60_000,
+      select: (data) =>
+        data.reduce<Record<string, BoardColumnResponse>>((acc, el) => {
+          acc[el.id] = el;
+          return acc;
+        }, {}),
     });
   }
 

@@ -1,15 +1,4 @@
 'use client';
-import * as React from 'react';
-import {
-  createContext,
-  CSSProperties,
-  HTMLAttributes,
-  ReactNode,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from 'react';
 import {
   defaultDropAnimationSideEffects,
   DndContext,
@@ -41,6 +30,18 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Slot } from 'radix-ui';
+import * as React from 'react';
+import {
+  createContext,
+  CSSProperties,
+  HTMLAttributes,
+  ReactNode,
+  useCallback,
+  useContext,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { createPortal } from 'react-dom';
 
 import { cn } from 'shared/lib/utils';
@@ -114,11 +115,21 @@ export interface KanbanMoveEvent {
   overIndex: number;
 }
 
+export interface KanbanItemMoveEvent<T> {
+  taskId: string;
+  item: T;
+  fromContainer: string;
+  fromIndex: number;
+  toContainer: string;
+  toIndex: number;
+}
+
 export interface KanbanRootProps<T> extends HTMLAttributes<HTMLDivElement> {
   value: Record<string, T[]>;
   onValueChange: (value: Record<string, T[]>) => void;
   getItemValue: (item: T) => string;
   children: ReactNode;
+  onItemMoveEnd?: (event: KanbanItemMoveEvent<T>) => void;
   onMove?: (event: KanbanMoveEvent) => void;
   asChild?: boolean;
   modifiers?: Modifiers;
@@ -131,6 +142,7 @@ function Kanban<T>({
   children,
   className,
   asChild = false,
+  onItemMoveEnd,
   onMove,
   modifiers,
   ...props
@@ -138,6 +150,7 @@ function Kanban<T>({
   const columns = value;
   const setColumns = onValueChange;
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
+  const itemMoveRef = useRef<KanbanItemMoveEvent<T> | null>(null);
 
   const sensors = useSensors(
     useSensor(MouseSensor, {
@@ -171,16 +184,41 @@ function Kanban<T>({
     [columns, columnIds, getItemValue, isColumn]
   );
 
-  const handleDragStart = useCallback((event: DragStartEvent) => {
-    setActiveId(event.active.id);
-  }, []);
+  const handleDragStart = useCallback(
+    (event: DragStartEvent) => {
+      const { active } = event;
+      setActiveId(active.id);
 
-  const handleDragOver = useCallback(
-    (event: DragOverEvent) => {
-      if (onMove) {
+      if (!onItemMoveEnd || isColumn(active.id)) {
         return;
       }
 
+      const fromContainer = findContainer(active.id);
+      if (!fromContainer) {
+        return;
+      }
+
+      const fromIndex = columns[fromContainer].findIndex(
+        (item: T) => getItemValue(item) === active.id
+      );
+      if (fromIndex === -1) {
+        return;
+      }
+
+      itemMoveRef.current = {
+        taskId: active.id as string,
+        item: columns[fromContainer][fromIndex],
+        fromContainer,
+        fromIndex,
+        toContainer: fromContainer,
+        toIndex: fromIndex,
+      };
+    },
+    [columns, findContainer, getItemValue, isColumn, onItemMoveEnd]
+  );
+
+  const handleDragOver = useCallback(
+    (event: DragOverEvent) => {
       const { active, over } = event;
       if (!over) return;
 
@@ -193,18 +231,28 @@ function Kanban<T>({
         return;
       }
 
+      const activeItems = columns[activeContainer];
+      const overItems = columns[overContainer];
+      const activeIndex = activeItems.findIndex((item: T) => getItemValue(item) === active.id);
+      let overIndex = overItems.findIndex((item: T) => getItemValue(item) === over.id);
+
+      if (isColumn(over.id)) {
+        overIndex = overItems.length;
+      }
+
+      if (onItemMoveEnd && itemMoveRef.current?.taskId === active.id) {
+        itemMoveRef.current = {
+          ...itemMoveRef.current,
+          toContainer: overContainer,
+          toIndex: overIndex,
+        };
+      }
+
+      if (onMove) {
+        return;
+      }
+
       if (activeContainer !== overContainer) {
-        const activeItems = columns[activeContainer];
-        const overItems = columns[overContainer];
-
-        const activeIndex = activeItems.findIndex((item: T) => getItemValue(item) === active.id);
-        let overIndex = overItems.findIndex((item: T) => getItemValue(item) === over.id);
-
-        // If dropping on the column itself, not an item
-        if (isColumn(over.id)) {
-          overIndex = overItems.length;
-        }
-
         const newActiveItems = [...activeItems];
         const newOverItems = [...overItems];
         const [movedItem] = newActiveItems.splice(activeIndex, 1);
@@ -230,11 +278,12 @@ function Kanban<T>({
         }
       }
     },
-    [findContainer, getItemValue, isColumn, setColumns, columns, onMove]
+    [findContainer, getItemValue, isColumn, setColumns, columns, onMove, onItemMoveEnd]
   );
 
   const handleDragCancel = useCallback(() => {
     setActiveId(null);
+    itemMoveRef.current = null;
   }, []);
 
   const handleDragEnd = useCallback(
@@ -242,7 +291,19 @@ function Kanban<T>({
       const { active, over } = event;
       setActiveId(null);
 
+      const itemMove = itemMoveRef.current;
+      itemMoveRef.current = null;
+
       if (!over) return;
+
+      if (
+        onItemMoveEnd &&
+        itemMove &&
+        !isColumn(active.id) &&
+        (itemMove.fromContainer !== itemMove.toContainer || itemMove.fromIndex !== itemMove.toIndex)
+      ) {
+        onItemMoveEnd(itemMove);
+      }
 
       // Handle item move callback
       if (onMove && !isColumn(active.id)) {
@@ -302,7 +363,7 @@ function Kanban<T>({
         }
       }
     },
-    [columnIds, columns, findContainer, getItemValue, isColumn, setColumns, onMove]
+    [columnIds, columns, findContainer, getItemValue, isColumn, setColumns, onMove, onItemMoveEnd]
   );
 
   const contextValue = useMemo(
@@ -401,7 +462,16 @@ function KanbanColumn({
 
   const style = {
     transition,
-    transform: CSS.Transform.toString(transform),
+    transform: CSS.Transform.toString(
+      transform
+        ? {
+            ...transform,
+            // Keep columns stable size while reordering.
+            scaleX: 1,
+            scaleY: 1,
+          }
+        : null
+    ),
   } as CSSProperties;
 
   const Comp = asChild ? Slot.Root : 'div';
@@ -681,9 +751,9 @@ export {
   Kanban,
   KanbanBoard,
   KanbanColumn,
+  KanbanColumnContent,
   KanbanColumnHandle,
   KanbanItem,
   KanbanItemHandle,
-  KanbanColumnContent,
   KanbanOverlay,
 };

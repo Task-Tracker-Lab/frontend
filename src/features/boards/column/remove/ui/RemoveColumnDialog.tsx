@@ -28,13 +28,13 @@ export function RemoveColumnDialog({ columnId, boardSlug, options = {}, ...props
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger {...props} />
+      {props.children ? <AlertDialogTrigger {...props} /> : null}
       <AlertDialogContent>
-        <AlertDialogDescription>Удаление доски</AlertDialogDescription>
+        <AlertDialogDescription>Удаление этапа</AlertDialogDescription>
         <AlertDialogHeader>
-          <AlertDialogTitle>Удалить колонку?</AlertDialogTitle>
+          <AlertDialogTitle>Удалить этап?</AlertDialogTitle>
           <AlertDialogDescription>
-            При удалении колонки будут удалены все задачи в ней
+            При удалении этапа будут удалены все задачи в нем
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

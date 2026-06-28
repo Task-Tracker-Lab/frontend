@@ -5,6 +5,7 @@ export { createEntityKeys } from './create-entity-keys';
 export { debounce } from './debounce/debounce';
 export { formatDate } from './format-date/format-date';
 export { formatTime } from './format-time/format-time';
+export { HEX_COLOR_REGEX, isHexColor } from './is-hex-color/is-hex-color';
 export { getPluralForm, type PluralForms } from './pluralize/pluralize';
 export { setFormErrors } from './set-form-errors';
 export { throttle } from './throttle/throttle';
