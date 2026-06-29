@@ -1,10 +1,12 @@
 'use client';
 
+import { useState } from 'react';
+import { FolderPlus, Plus, UsersRound, LayoutGrid } from 'lucide-react';
+import { useParams } from 'next/navigation';
 import { useTeamStore } from 'entities/team';
 import { CreateProjectDialog } from 'features/projects/create';
 import { CreateTeamDialog } from 'features/teams/create';
-import { FolderPlus, Plus, UsersRound } from 'lucide-react';
-import { useState } from 'react';
+import { CreateBoardDialog } from 'features/boards/create';
 import {
   Button,
   DropdownMenu,
@@ -23,6 +25,9 @@ export function QuickCreate() {
   const [open, setOpen] = useState(false);
   const [createTeamOpen, setCreateTeamOpen] = useState(false);
   const [createProjectOpen, setCreateProjectOpen] = useState(false);
+  const [createBoardOpen, setCreateBoardOpen] = useState(false);
+  const params = useParams<{ projectSlug: string }>();
+  const projectSlug = params?.projectSlug;
 
   return (
     <div>
@@ -80,12 +85,33 @@ export function QuickCreate() {
               </ItemContent>
             </Item>
           </DropdownMenuItem>
+          <DropdownMenuItem
+            disabled={!projectSlug}
+            onSelect={(e) => {
+              e.preventDefault();
+              setOpen(false);
+              setCreateBoardOpen(true);
+            }}
+          >
+            <Item className="flex-nowrap p-0">
+              <ItemMedia className="bg-primary/20 rounded-full p-2">
+                <LayoutGrid className="text-muted-foreground" />
+              </ItemMedia>
+              <ItemContent>
+                <ItemTitle>Доска</ItemTitle>
+                <ItemDescription className="whitespace-nowrap">
+                  Создать новую доску в проекте
+                </ItemDescription>
+              </ItemContent>
+            </Item>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
       <CreateTeamDialog dialog={{ open: createTeamOpen, onOpenChange: setCreateTeamOpen }} />
       <CreateProjectDialog
         dialog={{ open: createProjectOpen, onOpenChange: setCreateProjectOpen }}
       />
+      <CreateBoardDialog dialog={{ open: createBoardOpen, onOpenChange: setCreateBoardOpen }} />
     </div>
   );
 }
