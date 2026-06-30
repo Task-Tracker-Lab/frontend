@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import { FolderPlus, Plus, UsersRound, LayoutGrid } from 'lucide-react';
 import { useParams } from 'next/navigation';
@@ -7,18 +6,8 @@ import { useTeamStore } from 'entities/team';
 import { CreateProjectDialog } from 'features/projects/create';
 import { CreateTeamDialog } from 'features/teams/create';
 import { CreateBoardDialog } from 'features/boards/create';
-import {
-  Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  Item,
-  ItemContent,
-  ItemDescription,
-  ItemMedia,
-  ItemTitle,
-} from 'shared/ui';
+import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from 'shared/ui';
+import { QuickCreateItem } from './QuickCreateItem'; // ← Новый импорт
 
 export function QuickCreate() {
   const teamId = useTeamStore.use.teamId();
@@ -46,67 +35,40 @@ export function QuickCreate() {
           align="end"
           className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
         >
-          <DropdownMenuItem
-            onSelect={(e) => {
-              e.preventDefault();
+          <QuickCreateItem
+            icon={<UsersRound className="text-muted-foreground" />}
+            title="Команда"
+            description="Создать новую команду"
+            onOpenChange={() => {
               setOpen(false);
               setCreateTeamOpen(true);
             }}
-          >
-            <Item className="flex-nowrap p-0">
-              <ItemMedia className="bg-primary/20 rounded-full p-2">
-                <UsersRound className="text-muted-foreground" />
-              </ItemMedia>
-              <ItemContent>
-                <ItemTitle>Команда</ItemTitle>
-                <ItemDescription className="whitespace-nowrap">
-                  Создать новую команду
-                </ItemDescription>
-              </ItemContent>
-            </Item>
-          </DropdownMenuItem>
-          <DropdownMenuItem
+          />
+
+          <QuickCreateItem
+            icon={<FolderPlus className="text-muted-foreground" />}
+            title="Проект"
+            description="Создать новый проект"
             disabled={!teamId}
-            onSelect={(e) => {
-              e.preventDefault();
+            onOpenChange={() => {
               setOpen(false);
               setCreateProjectOpen(true);
             }}
-          >
-            <Item className="flex-nowrap p-0">
-              <ItemMedia className="bg-primary/20 rounded-full p-2">
-                <FolderPlus className="text-muted-foreground" />
-              </ItemMedia>
-              <ItemContent>
-                <ItemTitle>Проект</ItemTitle>
-                <ItemDescription className="whitespace-nowrap">
-                  Создать новый проект
-                </ItemDescription>
-              </ItemContent>
-            </Item>
-          </DropdownMenuItem>
-          <DropdownMenuItem
+          />
+
+          <QuickCreateItem
+            icon={<LayoutGrid className="text-muted-foreground" />}
+            title="Доска"
+            description="Создать новую доску в проекте"
             disabled={!projectSlug}
-            onSelect={(e) => {
-              e.preventDefault();
+            onOpenChange={() => {
               setOpen(false);
               setCreateBoardOpen(true);
             }}
-          >
-            <Item className="flex-nowrap p-0">
-              <ItemMedia className="bg-primary/20 rounded-full p-2">
-                <LayoutGrid className="text-muted-foreground" />
-              </ItemMedia>
-              <ItemContent>
-                <ItemTitle>Доска</ItemTitle>
-                <ItemDescription className="whitespace-nowrap">
-                  Создать новую доску в проекте
-                </ItemDescription>
-              </ItemContent>
-            </Item>
-          </DropdownMenuItem>
+          />
         </DropdownMenuContent>
       </DropdownMenu>
+
       <CreateTeamDialog dialog={{ open: createTeamOpen, onOpenChange: setCreateTeamOpen }} />
       <CreateProjectDialog
         dialog={{ open: createProjectOpen, onOpenChange: setCreateProjectOpen }}
