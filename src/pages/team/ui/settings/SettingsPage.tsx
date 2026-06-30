@@ -5,13 +5,9 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useQueryTeam } from '../../api/useQueryTeam';
 import { TeamSettingsFormSchema, type TeamSettingsFormValues } from '../../model/settings';
 import { DangerZone } from './DangerZone';
-import { DefaultSettings } from './DefaultSettings';
-import { InvitationSecurity } from './InvitationSecurity';
 import { SaveBar } from './SaveBar';
 import { TeamIdentity } from './TeamIdentity';
 import { DangerZoneSkeleton } from './skeletons/DangerZone.skeleton';
-import { DefaultSettingsSkeleton } from './skeletons/DefaultSettings.skeleton';
-import { InvitationSecuritySkeleton } from './skeletons/InvitationSecurity.skeleton';
 import { TeamIdentitySkeleton } from './skeletons/TeamIdentity.skeleton';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -52,8 +48,6 @@ export function Settings() {
       <FormProvider {...form}>
         <form className="space-y-5">
           {team ? <TeamIdentity team={team} /> : <TeamIdentitySkeleton />}
-          {team ? <DefaultSettings /> : <DefaultSettingsSkeleton />}
-          {team ? <InvitationSecurity /> : <InvitationSecuritySkeleton />}
           {team ? <DangerZone teamName={team?.name} teamId={team?.id} /> : <DangerZoneSkeleton />}
         </form>
         {team ? <SaveBar team={team} /> : null}

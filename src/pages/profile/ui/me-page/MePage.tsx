@@ -37,7 +37,7 @@ function MePage() {
       <div className="max-w-5xl space-y-4">
         <CardSection
           className="space-y-4"
-          title="Профиль"
+          title="Идентификация профиля"
           description="Публичная информация о вас."
         >
           <IdentityItem profile={profile} />

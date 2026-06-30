@@ -60,7 +60,7 @@ export function TeamContent() {
             <SidebarMenuSubItem>
               <SidebarMenuSubButton asChild>
                 <InviteTeamMemberDialog className="w-full">
-                  <Plus /> Добавить участника
+                  <Plus /> <span>Добавить участника</span>
                 </InviteTeamMemberDialog>
               </SidebarMenuSubButton>
             </SidebarMenuSubItem>

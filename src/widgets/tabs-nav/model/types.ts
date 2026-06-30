@@ -7,4 +7,5 @@ export type TabNavItem = {
   label: string;
   matchPrefix?: boolean;
   badge?: { value: string | ReactNode; variant: ComponentProps<typeof Badge>['variant'] };
+  icon?: ReactNode;
 };

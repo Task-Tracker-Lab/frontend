@@ -1,4 +1,4 @@
-import { CardSection, OptionGroup, Skeleton } from 'shared/ui';
+import { CardSection, Skeleton } from 'shared/ui';
 
 export function NotificationsPageFallback() {
   return (

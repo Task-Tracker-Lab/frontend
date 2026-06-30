@@ -67,7 +67,8 @@ export function ProjectsContent() {
                   asChild
                 >
                   <Link href={routes.team.projects.project(project.slug)}>
-                    <span>{projectIconCodeToEmoji(project.icon)}</span> {project.name}
+                    <span>{projectIconCodeToEmoji(project.icon)}</span>
+                    <span>{project.name}</span>
                   </Link>
                 </SidebarMenuSubButton>
                 <ProjectActions project={project} teamId={teamId} asChild>
@@ -80,15 +81,15 @@ export function ProjectsContent() {
             <SidebarMenuSubItem>
               <SidebarMenuSubButton asChild>
                 <CreateProjectDialog className="w-full">
-                  <Plus /> Новый проект
+                  <Plus /> <span>Новый проект</span>
                 </CreateProjectDialog>
               </SidebarMenuSubButton>
             </SidebarMenuSubItem>
             {totalProjects > 0 ? (
               <SidebarMenuSubItem>
-                <SidebarMenuSubButton isActive={pathname === routes.team.projects.all()} asChild>
+                <SidebarMenuSubButton asChild>
                   <Link href={routes.team.projects.all()} className="!text-muted-foreground">
-                    Все проекты ({totalProjects})
+                    <span> Все проекты ({totalProjects})</span>
                   </Link>
                 </SidebarMenuSubButton>
               </SidebarMenuSubItem>

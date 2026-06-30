@@ -1,4 +1,4 @@
-import { Mail, Settings, ShieldUser, UsersRound } from 'lucide-react';
+import { BriefcaseBusiness, Mail, Settings, UsersRound } from 'lucide-react';
 import { routes } from 'shared/config';
 
 export const team = [
@@ -7,7 +7,7 @@ export const team = [
     title: 'Участники',
     icon: UsersRound,
   },
+  { url: routes.team.projects.all(), title: 'Проекты', icon: BriefcaseBusiness },
   { url: routes.team.invitations(), title: 'Приглашения', icon: Mail },
-  { url: routes.team.roles(), title: 'Роли', icon: ShieldUser },
   { url: routes.team.settings(), title: 'Настройки', icon: Settings },
 ] as const;
