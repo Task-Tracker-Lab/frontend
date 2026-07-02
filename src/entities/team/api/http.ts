@@ -84,7 +84,7 @@ export class TeamHttp {
 
   static acceptInvitation(code: string) {
     return api<TTeam.ActionResponse>({
-      url: `/teams/invitations/${code}/accept`,
+      url: `/teams//invitations/${code}/accept`, // TODO: Убрать дублирующий слеш в URL, когда починят роутинг на бэке
       method: 'POST',
       contracts: {
         response: STeam.ActionResponse,
