@@ -5,7 +5,7 @@ import type * as TBoard from '../model/types';
 export class BoardHttp {
   static getBoardList(projectSlug: string, signal?: AbortSignal) {
     return api<TBoard.BoardListResponse>({
-      url: `/projects/${projectSlug}/area`,
+      url: `/projects/${projectSlug}/areas`,
       method: 'GET',
       contracts: {
         response: SBoard.BoardListResponse,
@@ -16,7 +16,7 @@ export class BoardHttp {
 
   static getBoard(projectSlug: string, id: string, signal?: AbortSignal) {
     return api<TBoard.BoardResponse>({
-      url: `/projects/${projectSlug}/area/${id}`,
+      url: `/projects/${projectSlug}/areas/${id}`,
       method: 'GET',
       contracts: {
         response: SBoard.Board,
@@ -27,7 +27,7 @@ export class BoardHttp {
 
   static createBoard(projectSlug: string, data: TBoard.CreateBoardBody) {
     return api<TBoard.CreateBoardResponse>({
-      url: `/projects/${projectSlug}/area`,
+      url: `/projects/${projectSlug}/areas`,
       method: 'POST',
       data,
       contracts: {
@@ -39,7 +39,7 @@ export class BoardHttp {
 
   static updateBoard(projectSlug: string, boardSlug: string, data: TBoard.UpdateBoardBody) {
     return api<TBoard.ActionResponse>({
-      url: `/projects/${projectSlug}/area/${boardSlug}`,
+      url: `/projects/${projectSlug}/areas/${boardSlug}`,
       method: 'PUT',
       data,
       contracts: {
@@ -51,7 +51,7 @@ export class BoardHttp {
 
   static removeBoard(projectSlug: string, boardSlug: string) {
     return api<TBoard.ActionResponse>({
-      url: `/projects/${projectSlug}/area/${boardSlug}`,
+      url: `/projects/${projectSlug}/areas/${boardSlug}`,
       method: 'DELETE',
       contracts: {
         response: SBoard.ActionResponse,
@@ -61,7 +61,7 @@ export class BoardHttp {
 
   static getBoardColumnList(boardSlug: string, signal?: AbortSignal) {
     return api<TBoard.BoardColumnListResponse>({
-      url: `/area/${boardSlug}/states`,
+      url: `/areas/${boardSlug}/states`,
       method: 'GET',
       contracts: {
         response: SBoard.BoardColumnListResponse,
@@ -72,7 +72,7 @@ export class BoardHttp {
 
   static getBoardColumn(boardSlug: string, columnId: string, signal?: AbortSignal) {
     return api<TBoard.BoardColumnResponse>({
-      url: `/area/${boardSlug}/states/${columnId}`,
+      url: `/areas/${boardSlug}/states/${columnId}`,
       method: 'GET',
       contracts: {
         response: SBoard.BoardColumn,
@@ -83,7 +83,7 @@ export class BoardHttp {
 
   static createBoardColumn(boardSlug: string, data: TBoard.CreateBoardColumnBody) {
     return api<TBoard.CreateBoardColumnResponse>({
-      url: `/area/${boardSlug}/states`,
+      url: `/areas/${boardSlug}/states`,
       method: 'POST',
       data,
       contracts: {
@@ -99,7 +99,7 @@ export class BoardHttp {
     data: TBoard.UpdateBoardColumnBody
   ) {
     return api<TBoard.ActionResponse>({
-      url: `/area/${boardSlug}/states/${columnId}`,
+      url: `/areas/${boardSlug}/states/${columnId}`,
       method: 'PATCH',
       data,
       contracts: {
@@ -111,7 +111,7 @@ export class BoardHttp {
 
   static removeBoardColumn(boardSlug: string, columnId: string) {
     return api<TBoard.ActionResponse>({
-      url: `/area/${boardSlug}/states/${columnId}`,
+      url: `/areas/${boardSlug}/states/${columnId}`,
       method: 'DELETE',
       contracts: {
         response: SBoard.ActionResponse,
@@ -120,7 +120,7 @@ export class BoardHttp {
   }
   static restoreBoardColumn(boardSlug: string, columnId: string) {
     return api<TBoard.ActionResponse>({
-      url: `/area/${boardSlug}/states/${columnId}/restore`,
+      url: `/areas/${boardSlug}/states/${columnId}/restore`,
       method: 'POST',
       contracts: {
         response: SBoard.ActionResponse,
