@@ -2,7 +2,6 @@ import { CardSection, FloatingSaveBar } from 'shared/ui';
 import { IdentityItem } from './IdentityItem';
 import { ProfileForm } from './ProfileForm';
 import { useMePage } from '../../../model/useMePage';
-import { ProfileSectionFallback } from './ProfileSectionFallback';
 
 export function ProfileSection() {
   const { form, profile, isDirty, isPending, onSubmit, onDiscard } = useMePage();

@@ -23,7 +23,7 @@ function MePage() {
 }
 
 function MePageLayout({ children }: PropsWithChildren) {
-  return <div className="max-w-5xl space-y-4">{children}</div>;
+  return <div className="max-w-5xl space-y-4 overflow-auto p-1 pb-4">{children}</div>;
 }
 
 export { MePage, MePageLayout };

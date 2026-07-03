@@ -12,7 +12,7 @@ export function SidebarLayout({ children, ...props }: ComponentProps<typeof Side
     <SidebarProvider {...props}>
       <TeamIdSync />
       <AppSidebar />
-      <SidebarInset className="min-h-screen">
+      <SidebarInset className="h-screen">
         <header className="bg-background sticky top-0 z-50 flex h-14 shrink-0 items-center justify-between gap-2 border-b px-4">
           <div className="flex items-center gap-2">
             <SidebarTrigger className="-ml-1" />

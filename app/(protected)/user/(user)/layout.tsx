@@ -13,8 +13,10 @@ export default function ProfileLayout({ children }: { children: React.ReactNode 
     <PageWrapper
       title="Профиль"
       description="Управляйте данными аккаунта, безопасностью и уведомлениями."
+      className="h-full overflow-auto"
+      wrap={{ className: 'h-full pb-0' }}
     >
-      <div className="grid gap-4 lg:grid-cols-[max-content_1fr]">
+      <div className="grid h-full gap-4 max-lg:grid-rows-[max-content_1fr] lg:grid-cols-[max-content_1fr]">
         <VerticalTabsNav className="max-lg:flex-row" tabs={tabs} />
         {children}
       </div>
