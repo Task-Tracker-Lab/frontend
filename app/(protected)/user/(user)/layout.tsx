@@ -1,6 +1,6 @@
-import { PageLayout } from 'app/layouts/PageLayout';
 import { Bell, Settings } from 'lucide-react';
 import { routes } from 'shared/config';
+import { PageWrapper } from 'widgets/page-wrapper';
 import { VerticalTabsNav, type TabNavItem } from 'widgets/tabs-nav';
 
 export const tabs: TabNavItem[] = [
@@ -10,7 +10,7 @@ export const tabs: TabNavItem[] = [
 
 export default function ProfileLayout({ children }: { children: React.ReactNode }) {
   return (
-    <PageLayout
+    <PageWrapper
       title="Профиль"
       description="Управляйте данными аккаунта, безопасностью и уведомлениями."
     >
@@ -18,6 +18,6 @@ export default function ProfileLayout({ children }: { children: React.ReactNode 
         <VerticalTabsNav className="max-lg:flex-row" tabs={tabs} />
         {children}
       </div>
-    </PageLayout>
+    </PageWrapper>
   );
 }

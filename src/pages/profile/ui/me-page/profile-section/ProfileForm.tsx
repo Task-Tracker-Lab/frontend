@@ -1,6 +1,6 @@
 import { Controller, UseFormReturn } from 'react-hook-form';
 import { Field, FieldError, FieldGroup, FieldLabel, Input, Textarea } from 'shared/ui';
-import type { ProfileFormValues } from '../../model/profile';
+import type { ProfileFormValues } from '../../../model/profile';
 
 interface ProfileFormProps {
   form: UseFormReturn<ProfileFormValues>;

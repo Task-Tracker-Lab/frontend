@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { type TUser, UserQueries } from 'entities/user';
 import { useEffect } from 'react';
 import { useForm, useFormState } from 'react-hook-form';
@@ -9,7 +9,7 @@ import { useUpdateProfile } from '../api/useUpdateProfile';
 import { ProfileForm as ProfileFormSchema, type ProfileFormValues } from './profile';
 
 export function useMePage() {
-  const query = useQuery(UserQueries.getMe());
+  const query = useSuspenseQuery(UserQueries.getMe());
   const profile = query.data?.profile;
   const email = query.data?.email;
 

@@ -11,6 +11,7 @@ export function NotificationsPageFallback() {
     </CardSection>
   );
 }
+
 function OptionGroupSkeleton({ items = 3 }: { items?: number }) {
   return (
     <div className="space-y-1.5">
