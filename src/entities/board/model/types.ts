@@ -17,6 +17,7 @@ export type CreateBoardResponse = z.infer<typeof SBoard.CreateBoardResponse>;
 
 export type CreateBoardColumnBody = z.infer<typeof SBoard.CreateBoardColumnBody>;
 export type UpdateBoardColumnBody = z.infer<typeof SBoard.UpdateBoardColumnBody>;
+export type MoveBoardColumnBody = z.infer<typeof SBoard.MoveBoardColumnBody>;
 export type CreateBoardColumnResponse = z.infer<typeof SBoard.CreateBoardColumnResponse>;
 
 export type ActionResponse = z.infer<typeof SBoard.ActionResponse>;

@@ -13,7 +13,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from 'shared/ui';
-import { useArchiveProject } from '../model/useArchiveProject';
+import { useArchiveProject } from '../api/useArchiveProject';
 
 interface ArchiveProjectDialogProps extends ComponentProps<typeof AlertDialogTrigger> {
   projectName: string;

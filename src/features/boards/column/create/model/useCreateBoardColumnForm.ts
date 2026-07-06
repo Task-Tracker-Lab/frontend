@@ -3,33 +3,29 @@ import { type TBoard } from 'entities/board';
 import { useForm } from 'react-hook-form';
 import { extractValidationIssues } from 'shared/api';
 import { setFormErrors } from 'shared/lib/utils';
-import { getDefaultCreateBoardColumnValues } from '../config/default-values';
 import { CreateBoardColumnFormSchema } from './schemas';
 import { type CreateBoardColumnFormValues } from './types';
-import { useCreateBoardColumn, UseCreateBoardColumnOptions } from './useCreateBoardColumn';
-
-type UseCreateBoardColumnFormOptions = UseCreateBoardColumnOptions & {
-  defaultPosition?: number;
-};
+import { useCreateBoardColumn, UseCreateBoardColumnOptions } from '../api/useCreateBoardColumn';
+import { useDefaultCreateBoardColumnValues } from '../config/useDefaultCreateBoardColumnValues';
 
 export function useCreateBoardColumnForm(
   boardSlug: string,
-  options: UseCreateBoardColumnFormOptions = {}
+  options: UseCreateBoardColumnOptions = {}
 ) {
-  const { defaultPosition = 100, ...mutationOptions } = options;
+  const getDefaultValues = useDefaultCreateBoardColumnValues(boardSlug);
 
   const form = useForm<CreateBoardColumnFormValues>({
     resolver: zodResolver(CreateBoardColumnFormSchema),
-    defaultValues: getDefaultCreateBoardColumnValues(defaultPosition),
+    defaultValues: getDefaultValues(),
   });
 
   const createBoardColumn = useCreateBoardColumn({
-    ...mutationOptions,
+    ...options,
     meta: {
       skipGlobalValidationToast: true,
     },
     onError: (err, ...args) => {
-      mutationOptions.onError?.(err, ...args);
+      options.onError?.(err, ...args);
       setFormErrors(extractValidationIssues(err), form);
     },
   });
@@ -37,7 +33,7 @@ export function useCreateBoardColumnForm(
   const onSubmit = (data: CreateBoardColumnFormValues) => {
     const body: TBoard.CreateBoardColumnBody = {
       title: data.title,
-      position: data.position, //todo: пока будет 100, потом будет динамический position
+      position: data.position,
       ...(data.color ? { color: data.color } : {}),
     };
 

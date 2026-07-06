@@ -26,7 +26,7 @@ import {
 } from 'shared/ui';
 import { SigninForm as SigninFormSchema } from '../model/schemas';
 import type { SigninFormValues } from '../model/types';
-import { useSignin, UseSigninOptions } from '../model/useSignin';
+import { useSignin, UseSigninOptions } from '../api/useSignin';
 
 interface SigninFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
   mutateOptions?: UseSigninOptions;

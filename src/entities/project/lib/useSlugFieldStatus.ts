@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { ProjectQueries } from '../api/queries';
-import { MAX_SLUG_LENGTH, MIN_SLUG_LENGTH } from '../model/const';
+import { MAX_SLUG_LENGTH, MIN_SLUG_LENGTH } from '../model/consts';
 
 type SlugFieldStatusValue = 'pending' | 'success' | 'error';
 
@@ -15,17 +15,20 @@ export function useSlugFieldStatus({
   slug,
   teamId,
 }: SlugFieldStatusState & { teamId: string }): SlugFieldStatusValue | undefined {
-  const { data, isPending } = useQuery({
-    ...ProjectQueries.checkSlug(teamId!, slug),
-    enabled: false,
+  const canCheck =
+    Boolean(teamId) && isDirty && slug.length >= MIN_SLUG_LENGTH && slug.length <= MAX_SLUG_LENGTH;
+
+  const { data, isFetching } = useQuery({
+    ...ProjectQueries.checkSlug(teamId, slug),
+    enabled: canCheck,
   });
 
   return useMemo(() => {
-    if (!isDirty || slug.length < MIN_SLUG_LENGTH || slug.length > MAX_SLUG_LENGTH) {
+    if (!canCheck) {
       return undefined;
     }
 
-    if (isPending) {
+    if (isFetching) {
       return 'pending';
     }
 
@@ -38,5 +41,5 @@ export function useSlugFieldStatus({
     }
 
     return undefined;
-  }, [data?.available, isDirty, isPending, slug]);
+  }, [canCheck, data?.available, isFetching]);
 }

@@ -1,5 +1,5 @@
 import { queryOptions } from '@tanstack/react-query';
-import { teamFabricKeys } from '../model/const';
+import { teamFabricKeys } from '../model/consts';
 import { TeamHttp } from './http';
 
 export class TeamQueries {

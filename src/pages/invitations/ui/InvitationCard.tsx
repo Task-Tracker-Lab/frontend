@@ -30,10 +30,7 @@ export function InvitationCard({ invitation }: InvitationCardProps) {
       <ItemHeader>
         <ItemMedia>
           <Avatar>
-            <AvatarImage
-              src={invitation.teamAvatar?.small ?? undefined}
-              alt={invitation.teamName}
-            />
+            <AvatarImage src={invitation.teamAvatar?.small} alt={invitation.teamName} />
             <AvatarFallback>
               <MailIcon />
             </AvatarFallback>

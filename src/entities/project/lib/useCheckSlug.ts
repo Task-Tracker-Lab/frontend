@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useRef } from 'react';
 import type { FieldErrors } from 'react-hook-form';
 import { debounce } from 'shared/lib/utils';
 import { ProjectQueries } from '../api/queries';
-import { MAX_SLUG_LENGTH, MIN_SLUG_LENGTH, projectFabricKeys } from '../model/const';
+import { MAX_SLUG_LENGTH, MIN_SLUG_LENGTH, projectFabricKeys } from '../model/consts';
 
 const DEBOUNCE_MS = 400;
 const SLUG_UNAVAILABLE_MESSAGE = 'Этот адрес уже занят';

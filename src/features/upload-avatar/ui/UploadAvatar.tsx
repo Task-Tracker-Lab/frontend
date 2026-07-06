@@ -3,7 +3,7 @@ import { Pencil } from 'lucide-react';
 import { type ChangeEvent, type ComponentProps, type ReactElement, useRef } from 'react';
 import { classNames } from 'shared/lib/utils';
 import { type Avatar, Button } from 'shared/ui';
-import { useUploadAvatar, UseUploadFileOptions } from '../model/useUploadAvatar';
+import { useUploadAvatar, UseUploadFileOptions } from '../api/useUploadAvatar';
 
 interface UploadAvatarProps {
   className?: string;

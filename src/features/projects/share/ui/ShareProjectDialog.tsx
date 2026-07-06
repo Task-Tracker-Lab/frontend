@@ -30,10 +30,10 @@ import {
   Spinner,
 } from 'shared/ui';
 import { SHARE_TTL_OPTIONS } from '../config/ttl-options';
-import { copyShareUrl } from '../model/copy-share-url';
-import { ttlOptionToBody } from '../model/ttl-option-to-body';
+import { copyShareUrl } from '../lib/copy-share-url';
+import { ttlOptionToBody } from '../lib/ttl-option-to-body';
 import type { ShareTtlOption } from '../model/types';
-import { useShareProject } from '../model/useShareProject';
+import { useShareProject } from '../api/useShareProject';
 
 interface ShareProjectDialogProps extends ComponentProps<typeof DialogTrigger> {
   projectName: string;

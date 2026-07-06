@@ -3,7 +3,7 @@ import { UserQueries } from 'entities/user';
 import { useSwitchTeam } from 'features/teams/active-team';
 import { useMemo, useState } from 'react';
 import { MAX_VISIBLE_TEAMS } from './const';
-import { useTeamHotkeys } from './useTeamHotkeys';
+import { useTeamHotkeys } from '../lib/useTeamHotkeys';
 
 export function useTeamsDropdown() {
   const [open, setOpen] = useState(false);

@@ -2,7 +2,7 @@ import { Controller, FormProvider } from 'react-hook-form';
 import { cn } from 'shared/lib/utils';
 import { Field, FieldError, FieldGroup, FieldLabel, Input } from 'shared/ui';
 import { useCreateBoardForm } from '../model/useCreateBoardForm';
-import { UseCreateBoardOptions } from '../model/useCreateBoard';
+import { UseCreateBoardOptions } from '../api/useCreateBoard';
 import { ComponentProps } from 'react';
 
 interface CreateBoardFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {

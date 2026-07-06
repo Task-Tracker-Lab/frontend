@@ -21,7 +21,7 @@ import { setFormErrors } from 'shared/lib/utils';
 import { extractValidationIssues } from 'shared/api';
 import { PasswordForm as PasswordFormSchema } from '../model/schemas';
 import type { PasswordFormValues } from '../model/types';
-import { useSendPassword, UseSendPasswordOptions } from '../model/useSendPassword';
+import { useSendPassword, UseSendPasswordOptions } from '../api/useSendPassword';
 
 interface PasswordFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {
   mutateOptions?: UseSendPasswordOptions;
