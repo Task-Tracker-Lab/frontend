@@ -1,6 +1,6 @@
 import { api } from 'shared/api';
-import * as TUser from '../model/types';
 import * as SUser from '../model/schemas';
+import type * as TUser from '../model/types';
 
 export class UserHttp {
   static getUser(signal?: AbortSignal) {

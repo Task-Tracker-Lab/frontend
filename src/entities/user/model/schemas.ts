@@ -1,5 +1,4 @@
 import { DateTimeString, GlobalSuccess } from 'shared/api';
-import { PaginatedResponseSchema } from 'shared/api/';
 import { z } from 'zod/v4';
 
 export const UserAvatarSchema = z

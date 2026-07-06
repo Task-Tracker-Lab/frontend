@@ -1,26 +1,14 @@
-import { classNames } from 'shared/lib/utils';
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from 'shared/ui';
 
 interface PageWrapperProps extends React.ComponentProps<typeof CardContent> {
-  wrap?: Omit<React.ComponentProps<typeof Card>, 'children'>;
   title?: string;
   description?: React.ReactNode;
   action?: React.ReactNode;
 }
 
-export function PageWrapper({
-  title,
-  description,
-  action,
-  children,
-  wrap: { className, ...wrapProps } = {},
-  ...props
-}: PageWrapperProps) {
+export function PageWrapper({ title, description, action, children, ...props }: PageWrapperProps) {
   return (
-    <Card
-      className={classNames('overflow-auto rounded-none pt-8 ring-0 *:px-5', {}, [className])}
-      {...wrapProps}
-    >
+    <Card className="overflow-visible rounded-none pt-4 ring-0 *:px-2 lg:pt-8 lg:*:px-5">
       {(title || description || action) && (
         <CardHeader>
           {title && <CardTitle>{title}</CardTitle>}
