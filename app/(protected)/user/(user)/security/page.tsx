@@ -1,1 +1,1 @@
-export { SecurityPage as default } from 'pages/profile';
+export { SecurityPage as default } from 'pages/profile/security';

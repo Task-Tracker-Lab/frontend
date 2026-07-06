@@ -1,7 +1,7 @@
 import { Badge } from 'shared/ui';
-import { type OAuthConnectionStatus } from '../../../model/profile';
+import { type OAuthConnectionStatus } from '../../model/profile';
 import { classNames } from 'shared/lib/utils';
-import { OAUTH_BADGE_LABELS } from 'pages/profile/config/profile';
+import { OAUTH_STATUS_LABELS } from '../../config/oauth-status';
 
 export function OAuthBadge({
   status,
@@ -22,7 +22,7 @@ export function OAuthBadge({
         [className]
       )}
     >
-      {OAUTH_BADGE_LABELS[status]}
+      {OAUTH_STATUS_LABELS[status]}
     </Badge>
   );
 }

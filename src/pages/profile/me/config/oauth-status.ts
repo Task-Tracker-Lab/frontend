@@ -1,6 +1,6 @@
 import { OAuthConnectionStatus } from '../model/profile';
 
-export const OAUTH_BADGE_LABELS = {
+export const OAUTH_STATUS_LABELS = {
   connected: 'Подключен',
   disconnected: 'Не подключен',
   unknown: 'Не удалось проверить',

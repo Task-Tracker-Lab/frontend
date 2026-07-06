@@ -5,8 +5,8 @@ import { type ComponentProps } from 'react';
 import { Button, Spinner } from 'shared/ui';
 import Image from 'next/image';
 import { classNames } from 'shared/lib/utils';
-import { type OAuthConnectionStatus } from '../../../model/profile';
-import { useOAuthManage } from 'pages/profile/model/useOAuthManage';
+import { type OAuthConnectionStatus } from '../../model/profile';
+import { useOAuthManage } from 'pages/profile/me/model/useOAuthManage';
 import { OAuthBadge } from './OAuthBadge';
 
 type OAuthManageButtonProps = ComponentProps<typeof Button> & {

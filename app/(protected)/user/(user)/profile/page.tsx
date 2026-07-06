@@ -1,1 +1,1 @@
-export { MePage as default } from 'pages/profile';
+export { MePage as default } from 'pages/profile/me';

@@ -3,10 +3,10 @@
 import { useReducer } from 'react';
 import { CardSection, FloatingSaveBar, OptionGroup, Switch } from 'shared/ui';
 import { UserQueries } from 'entities/user';
-import { useUpdateNotifications } from '../../api/useUpdateNotifications';
+import { useUpdateNotifications } from '../api/useUpdateNotifications';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { notificationItems } from '../../config/notifications';
-import { NotificationChannel, type Notifications } from '../../model/notifications';
+import { notificationItems } from '../config/notifications';
+import { NotificationChannel, type Notifications } from '../model/notifications';
 
 type NotificationsState = Notifications | null;
 
