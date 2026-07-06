@@ -22,7 +22,6 @@ export const routeDefinitions = [
   ['team.root', (pathname) => pathname === routes.team.root(), 'Команда'],
   ['team.members', (pathname) => pathname === routes.team.members(), 'Участники'],
   ['team.invitations', (pathname) => pathname === routes.team.invitations(), 'Приглашения'],
-  ['team.roles', (pathname) => pathname === routes.team.roles(), 'Роли и права'],
   ['team.settings', (pathname) => pathname === routes.team.settings(), 'Настройки'],
   ['team.projects.all', (pathname) => pathname === routes.team.projects.all(), 'Проекты'],
   ['auth.signin', (pathname) => pathname === routes.auth.signin(), 'Вход'],
