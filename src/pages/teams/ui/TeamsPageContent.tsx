@@ -7,7 +7,7 @@ import { CreateTeamDialog } from 'features/teams/create';
 import { Plus } from 'lucide-react';
 import { Button } from 'shared/ui';
 import { PageWrapper } from 'widgets/page-wrapper';
-import { getTeamsCountText } from '../model/get-teams-count-text';
+import { getTeamsCountText } from '../lib/get-teams-count-text';
 import { TeamCard } from './TeamCard';
 
 export function TeamsPageContent() {

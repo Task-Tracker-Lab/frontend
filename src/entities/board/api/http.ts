@@ -127,4 +127,16 @@ export class BoardHttp {
       },
     });
   }
+
+  static moveBoardColumn(boardSlug: string, columnId: string, data: TBoard.MoveBoardColumnBody) {
+    return api<TBoard.ActionResponse>({
+      url: `/areas/${boardSlug}/states/${columnId}/move`,
+      method: 'POST',
+      data,
+      contracts: {
+        body: SBoard.MoveBoardColumnBody,
+        response: SBoard.ActionResponse,
+      },
+    });
+  }
 }

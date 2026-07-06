@@ -18,7 +18,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { EmailFormValues } from '../model/types';
 import { EmailForm as EmailFormSchema } from '../model/schemas';
-import { UseResetePasswordOptions, useResetPassword } from '../model/useResetPassword';
+import { UseResetePasswordOptions, useResetPassword } from '../api/useResetPassword';
 import { setFormErrors } from 'shared/lib/utils';
 import { extractValidationIssues } from 'shared/api';
 import { ComponentProps } from 'react';

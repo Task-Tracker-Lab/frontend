@@ -1,1 +1,1 @@
-export { useUpdateTask } from './model/useUpdateTask';
+export { useUpdateTask } from './api/useUpdateTask';

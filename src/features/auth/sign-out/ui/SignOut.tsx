@@ -1,7 +1,7 @@
 import { LogOut } from 'lucide-react';
 import { type ComponentProps } from 'react';
 import { Button, buttonVariants } from 'shared/ui';
-import { useSignOut, UseSignOutOptions } from '../model/useSignOut';
+import { useSignOut, UseSignOutOptions } from '../api/useSignOut';
 import { Slot } from 'radix-ui';
 import { cn } from 'shared/lib/utils';
 

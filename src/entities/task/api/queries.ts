@@ -1,5 +1,5 @@
 import { queryOptions } from '@tanstack/react-query';
-import { taskFabricKeys } from '../model/const';
+import { taskFabricKeys } from '../model/consts';
 import type { Task, TaskContextQuery, TaskListQuery } from '../model/types';
 import { TaskHttp } from './http';
 

@@ -10,7 +10,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from 'shared/ui';
-import { RemoveTaskVariables, useRemoveTask } from '../model/useRemoveTask';
+import { RemoveTaskVariables, useRemoveTask } from '../api/useRemoveTask';
 
 type Props = ComponentProps<typeof AlertDialogTrigger> &
   RemoveTaskVariables & {

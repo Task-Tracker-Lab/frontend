@@ -7,7 +7,7 @@ import { extractValidationIssues } from 'shared/api';
 import { setFormErrors } from 'shared/lib/utils';
 import { InviteTeamMemberFormSchema } from './schemas';
 import type { InviteTeamMemberFormValues } from './types';
-import { useInviteTeamMember, type UseInviteTeamMemberOptions } from './useInviteTeamMember';
+import { useInviteTeamMember, type UseInviteTeamMemberOptions } from '../api/useInviteTeamMember';
 
 export function useInviteTeamMemberForm(
   mutateOptions: UseInviteTeamMemberOptions = {},

@@ -68,7 +68,11 @@ export function SlugField<T extends FieldValues>({
               disabled={disabled}
             />
             <InputGroupAddon align="inline-end">
-              <SlugFieldStatus teamId={teamId} slug={field.value} isDirty={fieldState.isDirty} />
+              <SlugFieldStatus
+                teamId={teamId}
+                slug={field.value ?? ''}
+                isDirty={fieldState.isDirty}
+              />
             </InputGroupAddon>
           </InputGroup>
           {fieldState.invalid && <FieldError errors={[fieldState.error]} />}

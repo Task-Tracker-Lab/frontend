@@ -1,6 +1,6 @@
 import { createSortingSchema, CursorQuerySchema, DateTimeString, GlobalSuccess } from 'shared/api';
-import { z } from 'zod/v4';
 import { HEX_COLOR_REGEX } from 'shared/lib/utils';
+import { z } from 'zod/v4';
 
 export const ActionResponse = GlobalSuccess;
 
@@ -47,10 +47,7 @@ export const Board = z.object({
     .int('Количество задач должно быть целым числом')
     .min(0, 'Количество задач не может быть отрицательным'),
   defaultView: ViewTypeEnum,
-  position: z
-    .number()
-    .int('Позиция должна быть целым числом')
-    .min(0, 'Позиция не может быть отрицательной'),
+  position: z.number().min(0, 'Позиция не может быть отрицательной'),
   maxTasksLimit: z
     .number()
     .int('Лимит задач должен быть целым числом')
@@ -79,10 +76,7 @@ export const BoardColumn = z.object({
     .nullable()
     .optional(),
   icon: z.string().max(20, 'Иконка должна быть не длиннее 20 символов').nullable().optional(),
-  position: z
-    .number()
-    .int('Позиция должна быть целым числом')
-    .min(0, 'Позиция не может быть отрицательной'),
+  position: z.number().min(0, 'Позиция не может быть отрицательной'),
   isVisible: z.boolean(),
   maxTasksLimit: z
     .number()
@@ -163,6 +157,14 @@ export const UpdateBoardColumnBody = CreateBoardColumnBody.partial().refine(
     abort: true,
   }
 );
+
+export const MoveBoardColumnBody = z
+  .object({
+    position: z.number().nonnegative(),
+    prevStatePosition: z.number().nonnegative().nullable(),
+    nextStatePosition: z.number().nonnegative().nullable(),
+  })
+  .strict();
 
 export const BoardColumnQueryParams = z
   .object({

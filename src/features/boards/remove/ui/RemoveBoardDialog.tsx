@@ -10,7 +10,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from 'shared/ui';
-import { RemoveBoardVariables, useRemoveBoard } from '../model/useRemoveBoard';
+import { RemoveBoardVariables, useRemoveBoard } from '../api/useRemoveBoard';
 
 type Props = ComponentProps<typeof AlertDialogTrigger> &
   RemoveBoardVariables & { boardName: string };

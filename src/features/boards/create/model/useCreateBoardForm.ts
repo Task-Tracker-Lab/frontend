@@ -1,17 +1,16 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { type TBoard } from 'entities/board';
-import { useParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { extractValidationIssues } from 'shared/api';
+import { useRouteParams } from 'shared/lib/hooks';
 import { setFormErrors } from 'shared/lib/utils';
 import { getDefaultCreateBoardValues } from '../config/default-values';
 import { CreateBoardFormSchema } from './schemas';
 import { type CreateBoardFormValues } from './types';
-import { useCreateBoard, UseCreateBoardOptions } from './useCreateBoard';
+import { useCreateBoard, UseCreateBoardOptions } from '../api/useCreateBoard';
 
 export function useCreateBoardForm(options: UseCreateBoardOptions = {}) {
-  const params = useParams<{ projectSlug: string }>();
-  const slug = params?.projectSlug;
+  const { projectSlug } = useRouteParams();
 
   const form = useForm<CreateBoardFormValues>({
     resolver: zodResolver(CreateBoardFormSchema),
@@ -34,12 +33,12 @@ export function useCreateBoardForm(options: UseCreateBoardOptions = {}) {
       title: data.title,
     };
 
-    createBoard.mutate({ projectSlug: slug!, body });
+    createBoard.mutate({ projectSlug, body });
   };
 
   return {
     form,
-    projectSlug: slug!,
+    projectSlug,
     isPending: createBoard.isPending,
     handleSubmit: form.handleSubmit(onSubmit),
   };

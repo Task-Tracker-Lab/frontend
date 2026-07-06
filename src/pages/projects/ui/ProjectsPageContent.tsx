@@ -6,7 +6,7 @@ import { CreateProjectDialog } from 'features/projects/create';
 import { Plus } from 'lucide-react';
 import { Button } from 'shared/ui';
 import { PageWrapper } from 'widgets/page-wrapper';
-import { getProjectsCountText } from '../model/get-projects-count-text';
+import { getProjectsCountText } from '../lib/get-projects-count-text';
 import { ProjectCard } from './ProjectCard';
 
 export function ProjectsPageContent({ teamId }: { teamId: string }) {

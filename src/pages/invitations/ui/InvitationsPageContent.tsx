@@ -5,7 +5,7 @@ import { UserQueries } from 'entities/user';
 import { MailOpen } from 'lucide-react';
 import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from 'shared/ui';
 import { PageWrapper } from 'widgets/page-wrapper';
-import { getInvitationsCountText } from '../model/get-invitations-count-text';
+import { getInvitationsCountText } from '../lib/get-invitations-count-text';
 import { InvitationCard } from './InvitationCard';
 
 export function InvitationsPageContent() {

@@ -77,7 +77,8 @@ export const CreateTaskResponse = GlobalSuccess.extend({
   id: z.string(),
 });
 
-export const UpdateTaskBody = CreateTaskBody.partial()
+export const UpdateTaskBody = CreateTaskBody.omit({ position: true })
+  .partial()
   .refine((data) => Object.keys(data).length > 0, {
     error: 'Необходимо передать хотя бы одно поле для обновления',
     abort: true,
@@ -89,6 +90,8 @@ export const MoveTaskBody = z
     targetAreaId: z.string().optional(),
     targetStateId: z.string().nullable().optional(),
     position: z.number().int().nonnegative(),
+    prevIssuePosition: z.number().int().nonnegative().nullable(),
+    nextIssuePosition: z.number().int().nonnegative().nullable(),
   })
   .strict();
 
@@ -115,10 +118,10 @@ export const TaskListQuery = TaskContextQuery.extend({
   reporterId: z.string().optional(),
   priority: IssueFilterPriority.optional(),
   type: IssueFilterType.optional(),
-  parentId: z.string().optional(),
+  parentId: z.string().nullable().optional(),
   labels: z.string().optional(),
   cursor: z.string().optional(),
-  limit: z.coerce.number().int().positive().optional(),
+  limit: z.coerce.number().int().min(1).max(100).optional(),
   sortBy: IssueSortBy.optional(),
   sortOrder: IssueSortOrder.optional(),
   areaId: z.string().optional(),
