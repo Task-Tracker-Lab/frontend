@@ -7,7 +7,7 @@ import { CreateProjectDialog } from 'features/projects/create';
 import { CreateTeamDialog } from 'features/teams/create';
 import { CreateBoardDialog } from 'features/boards/create';
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from 'shared/ui';
-import { QuickCreateItem } from './QuickCreateItem'; // ← Новый импорт
+import { QuickCreateItem } from './QuickCreateItem';
 
 export function QuickCreate() {
   const teamId = useTeamStore.use.teamId();
