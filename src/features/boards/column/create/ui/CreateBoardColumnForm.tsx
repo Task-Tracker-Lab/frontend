@@ -3,7 +3,7 @@ import { ComponentProps } from 'react';
 import { Controller, FormProvider } from 'react-hook-form';
 import { cn } from 'shared/lib/utils';
 import { ColorPicker, Field, FieldError, FieldGroup, FieldLabel, Input } from 'shared/ui';
-import { UseCreateBoardColumnOptions } from '../model/useCreateBoardColumn';
+import { UseCreateBoardColumnOptions } from '../api/useCreateBoardColumn';
 import { useCreateBoardColumnForm } from '../model/useCreateBoardColumnForm';
 
 interface CreateBoardColumnFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {

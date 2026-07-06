@@ -14,7 +14,7 @@ import {
   RemoveColunmnVariables,
   UseDeleteColumnOptions,
   useRemoveColumn,
-} from '../model/useRemoveColumn';
+} from '../api/useRemoveColumn';
 
 type Props = ComponentProps<typeof AlertDialogTrigger> &
   RemoveColunmnVariables & { options?: UseDeleteColumnOptions };

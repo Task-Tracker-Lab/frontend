@@ -48,7 +48,11 @@ import { cn } from 'shared/lib/utils';
 
 interface KanbanContextProps<T> {
   columns: Record<string, T[]>;
-  setColumns: (columns: Record<string, T[]>) => void;
+  setColumns: (
+    columns: Record<string, T[]>,
+    draggedTaskId?: string,
+    draggedColumnId?: string
+  ) => void;
   getItemId: (item: T) => string;
   columnIds: string[];
   activeId: UniqueIdentifier | null;
@@ -124,12 +128,23 @@ export interface KanbanItemMoveEvent<T> {
   toIndex: number;
 }
 
+export interface KanbanColumnMoveEvent {
+  columnId: string;
+  fromIndex: number;
+  toIndex: number;
+}
+
 export interface KanbanRootProps<T> extends HTMLAttributes<HTMLDivElement> {
   value: Record<string, T[]>;
-  onValueChange: (value: Record<string, T[]>) => void;
+  onValueChange: (
+    value: Record<string, T[]>,
+    draggedTaskId?: string,
+    draggedColumnId?: string
+  ) => void;
   getItemValue: (item: T) => string;
   children: ReactNode;
   onItemMoveEnd?: (event: KanbanItemMoveEvent<T>) => void;
+  onColumnMoveEnd?: (event: KanbanColumnMoveEvent) => void;
   onMove?: (event: KanbanMoveEvent) => void;
   asChild?: boolean;
   modifiers?: Modifiers;
@@ -143,6 +158,7 @@ function Kanban<T>({
   className,
   asChild = false,
   onItemMoveEnd,
+  onColumnMoveEnd,
   onMove,
   modifiers,
   ...props
@@ -151,6 +167,7 @@ function Kanban<T>({
   const setColumns = onValueChange;
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const itemMoveRef = useRef<KanbanItemMoveEvent<T> | null>(null);
+  const columnMoveRef = useRef<KanbanColumnMoveEvent | null>(null);
 
   const sensors = useSensors(
     useSensor(MouseSensor, {
@@ -190,6 +207,14 @@ function Kanban<T>({
       setActiveId(active.id);
 
       if (!onItemMoveEnd || isColumn(active.id)) {
+        if (onColumnMoveEnd && isColumn(active.id)) {
+          const fromIndex = columnIds.indexOf(active.id as string);
+          columnMoveRef.current = {
+            columnId: active.id as string,
+            fromIndex,
+            toIndex: fromIndex,
+          };
+        }
         return;
       }
 
@@ -214,13 +239,35 @@ function Kanban<T>({
         toIndex: fromIndex,
       };
     },
-    [columns, findContainer, getItemValue, isColumn, onItemMoveEnd]
+    [columns, columnIds, findContainer, getItemValue, isColumn, onColumnMoveEnd, onItemMoveEnd]
   );
 
   const handleDragOver = useCallback(
     (event: DragOverEvent) => {
       const { active, over } = event;
       if (!over) return;
+
+      if (isColumn(active.id) && isColumn(over.id)) {
+        const activeIndex = columnIds.indexOf(active.id as string);
+        const overIndex = columnIds.indexOf(over.id as string);
+
+        if (onColumnMoveEnd && columnMoveRef.current?.columnId === active.id) {
+          columnMoveRef.current = {
+            ...columnMoveRef.current,
+            toIndex: overIndex,
+          };
+        }
+
+        if (activeIndex !== -1 && overIndex !== -1 && activeIndex !== overIndex) {
+          const newOrder = arrayMove(Object.keys(columns), activeIndex, overIndex);
+          const newColumns: Record<string, T[]> = {};
+          newOrder.forEach((key) => {
+            newColumns[key] = columns[key];
+          });
+          setColumns(newColumns, undefined, active.id as string);
+        }
+        return;
+      }
 
       if (isColumn(active.id)) return;
 
@@ -258,11 +305,14 @@ function Kanban<T>({
         const [movedItem] = newActiveItems.splice(activeIndex, 1);
         newOverItems.splice(overIndex, 0, movedItem);
 
-        setColumns({
-          ...columns,
-          [activeContainer]: newActiveItems,
-          [overContainer]: newOverItems,
-        });
+        setColumns(
+          {
+            ...columns,
+            [activeContainer]: newActiveItems,
+            [overContainer]: newOverItems,
+          },
+          active.id as string
+        );
       } else {
         const container = activeContainer;
         const activeIndex = columns[container].findIndex(
@@ -271,19 +321,33 @@ function Kanban<T>({
         const overIndex = columns[container].findIndex((item: T) => getItemValue(item) === over.id);
 
         if (activeIndex !== overIndex) {
-          setColumns({
-            ...columns,
-            [container]: arrayMove(columns[container], activeIndex, overIndex),
-          });
+          setColumns(
+            {
+              ...columns,
+              [container]: arrayMove(columns[container], activeIndex, overIndex),
+            },
+            active.id as string
+          );
         }
       }
     },
-    [findContainer, getItemValue, isColumn, setColumns, columns, onMove, onItemMoveEnd]
+    [
+      findContainer,
+      getItemValue,
+      isColumn,
+      setColumns,
+      columns,
+      onMove,
+      onItemMoveEnd,
+      onColumnMoveEnd,
+      columnIds,
+    ]
   );
 
   const handleDragCancel = useCallback(() => {
     setActiveId(null);
     itemMoveRef.current = null;
+    columnMoveRef.current = null;
   }, []);
 
   const handleDragEnd = useCallback(
@@ -294,6 +358,9 @@ function Kanban<T>({
       const itemMove = itemMoveRef.current;
       itemMoveRef.current = null;
 
+      const columnMove = columnMoveRef.current;
+      columnMoveRef.current = null;
+
       if (!over) return;
 
       if (
@@ -303,6 +370,15 @@ function Kanban<T>({
         (itemMove.fromContainer !== itemMove.toContainer || itemMove.fromIndex !== itemMove.toIndex)
       ) {
         onItemMoveEnd(itemMove);
+      }
+
+      if (
+        onColumnMoveEnd &&
+        columnMove &&
+        isColumn(active.id) &&
+        columnMove.fromIndex !== columnMove.toIndex
+      ) {
+        onColumnMoveEnd(columnMove);
       }
 
       // Handle item move callback
@@ -331,16 +407,6 @@ function Kanban<T>({
 
       // Handle column reordering
       if (isColumn(active.id) && isColumn(over.id)) {
-        const activeIndex = columnIds.indexOf(active.id as string);
-        const overIndex = columnIds.indexOf(over.id as string);
-        if (activeIndex !== overIndex) {
-          const newOrder = arrayMove(Object.keys(columns), activeIndex, overIndex);
-          const newColumns: Record<string, T[]> = {};
-          newOrder.forEach((key) => {
-            newColumns[key] = columns[key];
-          });
-          setColumns(newColumns);
-        }
         return;
       }
 
@@ -356,14 +422,26 @@ function Kanban<T>({
         const overIndex = columns[container].findIndex((item: T) => getItemValue(item) === over.id);
 
         if (activeIndex !== overIndex) {
-          setColumns({
-            ...columns,
-            [container]: arrayMove(columns[container], activeIndex, overIndex),
-          });
+          setColumns(
+            {
+              ...columns,
+              [container]: arrayMove(columns[container], activeIndex, overIndex),
+            },
+            active.id as string
+          );
         }
       }
     },
-    [columnIds, columns, findContainer, getItemValue, isColumn, setColumns, onMove, onItemMoveEnd]
+    [
+      columns,
+      findContainer,
+      getItemValue,
+      isColumn,
+      setColumns,
+      onMove,
+      onItemMoveEnd,
+      onColumnMoveEnd,
+    ]
   );
 
   const contextValue = useMemo(

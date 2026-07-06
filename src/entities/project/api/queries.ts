@@ -1,5 +1,5 @@
 import { queryOptions } from '@tanstack/react-query';
-import { projectFabricKeys } from '../model/const';
+import { projectFabricKeys } from '../model/consts';
 import { ProjectHttp } from './http';
 
 export class ProjectQueries {

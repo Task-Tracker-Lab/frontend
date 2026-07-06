@@ -134,7 +134,7 @@ export const UserInvitationResponse = z.object({
   expiresAt: DateTimeString,
 });
 
-export const UserInvitationListResponse = PaginatedResponseSchema(UserInvitationResponse);
+export const UserInvitationListResponse = UserInvitationResponse.array();
 
 export const UserActivityResponse = z.object({
   id: z.string(),

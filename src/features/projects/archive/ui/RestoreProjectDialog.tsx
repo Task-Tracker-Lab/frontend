@@ -13,7 +13,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from 'shared/ui';
-import { useRestoreProject } from '../model/useRestoreProject';
+import { useRestoreProject } from '../api/useRestoreProject';
 
 interface RestoreProjectDialogProps extends ComponentProps<typeof AlertDialogTrigger> {
   projectName: string;

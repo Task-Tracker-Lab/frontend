@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation';
 import { AccessToken } from 'shared/api';
 import { routes } from 'shared/config';
 import { toast } from 'sonner';
-import { useSignupConfirm } from '../model/useSignupConfirm';
+import { useSignupConfirm } from '../api/useSignupConfirm';
 import { useLocalStorageDraft } from 'shared/lib/hooks';
 
 type SignupStep = 'signup' | 'otp' | null;

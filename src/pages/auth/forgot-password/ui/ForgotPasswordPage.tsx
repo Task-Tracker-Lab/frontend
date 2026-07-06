@@ -13,7 +13,7 @@ import {
   RESEND_CODE_DELAY_MS,
   ResendCodeControl,
 } from 'features/otp-form';
-import { useSendCode } from '../model/useSendCode';
+import { useSendCode } from '../api/useSendCode';
 import { useLocalStorageDraft } from 'shared/lib/hooks';
 
 type ForgotPasswordStep = 'email' | 'password' | 'otp' | null;

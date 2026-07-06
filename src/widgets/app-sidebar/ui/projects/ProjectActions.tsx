@@ -3,7 +3,7 @@
 import { type TProject } from 'entities/project';
 import { ArchiveProjectDialog, RestoreProjectDialog } from 'features/projects/archive';
 import { ShareProjectDialog } from 'features/projects/share';
-import { Archive, Link2 } from 'lucide-react';
+import { Archive, CogIcon, Link2 } from 'lucide-react';
 import { ComponentProps, useState } from 'react';
 import {
   DropdownMenu,
@@ -12,6 +12,8 @@ import {
   DropdownMenuTrigger,
   useSidebar,
 } from 'shared/ui';
+import Link from 'next/link';
+import { routes } from 'shared/config';
 
 interface ProjectActionsProps extends ComponentProps<typeof DropdownMenuTrigger> {
   project: TProject.ProjectListItemResponse;
@@ -45,6 +47,14 @@ export function ProjectActions({ project, teamId, ...props }: ProjectActionsProp
             <Link2 className="text-muted-foreground" />
             <span>Опубликовать</span>
           </DropdownMenuItem>
+
+          <DropdownMenuItem asChild>
+            <Link href={routes.team.projects.projectSettings(project.slug)}>
+              <CogIcon className="text-muted-foreground" />
+              <span>Настройки</span>
+            </Link>
+          </DropdownMenuItem>
+
           {project.status === 'archived' ? (
             <DropdownMenuItem disabled={!canManage} onSelect={openDialog(setRestoreOpen)}>
               <Archive className="text-muted-foreground" />

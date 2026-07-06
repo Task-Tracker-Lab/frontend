@@ -11,7 +11,7 @@ import {
   AlertDialogTrigger,
   Input,
 } from 'shared/ui';
-import { useRemoveTeam } from '../model/useRemoveTeam';
+import { useRemoveTeam } from '../api/useRemoveTeam';
 
 interface Props extends ComponentProps<typeof AlertDialogTrigger> {
   teamName: string;

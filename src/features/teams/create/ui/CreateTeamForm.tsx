@@ -4,7 +4,7 @@ import { ComponentProps } from 'react';
 import { Controller, FormProvider } from 'react-hook-form';
 import { cn } from 'shared/lib/utils';
 import { Field, FieldError, FieldGroup, FieldLabel, Input, Textarea } from 'shared/ui';
-import type { UseCreateTeamOptions } from '../model/useCreateTeam';
+import type { UseCreateTeamOptions } from '../api/useCreateTeam';
 import { useCreateTeamForm } from '../model/useCreateTeamForm';
 
 interface CreateTeamFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {

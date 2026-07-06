@@ -2,7 +2,7 @@ import { DateTimeString, GlobalSuccess, PaginatedResponseSchema } from 'shared/a
 import { HEX_COLOR_REGEX } from 'shared/lib/utils';
 import { z } from 'zod/v4';
 import { PROJECT_ICONS } from '../config/icons';
-import { MEMBER_ROLE, PROJECT_STATUSES, PROJECT_VISIBILITIES } from './const';
+import { MEMBER_ROLE, PROJECT_STATUSES, PROJECT_VISIBILITIES } from './consts';
 
 export const ActionResponse = GlobalSuccess;
 export const ProjectStatusSchema = z.enum(PROJECT_STATUSES);

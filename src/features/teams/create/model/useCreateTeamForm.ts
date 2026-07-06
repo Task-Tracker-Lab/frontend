@@ -4,7 +4,7 @@ import { extractValidationIssues } from 'shared/api';
 import { setFormErrors } from 'shared/lib/utils';
 import { CreateTeamFormSchema } from './schemas';
 import type { CreateTeamFormValues } from './types';
-import { useCreateTeam, type UseCreateTeamOptions } from './useCreateTeam';
+import { useCreateTeam, type UseCreateTeamOptions } from '../api/useCreateTeam';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 export function useCreateTeamForm(mutateOptions: UseCreateTeamOptions = {}) {

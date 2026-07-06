@@ -16,7 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from 'shared/ui';
-import type { UseInviteTeamMemberOptions } from '../model/useInviteTeamMember';
+import type { UseInviteTeamMemberOptions } from '../api/useInviteTeamMember';
 import { useInviteTeamMemberForm } from '../model/useInviteTeamMemberForm';
 
 interface InviteTeamMemberFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {

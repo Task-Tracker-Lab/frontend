@@ -11,7 +11,7 @@ import {
   AlertDialogTrigger,
   Input,
 } from 'shared/ui';
-import { useRemoveProject } from '../model/useRemoveProject';
+import { useRemoveProject } from '../api/useRemoveProject';
 
 interface Props extends ComponentProps<typeof AlertDialogTrigger> {
   projectName: string;

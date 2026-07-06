@@ -4,7 +4,7 @@ import { ComponentProps } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { cn } from 'shared/lib/utils';
 import { FieldGroup, Separator } from 'shared/ui';
-import type { UseCreateProjectOptions } from '../model/useCreateProject';
+import type { UseCreateProjectOptions } from '../api/useCreateProject';
 import { useCreateProjectForm } from '../model/useCreateProjectForm';
 import { ProjectIdentityFields } from './ProjectIdentityFields';
 import { VisibilityPicker } from './VisibilityPicker';

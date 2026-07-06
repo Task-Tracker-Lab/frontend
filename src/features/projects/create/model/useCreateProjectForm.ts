@@ -1,12 +1,12 @@
 import { useForm } from 'react-hook-form';
-import { useCheckSlug, validateProjectSlugAsync, type TProject } from 'entities/project';
+import { type TProject, useCheckSlug, validateProjectSlugAsync } from 'entities/project';
 import { useTeamStore } from 'entities/team';
 import { extractValidationIssues } from 'shared/api';
 import { setFormErrors } from 'shared/lib/utils';
 import { useZodValidationWithAsyncCheck } from 'shared/lib/hooks';
 import { getDefaultCreateProjectValues } from '../config/default-values';
 import { CreateProjectFormSchema } from './schemas';
-import { type UseCreateProjectOptions, useCreateProject } from './useCreateProject';
+import { useCreateProject, type UseCreateProjectOptions } from '../api/useCreateProject';
 import type { CreateProjectFormValues } from './types';
 
 export function useCreateProjectForm(options: UseCreateProjectOptions = {}) {

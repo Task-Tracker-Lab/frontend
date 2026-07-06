@@ -25,11 +25,11 @@ import { SignupForm as SignupFormSchema } from '../model/schemas';
 import { cn, setFormErrors } from 'shared/lib/utils';
 import { routes } from 'shared/config';
 import { ComponentProps, useState } from 'react';
-import { fieldNameMapper } from '../model/utils/field-name-mapper';
-import { prepareFullName } from '../model/utils/prepare-fullname';
+import { fieldNameMapper } from '../lib/field-name-mapper';
+import { prepareFullName } from '../lib/prepare-fullname';
 import { extractValidationIssues } from 'shared/api';
 import { type TAuth } from 'entities/auth';
-import { useSignup, type UseSignupOptions } from '../model/useSignup';
+import { useSignup, type UseSignupOptions } from '../api/useSignup';
 import { OAuthLoginButtons, OAuthSeparator } from 'features/auth/oauth-login';
 
 interface SignupFormProps extends Omit<ComponentProps<'form'>, 'children' | 'onSubmit'> {

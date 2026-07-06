@@ -1,1 +1,1 @@
-export { TaskWidgetContent } from './ui/TaskWidgetContent';
+export { Task } from './ui/Task';

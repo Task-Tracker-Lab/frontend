@@ -19,10 +19,13 @@ interface UseSwitchTeamProps {
 
 export function useSwitchTeam({ teams = [], defaultOptions = {} }: UseSwitchTeamProps = {}) {
   const router = useRouter();
+  const currentTeamId = useTeamStore.use.teamId();
   const setTeamId = useTeamStore.use.setTeamId();
 
   const switchTeam = useCallback(
     (teamId: string, options: SwitchTeamOptions = {}) => {
+      if (teamId === currentTeamId) return;
+
       const { redirect = false, showToast = true } = { ...defaultOptions, ...options };
       const team = teams.find((t) => t.id === teamId);
 
@@ -38,7 +41,7 @@ export function useSwitchTeam({ teams = [], defaultOptions = {} }: UseSwitchTeam
         router.push(routes.team.root());
       }
     },
-    [setTeamId, teams, router, defaultOptions]
+    [currentTeamId, setTeamId, teams, router, defaultOptions]
   );
 
   return { switchTeam };

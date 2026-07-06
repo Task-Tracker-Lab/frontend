@@ -8,6 +8,7 @@ import { BriefcaseBusiness, ChevronRight, MoreHorizontal, Plus } from 'lucide-re
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { routes } from 'shared/config';
+import { useRouteParams } from 'shared/lib/hooks';
 import {
   Collapsible,
   CollapsibleContent,
@@ -26,6 +27,7 @@ export function ProjectsContent() {
   const teamId = useTeamStore.use.teamId();
   const router = useRouter();
   const pathname = usePathname();
+  const { projectSlug } = useRouteParams();
   const { open, isMobile } = useSidebar();
   const projects = useQuery({ ...ProjectQueries.getProjects(teamId!), enabled: !!teamId });
 
@@ -62,10 +64,7 @@ export function ProjectsContent() {
           <SidebarMenuSub>
             {projectList.map((project) => (
               <SidebarMenuSubItem key={project.id}>
-                <SidebarMenuSubButton
-                  isActive={pathname?.startsWith(routes.team.projects.project(project.slug))}
-                  asChild
-                >
+                <SidebarMenuSubButton isActive={projectSlug === project.slug} asChild>
                   <Link href={routes.team.projects.project(project.slug)}>
                     <span>{projectIconCodeToEmoji(project.icon)}</span>
                     <span>{project.name}</span>
