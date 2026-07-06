@@ -17,7 +17,6 @@ export const routeDefinitions = [
   ['home', (pathname) => pathname === routes.home(), 'Главная'],
   ['user.root', (pathname) => pathname === routes.user.root(), 'Профиль'],
   ['user.profile', (pathname) => pathname === routes.user.profile(), 'Мой профиль'],
-  ['user.security', (pathname) => pathname === routes.user.security(), 'Безопасность'],
   ['user.notifications', (pathname) => pathname === routes.user.notifications(), 'Уведомления'],
   ['team.root', (pathname) => pathname === routes.team.root(), 'Команда'],
   ['team.members', (pathname) => pathname === routes.team.members(), 'Участники'],

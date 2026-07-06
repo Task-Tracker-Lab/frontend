@@ -5,7 +5,6 @@ export const routes = {
   user: {
     root: (): Route => '/user',
     profile: (): Route => '/user/profile',
-    security: (): Route => '/user/security',
     notifications: (): Route => '/user/notifications',
     teams: (): Route => '/user/teams',
   },
