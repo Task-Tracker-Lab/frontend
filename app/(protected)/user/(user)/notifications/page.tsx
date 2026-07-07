@@ -1,1 +1,1 @@
-export { NotificationsPage as default } from 'pages/profile/notifications';
+export { NotificationsPage as default } from 'pages/user/notifications';

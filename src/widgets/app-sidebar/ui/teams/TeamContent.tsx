@@ -49,7 +49,7 @@ export function TeamContent() {
           <SidebarMenuSub>
             {team.map((subItem) => (
               <SidebarMenuSubItem key={subItem.url}>
-                <SidebarMenuSubButton isActive={pathname?.startsWith(subItem.url)} asChild>
+                <SidebarMenuSubButton isActive={pathname === subItem.url} asChild>
                   <Link href={subItem.url}>
                     <subItem.icon />
                     {subItem.title}

@@ -1,1 +1,1 @@
-export { InvitationsPage as default } from 'pages/team';
+export { InvitationsPage as default } from 'pages/team/invitations';

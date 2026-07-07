@@ -1,1 +1,1 @@
-export { Settings as default } from 'pages/team';
+export { SettingsPage as default } from 'pages/team/settings';

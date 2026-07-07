@@ -1,1 +1,1 @@
-export { MembersPage as default } from 'pages/team';
+export { MembersPage as default } from 'pages/team/members';
