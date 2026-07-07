@@ -4,7 +4,7 @@ import { PageWrapper } from 'widgets/page-wrapper';
 import { type TabNavItem, VerticalTabsNav } from 'widgets/tabs-nav';
 
 const tabs: TabNavItem[] = [
-  { key: routes.user.profile(), label: 'Основные настройки', icon: <Settings /> },
+  { key: routes.user.profile(), label: 'Общие', icon: <Settings /> },
   { key: routes.user.notifications(), label: 'Уведомления', icon: <Bell /> },
 ];
 
