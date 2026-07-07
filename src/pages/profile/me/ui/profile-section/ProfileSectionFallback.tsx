@@ -8,11 +8,11 @@ export function ProfileSectionFallback() {
         title="Идентификация профиля"
         description="Публичная информация о вас."
       >
-        <div className="flex items-center justify-between gap-4 px-3 py-[10px]">
+        <div className="flex items-center justify-between gap-4 px-3 py-2.5">
           <div className="flex items-center gap-6">
             <Skeleton className="size-20 rounded-full" aria-hidden />
           </div>
-          <Skeleton className="h-9 w-28 rounded-md" aria-hidden />
+          <Skeleton className="h-7 w-20 rounded-md" aria-hidden />
         </div>
         <div className="space-y-4">
           <div className="grid gap-3 sm:grid-cols-2">

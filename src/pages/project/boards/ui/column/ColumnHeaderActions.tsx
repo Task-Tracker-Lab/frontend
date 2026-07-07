@@ -30,7 +30,7 @@ export function ColumnHeaderActions({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button size={'icon-sm'} variant={'ghost'}>
+        <Button size="icon-sm" variant="ghost">
           <Ellipsis />
         </Button>
       </DropdownMenuTrigger>

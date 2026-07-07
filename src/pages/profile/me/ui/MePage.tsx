@@ -1,14 +1,13 @@
-'use client';
-import dynamic from 'next/dynamic';
-import { MePageFallback } from './MePageFallback';
-
-const MePageContent = dynamic(() => import('./MePageContent').then((mod) => mod.MePage), {
-  ssr: false,
-  loading: () => <MePageFallback />,
-});
+import { OAuthSection } from './oauth-section/OAuthSection';
+import { ProfileSection } from './profile-section/ProfileSection';
 
 function MePage() {
-  return <MePageContent />;
+  return (
+    <div className="max-w-5xl space-y-4 overflow-auto p-1 pb-4">
+      <ProfileSection />
+      <OAuthSection />
+    </div>
+  );
 }
 
 export { MePage };

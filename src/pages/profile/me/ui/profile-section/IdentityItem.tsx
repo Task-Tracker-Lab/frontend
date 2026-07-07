@@ -28,7 +28,7 @@ function IdentityItem({ profile }: AccountIdentityItemProps) {
         />
       </ItemMedia>
       <ItemActions>
-        <SignOut size={'lg'} variant={'destructive'} />
+        <SignOut size="sm" variant="destructive" />
       </ItemActions>
     </Item>
   );

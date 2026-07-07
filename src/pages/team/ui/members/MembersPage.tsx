@@ -15,7 +15,7 @@ export function MembersPage() {
       <div className="mb-6 flex items-center justify-between gap-4">
         <Search value={search} onChange={onChange} placeholder="Поиск участников…" />
         <InviteTeamMemberDialog asChild>
-          <Button variant={'secondary'}>
+          <Button variant="secondary">
             <Plus size={15} /> Пригласить
           </Button>
         </InviteTeamMemberDialog>

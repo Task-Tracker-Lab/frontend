@@ -19,4 +19,4 @@ export const ProfileForm = z.object({
 
 export type ProfileFormValues = z.infer<typeof ProfileForm>;
 
-export type OAuthConnectionStatus = 'connected' | 'disconnected' | 'unknown';
+export type OAuthConnectionStatus = 'connected' | 'disconnected';
