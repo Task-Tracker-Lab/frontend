@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, type ComponentType } from 'react';
 import { FolderPlus, Plus, UsersRound, LayoutGrid } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import { useTeamStore } from 'entities/team';
@@ -9,14 +9,55 @@ import { CreateBoardDialog } from 'features/boards/create';
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from 'shared/ui';
 import { QuickCreateItem } from './QuickCreateItem';
 
+interface MenuItemConfig {
+  title: string;
+  description: string;
+  icon: ComponentType<{ className?: string }>;
+  disabled?: boolean;
+  onOpenChange: () => void;
+}
+
 export function QuickCreate() {
   const teamId = useTeamStore.use.teamId();
   const [open, setOpen] = useState(false);
   const [createTeamOpen, setCreateTeamOpen] = useState(false);
   const [createProjectOpen, setCreateProjectOpen] = useState(false);
   const [createBoardOpen, setCreateBoardOpen] = useState(false);
+
   const params = useParams<{ projectSlug: string }>();
   const projectSlug = params?.projectSlug;
+
+  const menuItems: MenuItemConfig[] = [
+    {
+      title: 'Команда',
+      description: 'Создать новую команду',
+      icon: UsersRound,
+      onOpenChange: () => {
+        setOpen(false);
+        setCreateTeamOpen(true);
+      },
+    },
+    {
+      title: 'Проект',
+      description: 'Создать новый проект',
+      icon: FolderPlus,
+      disabled: !teamId,
+      onOpenChange: () => {
+        setOpen(false);
+        setCreateProjectOpen(true);
+      },
+    },
+    {
+      title: 'Доска',
+      description: 'Создать новую доску в проекте',
+      icon: LayoutGrid,
+      disabled: !projectSlug,
+      onOpenChange: () => {
+        setOpen(false);
+        setCreateBoardOpen(true);
+      },
+    },
+  ];
 
   return (
     <div>
@@ -35,37 +76,9 @@ export function QuickCreate() {
           align="end"
           className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
         >
-          <QuickCreateItem
-            icon={<UsersRound className="text-muted-foreground" />}
-            title="Команда"
-            description="Создать новую команду"
-            onOpenChange={() => {
-              setOpen(false);
-              setCreateTeamOpen(true);
-            }}
-          />
-
-          <QuickCreateItem
-            icon={<FolderPlus className="text-muted-foreground" />}
-            title="Проект"
-            description="Создать новый проект"
-            disabled={!teamId}
-            onOpenChange={() => {
-              setOpen(false);
-              setCreateProjectOpen(true);
-            }}
-          />
-
-          <QuickCreateItem
-            icon={<LayoutGrid className="text-muted-foreground" />}
-            title="Доска"
-            description="Создать новую доску в проекте"
-            disabled={!projectSlug}
-            onOpenChange={() => {
-              setOpen(false);
-              setCreateBoardOpen(true);
-            }}
-          />
+          {menuItems.map((item) => (
+            <QuickCreateItem key={item.title} {...item} />
+          ))}
         </DropdownMenuContent>
       </DropdownMenu>
 

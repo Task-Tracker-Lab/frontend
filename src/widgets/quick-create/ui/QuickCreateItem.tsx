@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ComponentType } from 'react';
 import {
   DropdownMenuItem,
   Item,
@@ -9,7 +9,7 @@ import {
 } from 'shared/ui';
 
 interface QuickCreateItemProps {
-  icon: ReactNode;
+  icon: ComponentType<{ className?: string }>;
   title: string;
   description: string;
   disabled?: boolean;
@@ -17,7 +17,7 @@ interface QuickCreateItemProps {
 }
 
 export function QuickCreateItem({
-  icon,
+  icon: Icon,
   title,
   description,
   disabled = false,
@@ -32,7 +32,9 @@ export function QuickCreateItem({
       }}
     >
       <Item className="flex-nowrap p-0">
-        <ItemMedia className="bg-primary/20 rounded-full p-2">{icon}</ItemMedia>
+        <ItemMedia className="bg-primary/20 rounded-full p-2">
+          <Icon className="text-muted-foreground" />
+        </ItemMedia>
         <ItemContent>
           <ItemTitle>{title}</ItemTitle>
           <ItemDescription className="whitespace-nowrap">{description}</ItemDescription>
