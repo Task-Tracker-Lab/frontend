@@ -5,7 +5,6 @@ export const routes = {
   user: {
     root: (): Route => '/user',
     profile: (): Route => '/user/profile',
-    security: (): Route => '/user/security',
     notifications: (): Route => '/user/notifications',
     teams: (): Route => '/user/teams',
   },
@@ -13,7 +12,6 @@ export const routes = {
     root: (): Route => '/team',
     members: (): Route => '/team/members',
     invitations: (): Route => '/team/invitations',
-    roles: (): Route => '/team/roles',
     settings: (): Route => '/team/settings',
     projects: {
       all: (): Route => '/team/projects',

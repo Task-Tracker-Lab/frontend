@@ -40,7 +40,6 @@ export function TaskCard({ task, onClick }: TaskCardProps) {
             <TaskCardTitle task={task} />
           </div>
           <TaskCardActions taskId={task.id} taskTitle={task.title} />
-          <div className="text-muted-foreground text-xs">{task.position}</div>
         </div>
         <div className="text-muted-foreground flex items-center justify-between text-xs">
           {task.assignee && (

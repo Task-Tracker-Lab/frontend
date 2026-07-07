@@ -21,6 +21,7 @@ export default defineConfig([
       './src/features/projects/remove/**',
       './src/features/projects/share/**',
       './src/widgets/task/**',
+      './src/widgets/tabs-nav/**',
     ],
     rules: {
       'fsd/insignificant-slice': 'off',

@@ -1,5 +1,4 @@
 import { DateTimeString, GlobalSuccess } from 'shared/api';
-import { PaginatedResponseSchema } from 'shared/api/';
 import { z } from 'zod/v4';
 
 export const UserAvatarSchema = z
@@ -91,14 +90,11 @@ export const ProfileUpdateBody = z.object({
   headline: z.string().max(100, 'Должность слишком длинная').nullable().optional(),
   location: z.string().max(100, 'Локация слишком длинная').nullable().optional(),
   phone: z.string().max(20, 'Номер телефона слишком длинный').nullable().optional(),
-  gender: z
-    .enum(['none', 'male', 'female', 'non_binary', 'other', 'prefer_not_to_say'])
-    .default('none')
-    .optional(),
+  gender: z.enum(['none', 'male', 'female', 'non_binary', 'other', 'prefer_not_to_say']).optional(),
   vacationStart: z.string().nullable().optional(),
   vacationEnd: z.string().nullable().optional(),
   vacationMessage: z.string().max(500, 'Сообщение слишком длинное').nullable().optional(),
-  pronouns: z.enum(['he_him', 'she_her', 'they_them', 'other', 'none']).default('none').optional(),
+  pronouns: z.enum(['he_him', 'she_her', 'they_them', 'other', 'none']).optional(),
   pronounsCustom: z.string().max(50, 'Максимальная длина 50 символов').nullable().optional(),
   bio: z.string().max(1000, 'О себе не более 1000 символов').nullable().optional(),
   timezone: z.string().max(50).optional(),

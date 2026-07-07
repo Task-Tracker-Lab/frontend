@@ -8,7 +8,7 @@ interface PageWrapperProps extends React.ComponentProps<typeof CardContent> {
 
 export function PageWrapper({ title, description, action, children, ...props }: PageWrapperProps) {
   return (
-    <Card className="rounded-none pt-8 ring-0 *:px-5">
+    <Card className="overflow-visible rounded-none pt-4 ring-0 *:px-2 lg:pt-8 lg:*:px-5">
       {(title || description || action) && (
         <CardHeader>
           {title && <CardTitle>{title}</CardTitle>}

@@ -1,4 +1,5 @@
 import { TriangleAlert } from 'lucide-react';
+import { classNames } from 'shared/lib/utils';
 import {
   Button,
   Empty,
@@ -25,7 +26,7 @@ export function ErrorState({
   className,
 }: ErrorStateProps) {
   return (
-    <Empty className={className}>
+    <Empty className={classNames('border-none', {}, [className])}>
       <EmptyHeader>
         <EmptyMedia variant="icon">
           <TriangleAlert className="text-destructive" />

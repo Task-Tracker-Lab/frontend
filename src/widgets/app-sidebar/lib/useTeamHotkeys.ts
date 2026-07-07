@@ -12,7 +12,7 @@ export function useTeamHotkeys(
 
       const slot = parseInt(e.key, 10);
 
-      if (slot < 1 || slot > MAX_VISIBLE_TEAMS) return;
+      if (slot < 1 || slot > MAX_VISIBLE_TEAMS || Number.isNaN(slot)) return;
 
       e.preventDefault();
 

@@ -34,7 +34,7 @@ export function OAuthLoginButtonsContent({ className }: OAuthLoginButtonsContent
             type="button"
             className={data.className}
             key={value}
-            variant={'outline'}
+            variant="outline"
             size="icon"
             onClick={() => startOAuth(value)}
           >

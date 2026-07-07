@@ -90,7 +90,7 @@ export const ConnectedOAuthProvidersResponse = z
   .object({
     email: Email,
     avatarUrl: z.string().nullable(),
-    provider: z.string(),
+    provider: OAuthProvider,
     connectedAt: z.string(),
   })
   .array();
