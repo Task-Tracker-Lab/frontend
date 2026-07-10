@@ -141,7 +141,7 @@ export const ProjectListItemResponse = z
   .object({
     id: z.string(),
     slug: z.string(),
-    description: z.string(),
+    description: z.string().nullable(),
     name: z.string(),
     status: ProjectStatusSchema,
     color: z.string(),
@@ -159,7 +159,7 @@ export const ProjectDetailResponse = z
     id: z.string(),
     slug: z.string(),
     name: z.string(),
-    status: z.enum(['active', 'archived', 'template', 'deleted']),
+    status: ProjectStatusSchema,
     description: z.string().nullable(),
     descriptionHtml: z.string().nullish(),
     visuals: z.object({ color: z.string().nullish(), icon: z.string().nullish().optional() }),
@@ -169,8 +169,8 @@ export const ProjectDetailResponse = z
       updatedAt: DateTimeString,
     }),
     access: z.object({
-      visibility: z.enum(['public', 'private']),
-      currentUserRole: z.enum(['owner', 'admin', 'member', 'viewer']),
+      visibility: ProjectVisibilitySchema,
+      currentUserRole: ProjectMemberRoleSchema,
       shareUrl: z.string().nullable(),
     }),
     settings: ProjectSettingsSchema.omit({
