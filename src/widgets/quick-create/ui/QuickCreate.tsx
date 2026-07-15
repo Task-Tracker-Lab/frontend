@@ -9,6 +9,12 @@ import { CreateBoardDialog } from 'features/boards/create';
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from 'shared/ui';
 import { QuickCreateItem } from './QuickCreateItem';
 
+const MENU_CONFIG = [
+  { id: 'team', title: 'Команда', description: 'Создать новую команду', icon: UsersRound },
+  { id: 'project', title: 'Проект', description: 'Создать новый проект', icon: FolderPlus },
+  { id: 'board', title: 'Доска', description: 'Создать новую доску в проекте', icon: LayoutGrid },
+] as const;
+
 interface MenuItemConfig {
   title: string;
   description: string;
@@ -27,37 +33,28 @@ export function QuickCreate() {
   const params = useParams<{ projectSlug: string }>();
   const projectSlug = params?.projectSlug;
 
-  const menuItems: MenuItemConfig[] = [
-    {
-      title: 'Команда',
-      description: 'Создать новую команду',
-      icon: UsersRound,
-      onOpenChange: () => {
-        setOpen(false);
-        setCreateTeamOpen(true);
-      },
-    },
-    {
-      title: 'Проект',
-      description: 'Создать новый проект',
-      icon: FolderPlus,
-      disabled: !teamId,
-      onOpenChange: () => {
-        setOpen(false);
-        setCreateProjectOpen(true);
-      },
-    },
-    {
-      title: 'Доска',
-      description: 'Создать новую доску в проекте',
-      icon: LayoutGrid,
-      disabled: !projectSlug,
-      onOpenChange: () => {
-        setOpen(false);
-        setCreateBoardOpen(true);
-      },
-    },
-  ];
+  const menuItems: MenuItemConfig[] = MENU_CONFIG.map((item) => {
+    let disabled = false;
+    let onOpenChange = () => {};
+
+    if (item.id === 'team') {
+      onOpenChange = () => setCreateTeamOpen(true);
+    } else if (item.id === 'project') {
+      disabled = !teamId;
+      onOpenChange = () => setCreateProjectOpen(true);
+    } else if (item.id === 'board') {
+      disabled = !projectSlug;
+      onOpenChange = () => setCreateBoardOpen(true);
+    }
+
+    return {
+      title: item.title,
+      description: item.description,
+      icon: item.icon,
+      disabled,
+      onOpenChange,
+    };
+  });
 
   return (
     <div>

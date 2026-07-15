@@ -26,8 +26,7 @@ export function QuickCreateItem({
   return (
     <DropdownMenuItem
       disabled={disabled}
-      onSelect={(e) => {
-        e.preventDefault();
+      onSelect={() => {
         onOpenChange();
       }}
     >

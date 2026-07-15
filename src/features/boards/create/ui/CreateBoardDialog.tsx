@@ -14,11 +14,11 @@ import {
 } from 'shared/ui';
 import { CreateBoardForm } from './CreateBoardForm';
 
-interface CreateProjectDialogProps extends ComponentProps<typeof DialogTrigger> {
+interface CreateBoardDialogProps extends ComponentProps<typeof DialogTrigger> {
   dialog?: ComponentProps<typeof Dialog>;
 }
 
-export function CreateBoardDialog({ dialog = {}, ...props }: CreateProjectDialogProps) {
+export function CreateBoardDialog({ dialog = {}, ...props }: CreateBoardDialogProps) {
   const [open, setOpen] = useControllableState({
     defaultValue: dialog.defaultOpen,
     value: dialog.open,
