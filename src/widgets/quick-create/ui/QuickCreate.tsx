@@ -1,28 +1,60 @@
 'use client';
-
+import { useState, type ComponentType } from 'react';
+import { FolderPlus, Plus, UsersRound, LayoutGrid } from 'lucide-react';
+import { useParams } from 'next/navigation';
 import { useTeamStore } from 'entities/team';
 import { CreateProjectDialog } from 'features/projects/create';
 import { CreateTeamDialog } from 'features/teams/create';
-import { FolderPlus, Plus, UsersRound } from 'lucide-react';
-import { useState } from 'react';
-import {
-  Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  Item,
-  ItemContent,
-  ItemDescription,
-  ItemMedia,
-  ItemTitle,
-} from 'shared/ui';
+import { CreateBoardDialog } from 'features/boards/create';
+import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from 'shared/ui';
+import { QuickCreateItem } from './QuickCreateItem';
+
+const MENU_CONFIG = [
+  { id: 'team', title: 'Команда', description: 'Создать новую команду', icon: UsersRound },
+  { id: 'project', title: 'Проект', description: 'Создать новый проект', icon: FolderPlus },
+  { id: 'board', title: 'Доска', description: 'Создать новую доску в проекте', icon: LayoutGrid },
+] as const;
+
+interface MenuItemConfig {
+  title: string;
+  description: string;
+  icon: ComponentType<{ className?: string }>;
+  disabled?: boolean;
+  onOpenChange: () => void;
+}
 
 export function QuickCreate() {
   const teamId = useTeamStore.use.teamId();
   const [open, setOpen] = useState(false);
   const [createTeamOpen, setCreateTeamOpen] = useState(false);
   const [createProjectOpen, setCreateProjectOpen] = useState(false);
+  const [createBoardOpen, setCreateBoardOpen] = useState(false);
+
+  const params = useParams<{ projectSlug: string }>();
+  const projectSlug = params?.projectSlug;
+
+  const menuItems: MenuItemConfig[] = MENU_CONFIG.map((item) => {
+    let disabled = false;
+    let onOpenChange = () => {};
+
+    if (item.id === 'team') {
+      onOpenChange = () => setCreateTeamOpen(true);
+    } else if (item.id === 'project') {
+      disabled = !teamId;
+      onOpenChange = () => setCreateProjectOpen(true);
+    } else if (item.id === 'board') {
+      disabled = !projectSlug;
+      onOpenChange = () => setCreateBoardOpen(true);
+    }
+
+    return {
+      title: item.title,
+      description: item.description,
+      icon: item.icon,
+      disabled,
+      onOpenChange,
+    };
+  });
 
   return (
     <div>
@@ -41,51 +73,17 @@ export function QuickCreate() {
           align="end"
           className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
         >
-          <DropdownMenuItem
-            onSelect={(e) => {
-              e.preventDefault();
-              setOpen(false);
-              setCreateTeamOpen(true);
-            }}
-          >
-            <Item className="flex-nowrap p-0">
-              <ItemMedia className="bg-primary/20 rounded-full p-2">
-                <UsersRound className="text-muted-foreground" />
-              </ItemMedia>
-              <ItemContent>
-                <ItemTitle>Команда</ItemTitle>
-                <ItemDescription className="whitespace-nowrap">
-                  Создать новую команду
-                </ItemDescription>
-              </ItemContent>
-            </Item>
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            disabled={!teamId}
-            onSelect={(e) => {
-              e.preventDefault();
-              setOpen(false);
-              setCreateProjectOpen(true);
-            }}
-          >
-            <Item className="flex-nowrap p-0">
-              <ItemMedia className="bg-primary/20 rounded-full p-2">
-                <FolderPlus className="text-muted-foreground" />
-              </ItemMedia>
-              <ItemContent>
-                <ItemTitle>Проект</ItemTitle>
-                <ItemDescription className="whitespace-nowrap">
-                  Создать новый проект
-                </ItemDescription>
-              </ItemContent>
-            </Item>
-          </DropdownMenuItem>
+          {menuItems.map((item) => (
+            <QuickCreateItem key={item.title} {...item} />
+          ))}
         </DropdownMenuContent>
       </DropdownMenu>
+
       <CreateTeamDialog dialog={{ open: createTeamOpen, onOpenChange: setCreateTeamOpen }} />
       <CreateProjectDialog
         dialog={{ open: createProjectOpen, onOpenChange: setCreateProjectOpen }}
       />
+      <CreateBoardDialog dialog={{ open: createBoardOpen, onOpenChange: setCreateBoardOpen }} />
     </div>
   );
 }
